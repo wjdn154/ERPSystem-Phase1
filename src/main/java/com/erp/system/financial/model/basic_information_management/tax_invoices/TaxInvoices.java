@@ -1,4 +1,4 @@
-package com.erp.system.financial.model.basicinformationmanagement.tax_invoices;
+package com.erp.system.financial.model.basic_information_management.tax_invoices;
 
 import java.math.BigDecimal;
 import java.util.Date;
