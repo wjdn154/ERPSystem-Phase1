@@ -1,4 +1,4 @@
-package com.erp.system.financial.model.basicinformationmanagement.account_information;
+package com.erp.system.financial.model.basic_information_management.account_information;
 
 import java.util.Date;
 import java.util.UUID;

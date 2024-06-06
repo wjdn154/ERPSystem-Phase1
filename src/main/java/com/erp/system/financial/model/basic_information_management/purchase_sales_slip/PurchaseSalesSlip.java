@@ -1,4 +1,4 @@
-package com.erp.system.financial.model.basicinformationmanagement.purchase_sales_slip;
+package com.erp.system.financial.model.basic_information_management.purchase_sales_slip;
 
 import java.math.BigDecimal;
 import java.util.Date;
