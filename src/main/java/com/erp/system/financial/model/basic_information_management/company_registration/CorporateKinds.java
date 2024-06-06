@@ -1,24 +1,21 @@
-package com.erp.system.financial.model.basicinformationmanagement.companyregistration;
+package com.erp.system.financial.model.basic_information_management.company_registration;
 
 import java.util.UUID;
 
-public class corporate_kinds {
+/**
+ * 법인종류 테이블
+ * 법인종류 데이터 테이블
+ * 
+ */
+public class CorporateKinds {
     private final String id; // 고유 실벽자
     private final String code; // 법인종류 코드
     private String kind; // 법인종류
     private String description; // 법인종류 설명
 
-    public corporate_kinds(String code) {
+    public CorporateKinds(String code) {
         this.id = UUID.randomUUID().toString();
         this.code = code;
-    }
-
-    public void setKind(String kind) {
-        this.kind = kind;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getId() {
@@ -33,7 +30,15 @@ public class corporate_kinds {
         return kind;
     }
 
+    public void setKind(String kind) {
+        this.kind = kind;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
