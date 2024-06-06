@@ -1,4 +1,4 @@
-package com.erp.system.financial.model.basic_information_management.journal_entry;
+package com.erp.system.financial.model.basic_information_management.voucher_registration;
 
 import java.math.BigDecimal;
 import java.util.Date;
