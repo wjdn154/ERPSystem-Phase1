@@ -4,7 +4,7 @@ import java.util.UUID;
 
 /**
  * 거래처 유형 테이블
- * 거래처의 유형 데이터 저장 테이블
+ * 거래처의 데이터 저장 테이블
  */
 
 public class VendorTypes {
