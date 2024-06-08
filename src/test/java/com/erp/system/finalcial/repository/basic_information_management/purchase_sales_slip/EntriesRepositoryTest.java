@@ -17,7 +17,7 @@ public class EntriesRepositoryTest {
     // 테스트 실행 전 초기 설정
     @BeforeEach
     void setUp() {
-        repository = new EntriesRepository();
+        repository = EntriesRepository.getInstance(); // 싱글톤 인스턴스 사용
         entry = new Entries("0001"); // 예시 생성자, ID, 설명, 금액
         entry.setName("Entry 1");
         repository.save(entry);
