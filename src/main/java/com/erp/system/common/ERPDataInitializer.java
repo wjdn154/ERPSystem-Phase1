@@ -4,6 +4,7 @@ import com.erp.system.financial.model.basic_information_management.purchase_sale
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.VatTypes;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntriesRepository;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.VatTypesRepository;
+import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.impl.EntriesRepositoryImpl;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -16,42 +17,46 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static com.erp.system.common.Config.DATA_FILE_PATH;
+
 /**
  * Excel 파일을 읽고 각 시트의 데이터를 처리하는 클래스.
  */
 public class ERPDataInitializer {
+
     private Map<String, Class<?>> tableClassMap;
     private Map<Class<?>, Object> repositories;
 
     private EntriesRepository entriesRepository;
     private VatTypesRepository vatTypesRepository;
-    // 1. Repository 추가
+    // 1. 여기에 Repository 추가
 
     /**
      * ERPDataInitializer 생성자
-     * @param filePath Excel 파일 경로
      */
-    public ERPDataInitializer(String filePath) {
+    public ERPDataInitializer() {
+        // 테이블과 해당하는 클래스 타입을 매핑
         tableClassMap = new HashMap<>();
         tableClassMap.put("Entries", Entries.class);
         tableClassMap.put("VatTypes", VatTypes.class);
-        // 2. 테이블 매핑 추가
+        // 2. 여기에 테이블 매핑 추가
 
+        // 각 엔티티 타입에 해당하는 리포지토리 인스턴스를 싱글톤 패턴으로 생성
         repositories = new HashMap<>();
-        entriesRepository = EntriesRepository.getInstance();
+        entriesRepository = EntriesRepositoryImpl.getInstance();
         vatTypesRepository = VatTypesRepository.getInstance();
-        // 3. 싱글톤 적용
+        // 3. 여기에 싱글톤 적용
 
         repositories.put(Entries.class, entriesRepository);
         repositories.put(VatTypes.class, vatTypesRepository);
-        // 4. Domain과 Repository 매핑 추가
+        // 4. 여기에 Domain과 Repository 매핑 추가
 
-        readExcel(filePath);
+        readExcel(DATA_FILE_PATH);
     }
 
     /**
      * Excel 파일을 읽는 메서드
-     * @param filePath Excel 파일 경로
+     * @param filePath 읽을 파일의 경로
      */
     public void readExcel(String filePath) {
         try (FileInputStream fis = new FileInputStream(filePath);
@@ -67,12 +72,13 @@ public class ERPDataInitializer {
 
     /**
      * 각 시트를 처리하는 메서드
-     * @param sheet Excel 시트 객체
+     * 시트 내의 데이터를 읽어 엔티티 객체로 변환 후 저장
+     * @param sheet 처리할 Excel 시트 객체
      */
     public void handleSheet(Sheet sheet) {
-        Row includeRow = sheet.getRow(1);
-        Row typeRow = sheet.getRow(2);
-        Row headerRow = sheet.getRow(3);
+        Row includeRow = sheet.getRow(0);
+        Row typeRow = sheet.getRow(1);
+        Row headerRow = sheet.getRow(2);
 
         List<Boolean> includeInConstructor = new ArrayList<>();
         List<String> dataTypes = new ArrayList<>();
@@ -80,22 +86,26 @@ public class ERPDataInitializer {
 
         DataFormatter formatter = new DataFormatter();
 
+        // 생성자에 필드 설정
         for (Cell cell : includeRow) {
             String cellValue = formatter.formatCellValue(cell);
             includeInConstructor.add("1".equals(cellValue));
         }
 
+        // 데이터 타입 설정
         for (Cell cell : typeRow) {
             dataTypes.add(formatter.formatCellValue(cell));
         }
 
+        // 컬럼 이름 설정
         for (Cell cell : headerRow) {
             columnNames.add(formatter.formatCellValue(cell));
         }
 
         List<List<String>> allData = new ArrayList<>();
 
-        for (int i = 4; i <= sheet.getLastRowNum(); i++) {
+        // 데이터 행 설정
+        for (int i = 3; i <= sheet.getLastRowNum(); i++) {
             Row currentRow = sheet.getRow(i);
             List<String> rowData = new ArrayList<>();
             for (int j = 0; j < currentRow.getLastCellNum(); j++) {
@@ -153,6 +163,7 @@ public class ERPDataInitializer {
         List<Class<?>> paramTypesList = new ArrayList<>();
         List<Object> paramValuesList = new ArrayList<>();
 
+        // 생성자의 파라미터 타입과 값을 설정
         for (int i = 0; i < includeInConstructor.size(); i++) {
             if (includeInConstructor.get(i)) {
                 Class<?> type = getTypeFromString(dataTypes.get(i));
@@ -165,6 +176,7 @@ public class ERPDataInitializer {
         Class<?>[] paramTypesArray = paramTypesList.toArray(new Class<?>[0]);
 
         Constructor<?> matchedConstructor = null;
+        // 일치하는 생성자 찾기
         for (Constructor<?> constructor : clazz.getConstructors()) {
             Class<?>[] constructorParamTypes = constructor.getParameterTypes();
             if (Arrays.equals(constructorParamTypes, paramTypesArray)) {
@@ -179,6 +191,7 @@ public class ERPDataInitializer {
 
         Object entity = matchedConstructor.newInstance(paramValuesList.toArray());
 
+        // 생성자를 통하지 않고 나머지 필드 설정
         for (int i = 0; i < columnNames.size(); i++) {
             if (!includeInConstructor.get(i)) {
                 String columnName = columnNames.get(i);
