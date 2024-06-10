@@ -4,6 +4,8 @@ package com.erp.system;
 import com.erp.system.financial.controller.basic_information_management.purchase_sales_slip.EntriesController;
 import com.erp.system.financial.controller.basic_information_management.purchase_sales_slip.VatTypesController;
 import com.erp.system.common.ERPDataInitializer;
+import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.CashBookRepository;
+import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.impl.CashBookRepositoryImpl;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,9 +15,9 @@ public class Main {
         // Controller 인스턴스 생성
         EntriesController entriesController = EntriesController.getInstance();
         VatTypesController vatTypesController = VatTypesController.getInstance();
+        CashBookRepository cashBookRepository = CashBookRepositoryImpl.getInstance();
 
 
-        System.out.println("--------------------------------");
         entriesController.allEntries().stream()
                 .sorted((e1, e2) -> e1.getCode().compareTo(e2.getCode()))
                 .forEach(entry -> {
@@ -32,5 +34,10 @@ public class Main {
                 .forEach(vatType -> {
                     System.out.println(vatType.getCode() + " : " + vatType.getCategory() + " : " + vatType.getName());
                 });
+        System.out.println("--------------------------------");
+
+        cashBookRepository.findAll().stream()
+                .sorted((c1, c2) -> c1.getId().compareTo(c2.getId()))
+                .forEach(System.out::println);
     }
 }

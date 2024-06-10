@@ -2,8 +2,11 @@ package com.erp.system.common;
 
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entries;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.VatTypes;
+import com.erp.system.financial.model.book_keeping.accounting_ledger.CashBook;
+import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.CashBookRepository;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntriesRepository;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.VatTypesRepository;
+import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.impl.CashBookRepositoryImpl;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.impl.EntriesRepositoryImpl;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -13,6 +16,7 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -29,6 +33,7 @@ public class ERPDataInitializer {
 
     private EntriesRepository entriesRepository;
     private VatTypesRepository vatTypesRepository;
+    private CashBookRepository cashBookRepository;
     // 1. 여기에 Repository 추가
 
     /**
@@ -39,16 +44,19 @@ public class ERPDataInitializer {
         tableClassMap = new HashMap<>();
         tableClassMap.put("Entries", Entries.class);
         tableClassMap.put("VatTypes", VatTypes.class);
+        tableClassMap.put("CashBook", CashBook.class);
         // 2. 여기에 테이블 매핑 추가
 
         // 각 엔티티 타입에 해당하는 리포지토리 인스턴스를 싱글톤 패턴으로 생성
         repositories = new HashMap<>();
         entriesRepository = EntriesRepositoryImpl.getInstance();
         vatTypesRepository = VatTypesRepository.getInstance();
+        cashBookRepository = CashBookRepositoryImpl.getInstance();
         // 3. 여기에 싱글톤 적용
 
         repositories.put(Entries.class, entriesRepository);
         repositories.put(VatTypes.class, vatTypesRepository);
+        repositories.put(CashBook.class, cashBookRepository);
         // 4. 여기에 Domain과 Repository 매핑 추가
 
         readExcel(DATA_FILE_PATH);
@@ -228,6 +236,7 @@ public class ERPDataInitializer {
             case "boolean": return Boolean.class;
             case "double": return Double.class;
             case "date": return Date.class;
+            case "bigdecimal": return BigDecimal.class;
             default: throw new IllegalArgumentException("지원하지 않는 타입: " + typeStr);
         }
     }
@@ -245,7 +254,8 @@ public class ERPDataInitializer {
         if (type == Integer.class || type == int.class) return Integer.parseInt(value);
         if (type == Boolean.class || type == boolean.class) return Boolean.parseBoolean(value);
         if (type == Double.class || type == double.class) return Double.parseDouble(value);
-        if (type == Date.class) return new SimpleDateFormat("yyyy-MM-dd").parse(value);
+        if (type == Date.class) return new SimpleDateFormat("yyyyMMdd").parse(value);
+        if (type == BigDecimal.class) return new BigDecimal(value);
         throw new IllegalArgumentException("지원하지 않는 타입 변환: " + type.getSimpleName());
     }
 }

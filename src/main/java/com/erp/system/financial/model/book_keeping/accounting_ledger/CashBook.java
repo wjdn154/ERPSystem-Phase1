@@ -1,6 +1,7 @@
 package com.erp.system.financial.model.book_keeping.accounting_ledger;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -72,4 +73,20 @@ public class CashBook {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return "CashBook{" +
+                "id='" + id + '\'' +
+                ", transaction_code='" + transaction_code + '\'' +
+                ", memos_code='" + memos_code + '\'' +
+                ", vendor_code='" + vendor_code + '\'' +
+                ", debit=" + debit +
+                ", credit=" + credit +
+                ", balance_forward=" + balance_forward +
+                ", date=" + (date != null ? sdf.format(date) : "null") +
+                '}';
+    }
+
 }
