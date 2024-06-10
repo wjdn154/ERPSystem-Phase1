@@ -3,10 +3,7 @@ package com.erp.system;
 
 import com.erp.system.financial.controller.basic_information_management.purchase_sales_slip.EntriesController;
 import com.erp.system.financial.controller.basic_information_management.purchase_sales_slip.VatTypesController;
-import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.VatTypes;
-import com.erp.system.util.ERPDataInitializer;
-
-import java.util.Comparator;
+import com.erp.system.common.ERPDataInitializer;
 
 public class Main {
     public static void main(String[] args) {
