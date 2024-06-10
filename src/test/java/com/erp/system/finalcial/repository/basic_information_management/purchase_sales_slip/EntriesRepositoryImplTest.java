@@ -1,7 +1,8 @@
-package com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.impl;
+package com.erp.system.finalcial.repository.basic_information_management.purchase_sales_slip;
 
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entries;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntriesRepository;
+import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.impl.EntriesRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,8 +12,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * EntriesRepositoryImplTest 클래스는 EntriesRepositoryImpl 클래스의 단위 테스트를 수행합니다.
- * 각 테스트는 저장소에 대한 CRUD(생성, 읽기, 업데이트, 삭제) 작업을 검증합니다.
+ * EntriesRepositoryImplTest 클래스는 EntriesRepositoryImpl 클래스의 단위 테스트를 수행.
+ * 각 테스트는 저장소에 대한 CRUD(생성, 읽기, 업데이트, 삭제) 작업을 검증.
  */
 public class EntriesRepositoryImplTest {
 
