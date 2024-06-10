@@ -139,7 +139,7 @@ public class ERPDataInitializer {
     }
 
     /**
-     * 엔티티 객체를 생성하는 메서드.
+     * 엔티티 객체를 생성하는 메서드
      * @param clazz 클래스 객체
      * @param includeInConstructor 생성자에 포함될 필드 여부 리스트
      * @param columnNames 컬럼 이름 리스트
