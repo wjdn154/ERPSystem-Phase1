@@ -12,8 +12,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * EntriesRepositoryImplTest 클래스는 EntriesRepositoryImpl 클래스의 단위 테스트를 수행.
- * 각 테스트는 저장소에 대한 CRUD(생성, 읽기, 업데이트, 삭제) 작업을 검증.
+ * CRUD(생성, 읽기, 업데이트, 삭제) 작업을 검증.
  */
 public class EntriesRepositoryImplTest {
 

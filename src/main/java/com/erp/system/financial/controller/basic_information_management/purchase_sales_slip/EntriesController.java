@@ -21,7 +21,7 @@ public class EntriesController {
 
     /**
      * 싱글톤 인스턴스를 반환함.
-     * @return EntriesController의 인스턴스
+     * @return 현재 인스턴스
      */
     public static synchronized EntriesController getInstance() {
         if (instance == null) {

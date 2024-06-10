@@ -8,14 +8,18 @@ import java.util.Collection;
 import java.util.Optional;
 
 public class EntriesService {
+    private static EntriesService instance; // 싱글톤 인스턴스를 저장할 변수
+    private final EntriesRepository repository; // Entries 유형 리포지토리 참조
 
-    private static EntriesService instance;
-    private final EntriesRepository repository;
-
+    // 생성자: 외부 인스턴스화 방지
     public EntriesService() {
         this.repository = EntriesRepositoryImpl.getInstance();
     }
 
+    /**
+     * 싱글톤 인스턴스를 반환함.
+     * @return 현재 인스턴스
+     */
     public static synchronized EntriesService getInstance() {
         if (instance == null) {
             instance = new EntriesService();

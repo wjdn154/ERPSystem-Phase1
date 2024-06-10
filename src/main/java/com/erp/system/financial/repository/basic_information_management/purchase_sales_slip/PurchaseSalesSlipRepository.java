@@ -9,12 +9,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PurchaseSalesSlipRepository {
-    private static PurchaseSalesSlipRepository instance;
+    private static PurchaseSalesSlipRepository instance; // 싱글톤 인스턴스를 저장할 변수
     private Map<String, PurchaseSalesSlip> Map = new HashMap<>();
 
-    private PurchaseSalesSlipRepository() {
-    }
+    private PurchaseSalesSlipRepository() { } // 생성자: 외부 인스턴스화 방지
 
+    /**
+     * 싱글톤 인스턴스를 반환함.
+     * @return 현재 인스턴스
+     */
     public static synchronized PurchaseSalesSlipRepository getInstance() {
         if (instance == null) {
             instance = new PurchaseSalesSlipRepository();

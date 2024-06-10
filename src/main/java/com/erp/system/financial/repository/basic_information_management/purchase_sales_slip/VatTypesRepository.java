@@ -8,12 +8,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class VatTypesRepository {
-    private static VatTypesRepository instance;
+    private static VatTypesRepository instance; // 싱글톤 인스턴스를 저장할 변수
     private java.util.Map<String, VatTypes> Map = new HashMap<>();
 
-    private VatTypesRepository() {
-    }
+    // 생성자: 외부 인스턴스화 방지
+    private VatTypesRepository() { }
 
+    /**
+     * 싱글톤 인스턴스를 반환함.
+     * @return 현재 인스턴스
+     */
     public static synchronized VatTypesRepository getInstance() {
         if (instance == null) {
             instance = new VatTypesRepository();
