@@ -1,4 +1,4 @@
-package com.erp.system.util;
+package com.erp.system.common;
 
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entries;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.VatTypes;
@@ -125,11 +125,6 @@ public class ERPDataInitializer {
 
         for (List<String> rowData : allData) {
             try {
-                System.out.println("clazz = " + clazz);
-                System.out.println("includeInConstructor = " + includeInConstructor);
-                System.out.println("columnNames = " + columnNames);
-                System.out.println("dataTypes = " + dataTypes);
-                System.out.println("rowData = " + rowData);
                 Object entity = createEntity(clazz, includeInConstructor, columnNames, dataTypes, rowData);
                 if (entity != null) {
                     Method saveMethod = repository.getClass().getMethod("save", clazz);
