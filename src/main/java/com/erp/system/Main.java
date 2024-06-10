@@ -7,8 +7,8 @@ import com.erp.system.common.ERPDataInitializer;
 
 public class Main {
     public static void main(String[] args) {
-        // ERPDataInitializer를 통해 Excel 파일을 읽어 데이터 초기화
-        new ERPDataInitializer("src/main/resources/data.xlsx");
+        // ERPSystem 초기 데이터 생성
+        new ERPDataInitializer();
 
         // Controller 인스턴스 생성
         EntriesController entriesController = EntriesController.getInstance();
