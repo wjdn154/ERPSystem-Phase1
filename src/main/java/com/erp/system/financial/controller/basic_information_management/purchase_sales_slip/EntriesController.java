@@ -1,31 +1,35 @@
 package com.erp.system.financial.controller.basic_information_management.purchase_sales_slip;
 
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entries;
+import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntriesRepository;
 import com.erp.system.financial.service.basic_information_management.purchase_sales_slip.EntriesService;
+import com.erp.system.financial.service.basic_information_management.purchase_sales_slip.impl.EntriesServiceImpl;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
-
 public class EntriesController {
-    private static EntriesController instance; // 싱글톤 인스턴스를 저장할 변수
-    private EntriesService entriesService; // EntriesService 인스턴스
+    private static volatile EntriesController instance; // 싱글톤 인스턴스를 저장할 변수
+    private final EntriesService entriesService; // EntriesService 인스턴스
 
     /**
      * private 생성자를 사용하여 싱글톤 패턴을 구현.
      */
-    private EntriesController() {
-        entriesService = EntriesService.getInstance(); // EntriesService 인스턴스를 가져옴
+    private EntriesController(EntriesService entriesService) {
+        this.entriesService = entriesService; // EntriesService 인스턴스를 가져옴
     }
 
     /**
      * 싱글톤 인스턴스를 반환함.
      * @return 현재 인스턴스
      */
-    public static synchronized EntriesController getInstance() {
+    public static EntriesController getInstance(EntriesService entriesService) {
         if (instance == null) {
-            instance = new EntriesController(); // 인스턴스가 없으면 새로 생성
+            synchronized (EntriesController.class) {
+                if (instance == null) {
+                    instance = new EntriesController(entriesService);
+                }
+            }
         }
         return instance; // 인스턴스 반환
     }

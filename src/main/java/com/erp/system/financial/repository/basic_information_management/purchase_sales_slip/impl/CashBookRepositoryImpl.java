@@ -4,7 +4,7 @@ import com.erp.system.common.generic_repository.GenericRepositoryImpl;
 import com.erp.system.financial.model.book_keeping.accounting_ledger.CashBook;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.CashBookRepository;
 
-public class CashBookRepositoryImpl extends GenericRepositoryImpl<CashBook, String, String> implements CashBookRepository {
+public class CashBookRepositoryImpl extends GenericRepositoryImpl<CashBook> implements CashBookRepository {
 
     private static CashBookRepositoryImpl instance; // 싱글톤 인스턴스를 저장할 변수
 

@@ -6,18 +6,16 @@ import java.util.*;
 /**
  * 모든 유형의 엔티티에 대한 공통 메서드를 제공하는 제네릭 리포지토리 구현 클래스.
  * @param <T> 엔티티 유형
- * @param <ID> 엔티티의 식별자 유형
- * @param <Code> 엔티티의 코드 유형
  */
-public class GenericRepositoryImpl<T, ID, Code> implements GenericRepository<T, ID, Code> {
+public class GenericRepositoryImpl<T> implements GenericRepository<T> {
 
-    private final Map<ID, T> store = new HashMap<>(); // ID로 엔티티를 저장할 맵
-    private final Map<Code, T> codeStore = new HashMap<>(); // 코드로 엔티티를 저장할 맵
+    private final Map<String, T> store = new HashMap<>(); // ID로 엔티티를 저장할 맵
+    private final Map<String, T> codeStore = new HashMap<>(); // 코드로 엔티티를 저장할 맵
     private final Class<T> entityClass; // 엔티티 클래스 타입
     private static final String ID_FIELD_NAME = "id"; // ID 필드명 고정
     private static final String CODE_FIELD_NAME = "code"; // 코드 필드명 고정
 
-    private static final Map<Class<?>, GenericRepositoryImpl<?, ?, ?>> instances = new HashMap<>();
+    private static final Map<Class<?>, GenericRepositoryImpl<?>> instances = new HashMap<>();
 
     /**
      * protected 생성자. 싱글톤 패턴 적용.
@@ -33,11 +31,11 @@ public class GenericRepositoryImpl<T, ID, Code> implements GenericRepository<T, 
      * @return GenericRepositoryImpl의 싱글톤 인스턴스
      */
     @SuppressWarnings("unchecked")
-    public static synchronized <T, ID, Code> GenericRepositoryImpl<T, ID, Code> getInstance(Class<T> entityClass) {
+    public static synchronized <T> GenericRepositoryImpl<T> getInstance(Class<T> entityClass) {
         if (!instances.containsKey(entityClass)) {
             instances.put(entityClass, new GenericRepositoryImpl<>(entityClass));
         }
-        return (GenericRepositoryImpl<T, ID, Code>) instances.get(entityClass);
+        return (GenericRepositoryImpl<T>) instances.get(entityClass);
     }
 
     /**
@@ -47,13 +45,13 @@ public class GenericRepositoryImpl<T, ID, Code> implements GenericRepository<T, 
     @Override
     public void save(T entity) {
         try {
-            ID id = getFieldValue(entity, ID_FIELD_NAME);
+            String id = getFieldValue(entity, ID_FIELD_NAME);
             if (store.containsKey(id)) {
                 throw new IllegalArgumentException("이미 존재하는 ID입니다: " + id);
             }
 
             if (hasField(entity, CODE_FIELD_NAME)) {
-                Code code = getFieldValue(entity, CODE_FIELD_NAME);
+                String code = getFieldValue(entity, CODE_FIELD_NAME);
                 if (codeStore.containsKey(code)) {
                     throw new IllegalArgumentException("이미 존재하는 코드입니다: " + code);
                 }
@@ -72,7 +70,7 @@ public class GenericRepositoryImpl<T, ID, Code> implements GenericRepository<T, 
      * @return 조회된 엔티티를 Optional로 반환
      */
     @Override
-    public Optional<T> findByIdOrCode(ID id) {
+    public Optional<T> findByIdOrCode(String id) {
         return Optional.ofNullable(store.get(id));
     }
 
@@ -83,7 +81,7 @@ public class GenericRepositoryImpl<T, ID, Code> implements GenericRepository<T, 
      * @return 조회된 엔티티를 Optional로 반환
      */
     @Override
-    public Optional<T> findByIdOrCode(ID id, Code code) {
+    public Optional<T> findByIdOrCode(String id, String code) {
         // ID로 엔티티 조회
         Optional<T> entityById = findByIdOrCode(id);
         if (entityById.isPresent()) {
@@ -103,12 +101,12 @@ public class GenericRepositoryImpl<T, ID, Code> implements GenericRepository<T, 
     @Override
     public void update(T entity) {
         try {
-            ID id = getFieldValue(entity, ID_FIELD_NAME);
+            String id = getFieldValue(entity, ID_FIELD_NAME);
             if (store.containsKey(id)) {
                 store.put(id, entity);
 
                 if (hasField(entity, CODE_FIELD_NAME)) {
-                    Code code = getFieldValue(entity, CODE_FIELD_NAME);
+                    String code = getFieldValue(entity, CODE_FIELD_NAME);
                     codeStore.put(code, entity);
                 }
             } else {
@@ -124,11 +122,11 @@ public class GenericRepositoryImpl<T, ID, Code> implements GenericRepository<T, 
      * @param id 삭제할 엔티티의 ID
      */
     @Override
-    public void delete(ID id) {
+    public void delete(String id) {
         T entity = store.remove(id);
         if (entity != null && hasField(entity, CODE_FIELD_NAME)) {
             try {
-                Code code = getFieldValue(entity, CODE_FIELD_NAME);
+                String code = getFieldValue(entity, CODE_FIELD_NAME);
                 codeStore.remove(code);
             } catch (Exception e) {
                 throw new RuntimeException("Failed to delete entity", e);

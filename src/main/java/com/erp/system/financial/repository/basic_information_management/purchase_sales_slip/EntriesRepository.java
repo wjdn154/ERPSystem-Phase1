@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Entries 엔티티에 대한 리포지토리 인터페이스.
  */
-public interface EntriesRepository extends GenericRepository<Entries, String, String> {
+public interface EntriesRepository extends GenericRepository<Entries> {
     @Override
     void save(Entries entity);
 }
