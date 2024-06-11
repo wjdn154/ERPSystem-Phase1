@@ -21,7 +21,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static com.erp.system.common.Config.DATA_FILE_PATH;
+import static com.erp.system.common.Rules.DATA_FILE_PATH;
 
 /**
  * Excel 파일을 읽고 각 시트의 데이터를 처리하는 클래스.

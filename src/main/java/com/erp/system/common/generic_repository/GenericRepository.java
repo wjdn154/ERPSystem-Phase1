@@ -6,10 +6,8 @@ import java.util.Optional;
 /**
  * 모든 유형의 엔티티에 대한 공통 메서드를 제공하는 제네릭 리포지토리 인터페이스.
  * @param <T> 엔티티 유형
- * @param <ID> 엔티티의 식별자 유형
- * @param <Code> 엔티티의 코드 유형
  */
-public interface GenericRepository<T, ID, Code> {
+public interface GenericRepository<T> {
 
     /**
      * 엔티티를 저장함.
@@ -22,7 +20,7 @@ public interface GenericRepository<T, ID, Code> {
      * @param id 엔티티의 식별자
      * @return 찾은 엔티티를 Optional로 반환
      */
-    Optional<T> findByIdOrCode(ID id);
+    Optional<T> findByIdOrCode(String id);
 
     /**
      * 식별자 또는 코드로 엔티티를 찾음.
@@ -30,7 +28,7 @@ public interface GenericRepository<T, ID, Code> {
      * @param code 엔티티의 코드
      * @return 찾은 엔티티를 Optional로 반환
      */
-    Optional<T> findByIdOrCode(ID id, Code code);
+    Optional<T> findByIdOrCode(String id, String code);
 
     /**
      * 엔티티를 업데이트함.
@@ -42,7 +40,7 @@ public interface GenericRepository<T, ID, Code> {
      * 식별자로 엔티티를 삭제함.
      * @param id 삭제할 엔티티의 식별자
      */
-    void delete(ID id);
+    void delete(String id);
 
     /**
      * 모든 엔티티를 찾음.

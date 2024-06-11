@@ -1,6 +1,7 @@
 package com.erp.system;
 
 
+import com.erp.system.common.DependencyInjector;
 import com.erp.system.financial.controller.basic_information_management.purchase_sales_slip.EntriesController;
 import com.erp.system.financial.controller.basic_information_management.purchase_sales_slip.VatTypesController;
 import com.erp.system.common.ERPDataInitializer;
@@ -12,8 +13,9 @@ public class Main {
         // ERPSystem 초기 데이터 생성
         new ERPDataInitializer();
 
+
         // Controller 인스턴스 생성
-        EntriesController entriesController = EntriesController.getInstance();
+        EntriesController entriesController = EntriesController.getInstance(DependencyInjector.createEntriesService());
         VatTypesController vatTypesController = VatTypesController.getInstance();
         CashBookRepository cashBookRepository = CashBookRepositoryImpl.getInstance();
 
@@ -39,5 +41,7 @@ public class Main {
         cashBookRepository.findAll().stream()
                 .sorted((c1, c2) -> c1.getId().compareTo(c2.getId()))
                 .forEach(System.out::println);
+
     }
+
 }

@@ -1,32 +1,35 @@
 package com.erp.system.common.generic_repository;
 
+import com.erp.system.common.DependencyInjector;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entries;
+import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntriesRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GenericRepositoryImplTest {
-    private GenericRepositoryImpl<Entries, String, String> repository;
-    private Entries entry;
+    private EntriesRepository repository;
 
     // 테스트 실행 전 초기 설정
     @BeforeEach
     void setUp() {
         // 싱글톤 인스턴스를 사용하여 저장소 초기화
-        repository = GenericRepositoryImpl.getInstance(Entries.class);
-        entry = new Entries("0001"); // 예시 생성자, ID를 사용
-        entry.setName("Entry 1");
-        repository.save(entry); // 초기 객체 저장
+        repository = DependencyInjector.createEntriesRepository();
+        repository.reset();
     }
 
     // 저장 및 ID 또는 코드로 조회 테스트
     @Test
     void saveAndFindByIdOrCode() {
+        // Given: 새로운 엔트리를 저장
+        Entries entry = new Entries("0001");
+        entry.setName("Entry 1");
+        repository.save(entry);
+
         // When: 저장된 객체를 ID 또는 코드로 조회
         Optional<Entries> foundById = repository.findByIdOrCode(entry.getId(), null);
         Optional<Entries> foundByCode = repository.findByIdOrCode(null, entry.getCode());
@@ -41,28 +44,34 @@ class GenericRepositoryImplTest {
     // 업데이트 테스트
     @Test
     void updateEntry() {
-        // Given: 객체의 이름을 새 정보로 업데이트
-        System.out.println("entry = " + entry.getName());
-        entry.setName("Updated Entry");
-        repository.update(entry);
+        // Given: 새로운 엔트리를 저장하고, 업데이트할 정보 설정
+        Entries entry = new Entries("0001");
+        entry.setName("Entry 1");
+        repository.save(entry);
 
-        // When: 업데이트된 객체를 조회
+        entry.setName("Updated Entry");
+
+        // When: 엔트리를 업데이트하고 조회
+        repository.update(entry);
         Optional<Entries> found = repository.findByIdOrCode(entry.getId(), null);
-        System.out.println("found = " + found.get().getName());
 
         // Then: 변경된 정보가 반영되어야 함
         assertTrue(found.isPresent(), "업데이트된 객체는 null이 아니어야 함.");
         assertEquals("Updated Entry", found.get().getName(), "업데이트된 이름이 반영되어야 함.");
     }
-
     // 삭제 테스트
     @Test
     void deleteEntry() {
-        // Given: 객체를 삭제
-        repository.delete(entry.getId());
+        // Given: 새로운 엔트리를 저장하고, 삭제할 ID 설정
+        Entries entry = new Entries("0001");
+        entry.setName("Entry 1");
+        repository.save(entry);
 
-        // When & Then: 삭제 후 조회 시 null이어야 함
+        // When: 엔트리를 삭제하고 조회
+        repository.delete(entry.getId());
         Optional<Entries> found = repository.findByIdOrCode(entry.getId(), null);
+
+        // Then: 삭제 후 조회 시 null이어야 함
         assertFalse(found.isPresent(), "삭제된 객체는 조회되어서는 안됨.");
     }
 
@@ -81,8 +90,29 @@ class GenericRepositoryImplTest {
         Collection<Entries> allEntries = repository.findAll();
 
         // Then: 저장된 모든 객체가 실제로 포함되어 있는지 확인
-        assertTrue(allEntries.contains(entry), "entry가 포함되어 있어야 함.");
         assertTrue(allEntries.contains(entry1), "entry1가 포함되어 있어야 함.");
         assertTrue(allEntries.contains(entry2), "entry2가 포함되어 있어야 함.");
+    }
+
+    // 코드 중복 저장 테스트
+    @Test
+    void saveDuplicateCode() {
+        // Given: 동일한 코드를 가진 두 번째 엔트리 생성
+        Entries entry1 = new Entries("0001");
+        entry1.setName("Entry 1");
+        repository.save(entry1);
+
+        Entries duplicateEntry = new Entries("0001");
+        duplicateEntry.setName("Duplicate Entry");
+
+        // When & Then: 저장 시 예외 발생 확인
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            repository.save(duplicateEntry);
+        });
+
+        // 예외 메시지 검증
+        Throwable cause = exception.getCause();
+        assertTrue(cause instanceof IllegalArgumentException);
+        assertEquals("이미 존재하는 코드입니다: 0001", cause.getMessage());
     }
 }
