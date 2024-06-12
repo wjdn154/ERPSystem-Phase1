@@ -6,16 +6,36 @@ import com.erp.system.financial.controller.basic_information_management.purchase
 import com.erp.system.financial.controller.basic_information_management.purchase_sales_slip.VatTypesController;
 import com.erp.system.common.ERPDataInitializer;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.CashBookRepository;
+import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntriesRepository;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.impl.CashBookRepositoryImpl;
+import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.impl.EntriesRepositoryImpl;
+import com.erp.system.financial.service.basic_information_management.purchase_sales_slip.impl.EntriesServiceImpl;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         // ERPSystem 초기 데이터 생성
         new ERPDataInitializer();
 
+        DependencyInjector di = new DependencyInjector();
+
+        // EntriesRepositoryImpl 싱글톤 인스턴스 등록
+        di.register(EntriesRepositoryImpl.class, EntriesRepositoryImpl::getInstance);
+
+        // EntriesServiceImpl 의존성을 등록, EntriesRepositoryImpl 필요
+        di.register(EntriesServiceImpl.class, () -> new EntriesServiceImpl(di.resolve(EntriesRepositoryImpl.class)));
+
+        // EntriesController 의존성을 등록, EntriesServiceImpl 필요
+        di.register(EntriesController.class, () -> new EntriesController(di.resolve(EntriesServiceImpl.class)));
+
+        // 컨트롤러를 통해 서비스와 레포지토리 기능 사용
+        EntriesController controller = di.resolve(EntriesController.class);
+
+
+
+
 
         // Controller 인스턴스 생성
-        EntriesController entriesController = EntriesController.getInstance(DependencyInjector.createEntriesService());
+        EntriesController entriesController = controller;
         VatTypesController vatTypesController = VatTypesController.getInstance();
         CashBookRepository cashBookRepository = CashBookRepositoryImpl.getInstance();
 

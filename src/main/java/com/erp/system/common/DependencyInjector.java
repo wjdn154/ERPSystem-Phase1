@@ -6,21 +6,24 @@ import com.erp.system.financial.repository.basic_information_management.purchase
 import com.erp.system.financial.service.basic_information_management.purchase_sales_slip.EntriesService;
 import com.erp.system.financial.service.basic_information_management.purchase_sales_slip.impl.EntriesServiceImpl;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
+
 public class DependencyInjector {
+    private final Map<Class<?>, Supplier<?>> registry = new HashMap<>();
 
-    // Repository 인스턴스 생성
-    public static EntriesRepository createEntriesRepository() {
-        return EntriesRepositoryImpl.getInstance();
+    // Method to register a component and its creation logic
+    public <T> void register(Class<T> interfaceType, Supplier<T> supplier) {
+        registry.put(interfaceType, supplier);
     }
 
-    // Service 인스턴스 생성
-    public static EntriesService createEntriesService() {
-        return EntriesServiceImpl.getInstance(createEntriesRepository());
+    // Method to retrieve an instance of the registered class
+    public <T> T resolve(Class<T> interfaceType) {
+        Supplier<?> supplier = registry.get(interfaceType);
+        if (supplier == null) {
+            throw new IllegalArgumentException("No supplier registered for " + interfaceType.getName());
+        }
+        return interfaceType.cast(supplier.get());
     }
-
-    // Controller 인스턴스 생성
-    public static EntriesController createEntriesController() {
-        return EntriesController.getInstance(createEntriesService());
-    }
-
 }

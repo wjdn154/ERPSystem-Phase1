@@ -18,7 +18,7 @@ class GenericRepositoryImplTest {
     @BeforeEach
     void setUp() {
         // 싱글톤 인스턴스를 사용하여 저장소 초기화
-        repository = DependencyInjector.createEntriesRepository();
+//        repository = DependencyInjector.createEntriesRepository();
         repository.reset();
     }
 

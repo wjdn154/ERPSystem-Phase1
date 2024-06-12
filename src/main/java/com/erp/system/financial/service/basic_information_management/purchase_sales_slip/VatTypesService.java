@@ -1,5 +1,7 @@
 package com.erp.system.financial.service.basic_information_management.purchase_sales_slip;
 
+import com.erp.system.common.DependencyInjector;
+import com.erp.system.financial.controller.basic_information_management.purchase_sales_slip.EntriesController;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entries;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.VatTypes;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntriesRepository;

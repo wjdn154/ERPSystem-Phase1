@@ -9,27 +9,11 @@ import java.util.Collection;
 import java.util.Optional;
 
 public class EntriesServiceImpl implements EntriesService {
-    private static volatile EntriesServiceImpl instance; // 싱글톤 인스턴스를 저장할 변수
-    private final EntriesRepository entriesRepository; // Entries 유형 리포지토리 참조
 
-    // 생성자: 외부 인스턴스화 방지
-    private EntriesServiceImpl(EntriesRepository entriesRepository) {
+    private final EntriesRepository entriesRepository;
+
+    public EntriesServiceImpl(EntriesRepository entriesRepository) {
         this.entriesRepository = entriesRepository;
-    }
-
-    /**
-     * 싱글톤 인스턴스를 반환함.
-     * @return 현재 인스턴스
-     */
-    public static EntriesService getInstance(EntriesRepository entriesRepository) {
-        if (instance == null) {
-            synchronized (EntriesServiceImpl.class) {
-                if (instance == null) {
-                    instance = new EntriesServiceImpl(entriesRepository);
-                }
-            }
-        }
-        return instance;
     }
 
     /**
