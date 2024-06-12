@@ -1,8 +1,11 @@
 package com.erp.system.common.generic_repository;
 
 import com.erp.system.common.DependencyInjector;
+import com.erp.system.financial.controller.basic_information_management.purchase_sales_slip.EntriesController;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entries;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntriesRepository;
+import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.impl.EntriesRepositoryImpl;
+import com.erp.system.financial.service.basic_information_management.purchase_sales_slip.impl.EntriesServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +21,12 @@ class GenericRepositoryImplTest {
     @BeforeEach
     void setUp() {
         // 싱글톤 인스턴스를 사용하여 저장소 초기화
-//        repository = DependencyInjector.createEntriesRepository();
+        DependencyInjector di = DependencyInjector.getInstance();
+        di.register(EntriesRepositoryImpl.class, EntriesRepositoryImpl::getInstance);
+        di.register(EntriesServiceImpl.class, () -> new EntriesServiceImpl(di.resolve(EntriesRepositoryImpl.class)));
+        di.register(EntriesController.class, () -> new EntriesController(di.resolve(EntriesServiceImpl.class)));
+
+        repository = di.resolve(EntriesRepositoryImpl.class);
         repository.reset();
     }
 

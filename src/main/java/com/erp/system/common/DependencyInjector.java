@@ -11,7 +11,19 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class DependencyInjector {
+    private static DependencyInjector instance;
     private final Map<Class<?>, Supplier<?>> registry = new HashMap<>();
+
+    // Private constructor to prevent instantiation
+    private DependencyInjector() {}
+
+    // Public method to get the singleton instance
+    public static synchronized DependencyInjector getInstance() {
+        if (instance == null) {
+            instance = new DependencyInjector();
+        }
+        return instance;
+    }
 
     // Method to register a component and its creation logic
     public <T> void register(Class<T> interfaceType, Supplier<T> supplier) {

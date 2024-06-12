@@ -16,26 +16,11 @@ public class Main {
         // ERPSystem 초기 데이터 생성
         new ERPDataInitializer();
 
-        DependencyInjector di = new DependencyInjector();
-
-        // EntriesRepositoryImpl 싱글톤 인스턴스 등록
-        di.register(EntriesRepositoryImpl.class, EntriesRepositoryImpl::getInstance);
-
-        // EntriesServiceImpl 의존성을 등록, EntriesRepositoryImpl 필요
-        di.register(EntriesServiceImpl.class, () -> new EntriesServiceImpl(di.resolve(EntriesRepositoryImpl.class)));
-
-        // EntriesController 의존성을 등록, EntriesServiceImpl 필요
-        di.register(EntriesController.class, () -> new EntriesController(di.resolve(EntriesServiceImpl.class)));
-
-        // 컨트롤러를 통해 서비스와 레포지토리 기능 사용
-        EntriesController controller = di.resolve(EntriesController.class);
-
-
-
-
+        DependencyInjector di = DependencyInjector.getInstance();
+        setupDependencyInjector(di);
 
         // Controller 인스턴스 생성
-        EntriesController entriesController = controller;
+        EntriesController entriesController = di.resolve(EntriesController.class);
         VatTypesController vatTypesController = VatTypesController.getInstance();
         CashBookRepository cashBookRepository = CashBookRepositoryImpl.getInstance();
 
@@ -62,6 +47,12 @@ public class Main {
                 .sorted((c1, c2) -> c1.getId().compareTo(c2.getId()))
                 .forEach(System.out::println);
 
+    }
+
+    private static void setupDependencyInjector(DependencyInjector di) {
+        di.register(EntriesRepository.class, EntriesRepositoryImpl::getInstance); // EntriesRepository 인터페이스를 사용하여 의존성 등록
+        di.register(EntriesServiceImpl.class, () -> new EntriesServiceImpl(di.resolve(EntriesRepository.class))); // EntriesServiceImpl 생성자에는 EntriesRepository 인터페이스의 인스턴스를 주입
+        di.register(EntriesController.class, () -> new EntriesController(di.resolve(EntriesServiceImpl.class))); // EntriesController 생성자에는 EntriesServiceImpl의 인스턴스를 주입
     }
 
 }
