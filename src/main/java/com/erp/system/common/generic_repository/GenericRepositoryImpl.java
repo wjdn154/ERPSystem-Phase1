@@ -15,27 +15,13 @@ public class GenericRepositoryImpl<T> implements GenericRepository<T> {
     private static final String ID_FIELD_NAME = "id"; // ID 필드명 고정
     private static final String CODE_FIELD_NAME = "code"; // 코드 필드명 고정
 
-    private static final Map<Class<?>, GenericRepositoryImpl<?>> instances = new HashMap<>();
-
     /**
      * protected 생성자. 싱글톤 패턴 적용.
      * @param entityClass 엔티티 클래스 타입
      */
     protected GenericRepositoryImpl(Class<T> entityClass) {
         this.entityClass = entityClass;
-    }
-
-    /**
-     * 싱글톤 인스턴스를 반환함.
-     * @param entityClass 엔티티 클래스 타입
-     * @return GenericRepositoryImpl의 싱글톤 인스턴스
-     */
-    @SuppressWarnings("unchecked")
-    public static synchronized <T> GenericRepositoryImpl<T> getInstance(Class<T> entityClass) {
-        if (!instances.containsKey(entityClass)) {
-            instances.put(entityClass, new GenericRepositoryImpl<>(entityClass));
-        }
-        return (GenericRepositoryImpl<T>) instances.get(entityClass);
+        System.out.println("entityClass : " + entityClass);
     }
 
     /**

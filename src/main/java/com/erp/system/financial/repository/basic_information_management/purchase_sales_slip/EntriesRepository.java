@@ -1,16 +1,12 @@
 package com.erp.system.financial.repository.basic_information_management.purchase_sales_slip;
 
 import com.erp.system.common.generic_repository.GenericRepository;
-import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entries;
-
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entry;
 
 /**
- * Entries 엔티티에 대한 리포지토리 인터페이스.
+ * 분개 엔티티에 대한 리포지토리 인터페이스.
  */
-public interface EntriesRepository extends GenericRepository<Entries> {
+public interface EntriesRepository extends GenericRepository<Entry> {
     @Override
-    void save(Entries entity);
+    void save(Entry entity);
 }

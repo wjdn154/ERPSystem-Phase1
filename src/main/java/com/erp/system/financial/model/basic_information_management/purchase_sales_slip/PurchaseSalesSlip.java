@@ -4,6 +4,10 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 
+/**
+ * 매입매출전표
+ * 매입매출전표 등록 할때 필요한 정보들이 있는 테이블
+ */
 public class PurchaseSalesSlip {
     private final String id; // 고유 식별자
     private final String code; // 매입매출전표 코드
@@ -19,10 +23,6 @@ public class PurchaseSalesSlip {
     private Boolean electronic_tax_invoice_issued; // 전자세금계산서 발행여부
 
 
-    /**
-     * 매입매출전표
-     * 매입매출전표 등록 할때 필요한 정보들이 있는 테이블
-     */
     public PurchaseSalesSlip(String code, String vat_type_code, String supplier_code, String entry_code) {
         this.id = UUID.randomUUID().toString();
         this.code = code;

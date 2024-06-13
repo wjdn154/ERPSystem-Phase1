@@ -1,22 +1,21 @@
-package com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.impl;
+package com.erp.system.financial.repository.book_keeping.accounting_ledger.impl;
 
 import com.erp.system.common.generic_repository.GenericRepositoryImpl;
 import com.erp.system.financial.model.book_keeping.accounting_ledger.CashBook;
-import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.CashBookRepository;
+import com.erp.system.financial.repository.book_keeping.accounting_ledger.CashBookRepository;
 
 public class CashBookRepositoryImpl extends GenericRepositoryImpl<CashBook> implements CashBookRepository {
-
     private static CashBookRepositoryImpl instance; // 싱글톤 인스턴스를 저장할 변수
 
     /**
      * 싱글톤 인스턴스 반환.
-     * @return CashBookRepositoryImpl의 인스턴스
+     * @return CashBookRepositoryImpl 인스턴스
      */
     public static synchronized CashBookRepositoryImpl getInstance() {
         if (instance == null) {
-            instance = new CashBookRepositoryImpl(); // 인스턴스가 없으면 새로 생성
+            instance = new CashBookRepositoryImpl();
         }
-        return instance; // 인스턴스 반환
+        return instance;
     }
 
     /**

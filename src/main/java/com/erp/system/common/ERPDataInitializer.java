@@ -1,13 +1,11 @@
 package com.erp.system.common;
 
-import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entries;
-import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.VatTypes;
+import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entry;
+import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.VatType;
 import com.erp.system.financial.model.book_keeping.accounting_ledger.CashBook;
-import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.CashBookRepository;
+import com.erp.system.financial.repository.book_keeping.accounting_ledger.CashBookRepository;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntriesRepository;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.VatTypesRepository;
-import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.impl.CashBookRepositoryImpl;
-import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.impl.EntriesRepositoryImpl;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -27,6 +25,7 @@ import static com.erp.system.common.Rules.DATA_FILE_PATH;
  * Excel 파일을 읽고 각 시트의 데이터를 처리하는 클래스.
  */
 public class ERPDataInitializer {
+    DependencyInjector di = DependencyInjector.getInstance();
 
     private Map<String, Class<?>> tableClassMap;
     private Map<Class<?>, Object> repositories;
@@ -42,20 +41,20 @@ public class ERPDataInitializer {
     public ERPDataInitializer() {
         // 테이블과 해당하는 클래스 타입을 매핑
         tableClassMap = new HashMap<>();
-        tableClassMap.put("Entries", Entries.class);
-        tableClassMap.put("VatTypes", VatTypes.class);
+        tableClassMap.put("Entries", Entry.class);
+        tableClassMap.put("VatTypes", VatType.class);
         tableClassMap.put("CashBook", CashBook.class);
         // 2. 여기에 테이블 매핑 추가
 
         // 각 엔티티 타입에 해당하는 리포지토리 인스턴스를 싱글톤 패턴으로 생성
         repositories = new HashMap<>();
-        entriesRepository = EntriesRepositoryImpl.getInstance();
-        vatTypesRepository = VatTypesRepository.getInstance();
-        cashBookRepository = CashBookRepositoryImpl.getInstance();
+        entriesRepository = di.resolve(EntriesRepository.class);
+        vatTypesRepository = di.resolve(VatTypesRepository.class);
+        cashBookRepository = di.resolve(CashBookRepository.class);
         // 3. 여기에 싱글톤 적용
 
-        repositories.put(Entries.class, entriesRepository);
-        repositories.put(VatTypes.class, vatTypesRepository);
+        repositories.put(Entry.class, entriesRepository);
+        repositories.put(VatType.class, vatTypesRepository);
         repositories.put(CashBook.class, cashBookRepository);
         // 4. 여기에 Domain과 Repository 매핑 추가
 

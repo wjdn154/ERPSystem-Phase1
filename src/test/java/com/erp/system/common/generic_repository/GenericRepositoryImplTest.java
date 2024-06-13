@@ -2,10 +2,9 @@ package com.erp.system.common.generic_repository;
 
 import com.erp.system.common.DependencyInjector;
 import com.erp.system.financial.controller.basic_information_management.purchase_sales_slip.EntriesController;
-import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entries;
+import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entry;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntriesRepository;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.impl.EntriesRepositoryImpl;
-import com.erp.system.financial.service.basic_information_management.purchase_sales_slip.impl.EntriesServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,8 +22,8 @@ class GenericRepositoryImplTest {
         // 싱글톤 인스턴스를 사용하여 저장소 초기화
         DependencyInjector di = DependencyInjector.getInstance();
         di.register(EntriesRepositoryImpl.class, EntriesRepositoryImpl::getInstance);
-        di.register(EntriesServiceImpl.class, () -> new EntriesServiceImpl(di.resolve(EntriesRepositoryImpl.class)));
-        di.register(EntriesController.class, () -> new EntriesController(di.resolve(EntriesServiceImpl.class)));
+//        di.register(EntriesServiceImpl.class, () -> new EntriesServiceImpl(di.resolve(EntriesRepositoryImpl.class)));
+//        di.register(EntriesController.class, () -> new EntriesController(di.resolve(EntriesServiceImpl.class)));
 
         repository = di.resolve(EntriesRepositoryImpl.class);
         repository.reset();
@@ -34,13 +33,13 @@ class GenericRepositoryImplTest {
     @Test
     void saveAndFindByIdOrCode() {
         // Given: 새로운 엔트리를 저장
-        Entries entry = new Entries("0001");
+        Entry entry = new Entry("0001");
         entry.setName("Entry 1");
         repository.save(entry);
 
         // When: 저장된 객체를 ID 또는 코드로 조회
-        Optional<Entries> foundById = repository.findByIdOrCode(entry.getId(), null);
-        Optional<Entries> foundByCode = repository.findByIdOrCode(null, entry.getCode());
+        Optional<Entry> foundById = repository.findByIdOrCode(entry.getId(), null);
+        Optional<Entry> foundByCode = repository.findByIdOrCode(null, entry.getCode());
 
         // Then: 객체는 null이 아니며 속성이 일치해야 함
         assertTrue(foundById.isPresent(), "조회된 객체는 null이 아니어야 함.");
@@ -53,7 +52,7 @@ class GenericRepositoryImplTest {
     @Test
     void updateEntry() {
         // Given: 새로운 엔트리를 저장하고, 업데이트할 정보 설정
-        Entries entry = new Entries("0001");
+        Entry entry = new Entry("0001");
         entry.setName("Entry 1");
         repository.save(entry);
 
@@ -61,7 +60,7 @@ class GenericRepositoryImplTest {
 
         // When: 엔트리를 업데이트하고 조회
         repository.update(entry);
-        Optional<Entries> found = repository.findByIdOrCode(entry.getId(), null);
+        Optional<Entry> found = repository.findByIdOrCode(entry.getId(), null);
 
         // Then: 변경된 정보가 반영되어야 함
         assertTrue(found.isPresent(), "업데이트된 객체는 null이 아니어야 함.");
@@ -71,13 +70,13 @@ class GenericRepositoryImplTest {
     @Test
     void deleteEntry() {
         // Given: 새로운 엔트리를 저장하고, 삭제할 ID 설정
-        Entries entry = new Entries("0001");
+        Entry entry = new Entry("0001");
         entry.setName("Entry 1");
         repository.save(entry);
 
         // When: 엔트리를 삭제하고 조회
         repository.delete(entry.getId());
-        Optional<Entries> found = repository.findByIdOrCode(entry.getId(), null);
+        Optional<Entry> found = repository.findByIdOrCode(entry.getId(), null);
 
         // Then: 삭제 후 조회 시 null이어야 함
         assertFalse(found.isPresent(), "삭제된 객체는 조회되어서는 안됨.");
@@ -87,15 +86,15 @@ class GenericRepositoryImplTest {
     @Test
     void findAllEntries() {
         // Given: 여러 Entries 객체를 저장
-        Entries entry1 = new Entries("0002");
+        Entry entry1 = new Entry("0002");
         entry1.setName("Entry 2");
-        Entries entry2 = new Entries("0003");
+        Entry entry2 = new Entry("0003");
         entry2.setName("Entry 3");
         repository.save(entry1);
         repository.save(entry2);
 
         // When: findAll 메소드를 호출하여 모든 객체를 검색
-        Collection<Entries> allEntries = repository.findAll();
+        Collection<Entry> allEntries = repository.findAll();
 
         // Then: 저장된 모든 객체가 실제로 포함되어 있는지 확인
         assertTrue(allEntries.contains(entry1), "entry1가 포함되어 있어야 함.");
@@ -106,11 +105,11 @@ class GenericRepositoryImplTest {
     @Test
     void saveDuplicateCode() {
         // Given: 동일한 코드를 가진 두 번째 엔트리 생성
-        Entries entry1 = new Entries("0001");
+        Entry entry1 = new Entry("0001");
         entry1.setName("Entry 1");
         repository.save(entry1);
 
-        Entries duplicateEntry = new Entries("0001");
+        Entry duplicateEntry = new Entry("0001");
         duplicateEntry.setName("Duplicate Entry");
 
         // When & Then: 저장 시 예외 발생 확인
