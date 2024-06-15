@@ -28,8 +28,12 @@ public class DependencyInjector {
      */
     private DependencyInjector() {
         System.out.println("\n--------------------------- 1. DependencyInjector 생성 ---------------------------\n");
+        long startTime = System.nanoTime(); // 시작 시간 기록
         autoRegister();
-        System.out.println("\n--------------------------- 1. DependencyInjector 초기화 완료 ---------------------------\n");
+        long endTime = System.nanoTime(); // 종료 시간 기록
+        long duration = endTime - startTime; // 실행 시간 계산
+        System.out.println("\n실행 시간: " + duration / 1_000_000 + " ms");
+        System.out.println("--------------------------- 1. DependencyInjector 종료 ---------------------------\n");
     }
 
     /**
@@ -138,4 +142,21 @@ public class DependencyInjector {
         // 여러 인터페이스가 구현된 경우 특정 인터페이스를 선택할 수 있도록 확장 가능
         return Arrays.stream(type.getInterfaces()).findFirst().orElse(null);
     }
+
+    /**
+     * 주어진 타입에 해당하는 모든 인스턴스를 반환.
+     * @param type 찾을 타입
+     * @return 찾은 인스턴스 맵
+     */
+    public Map<Class<?>, Object> getAllInstancesOfType(Class<?> type) {
+
+        Map<Class<?>, Object> result = new HashMap<>();
+        for (Map.Entry<Class<?>, Object> entry : instances.entrySet()) {
+            if (type.isAssignableFrom(entry.getKey())) {
+                result.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return result;
+    }
+
 }
