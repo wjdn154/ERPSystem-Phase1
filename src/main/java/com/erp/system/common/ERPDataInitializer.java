@@ -5,7 +5,7 @@ import com.erp.system.financial.model.basic_information_management.purchase_sale
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.VatType;
 import com.erp.system.financial.model.book_keeping.accounting_ledger.CashBook;
 import com.erp.system.financial.repository.book_keeping.accounting_ledger.CashBookRepository;
-import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntrieRepository;
+import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntryRepository;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.VatTypeRepository;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -31,7 +31,7 @@ public class ERPDataInitializer {
     private Map<String, Class<?>> tableClassMap;
     private Map<Class<?>, Object> repositories;
 
-    private EntrieRepository entriesRepository;
+    private EntryRepository entriesRepository;
     private VatTypeRepository vatTypesRepository;
     private CashBookRepository cashBookRepository;
     // 1. 여기에 Repository 추가
@@ -50,7 +50,7 @@ public class ERPDataInitializer {
 
         // 각 엔티티 타입에 해당하는 리포지토리 인스턴스를 싱글톤 패턴으로 생성
         repositories = new HashMap<>();
-        entriesRepository = di.getInstance(EntrieRepository.class);
+        entriesRepository = di.getInstance(EntryRepository.class);
         vatTypesRepository = di.getInstance(VatTypeRepository.class);
         cashBookRepository = di.getInstance(CashBookRepository.class);
         // 3. 여기에 싱글톤 적용
