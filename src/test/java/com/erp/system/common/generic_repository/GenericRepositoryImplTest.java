@@ -1,9 +1,8 @@
 package com.erp.system.common.generic_repository;
 
-import com.erp.system.common.DependencyInjector;
-import com.erp.system.financial.controller.basic_information_management.purchase_sales_slip.EntriesController;
+import com.erp.system.common.DependencyInjector.DependencyInjector;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entry;
-import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntriesRepository;
+import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntrieRepository;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.impl.EntriesRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GenericRepositoryImplTest {
-    private EntriesRepository repository;
+    private EntrieRepository repository;
 
     // 테스트 실행 전 초기 설정
     @BeforeEach

@@ -1,11 +1,12 @@
 package com.erp.system.common;
 
+import com.erp.system.common.DependencyInjector.DependencyInjector;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entry;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.VatType;
 import com.erp.system.financial.model.book_keeping.accounting_ledger.CashBook;
 import com.erp.system.financial.repository.book_keeping.accounting_ledger.CashBookRepository;
-import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntriesRepository;
-import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.VatTypesRepository;
+import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntrieRepository;
+import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.VatTypeRepository;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -30,8 +31,8 @@ public class ERPDataInitializer {
     private Map<String, Class<?>> tableClassMap;
     private Map<Class<?>, Object> repositories;
 
-    private EntriesRepository entriesRepository;
-    private VatTypesRepository vatTypesRepository;
+    private EntrieRepository entriesRepository;
+    private VatTypeRepository vatTypesRepository;
     private CashBookRepository cashBookRepository;
     // 1. 여기에 Repository 추가
 
@@ -39,6 +40,7 @@ public class ERPDataInitializer {
      * ERPDataInitializer 생성자
      */
     public ERPDataInitializer() {
+        System.out.println("\n--------------------------- 2. ERPDataInitializer 생성 ---------------------------\n");
         // 테이블과 해당하는 클래스 타입을 매핑
         tableClassMap = new HashMap<>();
         tableClassMap.put("Entries", Entry.class);
@@ -48,9 +50,9 @@ public class ERPDataInitializer {
 
         // 각 엔티티 타입에 해당하는 리포지토리 인스턴스를 싱글톤 패턴으로 생성
         repositories = new HashMap<>();
-        entriesRepository = di.resolve(EntriesRepository.class);
-        vatTypesRepository = di.resolve(VatTypesRepository.class);
-        cashBookRepository = di.resolve(CashBookRepository.class);
+        entriesRepository = di.getInstance(EntrieRepository.class);
+        vatTypesRepository = di.getInstance(VatTypeRepository.class);
+        cashBookRepository = di.getInstance(CashBookRepository.class);
         // 3. 여기에 싱글톤 적용
 
         repositories.put(Entry.class, entriesRepository);
@@ -59,6 +61,7 @@ public class ERPDataInitializer {
         // 4. 여기에 Domain과 Repository 매핑 추가
 
         readExcel(DATA_FILE_PATH);
+        System.out.println("\n--------------------------- 2. ERPDataInitializer 초기화 완료 ---------------------------\n");
     }
 
     /**

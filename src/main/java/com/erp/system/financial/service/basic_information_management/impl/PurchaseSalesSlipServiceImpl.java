@@ -1,32 +1,28 @@
 package com.erp.system.financial.service.basic_information_management.impl;
 
-import com.erp.system.common.DependencyInjector;
+import com.erp.system.common.DependencyInjector.Component;
+import com.erp.system.common.DependencyInjector.Priority;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entry;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.PurchaseSalesSlip;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.VatType;
-import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntriesRepository;
+import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntrieRepository;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.PurchaseSalesSlipRepository;
-import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.VatTypesRepository;
+import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.VatTypeRepository;
 import com.erp.system.financial.service.basic_information_management.PurchaseSalesSlipService;
 
 import java.util.Collection;
 import java.util.Optional;
 
+@Component
+@Priority(2)
 public class PurchaseSalesSlipServiceImpl implements PurchaseSalesSlipService {
-    EntriesRepository entriesRepository;
-    PurchaseSalesSlipRepository purchaseSalesSlipRepository;
-    VatTypesRepository vatTypesRepository;
+    private final EntrieRepository entriesRepository;
+    private final PurchaseSalesSlipRepository purchaseSalesSlipRepository;
+    private final VatTypeRepository vatTypesRepository;
 
-    /**
-     * 생성자를 통한 의존성 주입
-     *
-     * @param entriesRepository           엔트리 관련 데이터 접근을 담당하는 리포지토리
-     * @param purchaseSalesSlipRepository 매입매출전표 데이터 접근을 담당하는 리포지토리
-     * @param vatTypesRepository          부가세 유형 데이터 접근을 담당하는 리포지토리
-     */
-    public PurchaseSalesSlipServiceImpl(EntriesRepository entriesRepository,
+    public PurchaseSalesSlipServiceImpl(EntrieRepository entriesRepository,
                                         PurchaseSalesSlipRepository purchaseSalesSlipRepository,
-                                        VatTypesRepository vatTypesRepository) {
+                                        VatTypeRepository vatTypesRepository) {
         this.entriesRepository = entriesRepository;
         this.purchaseSalesSlipRepository = purchaseSalesSlipRepository;
         this.vatTypesRepository = vatTypesRepository;
@@ -72,128 +68,89 @@ public class PurchaseSalesSlipServiceImpl implements PurchaseSalesSlipService {
     }
 
     /**
-     * ID 또는 코드로 분개 검색
+     * ID로 분개 검색
      * @param id   분개 ID
+     * @return 검색된 분개, 없으면 Optional.empty()
+     */
+    @Override
+    public Optional<Entry> findEntryById(String id) {
+        return entriesRepository.findById(id);
+    }
+
+    /**
+     * 코드로 분개 검색
      * @param code 분개 코드
      * @return 검색된 분개, 없으면 Optional.empty()
      */
     @Override
-    public Optional<Entry> findPurchaseSalesSlipEntryByIdOrCode(String id, String code) {
-        return entriesRepository.findByIdOrCode(id, code);
+    public Optional<Entry> findEntryByCode(String code) {
+        return entriesRepository.findByCode(code);
     }
 
     /**
-     * ID 또는 코드로 매입매출전표 검색
+     * ID로 매입매출전표 검색
      * @param id   매입매출전표의 ID
+     * @return 검색된 매입매출전표, 없으면 Optional.empty()
+     */
+    @Override
+    public Optional<PurchaseSalesSlip> findPurchaseSalesSlipById(String id) {
+        return purchaseSalesSlipRepository.findById(id);
+    }
+
+    /**
+     * 코드로 매입매출전표 검색
      * @param code 매입매출전표의 코드
      * @return 검색된 매입매출전표, 없으면 Optional.empty()
      */
     @Override
-    public Optional<PurchaseSalesSlip> findByIdOrCode(String id, String code) {
-        return purchaseSalesSlipRepository.findByIdOrCode(id, code);
+    public Optional<PurchaseSalesSlip> findPurchaseSalesSlipByCode(String code) {
+        return purchaseSalesSlipRepository.findByCode(code);
     }
 
     /**
-     * ID 또는 코드로 부가세 유형 검색
+     * ID로 부가세 유형 검색
      * @param id   부가세 유형의 ID
+     * @return 검색된 부가세 유형, 없으면 Optional.empty()
+     */
+    @Override
+    public Optional<VatType> findVatTypeById(String id) {
+        return vatTypesRepository.findById(id);
+    }
+
+    /**
+     * 코드로 부가세 유형 검색
      * @param code 부가세 유형의 코드
      * @return 검색된 부가세 유형, 없으면 Optional.empty()
      */
     @Override
-    public Optional<VatType> findVatTypeByIdOrCode(String id, String code) {
-        return vatTypesRepository.findByIdOrCode(id, code);
+    public Optional<VatType> findVatTypeByCode(String code) {
+        return vatTypesRepository.findByCode(code);
     }
 
     /**
-     * 엔트리를 업데이트함
-     * @param entry 업데이트할 엔트리 객체
-     * @throws IllegalArgumentException null 값이 입력된 경우
+     * 모든 분개 조회
+     * @return 모든 분개 리스트
      */
-    @Override
-    public void updateEntry(Entry entry) {
-        if (entry == null) {
-            throw new IllegalArgumentException("업데이트할 엔트리는 null일 수 없습니다.");
-        }
-        entriesRepository.update(entry);
-    }
-
-    /**
-     * 매입매출전표를 업데이트함
-     * @param purchaseSalesSlip 업데이트할 매입매출전표 객체
-     * @throws IllegalArgumentException null 값이 입력된 경우
-     */
-    @Override
-    public void updatePurchaseSalesSlip(PurchaseSalesSlip purchaseSalesSlip) {
-        if (purchaseSalesSlip == null) {
-            throw new IllegalArgumentException("업데이트할 매입매출전표는 null일 수 없습니다.");
-        }
-        purchaseSalesSlipRepository.update(purchaseSalesSlip);
-    }
-
-    /**
-     * 부가세 유형을 업데이트함
-     * @param vatType 업데이트할 부가세 유형 객체
-     * @throws IllegalArgumentException null 값이 입력된 경우
-     */
-    @Override
-    public void updateVatType(VatType vatType) {
-        if (vatType == null) {
-            throw new IllegalArgumentException("업데이트할 부가세 유형은 null일 수 없습니다.");
-        }
-        vatTypesRepository.update(vatType);
-    }
-
-    /**
-     * 엔트리를 삭제함
-     * @param id 삭제할 엔트리의 ID
-     * @throws IllegalArgumentException null 값이 입력된 경우
-     */
-    @Override
-    public void deleteEntry(String id) {
-        if (id == null) {
-            throw new IllegalArgumentException("삭제할 엔트리 ID는 null일 수 없습니다.");
-        }
-        entriesRepository.delete(id);
-    }
-
-    /**
-     * 매입매출전표를 삭제함
-     * @param id 삭제할 매입매출전표의 ID
-     * @throws IllegalArgumentException null 값이 입력된 경우
-     */
-    @Override
-    public void deletePurchaseSalesSlip(String id) {
-        if (id == null) {
-            throw new IllegalArgumentException("삭제할 매입매출전표 ID는 null일 수 없습니다.");
-        }
-        purchaseSalesSlipRepository.delete(id);
-    }
-
-    /**
-     * 부가세 유형을 삭제함
-     * @param id 삭제할 부가세 유형의 ID
-     * @throws IllegalArgumentException null 값이 입력된 경우
-     */
-    @Override
-    public void deleteVatType(String id) {
-        if (id == null) {
-            throw new IllegalArgumentException("삭제할 부가세 유형 ID는 null일 수 없습니다.");
-        }
-        vatTypesRepository.delete(id);
-    }
-
     @Override
     public Collection<Entry> findAllEntries() {
-        return null;
+        return entriesRepository.findAll();
     }
 
+    /**
+     * 모든 매입매출전표 조회
+     * @return 모든 매입매출전표 리스트
+     */
     @Override
     public Collection<PurchaseSalesSlip> findAllPurchaseSalesSlip() {
-        return null;
+        return purchaseSalesSlipRepository.findAll();
     }
 
+    /**
+     * 모든 부가세 유형 조회
+     * @return 모든 부가세 유형 리스트
+     */
     @Override
     public Collection<VatType> findAllVatTypes() {
-        return null;
+        return vatTypesRepository.findAll();
     }
 }

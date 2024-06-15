@@ -1,12 +1,14 @@
 package com.erp.system.financial.repository.basic_information_management.voucher_registration.impl;
 
+import com.erp.system.common.DependencyInjector.Component;
+import com.erp.system.common.DependencyInjector.Priority;
 import com.erp.system.common.generic_repository.GenericRepositoryImpl;
-import com.erp.system.financial.model.basic_information_management.vendor_registration.VendorTypes;
-import com.erp.system.financial.model.basic_information_management.voucher_registration.Accounts;
-import com.erp.system.financial.repository.basic_information_management.vendor_registration.VendorTypesRepository;
-import com.erp.system.financial.repository.basic_information_management.voucher_registration.AccountsRepository;
+import com.erp.system.financial.model.basic_information_management.voucher_registration.Account;
+import com.erp.system.financial.repository.basic_information_management.voucher_registration.AccountRepository;
 
-public class AccountsRepositoryImpl extends GenericRepositoryImpl<Accounts> implements AccountsRepository {
+@Component
+@Priority(1)
+public class AccountsRepositoryImpl extends GenericRepositoryImpl<Account> implements AccountRepository {
     private static volatile AccountsRepositoryImpl instance;
 
     /**
@@ -24,7 +26,7 @@ public class AccountsRepositoryImpl extends GenericRepositoryImpl<Accounts> impl
      * private 생성자를 사용하여 싱글톤 패턴을 구현.
      */
     private AccountsRepositoryImpl() {
-        super(Accounts.class);
+        super(Account.class);
     }
 
     

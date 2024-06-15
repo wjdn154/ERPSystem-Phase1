@@ -21,7 +21,6 @@ public class GenericRepositoryImpl<T> implements GenericRepository<T> {
      */
     protected GenericRepositoryImpl(Class<T> entityClass) {
         this.entityClass = entityClass;
-        System.out.println("entityClass : " + entityClass);
     }
 
     /**
@@ -56,28 +55,18 @@ public class GenericRepositoryImpl<T> implements GenericRepository<T> {
      * @return 조회된 엔티티를 Optional로 반환
      */
     @Override
-    public Optional<T> findByIdOrCode(String id) {
+    public Optional<T> findById(String id) {
         return Optional.ofNullable(store.get(id));
     }
 
     /**
-     * ID 또는 코드로 엔티티를 조회함.
-     * @param id 엔티티의 ID
+     * 코드로 엔티티를 조회함.
      * @param code 엔티티의 코드
      * @return 조회된 엔티티를 Optional로 반환
      */
     @Override
-    public Optional<T> findByIdOrCode(String id, String code) {
-        // ID로 엔티티 조회
-        Optional<T> entityById = findByIdOrCode(id);
-        if (entityById.isPresent()) {
-            return entityById;
-        }
-        // 코드로 엔티티 조회
-        if (code != null) {
-            return Optional.ofNullable(codeStore.get(code));
-        }
-        return Optional.empty();
+    public Optional<T> findByCode(String code) {
+        return Optional.ofNullable(codeStore.get(code));
     }
 
     /**

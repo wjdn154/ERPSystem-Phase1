@@ -1,11 +1,13 @@
 package com.erp.system.financial.repository.book_keeping.accounting_ledger.impl;
 
+import com.erp.system.common.DependencyInjector.Component;
+import com.erp.system.common.DependencyInjector.Priority;
 import com.erp.system.common.generic_repository.GenericRepositoryImpl;
-import com.erp.system.financial.model.book_keeping.accounting_ledger.CashBook;
 import com.erp.system.financial.model.book_keeping.accounting_ledger.GeneralLedger;
-import com.erp.system.financial.repository.book_keeping.accounting_ledger.CashBookRepository;
 import com.erp.system.financial.repository.book_keeping.accounting_ledger.GeneralLedgerRepository;
 
+@Component
+@Priority(1)
 public class GeneralLedgerRepositoryImpl extends GenericRepositoryImpl<GeneralLedger> implements GeneralLedgerRepository {
     private static GeneralLedgerRepositoryImpl instance; // 싱글톤 인스턴스를 저장할 변수
 

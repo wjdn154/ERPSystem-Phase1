@@ -1,12 +1,15 @@
 package com.erp.system.financial.repository.basic_information_management.company_registration.impl;
 
+import com.erp.system.common.DependencyInjector.Component;
+import com.erp.system.common.DependencyInjector.Priority;
 import com.erp.system.common.generic_repository.GenericRepositoryImpl;
-import com.erp.system.financial.model.basic_information_management.account_information.BankAccounts;
-import com.erp.system.financial.model.basic_information_management.company_registration.Companies;
-import com.erp.system.financial.repository.basic_information_management.account_information.BankAccountsRepository;
-import com.erp.system.financial.repository.basic_information_management.company_registration.CompaniesRepository;
+import com.erp.system.financial.model.basic_information_management.company_registration.Company;
+import com.erp.system.financial.repository.basic_information_management.company_registration.CompanyRepository;
 
-public class CompaniesRepositoryImpl extends GenericRepositoryImpl<Companies> implements CompaniesRepository {
+
+@Component
+@Priority(1)
+public class CompaniesRepositoryImpl extends GenericRepositoryImpl<Company> implements CompanyRepository {
     private static volatile CompaniesRepositoryImpl instance; // 싱글톤 인스턴스를 저장할 변수
 
     /**
@@ -24,6 +27,6 @@ public class CompaniesRepositoryImpl extends GenericRepositoryImpl<Companies> im
      * private 생성자를 사용하여 싱글톤 패턴을 구현.
      */
     private CompaniesRepositoryImpl() {
-        super(Companies.class);
+        super(Company.class);
     }
 }

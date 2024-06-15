@@ -1,10 +1,14 @@
 package com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.impl;
 
+import com.erp.system.common.DependencyInjector.Component;
+import com.erp.system.common.DependencyInjector.Priority;
 import com.erp.system.common.generic_repository.GenericRepositoryImpl;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.VatType;
-import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.VatTypesRepository;
+import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.VatTypeRepository;
 
-public class VatTypesRepositoryImpl extends GenericRepositoryImpl<VatType> implements VatTypesRepository {
+@Component
+@Priority(1)
+public class VatTypesRepositoryImpl extends GenericRepositoryImpl<VatType> implements VatTypeRepository {
     private static volatile VatTypesRepositoryImpl instance;
 
     /**

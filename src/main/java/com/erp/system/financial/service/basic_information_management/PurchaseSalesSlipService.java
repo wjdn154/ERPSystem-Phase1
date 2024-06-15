@@ -12,15 +12,14 @@ public interface PurchaseSalesSlipService {
     void saveEntry(Entry entry);
     void savePurchaseSalesSlip(PurchaseSalesSlip purchaseSalesSlip);
     void saveVatType(VatType vatType);
-    Optional<Entry> findPurchaseSalesSlipEntryByIdOrCode(String id, String code);
-    Optional<PurchaseSalesSlip> findByIdOrCode(String id, String code);
-    Optional<VatType> findVatTypeByIdOrCode(String id, String code);
-    void updateEntry(Entry entry);
-    void updatePurchaseSalesSlip(PurchaseSalesSlip purchaseSalesSlip);
-    void updateVatType(VatType vatType);
-    void deleteEntry(String id);
-    void deletePurchaseSalesSlip(String id);
-    void deleteVatType(String id);
+
+    Optional<Entry> findEntryById(String id);
+    Optional<Entry> findEntryByCode(String code);
+    Optional<PurchaseSalesSlip> findPurchaseSalesSlipById(String id);
+    Optional<PurchaseSalesSlip> findPurchaseSalesSlipByCode(String code);
+    Optional<VatType> findVatTypeById(String id);
+    Optional<VatType> findVatTypeByCode(String code);
+
     Collection<Entry> findAllEntries();
     Collection<PurchaseSalesSlip> findAllPurchaseSalesSlip();
     Collection<VatType> findAllVatTypes();

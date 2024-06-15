@@ -1,12 +1,14 @@
 package com.erp.system.financial.repository.basic_information_management.voucher_registration.impl;
 
+import com.erp.system.common.DependencyInjector.Component;
+import com.erp.system.common.DependencyInjector.Priority;
 import com.erp.system.common.generic_repository.GenericRepositoryImpl;
-import com.erp.system.financial.model.basic_information_management.voucher_registration.Accounts;
-import com.erp.system.financial.model.basic_information_management.voucher_registration.Memos;
-import com.erp.system.financial.repository.basic_information_management.voucher_registration.AccountsRepository;
-import com.erp.system.financial.repository.basic_information_management.voucher_registration.MemosRepository;
+import com.erp.system.financial.model.basic_information_management.voucher_registration.Memo;
+import com.erp.system.financial.repository.basic_information_management.voucher_registration.MemoRepository;
 
-public class MemosRepositoryImpl extends GenericRepositoryImpl<Memos> implements MemosRepository {
+@Component
+@Priority(1)
+public class MemosRepositoryImpl extends GenericRepositoryImpl<Memo> implements MemoRepository {
     private static volatile MemosRepositoryImpl instance;
 
     /**
@@ -24,7 +26,7 @@ public class MemosRepositoryImpl extends GenericRepositoryImpl<Memos> implements
      * private 생성자를 사용하여 싱글톤 패턴을 구현.
      */
     private MemosRepositoryImpl() {
-        super(Memos.class);
+        super(Memo.class);
     }
 
     

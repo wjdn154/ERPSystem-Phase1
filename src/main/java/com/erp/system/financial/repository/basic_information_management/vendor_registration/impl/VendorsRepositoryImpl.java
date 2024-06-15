@@ -1,12 +1,14 @@
 package com.erp.system.financial.repository.basic_information_management.vendor_registration.impl;
 
+import com.erp.system.common.DependencyInjector.Component;
+import com.erp.system.common.DependencyInjector.Priority;
 import com.erp.system.common.generic_repository.GenericRepositoryImpl;
-import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.PurchaseSalesSlip;
-import com.erp.system.financial.model.basic_information_management.vendor_registration.Vendors;
-import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.PurchaseSalesSlipRepository;
-import com.erp.system.financial.repository.basic_information_management.vendor_registration.VendorsRepository;
+import com.erp.system.financial.model.basic_information_management.vendor_registration.Vendor;
+import com.erp.system.financial.repository.basic_information_management.vendor_registration.VendorRepository;
 
-public class VendorsRepositoryImpl extends GenericRepositoryImpl<Vendors> implements VendorsRepository {
+@Component
+@Priority(1)
+public class VendorsRepositoryImpl extends GenericRepositoryImpl<Vendor> implements VendorRepository {
     private static volatile VendorsRepositoryImpl instance;
 
     /**
@@ -24,7 +26,7 @@ public class VendorsRepositoryImpl extends GenericRepositoryImpl<Vendors> implem
      * private 생성자를 사용하여 싱글톤 패턴을 구현.
      */
     private VendorsRepositoryImpl() {
-        super(Vendors.class);
+        super(Vendor.class);
     }
 
     
