@@ -12,9 +12,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,42 +24,68 @@ import static com.erp.system.common.Rules.DATA_FILE_PATH;
  * Excel 파일을 읽고 각 시트의 데이터를 처리하는 클래스.
  */
 public class ERPDataInitializer {
-    DependencyInjector di = DependencyInjector.getInstance();
-
-    private Map<String, Class<?>> tableClassMap;
-    private Map<Class<?>, Object> repositories;
-
-    private EntryRepository entriesRepository;
-    private VatTypeRepository vatTypesRepository;
-    private CashBookRepository cashBookRepository;
-    // 1. 여기에 Repository 추가
+    private final DependencyInjector di = DependencyInjector.getInstance();
+    private final Map<String, Class<?>> tableClassMap = new HashMap<>();
+    private final Map<Class<?>, Object> repositories = new HashMap<>();
 
     /**
      * ERPDataInitializer 생성자
      */
     public ERPDataInitializer() {
-        System.out.println("\n--------------------------- 2. ERPDataInitializer 생성 ---------------------------\n");
-        // 테이블과 해당하는 클래스 타입을 매핑
-        tableClassMap = new HashMap<>();
-        tableClassMap.put("Entries", Entry.class);
-        tableClassMap.put("VatTypes", VatType.class);
-        tableClassMap.put("CashBook", CashBook.class);
-        // 2. 여기에 테이블 매핑 추가
-
-        // 각 엔티티 타입에 해당하는 리포지토리 인스턴스를 싱글톤 패턴으로 생성
-        repositories = new HashMap<>();
-        entriesRepository = di.getInstance(EntryRepository.class);
-        vatTypesRepository = di.getInstance(VatTypeRepository.class);
-        cashBookRepository = di.getInstance(CashBookRepository.class);
-        // 3. 여기에 싱글톤 적용
-
-        repositories.put(Entry.class, entriesRepository);
-        repositories.put(VatType.class, vatTypesRepository);
-        repositories.put(CashBook.class, cashBookRepository);
-        // 4. 여기에 Domain과 Repository 매핑 추가
-
+        System.out.println("--------------------------- 2. ERPDataInitializer 생성 ---------------------------");
+        long startTime = System.nanoTime(); // 시작 시간 기록
+        autoRegister();
         readExcel(DATA_FILE_PATH);
-        System.out.println("\n--------------------------- 2. ERPDataInitializer 초기화 완료 ---------------------------\n");
+        long endTime = System.nanoTime(); // 종료 시간 기록
+        long duration = endTime - startTime; // 실행 시간 계산
+        System.out.println("\n실행 시간: " + duration / 1_000_000 + " ms");
+        System.out.println("--------------------------- 2. ERPDataInitializer 종료 ---------------------------\n");
+    }
+
+    /**
+     * 모든 컴포넌트를 자동으로 등록하고 매핑을 설정하는 메서드
+     */
+    private void autoRegister() {
+        Map<Class<?>, Object> allRepositories = di.getAllInstancesOfType(Object.class); // 모든 리포지토리를 가져옴
+
+        // 모든 리포지토리를 순회하며 처리
+        for (Map.Entry<Class<?>, Object> entry : allRepositories.entrySet()) {
+            Class<?> repositoryClass = entry.getKey(); // 리포지토리 클래스
+            Object repositoryInstance = entry.getValue(); // 리포지토리 인스턴스
+            Class<?> domainClass = getDomainClassFromRepository(repositoryClass); // 리포지토리로부터 도메인 클래스를 추론
+
+            // 도메인 클래스가 null이 아닌 경우
+            if (domainClass != null) {
+                String tableName = domainClass.getSimpleName(); // 도메인 클래스 이름을 테이블 이름으로 사용
+                tableClassMap.put(tableName, domainClass); // 테이블 이름과 도메인 클래스를 매핑
+                repositories.put(domainClass, repositoryInstance); // 도메인 클래스와 리포지토리 인스턴스를 매핑
+            }
+        }
+    }
+
+    /**
+     * 리포지토리 클래스에서 도메인 클래스를 추론하는 메서드
+     * @param repositoryClass 리포지토리 클래스
+     * @return 도메인 클래스
+     */
+    private Class<?> getDomainClassFromRepository(Class<?> repositoryClass) {
+        Type[] genericInterfaces = repositoryClass.getGenericInterfaces(); // 리포지토리 클래스의 제네릭 인터페이스를 가져옴, ex)Repository<Entry>
+
+        // 제네릭 인터페이스를 순회
+        for (Type genericInterface : genericInterfaces) {
+            // 제네릭 인터페이스가 ParameterizedType인 경우
+            if (genericInterface instanceof ParameterizedType) {
+                ParameterizedType parameterizedType = (ParameterizedType) genericInterface; // ParameterizedType으로 캐스팅
+                Type[] actualTypeArguments = parameterizedType.getActualTypeArguments(); // 제네릭 타입 인수를 가져옴, ex)Repository<Entry>의 경우 Entry
+
+                // 제네릭 타입 인수가 있는 경우
+                if (actualTypeArguments.length > 0) {
+                    return (Class<?>) actualTypeArguments[0]; // 첫 번째 제네릭 타입 인수를 도메인 클래스로 반환
+                }
+            }
+        }
+
+        return null; // 도메인 클래스를 찾지 못한 경우 null 반환
     }
 
     /**
@@ -71,7 +95,6 @@ public class ERPDataInitializer {
     public void readExcel(String filePath) {
         try (FileInputStream fis = new FileInputStream(filePath);
              Workbook workbook = new XSSFWorkbook(fis)) {
-
             for (Sheet sheet : workbook) {
                 handleSheet(sheet);
             }
@@ -96,31 +119,25 @@ public class ERPDataInitializer {
 
         DataFormatter formatter = new DataFormatter();
 
-        // 생성자에 필드 설정
         for (Cell cell : includeRow) {
-            String cellValue = formatter.formatCellValue(cell);
-            includeInConstructor.add("1".equals(cellValue));
+            includeInConstructor.add("1".equals(formatter.formatCellValue(cell)));
         }
 
-        // 데이터 타입 설정
         for (Cell cell : typeRow) {
             dataTypes.add(formatter.formatCellValue(cell));
         }
 
-        // 컬럼 이름 설정
         for (Cell cell : headerRow) {
             columnNames.add(formatter.formatCellValue(cell));
         }
 
         List<List<String>> allData = new ArrayList<>();
 
-        // 데이터 행 설정
         for (int i = 3; i <= sheet.getLastRowNum(); i++) {
             Row currentRow = sheet.getRow(i);
             List<String> rowData = new ArrayList<>();
             for (int j = 0; j < currentRow.getLastCellNum(); j++) {
-                Cell cell = currentRow.getCell(j);
-                rowData.add(formatter.formatCellValue(cell));
+                rowData.add(formatter.formatCellValue(currentRow.getCell(j)));
             }
             allData.add(rowData);
         }
@@ -141,16 +158,19 @@ public class ERPDataInitializer {
         Class<?> clazz = tableClassMap.get(tableName);
         Object repository = repositories.get(clazz);
 
-        System.out.println("처리 중인 시트: " + tableName);
+        if (clazz == null) {
+            System.err.println("클래스를 찾을 수 없습니다: " + tableName);
+            return;
+        }
+
+        System.out.println("\n처리 중인 시트: " + tableName);
 
         for (List<String> rowData : allData) {
             try {
                 Object entity = createEntity(clazz, includeInConstructor, columnNames, dataTypes, rowData);
-                if (entity != null) {
-                    Method saveMethod = repository.getClass().getMethod("save", clazz);
-                    saveMethod.invoke(repository, entity);
-                    System.out.println("저장된 엔티티: " + entity);
-                }
+                Method saveMethod = repository.getClass().getMethod("save", clazz);
+                saveMethod.invoke(repository, entity);
+                System.out.println("저장된 엔티티: " + entity);
             } catch (Exception e) {
                 System.out.println("엔티티 생성 또는 저장 오류: " + e.getMessage());
                 e.printStackTrace();
@@ -173,20 +193,19 @@ public class ERPDataInitializer {
         List<Class<?>> paramTypesList = new ArrayList<>();
         List<Object> paramValuesList = new ArrayList<>();
 
-        // 생성자의 파라미터 타입과 값을 설정
         for (int i = 0; i < includeInConstructor.size(); i++) {
             if (includeInConstructor.get(i)) {
                 Class<?> type = getTypeFromString(dataTypes.get(i));
-                Object value = convertValue(rowData.get(i), type);
+                Object value = type.isEnum() ? Enum.valueOf((Class<Enum>) type, rowData.get(i)) : convertValue(rowData.get(i), type);
                 paramTypesList.add(type);
                 paramValuesList.add(value);
             }
         }
 
+
         Class<?>[] paramTypesArray = paramTypesList.toArray(new Class<?>[0]);
 
         Constructor<?> matchedConstructor = null;
-        // 일치하는 생성자 찾기
         for (Constructor<?> constructor : clazz.getConstructors()) {
             Class<?>[] constructorParamTypes = constructor.getParameterTypes();
             if (Arrays.equals(constructorParamTypes, paramTypesArray)) {
@@ -201,7 +220,6 @@ public class ERPDataInitializer {
 
         Object entity = matchedConstructor.newInstance(paramValuesList.toArray());
 
-        // 생성자를 통하지 않고 나머지 필드 설정
         for (int i = 0; i < columnNames.size(); i++) {
             if (!includeInConstructor.get(i)) {
                 String columnName = columnNames.get(i);
@@ -211,7 +229,7 @@ public class ERPDataInitializer {
                     Field field = clazz.getDeclaredField(columnName);
                     field.setAccessible(true);
                     Class<?> fieldType = field.getType();
-                    Object convertedValue = convertValue(value, fieldType);
+                    Object convertedValue = fieldType.isEnum() ? Enum.valueOf((Class<Enum>) fieldType, value) : convertValue(value, fieldType);
                     field.set(entity, convertedValue);
                 } catch (NoSuchFieldException e) {
                     System.out.println("필드 설정 오류: " + columnName + " 필드를 찾을 수 없습니다.");
@@ -239,6 +257,7 @@ public class ERPDataInitializer {
             case "double": return Double.class;
             case "date": return Date.class;
             case "bigdecimal": return BigDecimal.class;
+            case "enum": return Enum.class;
             default: throw new IllegalArgumentException("지원하지 않는 타입: " + typeStr);
         }
     }
@@ -260,4 +279,5 @@ public class ERPDataInitializer {
         if (type == BigDecimal.class) return new BigDecimal(value);
         throw new IllegalArgumentException("지원하지 않는 타입 변환: " + type.getSimpleName());
     }
+
 }
