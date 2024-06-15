@@ -11,6 +11,7 @@ import java.util.UUID;
  */
 public class CashBook {
     private final String id; // 고유 식별자
+    private final String code;
     private final String transaction_code; // 거래코드 참조키
     private final String memos_code; // 적요 코드 참조키
     private final String vendor_code; // 거래처 코드 참조키
@@ -19,15 +20,20 @@ public class CashBook {
     private BigDecimal balance_forward; // 이월 금액
     private Date date; // 거래 날짜
 
-    public CashBook(String vendor_code, String memos_code, String transaction_code) {
+    public CashBook(String code, String transaction_code, String memos_code, String vendor_code) {
         this.id = UUID.randomUUID().toString();
-        this.vendor_code = vendor_code;
-        this.memos_code = memos_code;
+        this.code = code;
         this.transaction_code = transaction_code;
+        this.memos_code = memos_code;
+        this.vendor_code = vendor_code;
     }
 
     public String getId() {
         return id;
+    }
+
+    public String getCode() {
+        return code;
     }
 
     public String getTransaction_code() {
@@ -73,20 +79,4 @@ public class CashBook {
     public void setDate(Date date) {
         this.date = date;
     }
-
-    @Override
-    public String toString() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        return "CashBook{" +
-                "id='" + id + '\'' +
-                ", transaction_code='" + transaction_code + '\'' +
-                ", memos_code='" + memos_code + '\'' +
-                ", vendor_code='" + vendor_code + '\'' +
-                ", debit=" + debit +
-                ", credit=" + credit +
-                ", balance_forward=" + balance_forward +
-                ", date=" + (date != null ? sdf.format(date) : "null") +
-                '}';
-    }
-
 }

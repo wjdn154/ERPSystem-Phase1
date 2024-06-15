@@ -15,27 +15,12 @@ public class GenericRepositoryImpl<T> implements GenericRepository<T> {
     private static final String ID_FIELD_NAME = "id"; // ID 필드명 고정
     private static final String CODE_FIELD_NAME = "code"; // 코드 필드명 고정
 
-    private static final Map<Class<?>, GenericRepositoryImpl<?>> instances = new HashMap<>();
-
     /**
      * protected 생성자. 싱글톤 패턴 적용.
      * @param entityClass 엔티티 클래스 타입
      */
     protected GenericRepositoryImpl(Class<T> entityClass) {
         this.entityClass = entityClass;
-    }
-
-    /**
-     * 싱글톤 인스턴스를 반환함.
-     * @param entityClass 엔티티 클래스 타입
-     * @return GenericRepositoryImpl의 싱글톤 인스턴스
-     */
-    @SuppressWarnings("unchecked")
-    public static synchronized <T> GenericRepositoryImpl<T> getInstance(Class<T> entityClass) {
-        if (!instances.containsKey(entityClass)) {
-            instances.put(entityClass, new GenericRepositoryImpl<>(entityClass));
-        }
-        return (GenericRepositoryImpl<T>) instances.get(entityClass);
     }
 
     /**
@@ -70,28 +55,18 @@ public class GenericRepositoryImpl<T> implements GenericRepository<T> {
      * @return 조회된 엔티티를 Optional로 반환
      */
     @Override
-    public Optional<T> findByIdOrCode(String id) {
+    public Optional<T> findById(String id) {
         return Optional.ofNullable(store.get(id));
     }
 
     /**
-     * ID 또는 코드로 엔티티를 조회함.
-     * @param id 엔티티의 ID
+     * 코드로 엔티티를 조회함.
      * @param code 엔티티의 코드
      * @return 조회된 엔티티를 Optional로 반환
      */
     @Override
-    public Optional<T> findByIdOrCode(String id, String code) {
-        // ID로 엔티티 조회
-        Optional<T> entityById = findByIdOrCode(id);
-        if (entityById.isPresent()) {
-            return entityById;
-        }
-        // 코드로 엔티티 조회
-        if (code != null) {
-            return Optional.ofNullable(codeStore.get(code));
-        }
-        return Optional.empty();
+    public Optional<T> findByCode(String code) {
+        return Optional.ofNullable(codeStore.get(code));
     }
 
     /**
