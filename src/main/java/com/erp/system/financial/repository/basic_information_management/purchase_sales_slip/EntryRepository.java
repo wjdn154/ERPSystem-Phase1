@@ -6,7 +6,7 @@ import com.erp.system.financial.model.basic_information_management.purchase_sale
 /**
  * 분개 엔티티에 대한 리포지토리 인터페이스.
  */
-public interface EntrieRepository extends GenericRepository<Entry> {
+public interface EntryRepository extends GenericRepository<Entry> {
     @Override
     void save(Entry entity);
 }

@@ -5,7 +5,7 @@ import com.erp.system.common.DependencyInjector.Priority;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entry;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.PurchaseSalesSlip;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.VatType;
-import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntrieRepository;
+import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntryRepository;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.PurchaseSalesSlipRepository;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.VatTypeRepository;
 import com.erp.system.financial.service.basic_information_management.PurchaseSalesSlipService;
@@ -16,11 +16,11 @@ import java.util.Optional;
 @Component
 @Priority(2)
 public class PurchaseSalesSlipServiceImpl implements PurchaseSalesSlipService {
-    private final EntrieRepository entriesRepository;
+    private final EntryRepository entriesRepository;
     private final PurchaseSalesSlipRepository purchaseSalesSlipRepository;
     private final VatTypeRepository vatTypesRepository;
 
-    public PurchaseSalesSlipServiceImpl(EntrieRepository entriesRepository,
+    public PurchaseSalesSlipServiceImpl(EntryRepository entriesRepository,
                                         PurchaseSalesSlipRepository purchaseSalesSlipRepository,
                                         VatTypeRepository vatTypesRepository) {
         this.entriesRepository = entriesRepository;
