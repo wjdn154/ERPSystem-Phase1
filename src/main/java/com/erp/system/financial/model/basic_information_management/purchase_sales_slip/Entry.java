@@ -9,11 +9,34 @@ import java.util.UUID;
 public class Entry {
     private final String id; // 고유 식별자
     private final String code; // 분개 코드
+
     private String name; // 분개 이름
 
-    public Entry(String code) {
-        this.id = UUID.randomUUID().toString();
-        this.code = code;
+    public static class Builder {
+        private final String id;
+        private final String code;
+
+        private String name;
+
+        public Builder(String code) {
+            this.id = UUID.randomUUID().toString();
+            this.code = code;
+        }
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Entry build() {
+            return new Entry(this);
+        }
+    }// end of Builder
+
+    private Entry(Builder builder) {
+        this.id = builder.id;
+        this.code = builder.code;
+        this.name = builder.name;
     }
 
     public String getId() {
@@ -26,9 +49,5 @@ public class Entry {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

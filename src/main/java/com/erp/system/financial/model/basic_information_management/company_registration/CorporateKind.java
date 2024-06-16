@@ -10,12 +10,42 @@ import java.util.UUID;
 public class CorporateKind {
     private final String id; // 고유 실벽자
     private final String code; // 법인종류 코드
+
     private String kind; // 법인종류
     private String description; // 법인종류 설명
 
-    public CorporateKind(String code) {
-        this.id = UUID.randomUUID().toString();
-        this.code = code;
+    public static class Builder {
+        private final String id;
+        private final String code;
+
+        private String kind;
+        private String description;
+
+        public Builder(String code) {
+            this.id = UUID.randomUUID().toString();
+            this.code = code;
+        }
+
+        public Builder kind(String kind) {
+            this.kind = kind;
+            return this;
+        }
+
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public CorporateKind build() {
+            return new CorporateKind(this);
+        }
+    } // end of Builder
+
+    private CorporateKind(Builder builder) {
+        this.id = builder.id;
+        this.code = builder.code;
+        this.kind = builder.kind;
+        this.description = builder.description;
     }
 
     public String getId() {
@@ -30,15 +60,7 @@ public class CorporateKind {
         return kind;
     }
 
-    public void setKind(String kind) {
-        this.kind = kind;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 }

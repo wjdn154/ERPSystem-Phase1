@@ -15,22 +15,82 @@ public class Voucher {
     private final String account_code; // 계정과목 코드
     private final String vendor_code; // 거래처 코드
     private final String memo_code; // 적요 코드
+    private final String code; // 전표 코드
+
     private String description; // 거래 설명
     private BigDecimal debit; // 차변 금액
     private BigDecimal credit; // 대변 금액
     private Date date; // 전표 날짜
 
-    public Voucher(String memo_code, String vendor_code, String account_code, String voucher_type_code, String company_code) {
-        this.id = UUID.randomUUID().toString();
-        this.memo_code = memo_code;
-        this.vendor_code = vendor_code;
-        this.account_code = account_code;
-        this.voucher_type_code = voucher_type_code;
-        this.company_code = company_code;
+    public static class Builder {
+        private final String id;
+        private final String company_code;
+        private final String voucher_type_code;
+        private final String account_code;
+        private final String vendor_code;
+        private final String memo_code;
+        private final String code;
+
+        private String description;
+        private BigDecimal debit;
+        private BigDecimal credit;
+        private Date date;
+
+        public Builder(String memo_code, String code, String vendor_code, String account_code, String voucher_type_code, String company_code) {
+            this.id = UUID.randomUUID().toString();
+            this.code = code;
+            this.memo_code = memo_code;
+            this.vendor_code = vendor_code;
+            this.account_code = account_code;
+            this.voucher_type_code = voucher_type_code;
+            this.company_code = company_code;
+        }
+
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder debit(BigDecimal debit) {
+            this.debit = debit;
+            return this;
+        }
+
+        public Builder credit(BigDecimal credit) {
+            this.credit = credit;
+            return this;
+        }
+
+        public Builder date(Date date) {
+            this.date = date;
+            return this;
+        }
+
+        public Voucher build() {
+            return new Voucher(this);
+        }
+    }
+
+    private Voucher(Builder builder) {
+        this.id = builder.id;
+        this.code = builder.code;
+        this.company_code = builder.company_code;
+        this.voucher_type_code = builder.voucher_type_code;
+        this.account_code = builder.account_code;
+        this.vendor_code = builder.vendor_code;
+        this.memo_code = builder.memo_code;
+        this.description = builder.description;
+        this.debit = builder.debit;
+        this.credit = builder.credit;
+        this.date = builder.date;
     }
 
     public String getId() {
         return id;
+    }
+
+    public String getCode() {
+        return code;
     }
 
     public String getCompany_code() {
@@ -57,31 +117,15 @@ public class Voucher {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public BigDecimal getDebit() {
         return debit;
-    }
-
-    public void setDebit(BigDecimal debit) {
-        this.debit = debit;
     }
 
     public BigDecimal getCredit() {
         return credit;
     }
 
-    public void setCredit(BigDecimal credit) {
-        this.credit = credit;
-    }
-
     public Date getDate() {
         return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 }
