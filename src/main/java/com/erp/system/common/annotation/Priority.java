@@ -1,4 +1,4 @@
-package com.erp.system.common.DependencyInjector;
+package com.erp.system.common.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

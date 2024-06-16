@@ -1,4 +1,6 @@
-package com.erp.system.common.generic_repository;
+package com.erp.system.common.generic_repository.impl;
+
+import com.erp.system.common.generic_repository.GenericRepository;
 
 import java.lang.reflect.Field;
 import java.util.*;

@@ -1,5 +1,7 @@
 package com.erp.system.financial.model.basic_information_management.tax_invoices;
 
+import com.erp.system.common.annotation.EnumMapping;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
@@ -8,6 +10,7 @@ import java.util.UUID;
  * 전자 세금 계산서 테이블
  * 전자 세금 계산서 발행 할때 필요한 정보들이 있는 테이블
  */
+@EnumMapping
 public class TaxInvoice {
     public enum TaxType { TAXABLE, EXEMPT, ZERO_RATED }
     public enum ReceiptType { RECEIPT, INVOICE }
@@ -15,10 +18,10 @@ public class TaxInvoice {
     public enum NTSStatus { TRANSMITTED, PENDING }
 
     private final String id; // 세금 계산서의 고유 식별자
-    private final String vendor_code; // 거래처 코드 참조
     private final String code; // 세금 계산서 코드
+    private final String vendor_code; // 거래처 코드 참조
 
-    private TaxType type; // 과세유형 (과세, 영세, 면세)
+    private TaxType taxType; // 과세유형 (과세, 영세, 면세)
     private ReceiptType receiptType; // 영수증 타입 (영수, 청구)
     private IssueStatus issueStatus; // 발행 상태 (타사발행, 자체발행)
     private NTSStatus ntsTransmissionStatus; // 국세청 전송 상태 (전송 완료, 전송 대기)
@@ -31,13 +34,13 @@ public class TaxInvoice {
     
     public static class Builder {
         private final String id;
-        private final String vendor_code;
         private final String code;
+        private final String vendor_code;
 
-        private TaxInvoice.TaxType type;
-        private TaxInvoice.ReceiptType receiptType;
-        private TaxInvoice.IssueStatus issueStatus;
-        private TaxInvoice.NTSStatus ntsTransmissionStatus;
+        private TaxType taxType;
+        private ReceiptType receiptType;
+        private IssueStatus issueStatus;
+        private NTSStatus ntsTransmissionStatus;
         private Date issue_date;
         private Boolean attachment_included;
         private String item_description;
@@ -45,28 +48,28 @@ public class TaxInvoice {
         private BigDecimal tax_amount;
         private String approval_number;
 
-        public Builder(String vendor_code, String code) {
+        public Builder(String code, String vendor_code) {
             this.id = UUID.randomUUID().toString();
-            this.vendor_code = vendor_code;
             this.code = code;
+            this.vendor_code = vendor_code;
         }
 
-        public Builder type(TaxInvoice.TaxType type) {
-            this.type = type;
+        public Builder taxType(TaxType taxType) {
+            this.taxType = taxType;
             return this;
         }
 
-        public Builder receiptType(TaxInvoice.ReceiptType receiptType) {
+        public Builder receiptType(ReceiptType receiptType) {
             this.receiptType = receiptType;
             return this;
         }
 
-        public Builder issueStatus(TaxInvoice.IssueStatus issueStatus) {
+        public Builder issueStatus(IssueStatus issueStatus) {
             this.issueStatus = issueStatus;
             return this;
         }
 
-        public Builder ntsTransmissionStatus(TaxInvoice.NTSStatus ntsTransmissionStatus) {
+        public Builder ntsTransmissionStatus(NTSStatus ntsTransmissionStatus) {
             this.ntsTransmissionStatus = ntsTransmissionStatus;
             return this;
         }
@@ -108,9 +111,9 @@ public class TaxInvoice {
 
     private TaxInvoice(Builder builder) {
         this.id = builder.id;
-        this.vendor_code = builder.vendor_code;
         this.code = builder.code;
-        this.type = builder.type;
+        this.vendor_code = builder.vendor_code;
+        this.taxType = builder.taxType;
         this.receiptType = builder.receiptType;
         this.issueStatus = builder.issueStatus;
         this.ntsTransmissionStatus = builder.ntsTransmissionStatus;
@@ -126,16 +129,17 @@ public class TaxInvoice {
         return id;
     }
 
-    public String getVendor_code() {
-        return vendor_code;
-    }
-
     public String getCode() {
         return code;
     }
 
-    public TaxType getType() {
-        return type;
+    public String getVendor_code() {
+        return vendor_code;
+    }
+
+
+    public TaxType getTaxType() {
+        return taxType;
     }
 
     public ReceiptType getReceiptType() {
