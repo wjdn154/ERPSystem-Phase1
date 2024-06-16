@@ -10,11 +10,34 @@ import java.util.UUID;
 public class VendorType {
     private final String id; // 거래처 유형의 고유 식별자
     private final String code; // 거래처 유형 코드
+
     private String category; // 구분(매입,매출 동시)
 
-    public VendorType(String code) {
-        this.id = UUID.randomUUID().toString();
-        this.code = code;
+    public static class Builder {
+        private final String id;
+        private final String code;
+
+        private String category;
+
+        public Builder(String code) {
+            this.id = UUID.randomUUID().toString();
+            this.code = code;
+        }
+
+        public Builder category(String category) {
+            this.category = category;
+            return this;
+        }
+
+        public VendorType build() {
+            return new VendorType(this);
+        }
+    }// end of Builder
+
+    private VendorType(Builder builder) {
+        this.id = builder.id;
+        this.code = builder.code;
+        this.category = builder.category;
     }
 
     public String getId() {
@@ -27,10 +50,6 @@ public class VendorType {
 
     public String getCategory() {
         return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 }
 

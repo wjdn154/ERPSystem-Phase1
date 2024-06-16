@@ -1,16 +1,11 @@
 package com.erp.system;
 
 
-import com.erp.system.common.DependencyInjector.DependencyInjector;
+import com.erp.system.common.DependencyInjector;
 import com.erp.system.financial.controller.basic_information_management.PurchaseSalesSlipController;
 import com.erp.system.common.ERPDataInitializer;
 import com.erp.system.financial.controller.basic_information_management.TaxInvoiceController;
 import com.erp.system.financial.controller.book_keeping.AccountingLedgerController;
-
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Comparator;
 
 import static com.erp.system.common.PrintAllEntities.printAllEntities;
 
@@ -28,7 +23,6 @@ public class Main {
         AccountingLedgerController accountingLedgerController = injector.getInstance(AccountingLedgerController.class);
         TaxInvoiceController taxInvoiceController = injector.getInstance(TaxInvoiceController.class);
 
-
         printAllEntities(purchaseSalesSlipController.findAllEntries(), "code"); // Entry 출력
         printAllEntities(purchaseSalesSlipController.findAllVatTypes(), "code"); // VatType 출력
         printAllEntities(accountingLedgerController.findAllCashBooks(), "code"); // CashBook 출력
@@ -37,6 +31,7 @@ public class Main {
         taxInvoiceController.findAllTaxInvoices().forEach(taxInvoice -> {
             System.out.println(taxInvoice.getNtsTransmissionStatus().getClass()); // enum 확인
         });
+
 
     }
 }

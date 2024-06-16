@@ -9,12 +9,42 @@ import java.util.UUID;
 public class CorporateType {
     private final String id; // 고유 식별자
     private final String code; // 법인구분 코드
+
     private String type; // 법인구분
     private String description; // 법인구분 설명
 
-    public CorporateType(String code) {
-        this.id = UUID.randomUUID().toString();
-        this.code = code;
+    public static class Builder {
+        private final String id;
+        private final String code;
+
+        private String type;
+        private String description;
+
+        public Builder(String code) {
+            this.id = UUID.randomUUID().toString();
+            this.code = code;
+        }
+
+        public Builder type(String type) {
+            this.type = type;
+            return this;
+        }
+
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public CorporateType build() {
+            return new CorporateType(this);
+        }
+    } // end of Builder
+
+    private CorporateType(Builder builder) {
+        this.id = builder.id;
+        this.code = builder.code;
+        this.type = builder.type;
+        this.description = builder.description;
     }
 
     public String getId() {
@@ -29,16 +59,8 @@ public class CorporateType {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 }
 

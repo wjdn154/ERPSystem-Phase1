@@ -1,6 +1,7 @@
-package com.erp.system.common.DependencyInjector;
+package com.erp.system.common;
 
 
+import com.erp.system.common.annotation.Component;
 import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
 import org.reflections.scanners.TypeAnnotationsScanner;
@@ -11,10 +12,6 @@ import java.lang.reflect.Constructor;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/**
- * 의존성 주입을 관리하는 싱글톤 클래스.
- * 클래스들을 자동으로 등록하고 인스턴스화하여 의존성을 관리함.
- */
 /**
  * 의존성 주입을 관리하는 싱글톤 클래스.
  * 클래스들을 자동으로 등록하고 인스턴스화하여 의존성을 관리함.
