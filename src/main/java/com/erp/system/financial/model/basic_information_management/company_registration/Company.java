@@ -9,13 +9,13 @@ import java.util.UUID;
  */
 public class Company {
     private final String id; // 고유식별자
+    private final String code; // 회사코드
     private final String corporate_type; // 법인구분 테이블 참조코드
     private final String corporate_kinds; // 법인종류 테이블 참조코드
     private final String representative_id; // 대표자 정보 테이블 참조코드
     private final String address_id; // 주소 정보 테이블 참조코드
     private final String contact_id; // 연락처 정보 테이블 참조코드
     private final String tax_id; // 세무 정보 테이블 참조코드
-    private final String code; // 회사코드
 
     private boolean is_sme; // 중소기업여부
     private String business_registration_number; // 사업자등록번호

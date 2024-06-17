@@ -9,8 +9,8 @@ import java.util.UUID;
  */
 public class Contact {
     private final String id; // 고유식별자
-    private final String company_id; // 연결된 회사 ID
     private final String code; // 연락처 코드
+    private final String company_id; // 연결된 회사 ID
 
     private String business_phone; // 사업장 전화번호
     private String fax; // 팩스번호
@@ -23,7 +23,7 @@ public class Contact {
         private String business_phone;
         private String fax;
 
-        public Builder(String company_id, String code) {
+        public Builder(String code, String company_id) {
             this.id = UUID.randomUUID().toString();
             this.code = code;
             this.company_id = company_id;

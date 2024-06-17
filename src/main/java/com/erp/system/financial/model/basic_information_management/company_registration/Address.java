@@ -9,8 +9,8 @@ import java.util.UUID;
  */
 public class Address {
     private final String id; // 고유식별자
-    private final String company_id; // 연결된 회사 ID
     private final String code; // 주소 코드번호
+    private final String company_id; // 연결된 회사 ID
 
     private String address; // 사업장주소
     private String headquarters_address; // 본점주소

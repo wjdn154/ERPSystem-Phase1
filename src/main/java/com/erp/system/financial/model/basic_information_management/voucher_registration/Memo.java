@@ -22,7 +22,7 @@ public class Memo {
         private String description;
         private boolean immutable;
 
-        public Builder(String account_code, String code) {
+        public Builder(String code, String account_code) {
             this.id = UUID.randomUUID().toString();
             this.account_code = account_code;
             this.code = code;

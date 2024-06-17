@@ -24,10 +24,10 @@ public class Deposit {
         private Date maturity_date;
         private BigDecimal interest_rate;
 
-        public Builder(String account_code, String code) {
+        public Builder(String code, String account_code) {
             this.id = UUID.randomUUID().toString();
-            this.account_code = account_code;
             this.code = code;
+            this.account_code = account_code;
         }
 
         public Builder maturity_date(Date maturity_date) {

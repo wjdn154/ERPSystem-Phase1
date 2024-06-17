@@ -10,12 +10,12 @@ import java.util.UUID;
  */
 public class Voucher {
     private final String id; // 전표의 고유 식별자
+    private final String code; // 전표 코드
     private final String company_code; // 회사 코드
     private final String voucher_type_code; // 전표타입 코드
     private final String account_code; // 계정과목 코드
     private final String vendor_code; // 거래처 코드
     private final String memo_code; // 적요 코드
-    private final String code; // 전표 코드
 
     private String description; // 거래 설명
     private BigDecimal debit; // 차변 금액
@@ -24,19 +24,19 @@ public class Voucher {
 
     public static class Builder {
         private final String id;
+        private final String code;
         private final String company_code;
         private final String voucher_type_code;
         private final String account_code;
         private final String vendor_code;
         private final String memo_code;
-        private final String code;
 
         private String description;
         private BigDecimal debit;
         private BigDecimal credit;
         private Date date;
 
-        public Builder(String memo_code, String code, String vendor_code, String account_code, String voucher_type_code, String company_code) {
+        public Builder( String code, String memo_code, String vendor_code, String account_code, String voucher_type_code, String company_code) {
             this.id = UUID.randomUUID().toString();
             this.code = code;
             this.memo_code = memo_code;

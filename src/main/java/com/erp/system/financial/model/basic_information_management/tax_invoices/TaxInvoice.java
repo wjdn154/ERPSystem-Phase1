@@ -15,8 +15,8 @@ public class TaxInvoice {
     public enum NTSStatus { TRANSMITTED, PENDING }
 
     private final String id; // 세금 계산서의 고유 식별자
-    private final String vendor_code; // 거래처 코드 참조
     private final String code; // 세금 계산서 코드
+    private final String vendor_code; // 거래처 코드 참조
 
     private TaxType type; // 과세유형 (과세, 영세, 면세)
     private ReceiptType receiptType; // 영수증 타입 (영수, 청구)
@@ -31,8 +31,8 @@ public class TaxInvoice {
     
     public static class Builder {
         private final String id;
-        private final String vendor_code;
         private final String code;
+        private final String vendor_code;
 
         private TaxInvoice.TaxType type;
         private TaxInvoice.ReceiptType receiptType;
@@ -45,7 +45,7 @@ public class TaxInvoice {
         private BigDecimal tax_amount;
         private String approval_number;
 
-        public Builder(String vendor_code, String code) {
+        public Builder( String code, String vendor_code) {
             this.id = UUID.randomUUID().toString();
             this.vendor_code = vendor_code;
             this.code = code;

@@ -8,8 +8,8 @@ import java.util.UUID;
  */
 public class Representative {
     private final String id; // 고유 식별자
-    private final String company_id; // 연결된 회사 ID
     private final String code; // 회사 대표자 코드
+    private final String company_id; // 연결된 회사 ID
 
     private String name; // 대표자명
     private String id_number; // 대표자 주민번호

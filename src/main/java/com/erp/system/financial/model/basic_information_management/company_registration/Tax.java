@@ -9,11 +9,11 @@ import java.util.UUID;
  */
 public class Tax {
     private final String id; // 고유식별자
+    private final String code; // 세무 정보 코드
     private final String company_id; // 연결된 회사 ID
     private final String business_tax_office_id; // 사업장관할세무서 ID
     private final String headquarters_tax_office_id; // 본점관할세무서 ID
     private final String local_corporate_tax_category_id; // 지방세법인구분 ID
-    private final String code; // 세무 정보 코드
 
     private String local_income_tax_office; // 지방소득세납세지
 
@@ -27,8 +27,8 @@ public class Tax {
 
         private String local_income_tax_office;
 
-        public Builder(String id, String company_id, String business_tax_office_id, String headquarters_tax_office_id,
-                       String local_corporate_tax_category_id, String code) {
+        public Builder( String code, String company_id, String business_tax_office_id, String headquarters_tax_office_id,
+                       String local_corporate_tax_category_id) {
             this.id = UUID.randomUUID().toString();
             this.company_id = company_id;
             this.business_tax_office_id = business_tax_office_id;

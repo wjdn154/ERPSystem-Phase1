@@ -11,6 +11,7 @@ import java.util.UUID;
  */
 public class GeneralLedger {
     private final String id; // 고유 식별자
+    private final String code; // 총계정원장 코드
     private final String account_code; // 계정과목 코드
 
     private Date date; // 거래 날짜
@@ -22,6 +23,7 @@ public class GeneralLedger {
 
     public static class Builder {
         private final String id;
+        private final String code;
         private final String account_code;
 
         private Date date;
@@ -31,8 +33,9 @@ public class GeneralLedger {
         private BigDecimal closing_balance;
         private Timestamp updated_at;
 
-        public Builder(String account_code) {
+        public Builder(String code, String account_code) {
             this.id = UUID.randomUUID().toString();
+            this.code = code;
             this.account_code = account_code;
         }
 
@@ -73,6 +76,7 @@ public class GeneralLedger {
 
     private GeneralLedger(Builder builder) {
         this.id = builder.id;
+        this.code = builder.code;
         this.account_code = builder.account_code;
         this.date = builder.date;
         this.opening_balance = builder.opening_balance;

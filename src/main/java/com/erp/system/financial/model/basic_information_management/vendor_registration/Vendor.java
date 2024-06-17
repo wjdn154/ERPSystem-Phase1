@@ -32,11 +32,11 @@ public class Vendor {
         private String business_item;
         private String address;
 
-        public Builder(String manager_id, String department_id, String code) {
+        public Builder( String code, String manager_id, String department_id) {
             this.id = UUID.randomUUID().toString();
+            this.code = code;
             this.manager_id = manager_id;
             this.department_id = department_id;
-            this.code = code;
         }
 
         public Builder name(String name) {
