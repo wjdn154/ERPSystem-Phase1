@@ -1,4 +1,4 @@
-package src.main.java.com.erp.system.production.model.material_inventory;
+package com.erp.system.production.model.material_inventory;
 
 public class Unit {
     public static final String KILOGRAM = "kg";

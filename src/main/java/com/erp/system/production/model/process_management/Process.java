@@ -1,4 +1,4 @@
-package src.main.java.com.erp.system.production.model.process_management;
+package com.erp.system.production.model.process_management;
 
 import java.util.UUID;
 

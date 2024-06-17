@@ -1,4 +1,4 @@
-package src.main.java.com.erp.system.production.model.production_plan_management.material_requirement_planning;
+package com.erp.system.production.model.production_plan_management.material_requirement_planning;
 
 import java.time.LocalDate;
 import java.util.UUID;

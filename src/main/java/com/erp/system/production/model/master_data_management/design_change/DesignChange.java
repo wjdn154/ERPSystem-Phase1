@@ -1,4 +1,4 @@
-package src.main.java.com.erp.system.production.model.master_data_management.design_change;
+package com.erp.system.production.model.master_data_management.design_change;
 
 // 설계 변경 관리
 
