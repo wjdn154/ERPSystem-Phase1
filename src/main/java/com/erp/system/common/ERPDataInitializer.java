@@ -181,7 +181,7 @@ public class ERPDataInitializer {
         Class<?> builderClass = Arrays.stream(clazz.getDeclaredClasses())
                 .filter(cl -> cl.getSimpleName().equals("Builder"))
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException("Builder class not found for " + clazz.getSimpleName()));
+                .orElseThrow(() -> new IllegalStateException("빌더 클래스를 찾을 수 없습니다. " + clazz.getSimpleName()));
 
         // Builder 생성자 조회 및 인스턴스 생성
         Constructor<?> constructor = builderClass.getDeclaredConstructors()[0]; // 첫 번째 생성자를 사용
@@ -193,7 +193,7 @@ public class ERPDataInitializer {
         for (int i = 0; i < paramTypes.length; i++) {
             int paramIndex = columnNames.indexOf(columnNames.get(i));
             if (paramIndex == -1) {
-                throw new IllegalArgumentException("Column for parameter " + columnNames.get(i) + " not found.");
+                throw new IllegalArgumentException("컬럼을 찾을 수 없습니다: " + columnNames.get(i));
             }
             constructorArgs[i] = convertValue(rowData.get(paramIndex), paramTypes[i], clazz.getSimpleName());
         }
@@ -233,8 +233,8 @@ public class ERPDataInitializer {
                 }
             }
         }
-        System.out.println("Failed to find setter method for " + fieldName + " with type " + parameterType.getSimpleName());
-        throw new NoSuchMethodException("No suitable setter found for " + fieldName + " in " + builderClass.getName());
+        System.out.println("해당 필드의 setter 메서드를 찾지 못했습니다: " + fieldName + " 타입: " + parameterType.getSimpleName());
+        throw new NoSuchMethodException("해당 필드의 setter 메서드를 찾지 못했습니다: " + fieldName + " in " + builderClass.getName());
     }
 
     /**
