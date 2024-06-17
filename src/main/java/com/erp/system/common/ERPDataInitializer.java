@@ -181,7 +181,7 @@ public class ERPDataInitializer {
         Class<?> builderClass = Arrays.stream(clazz.getDeclaredClasses())
                 .filter(cl -> cl.getSimpleName().equals("Builder"))
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException("빌더 클래스를 찾을 수 없습니다. " + clazz.getSimpleName()));
+                .orElseThrow(() -> new IllegalStateException(clazz.getSimpleName() + " 클래스에 Builder 클래스가 존재하지 않습니다."));
 
         // Builder 생성자 조회 및 인스턴스 생성
         Constructor<?> constructor = builderClass.getDeclaredConstructors()[0]; // 첫 번째 생성자를 사용
@@ -193,7 +193,7 @@ public class ERPDataInitializer {
         for (int i = 0; i < paramTypes.length; i++) {
             int paramIndex = columnNames.indexOf(columnNames.get(i));
             if (paramIndex == -1) {
-                throw new IllegalArgumentException("컬럼을 찾을 수 없습니다: " + columnNames.get(i));
+                throw new IllegalArgumentException("매개변수 " + columnNames.get(i) + "에 대한 컬럼을 찾을 수 없습니다.");
             }
             constructorArgs[i] = convertValue(rowData.get(paramIndex), paramTypes[i], clazz.getSimpleName());
         }
@@ -207,7 +207,7 @@ public class ERPDataInitializer {
             String methodName = columnNames.get(i);
             Class<?> fieldType = getTypeFromString(dataTypes.get(i));
             Object value = convertValue(rowData.get(i), fieldType, clazz.getSimpleName());
-            Method setterMethod = findSetterMethod(builder.getClass(), methodName, fieldType);
+            Method setterMethod = findBuilderMethod(builder.getClass(), methodName, fieldType);
             setterMethod.invoke(builder, value);
         }
 
@@ -217,14 +217,14 @@ public class ERPDataInitializer {
     }
 
     /**
-     * Builder 클래스의 setter 메서드를 찾는 메서드.
+     * Builder 클래스의 필드를 설정하는 메서드를 찾는 메서드.
      * @param builderClass Builder 클래스
      * @param fieldName 필드 이름
      * @param parameterType 매개변수 타입
-     * @return setter 메서드
+     * @return 필드를 설정하는 메서드
      * @throws NoSuchMethodException 메서드를 찾지 못한 경우
      */
-    private Method findSetterMethod(Class<?> builderClass, String fieldName, Class<?> parameterType) throws NoSuchMethodException {
+    private Method findBuilderMethod(Class<?> builderClass, String fieldName, Class<?> parameterType) throws NoSuchMethodException {
         for (Method method : builderClass.getMethods()) {
             if (method.getName().equalsIgnoreCase(fieldName) && method.getParameterTypes().length == 1) {
                 Class<?> methodParamType = method.getParameterTypes()[0];
@@ -233,9 +233,10 @@ public class ERPDataInitializer {
                 }
             }
         }
-        System.out.println("해당 필드의 setter 메서드를 찾지 못했습니다: " + fieldName + " 타입: " + parameterType.getSimpleName());
-        throw new NoSuchMethodException("해당 필드의 setter 메서드를 찾지 못했습니다: " + fieldName + " in " + builderClass.getName());
+        System.out.println(fieldName + "에 대한 빌더 메서드를 " + parameterType.getSimpleName() + " 타입으로 찾지 못했습니다.");
+        throw new NoSuchMethodException(builderClass.getName() + " 클래스의 빌더에서 " + fieldName + "에 대한 적절한 메서드를 찾을 수 없습니다.");
     }
+
 
     /**
      * 문자열로부터 클래스 타입을 반환하는 메서드.

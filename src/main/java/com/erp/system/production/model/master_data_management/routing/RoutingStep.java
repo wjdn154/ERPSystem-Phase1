@@ -1,4 +1,4 @@
-package src.main.java.com.erp.system.production.model.master_data_management.routing;
+package com.erp.system.production.model.master_data_management.routing;
 
 import java.util.UUID;
 

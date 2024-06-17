@@ -1,4 +1,4 @@
-package src.main.java.com.erp.system.production.model.production_plan_management.production_plan;
+package com.erp.system.production.model.production_plan_management.production_plan;
 
 import java.time.LocalDate;
 import java.util.UUID;
