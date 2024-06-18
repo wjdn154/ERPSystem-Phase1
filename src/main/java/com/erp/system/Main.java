@@ -6,6 +6,7 @@ import com.erp.system.financial.controller.basic_information_management.Purchase
 import com.erp.system.common.ERPDataInitializer;
 import com.erp.system.financial.controller.basic_information_management.TaxInvoiceController;
 import com.erp.system.financial.controller.book_keeping.AccountingLedgerController;
+import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entry;
 
 import static com.erp.system.common.PrintAllEntities.printAllEntities;
 
@@ -31,6 +32,15 @@ public class Main {
         taxInvoiceController.findAllTaxInvoices().forEach(taxInvoice -> {
             System.out.println(taxInvoice.getNtsTransmissionStatus().getClass()); // enum 확인
         });
+
+        Entry entry = new Entry.Builder("1")
+                .build();
+
+        System.out.println("entry.getName() = " + entry.getName());
+
+
+        System.out.println("entry.getName() = " + entry.getName());
+
 
 
     }

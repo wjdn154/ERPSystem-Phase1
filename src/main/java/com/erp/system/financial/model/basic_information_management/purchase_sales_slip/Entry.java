@@ -1,5 +1,8 @@
 package com.erp.system.financial.model.basic_information_management.purchase_sales_slip;
 
+import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.annotation.NotNull;
+
 import java.util.UUID;
 
 /**
@@ -9,6 +12,7 @@ import java.util.UUID;
 public class Entry {
     private final String id; // 고유 식별자
     private final String code; // 분개 코드
+    @NotNull
     private final String name; // 분개 이름
 
     public static class Builder {
@@ -42,6 +46,7 @@ public class Entry {
         this.id = builder.id;
         this.code = builder.code;
         this.name = builder.name;
+        NotNullValidator.safeValidateFields(this);
     }
 
     public String getId() {
