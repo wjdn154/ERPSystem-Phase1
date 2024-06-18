@@ -15,7 +15,7 @@ public class Material {
     private int quantity; // 재고량
     private LocalDateTime lastUpdated; // 마지막 업데이트 시간
 
-    public Material(Builder builder) {
+    private Material(Builder builder) {
         this.id = builder.id;
         this.code = builder.code;
         this.name = builder.name;

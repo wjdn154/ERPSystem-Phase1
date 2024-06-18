@@ -14,7 +14,7 @@ public class DesignChange {
     private String description; // 변경 내용
     private LocalDate date; // 변경 일자
 
-    public DesignChange(Builder builder) {
+    private DesignChange(Builder builder) {
         this.id = builder.id;
         this.code = builder.code;
         this.productId = builder.productId;

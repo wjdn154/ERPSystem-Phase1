@@ -13,6 +13,15 @@ public class BomItem {
 
     private int quantity; // 자재 수량
 
+    // BomItem 생성자: Builder 객체를 받아서 초기화
+    private BomItem(Builder builder) {
+        this.id = builder.id;
+        this.code = builder.code;
+        this.bomId = builder.bomId;
+        this.materialId = builder.materialId;
+        this.quantity = builder.quantity;
+    }
+
     public static class Builder {
         private final String id; // Bom 항목 ID
         private final String code; // Bom 항목 CODE
@@ -41,14 +50,6 @@ public class BomItem {
         }
     }
 
-    // BomItem 생성자: Builder 객체를 받아서 초기화
-    private BomItem(Builder builder) {
-        this.id = builder.id;
-        this.code = builder.code;
-        this.bomId = builder.bomId;
-        this.materialId = builder.materialId;
-        this.quantity = builder.quantity;
-    }
     public String getId() {
         return id;
     }

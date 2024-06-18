@@ -15,7 +15,7 @@ public class AnnualProductionPlan {
     private String description; // 계획 내용
     private LocalDate date; // 계획 생성 일자
 
-    public AnnualProductionPlan(Builder builder) {
+    private AnnualProductionPlan(Builder builder) {
         this.id = builder.id;
         this.code = builder.code;
         this.productId = builder.productId;

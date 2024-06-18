@@ -16,7 +16,7 @@ public class Product {
     private String description; // 제품 설명
     private LocalDate releaseDate; // 출시일
 
-    public Product(Builder builder) {
+    private Product(Builder builder) {
         this.id = builder.id;
         this.code = builder.code;
         this.name = builder.name;

@@ -14,7 +14,7 @@ public class Routing {
     private LocalDate effectiveDate; // 공정경로 유효 시작일
     private LocalDate expirationDate; // 공정경로 유효 종료일
 
-    public Routing(Builder builder) {
+    private Routing(Builder builder) {
         this.id = builder.id;
         this.code = builder.code;
         this.productId = builder.productId;

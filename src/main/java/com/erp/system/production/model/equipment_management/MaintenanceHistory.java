@@ -15,7 +15,7 @@ public class MaintenanceHistory {
     private LocalDate maintenanceDate; // 유지보수 일자
     private String description; // 유지보수 설명
 
-    public MaintenanceHistory(Builder builder) {
+    private MaintenanceHistory(Builder builder) {
         this.id = builder.id;
         this.code = builder.code;
         this.equipmentId = builder.equipmentId;
