@@ -13,7 +13,7 @@ public class RoutingStep {
     private String description; // 해당 단계 작업내용 설명
     private int duration; // 소요시간 (분 단위)
 
-    public RoutingStep(Builder builder) {
+    private RoutingStep(Builder builder) {
         this.id = builder.id;
         this.code = builder.code;
         this.routingId = builder.routingId;

@@ -10,6 +10,15 @@ public class Bom {
     private LocalDate effectiveDate; // Bom 유효시작일
     private LocalDate expirationDate; // Bom 종료일
 
+    // Bom 클래스의 private 생성자, Builder 객체를 파라미터로 받음
+    private Bom(Builder builder) {
+        this.id = builder.id;
+        this.code = builder.code;
+        this.name = builder.name;
+        this.effectiveDate = builder.effectiveDate;
+        this.expirationDate = builder.expirationDate;
+    }
+
     // Builder 클래스 정의
     public static class Builder {
         private final String id; // Bill of Materials(자재명세표) ID
@@ -50,15 +59,6 @@ public class Bom {
 
 
     } // end of Builder
-
-    // Bom 클래스의 private 생성자, Builder 객체를 파라미터로 받음
-    private Bom(Builder builder) {
-        this.id = builder.id;
-        this.code = builder.code;
-        this.name = builder.name;
-        this.effectiveDate = builder.effectiveDate;
-        this.expirationDate = builder.expirationDate;
-    }
 
     public String getId() {
         return id;

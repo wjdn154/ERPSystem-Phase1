@@ -13,7 +13,7 @@ public class Equipment {
     private LocalDate purchaseDate; // 구입일자
     private String location; // 위치
 
-    public Equipment(Builder builder) {
+    private Equipment(Builder builder) {
         this.id = builder.id;
         this.code = builder.code;
         this.name = builder.name;

@@ -14,7 +14,7 @@ public class MRP {
     private int requiredQuantity; // 소요 자재 수량
     private LocalDate date; // MRP 생성 일자
 
-    public MRP(Builder builder) {
+    private MRP(Builder builder) {
         this.id = builder.id;
         this.code = builder.code;
         this.productionPlanId = builder.productionPlanId;

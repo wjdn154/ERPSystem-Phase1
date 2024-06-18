@@ -13,7 +13,7 @@ public class ProductionPerformance {
     private int quantity; // 생산수량
     private LocalDate recordDate; // 생산실적 기록 일자
 
-    public ProductionPerformance(Builder builder) {
+    private ProductionPerformance(Builder builder) {
         this.id = builder.id;
         this.code = builder.code;
         this.productionPlanId = builder.productionPlanId;

@@ -16,7 +16,7 @@ public class MaterialInventory {
     private int quantity; // 재고 수량
     private LocalDateTime updated; // 마지막 업데이트 시간
 
-    public MaterialInventory(Builder builder) {
+    private MaterialInventory(Builder builder) {
         this.id = builder.id;
         this.code = builder.code;
         this.materialId = builder.materialId;

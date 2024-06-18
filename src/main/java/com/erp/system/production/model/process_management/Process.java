@@ -13,7 +13,7 @@ public class Process {
     private String name; // 공정 이름
     private String description; // 공정 설명
 
-    public Process(Builder builder) {
+    private Process(Builder builder) {
         this.id = builder.id;
         this.code = builder.code;
         this.productId = builder.productId;
