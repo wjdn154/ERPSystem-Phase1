@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 // 자재소요계획(MRP, Material Requirement Planning) : 생산계획에 따라 필요한 자재의 수량과 종류를 결정하고, 이를 바탕으로 자재 관리
-public class MRP {
+public class Mrp {
 
     private final String id; // MRP ID
     private final String code; // MRP CODE
@@ -14,7 +14,7 @@ public class MRP {
     private int requiredQuantity; // 소요 자재 수량
     private LocalDate date; // MRP 생성 일자
 
-    private MRP(Builder builder) {
+    private Mrp(Builder builder) {
         this.id = builder.id;
         this.code = builder.code;
         this.productionPlanId = builder.productionPlanId;
@@ -53,8 +53,8 @@ public class MRP {
             return this;
         }
 
-        public MRP build() {
-            return new MRP(this);
+        public Mrp build() {
+            return new Mrp(this);
         }
     } // end of Builder
 
