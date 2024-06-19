@@ -1,6 +1,7 @@
 package com.erp.system.financial.model.basic_information_management.account_information;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -11,33 +12,45 @@ import java.util.UUID;
 public class BankTransaction {
     private final String id; // 은행 거래의 고유식별자
     private final String code; // 코드번호
-    private final String account_code; // 계좌 코드 참조
+    private final String accountCode; // 계좌 코드 참조
 
-    private String bank_name; // 거래 은행명
+    private String bankName; // 거래 은행명
     private String type; // 거래 유형
     private BigDecimal amount; // 거래 금액
-    private Date date; // 거래 날짜
-    private BigDecimal current_balance; // 현재 잔액
+    private LocalDate date; // 거래 날짜
+    private BigDecimal currentBalance; // 현재 잔액
+
+    public static int idIndex = 1;
 
     public static class Builder {
-        private final String id;
-        private final String code;
-        private final String account_code;
+        private String id;
+        private String code;
+        private String accountCode;
 
-        private String bank_name;
+        private String bankName;
         private String type;
         private BigDecimal amount;
-        private Date date;
-        private BigDecimal current_balance;
+        private LocalDate date;
+        private BigDecimal currentBalance;
 
-        public Builder(String code, String account_code) {
-            this.id = UUID.randomUUID().toString();
-            this.code = code;
-            this.account_code = account_code;
+        public Builder id(String id) {
+            this.id = id;
+            return this;
         }
 
-        public Builder bank_name(String bank_name) {
-            this.bank_name = bank_name;
+        public Builder code(String code) {
+            this.code = code;
+            return this;
+        }
+
+        public Builder accountCode(String accountCode) {
+            this.accountCode = accountCode;
+            return this;
+        }
+
+
+        public Builder bankName(String bankName) {
+            this.bankName = bankName;
             return this;
         }
 
@@ -51,13 +64,13 @@ public class BankTransaction {
             return this;
         }
 
-        public Builder date(Date date) {
+        public Builder date(LocalDate date) {
             this.date = date;
             return this;
         }
 
-        public Builder current_balance(BigDecimal current_balance) {
-            this.current_balance = current_balance;
+        public Builder currentBalance(BigDecimal currentBalance) {
+            this.currentBalance = currentBalance;
             return this;
         }
 
@@ -67,14 +80,26 @@ public class BankTransaction {
     }
 
     private BankTransaction(Builder builder) {
-        this.id = builder.id;
+        this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.code = builder.code;
-        this.account_code = builder.account_code;
-        this.bank_name = builder.bank_name;
+        this.accountCode = builder.accountCode;
+        this.bankName = builder.bankName;
         this.type = builder.type;
         this.amount = builder.amount;
         this.date = builder.date;
-        this.current_balance = builder.current_balance;
+        this.currentBalance = builder.currentBalance;
+    }
+
+    public Builder tobuild() {
+        return new Builder()
+                .id(this.id)
+                .code(this.code)
+                .accountCode(this.accountCode)
+                .bankName(this.bankName)
+                .type(this.type)
+                .amount(this.amount)
+                .date(this.date)
+                .currentBalance(this.currentBalance);
     }
 
     public String getId() {
@@ -85,12 +110,12 @@ public class BankTransaction {
         return code;
     }
 
-    public String getAccount_code() {
-        return account_code;
+    public String getAccountCode() {
+        return accountCode;
     }
 
-    public String getBank_name() {
-        return bank_name;
+    public String getBankName() {
+        return bankName;
     }
 
     public String getType() {
@@ -101,11 +126,11 @@ public class BankTransaction {
         return amount;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public BigDecimal getCurrent_balance() {
-        return current_balance;
+    public BigDecimal getCurrentBalance() {
+        return currentBalance;
     }
 }

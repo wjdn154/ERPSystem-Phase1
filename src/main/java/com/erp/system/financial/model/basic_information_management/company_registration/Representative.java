@@ -9,25 +9,36 @@ import java.util.UUID;
 public class Representative {
     private final String id; // 고유 식별자
     private final String code; // 회사 대표자 코드
-    private final String company_id; // 연결된 회사 ID
+    private final String companyId; // 연결된 회사 ID
 
     private String name; // 대표자명
-    private String id_number; // 대표자 주민번호
+    private String idNumber; // 대표자 주민번호
     private boolean foreign; // 대표자 외국인여부
 
+    public static int idIndex = 1;
+
     public static class Builder {
-        private final String id;
-        private final String company_id;
-        private final String code;
+        private String id;
+        private String code;
+        private String companyId;
 
         private String name;
-        private String id_number;
+        private String idNumber;
         private boolean foreign;
 
-        public Builder(String code, String company_id) {
-            this.id = UUID.randomUUID().toString();
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder code(String code) {
             this.code = code;
-            this.company_id = company_id;
+            return this;
+        }
+
+        public Builder companyId(String companyId) {
+            this.companyId = companyId;
+            return this;
         }
 
         public Builder name(String name) {
@@ -35,8 +46,8 @@ public class Representative {
             return this;
         }
 
-        public Builder id_number(String id_number) {
-            this.id_number = id_number;
+        public Builder idNumber(String idNumber) {
+            this.idNumber = idNumber;
             return this;
         }
 
@@ -48,35 +59,45 @@ public class Representative {
         public Representative build() {
             return new Representative(this);
         }
-    }// end of Builder
+    } // end of Builder
 
-    public Representative(Builder builder) {
-        this.id = builder.id;
-        this.company_id = builder.company_id;
+    private Representative(Builder builder) {
+        this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.code = builder.code;
+        this.companyId = builder.companyId;
         this.name = builder.name;
-        this.id_number = builder.id_number;
+        this.idNumber = builder.idNumber;
         this.foreign = builder.foreign;
+    }
+
+    public Builder tobuild() {
+        return new Builder()
+                .id(this.id)
+                .code(this.code)
+                .companyId(this.companyId)
+                .name(this.name)
+                .idNumber(this.idNumber)
+                .foreign(this.foreign);
     }
 
     public String getId() {
         return id;
     }
 
-    public String getCompany_id() {
-        return company_id;
-    }
-
     public String getCode() {
         return code;
+    }
+
+    public String getCompanyId() {
+        return companyId;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getId_number() {
-        return id_number;
+    public String getIdNumber() {
+        return idNumber;
     }
 
     public boolean isForeign() {

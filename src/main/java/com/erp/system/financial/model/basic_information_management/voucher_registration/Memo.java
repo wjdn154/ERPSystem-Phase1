@@ -9,23 +9,34 @@ import java.util.UUID;
 public class Memo {
     private final String id; // 적요의 고유 식별자
     private final String code; // 적요의 고유 코드
-    private final String account_code; // 계정과목 참조 코드
+    private final String accountCode; // 계정과목 참조 코드
 
     private String description; // 적요 설명(계정과목에 따라 달라진다)
     private boolean immutable; // 수정불가 여부
 
+    public static int idIndex = 1; // static 변수 추가
+
     public static class Builder {
-        private final String id;
-        private final String code;
-        private final String account_code;
+        private String id;
+        private String code;
+        private String accountCode;
 
         private String description;
         private boolean immutable;
 
-        public Builder(String code, String account_code) {
-            this.id = UUID.randomUUID().toString();
-            this.account_code = account_code;
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder code(String code) {
             this.code = code;
+            return this;
+        }
+
+        public Builder accountCode(String accountCode) {
+            this.accountCode = accountCode;
+            return this;
         }
 
         public Builder description(String description) {
@@ -41,14 +52,23 @@ public class Memo {
         public Memo build() {
             return new Memo(this);
         }
-    }// end of Builder
+    } // end of Builder
 
     private Memo(Builder builder) {
-        this.id = builder.id;
+        this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.code = builder.code;
-        this.account_code = builder.account_code;
+        this.accountCode = builder.accountCode;
         this.description = builder.description;
         this.immutable = builder.immutable;
+    }
+
+    public Builder tobuild() {
+        return new Builder()
+                .id(this.id)
+                .code(this.code)
+                .accountCode(this.accountCode)
+                .description(this.description)
+                .immutable(this.immutable);
     }
 
     public String getId() {
@@ -59,8 +79,8 @@ public class Memo {
         return code;
     }
 
-    public String getAccount_code() {
-        return account_code;
+    public String getAccountCode() {
+        return accountCode;
     }
 
     public String getDescription() {

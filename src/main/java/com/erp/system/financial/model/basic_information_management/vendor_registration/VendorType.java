@@ -13,17 +13,23 @@ public class VendorType {
 
     private String category; // 구분(매입,매출 동시)
 
+    public static int idIndex = 1;
+
     public static class Builder {
-        private final String id;
-        private final String code;
+        private String id;
+        private String code;
 
         private String category;
 
-        public Builder(String code) {
-            this.id = UUID.randomUUID().toString();
-            this.code = code;
+        public Builder id(String id) {
+            this.id = id;
+            return this;
         }
 
+        public Builder code(String code) {
+            this.code = code;
+            return this;
+        }
         public Builder category(String category) {
             this.category = category;
             return this;
@@ -35,9 +41,16 @@ public class VendorType {
     }// end of Builder
 
     private VendorType(Builder builder) {
-        this.id = builder.id;
+        this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.code = builder.code;
         this.category = builder.category;
+    }
+
+    public Builder tobuild() {
+        return new Builder()
+                .id(this.id)
+                .code(this.code)
+                .category(this.category);
     }
 
     public String getId() {

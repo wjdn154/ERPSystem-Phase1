@@ -1,6 +1,7 @@
 package com.erp.system.financial.model.basic_information_management.voucher_registration;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -11,39 +12,66 @@ import java.util.UUID;
 public class Voucher {
     private final String id; // 전표의 고유 식별자
     private final String code; // 전표 코드
-    private final String company_code; // 회사 코드
-    private final String voucher_type_code; // 전표타입 코드
-    private final String account_code; // 계정과목 코드
-    private final String vendor_code; // 거래처 코드
-    private final String memo_code; // 적요 코드
+    private final String companyCode; // 회사 코드
+    private final String voucherTypeCode; // 전표타입 코드
+    private final String accountCode; // 계정과목 코드
+    private final String vendorCode; // 거래처 코드
+    private final String memoCode; // 적요 코드
 
     private String description; // 거래 설명
     private BigDecimal debit; // 차변 금액
     private BigDecimal credit; // 대변 금액
-    private Date date; // 전표 날짜
+    private LocalDate date; // 전표 날짜
+
+    public static int idIndex = 1; // static 변수 추가
 
     public static class Builder {
-        private final String id;
-        private final String code;
-        private final String company_code;
-        private final String voucher_type_code;
-        private final String account_code;
-        private final String vendor_code;
-        private final String memo_code;
+        private String id;
+        private String code;
+        private String companyCode;
+        private String voucherTypeCode;
+        private String accountCode;
+        private String vendorCode;
+        private String memoCode;
 
         private String description;
         private BigDecimal debit;
         private BigDecimal credit;
-        private Date date;
+        private LocalDate date;
 
-        public Builder( String code, String memo_code, String vendor_code, String account_code, String voucher_type_code, String company_code) {
-            this.id = UUID.randomUUID().toString();
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder code(String code) {
             this.code = code;
-            this.memo_code = memo_code;
-            this.vendor_code = vendor_code;
-            this.account_code = account_code;
-            this.voucher_type_code = voucher_type_code;
-            this.company_code = company_code;
+            return this;
+        }
+
+        public Builder companyCode(String companyCode) {
+            this.companyCode = companyCode;
+            return this;
+        }
+
+        public Builder voucherTypeCode(String voucherTypeCode) {
+            this.voucherTypeCode = voucherTypeCode;
+            return this;
+        }
+
+        public Builder accountCode(String accountCode) {
+            this.accountCode = accountCode;
+            return this;
+        }
+
+        public Builder vendorCode(String vendorCode) {
+            this.vendorCode = vendorCode;
+            return this;
+        }
+
+        public Builder memoCode(String memoCode) {
+            this.memoCode = memoCode;
+            return this;
         }
 
         public Builder description(String description) {
@@ -61,7 +89,7 @@ public class Voucher {
             return this;
         }
 
-        public Builder date(Date date) {
+        public Builder date(LocalDate date) {
             this.date = date;
             return this;
         }
@@ -69,20 +97,35 @@ public class Voucher {
         public Voucher build() {
             return new Voucher(this);
         }
-    }
+    } // end of Builder
 
     private Voucher(Builder builder) {
-        this.id = builder.id;
+        this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.code = builder.code;
-        this.company_code = builder.company_code;
-        this.voucher_type_code = builder.voucher_type_code;
-        this.account_code = builder.account_code;
-        this.vendor_code = builder.vendor_code;
-        this.memo_code = builder.memo_code;
+        this.companyCode = builder.companyCode;
+        this.voucherTypeCode = builder.voucherTypeCode;
+        this.accountCode = builder.accountCode;
+        this.vendorCode = builder.vendorCode;
+        this.memoCode = builder.memoCode;
         this.description = builder.description;
         this.debit = builder.debit;
         this.credit = builder.credit;
         this.date = builder.date;
+    }
+
+    public Builder tobuild() {
+        return new Builder()
+                .id(this.id)
+                .code(this.code)
+                .companyCode(this.companyCode)
+                .voucherTypeCode(this.voucherTypeCode)
+                .accountCode(this.accountCode)
+                .vendorCode(this.vendorCode)
+                .memoCode(this.memoCode)
+                .description(this.description)
+                .debit(this.debit)
+                .credit(this.credit)
+                .date(this.date);
     }
 
     public String getId() {
@@ -93,24 +136,24 @@ public class Voucher {
         return code;
     }
 
-    public String getCompany_code() {
-        return company_code;
+    public String getCompanyCode() {
+        return companyCode;
     }
 
-    public String getVoucher_type_code() {
-        return voucher_type_code;
+    public String getVoucherTypeCode() {
+        return voucherTypeCode;
     }
 
-    public String getAccount_code() {
-        return account_code;
+    public String getAccountCode() {
+        return accountCode;
     }
 
-    public String getVendor_code() {
-        return vendor_code;
+    public String getVendorCode() {
+        return vendorCode;
     }
 
-    public String getMemo_code() {
-        return memo_code;
+    public String getMemoCode() {
+        return memoCode;
     }
 
     public String getDescription() {
@@ -125,7 +168,7 @@ public class Voucher {
         return credit;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 }

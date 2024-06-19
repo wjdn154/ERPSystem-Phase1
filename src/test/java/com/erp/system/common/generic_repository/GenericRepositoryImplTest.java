@@ -1,11 +1,13 @@
 package com.erp.system.common.generic_repository;
 
 import com.erp.system.common.DependencyInjector.DependencyInjector;
+import com.erp.system.financial.model.basic_information_management.account_information.BankAccount;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entry;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javax.swing.filechooser.FileSystemView;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -27,7 +29,7 @@ class GenericRepositoryImplTest {
     // 저장 및 ID 또는 코드로 조회 테스트
     @Test
     void saveAndFindByIdOrCode() {
-        // Given: 새로운 엔트리를 저장
+       //  Given: 새로운 엔트리를 저장
         Entry entry = new Entry("0001");
         entry.setName("Entry 1");
         entryRepository.save(entry);
@@ -42,6 +44,7 @@ class GenericRepositoryImplTest {
         assertEquals(entry.getId(), foundById.get().getId(), "조회된 객체의 ID가 일치해야 함.");
         assertEquals(entry.getCode(), foundByCode.get().getCode(), "조회된 객체의 코드가 일치해야 함.");
     }
+
 
     // 업데이트 테스트
     @Test

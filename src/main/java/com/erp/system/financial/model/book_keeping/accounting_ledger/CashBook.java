@@ -2,6 +2,7 @@ package com.erp.system.financial.model.book_keeping.accounting_ledger;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -12,33 +13,52 @@ import java.util.UUID;
 public class CashBook {
     private final String id; // 고유 식별자
     private final String code;
-    private final String transaction_code; // 거래코드 참조키
-    private final String memos_code; // 적요 코드 참조키
-    private final String vendor_code; // 거래처 코드 참조키
+    private final String transactionCode; // 거래코드 참조키
+    private final String memosCode; // 적요 코드 참조키
+    private final String vendorCode; // 거래처 코드 참조키
 
     private BigDecimal debit; // 입금 금액
     private BigDecimal credit; // 출금 금액
-    private BigDecimal balance_forward; // 이월 금액
-    private Date date; // 거래 날짜
+    private BigDecimal balanceForward; // 이월 금액
+    private LocalDate date; // 거래 날짜
+
+    public static int idIndex = 1; // static 변수 추가
 
     public static class Builder {
-        private final String id;
-        private final String code;
-        private final String transaction_code;
-        private final String memos_code;
-        private final String vendor_code;
+        private String id;
+        private String code;
+        private String transactionCode;
+        private String memosCode;
+        private String vendorCode;
 
         private BigDecimal debit;
         private BigDecimal credit;
-        private BigDecimal balance_forward;
-        private Date date;
+        private BigDecimal balanceForward;
+        private LocalDate date;
 
-        public Builder(String code, String transaction_code, String memos_code, String vendor_code) {
-            this.id = UUID.randomUUID().toString();
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder code(String code) {
             this.code = code;
-            this.transaction_code = transaction_code;
-            this.memos_code = memos_code;
-            this.vendor_code = vendor_code;
+            return this;
+        }
+
+        public Builder transactionCode(String transactionCode) {
+            this.transactionCode = transactionCode;
+            return this;
+        }
+
+        public Builder memosCode(String memosCode) {
+            this.memosCode = memosCode;
+            return this;
+        }
+
+        public Builder vendorCode(String vendorCode) {
+            this.vendorCode = vendorCode;
+            return this;
         }
 
         public Builder debit(BigDecimal debit) {
@@ -51,12 +71,12 @@ public class CashBook {
             return this;
         }
 
-        public Builder balance_forward(BigDecimal balance_forward) {
-            this.balance_forward = balance_forward;
+        public Builder balanceForward(BigDecimal balanceForward) {
+            this.balanceForward = balanceForward;
             return this;
         }
 
-        public Builder date(Date date) {
+        public Builder date(LocalDate date) {
             this.date = date;
             return this;
         }
@@ -67,15 +87,28 @@ public class CashBook {
     }
 
     private CashBook(Builder builder) {
-        this.id = builder.id;
+        this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.code = builder.code;
-        this.transaction_code = builder.transaction_code;
-        this.memos_code = builder.memos_code;
-        this.vendor_code = builder.vendor_code;
+        this.transactionCode = builder.transactionCode;
+        this.memosCode = builder.memosCode;
+        this.vendorCode = builder.vendorCode;
         this.debit = builder.debit;
         this.credit = builder.credit;
-        this.balance_forward = builder.balance_forward;
+        this.balanceForward = builder.balanceForward;
         this.date = builder.date;
+    }
+
+    public Builder tobuild() {
+        return new Builder()
+                .id(this.id)
+                .code(this.code)
+                .transactionCode(this.transactionCode)
+                .memosCode(this.memosCode)
+                .vendorCode(this.vendorCode)
+                .debit(this.debit)
+                .credit(this.credit)
+                .balanceForward(this.balanceForward)
+                .date(this.date);
     }
 
     public String getId() {
@@ -86,16 +119,16 @@ public class CashBook {
         return code;
     }
 
-    public String getTransaction_code() {
-        return transaction_code;
+    public String getTransactionCode() {
+        return transactionCode;
     }
 
-    public String getMemos_code() {
-        return memos_code;
+    public String getMemosCode() {
+        return memosCode;
     }
 
-    public String getVendor_code() {
-        return vendor_code;
+    public String getVendorCode() {
+        return vendorCode;
     }
 
     public BigDecimal getDebit() {
@@ -106,11 +139,11 @@ public class CashBook {
         return credit;
     }
 
-    public BigDecimal getBalance_forward() {
-        return balance_forward;
+    public BigDecimal getBalanceForward() {
+        return balanceForward;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 }

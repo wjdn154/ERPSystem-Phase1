@@ -12,15 +12,21 @@ public class Entry {
 
     private String name; // 분개 이름
 
-    public static class Builder {
-        private final String id;
-        private final String code;
+    public static int idIndex = 1;
 
+    public static class Builder {
+        private String id;
+        private String code;
         private String name;
 
-        public Builder(String code) {
-            this.id = UUID.randomUUID().toString();
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder code(String code) {
             this.code = code;
+            return this;
         }
 
         public Builder name(String name) {
@@ -34,9 +40,16 @@ public class Entry {
     }// end of Builder
 
     private Entry(Builder builder) {
-        this.id = builder.id;
+        this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.code = builder.code;
         this.name = builder.name;
+    }
+
+    public Builder tobuild() {
+        return new Builder()
+                .id(this.id)
+                .code(this.code)
+                .name(this.name);
     }
 
     public String getId() {

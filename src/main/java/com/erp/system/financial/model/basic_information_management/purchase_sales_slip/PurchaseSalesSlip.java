@@ -1,6 +1,7 @@
 package com.erp.system.financial.model.basic_information_management.purchase_sales_slip;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -11,48 +12,67 @@ import java.util.UUID;
 public class PurchaseSalesSlip {
     private final String id; // 고유 식별자
     private final String code; // 매입매출전표 코드
-    private final String vat_type_code; // 부가세유형 참조 코드
-    private final String supplier_code; // 공급처 코드 (거래처 테이블 참조)
-    private final String entry_code; // 분개 코드 (분개 관련 정보 참조)
+    private final String vatTypeCode; // 부가세유형 참조 코드
+    private final String supplierCode; // 공급처 코드 (거래처 테이블 참조)
+    private final String entryCode; // 분개 코드 (분개 관련 정보 참조)
 
-    private Date date; // 전표 날짜
-    private String item_name; // 품목명
+    private LocalDate date; // 전표 날짜
+    private String itemName; // 품목명
     private BigDecimal quantity; // 수량
-    private BigDecimal unit_price; // 단가
-    private BigDecimal supply_value; // 공급가액
+    private BigDecimal unitPrice; // 단가
+    private BigDecimal supplyValue; // 공급가액
     private BigDecimal vat; // 부가세
-    private Boolean electronic_tax_invoice_issued; // 전자세금계산서 발행여부
+    private Boolean electronicTaxInvoiceIssued; // 전자세금계산서 발행여부
+
+    public static int idIndex = 1;
 
     public static class Builder {
-        private final String id;
-        private final String code;
-        private final String vat_type_code;
-        private final String supplier_code;
-        private final String entry_code;
+        private String id;
+        private String code;
+        private String vatTypeCode;
+        private String supplierCode;
+        private String entryCode;
 
-        private Date date;
-        private String item_name;
+        private LocalDate date;
+        private String itemName;
         private BigDecimal quantity;
-        private BigDecimal unit_price;
-        private BigDecimal supply_value;
+        private BigDecimal unitPrice;
+        private BigDecimal supplyValue;
         private BigDecimal vat;
-        private Boolean electronic_tax_invoice_issued;
+        private Boolean electronicTaxInvoiceIssued;
 
-        public Builder(String code, String vat_type_code, String supplier_code, String entry_code) {
-            this.id = UUID.randomUUID().toString();
-            this.code = code;
-            this.vat_type_code = vat_type_code;
-            this.supplier_code = supplier_code;
-            this.entry_code = entry_code;
+        public Builder id(String id) {
+            this.id = id;
+            return this;
         }
 
-        public Builder date(Date date) {
+        public Builder code(String code) {
+            this.code = code;
+            return this;
+        }
+
+        public Builder vatTypeCode(String vatTypeCode) {
+            this.vatTypeCode = vatTypeCode;
+            return this;
+        }
+
+        public Builder supplierCode(String supplierCode) {
+            this.supplierCode = supplierCode;
+            return this;
+        }
+
+        public Builder entryCode(String entryCode) {
+            this.entryCode = entryCode;
+            return this;
+        }
+
+        public Builder date(LocalDate date) {
             this.date = date;
             return this;
         }
 
-        public Builder item_name(String item_name) {
-            this.item_name = item_name;
+        public Builder itemName(String itemName) {
+            this.itemName = itemName;
             return this;
         }
 
@@ -61,13 +81,13 @@ public class PurchaseSalesSlip {
             return this;
         }
 
-        public Builder unit_price(BigDecimal unit_price) {
-            this.unit_price = unit_price;
+        public Builder unitPrice(BigDecimal unitPrice) {
+            this.unitPrice = unitPrice;
             return this;
         }
 
-        public Builder supply_value(BigDecimal supply_value) {
-            this.supply_value = supply_value;
+        public Builder supplyValue(BigDecimal supplyValue) {
+            this.supplyValue = supplyValue;
             return this;
         }
 
@@ -76,8 +96,8 @@ public class PurchaseSalesSlip {
             return this;
         }
 
-        public Builder electronic_tax_invoice_issued(Boolean electronic_tax_invoice_issued) {
-            this.electronic_tax_invoice_issued = electronic_tax_invoice_issued;
+        public Builder electronicTaxInvoiceIssued(Boolean electronicTaxInvoiceIssued) {
+            this.electronicTaxInvoiceIssued = electronicTaxInvoiceIssued;
             return this;
         }
 
@@ -86,19 +106,35 @@ public class PurchaseSalesSlip {
         }
     } // end of Builder
 
-    public PurchaseSalesSlip(Builder builder) {
-        this.id = builder.id;
+    private PurchaseSalesSlip(Builder builder) {
+        this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.code = builder.code;
-        this.vat_type_code = builder.vat_type_code;
-        this.supplier_code = builder.supplier_code;
-        this.entry_code = builder.entry_code;
+        this.vatTypeCode = builder.vatTypeCode;
+        this.supplierCode = builder.supplierCode;
+        this.entryCode = builder.entryCode;
         this.date = builder.date;
-        this.item_name = builder.item_name;
+        this.itemName = builder.itemName;
         this.quantity = builder.quantity;
-        this.unit_price = builder.unit_price;
-        this.supply_value = builder.supply_value;
+        this.unitPrice = builder.unitPrice;
+        this.supplyValue = builder.supplyValue;
         this.vat = builder.vat;
-        this.electronic_tax_invoice_issued = builder.electronic_tax_invoice_issued;
+        this.electronicTaxInvoiceIssued = builder.electronicTaxInvoiceIssued;
+    }
+
+    public Builder tobuild() {
+        return new Builder()
+                .id(this.id)
+                .code(this.code)
+                .vatTypeCode(this.vatTypeCode)
+                .supplierCode(this.supplierCode)
+                .entryCode(this.entryCode)
+                .date(this.date)
+                .itemName(this.itemName)
+                .quantity(this.quantity)
+                .unitPrice(this.unitPrice)
+                .supplyValue(this.supplyValue)
+                .vat(this.vat)
+                .electronicTaxInvoiceIssued(this.electronicTaxInvoiceIssued);
     }
 
     public String getId() {
@@ -109,43 +145,43 @@ public class PurchaseSalesSlip {
         return code;
     }
 
-    public String getVat_type_code() {
-        return vat_type_code;
+    public String getVatTypeCode() {
+        return vatTypeCode;
     }
 
-    public String getSupplier_code() {
-        return supplier_code;
+    public String getSupplierCode() {
+        return supplierCode;
     }
 
-    public String getEntry_code() {
-        return entry_code;
+    public String getEntryCode() {
+        return entryCode;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public String getItem_name() {
-        return item_name;
+    public String getItemName() {
+        return itemName;
     }
 
     public BigDecimal getQuantity() {
         return quantity;
     }
 
-    public BigDecimal getUnit_price() {
-        return unit_price;
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
     }
 
-    public BigDecimal getSupply_value() {
-        return supply_value;
+    public BigDecimal getSupplyValue() {
+        return supplyValue;
     }
 
     public BigDecimal getVat() {
         return vat;
     }
 
-    public Boolean getElectronic_tax_invoice_issued() {
-        return electronic_tax_invoice_issued;
+    public Boolean getElectronicTaxInvoiceIssued() {
+        return electronicTaxInvoiceIssued;
     }
 }
