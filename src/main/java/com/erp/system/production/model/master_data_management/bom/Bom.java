@@ -1,4 +1,4 @@
-package src.main.java.com.erp.system.production.model.master_data_management.bom;
+package com.erp.system.production.model.master_data_management.bom;
 
 import java.time.LocalDate;
 import java.util.UUID;

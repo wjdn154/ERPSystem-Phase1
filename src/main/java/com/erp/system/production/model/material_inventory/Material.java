@@ -1,4 +1,4 @@
-package src.main.java.com.erp.system.production.model.material_inventory;
+package com.erp.system.production.model.material_inventory;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
