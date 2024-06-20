@@ -11,18 +11,25 @@ public class VatType {
     private final String code; // 부가세유형 코드
 
     private String category; // 매입 또는 매출 구분
-    private String name ; // 항목명
+    private String name; // 항목명
+
+    public static int idIndex = 1;
 
     public static class Builder {
-        private final String id;
-        private final String code;
+        private String id;
+        private String code;
 
         private String category;
-        private String name ;
+        private String name;
 
-        public Builder(String code) {
-            this.id = UUID.randomUUID().toString();
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder code(String code) {
             this.code = code;
+            return this;
         }
 
         public Builder category(String category) {
@@ -38,13 +45,21 @@ public class VatType {
         public VatType build() {
             return new VatType(this);
         }
-    }// end of Builder
+    } // end of Builder
 
-    public VatType(Builder builder) {
+    private VatType(Builder builder) {
+        this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.code = builder.code;
-        this.id = builder.id;
         this.category = builder.category;
         this.name = builder.name;
+    }
+
+    public Builder tobuild() {
+        return new Builder()
+                .id(this.id)
+                .code(this.code)
+                .category(this.category)
+                .name(this.name);
     }
 
     public String getId() {

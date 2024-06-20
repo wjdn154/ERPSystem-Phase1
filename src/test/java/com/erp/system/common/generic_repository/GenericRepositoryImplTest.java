@@ -28,7 +28,8 @@ class GenericRepositoryImplTest {
     @Test
     void saveAndFindByIdOrCode() {
         // Given: 새로운 엔트리를 저장
-        Entry entry = new Entry.Builder("0001")
+        Entry entry = new Entry.Builder()
+                .code("1")
                 .name("Entry 1")
                 .build();
         entryRepository.save(entry);
@@ -48,13 +49,15 @@ class GenericRepositoryImplTest {
     @Test
     void updateEntry() {
         // Given: 새로운 엔트리를 저장하고, 업데이트할 정보 설정
-        Entry entry = new Entry.Builder("0001")
+        Entry entry = new Entry.Builder()
+                .code("1")
                 .name("Entry 1")
                 .build();
         entryRepository.save(entry);
 
         // When: 엔트리를 업데이트하고 조회
-        Entry updatedEntry = entry.toBuilder()
+        Entry updatedEntry = entry
+                .tobuild()
                 .name("Updated Entry")
                 .build();
 
@@ -70,7 +73,8 @@ class GenericRepositoryImplTest {
     @Test
     void deleteEntry() {
         // Given: 새로운 엔트리를 저장하고, 삭제할 ID 설정
-        Entry entry = new Entry.Builder("0001")
+        Entry entry = new Entry.Builder()
+                .code("1")
                 .name("Entry 1")
                 .build();
         entryRepository.save(entry);
@@ -87,10 +91,12 @@ class GenericRepositoryImplTest {
     @Test
     void findAllEntries() {
         // Given: 여러 Entries 객체를 저장
-        Entry entry1 = new Entry.Builder("0002")
+        Entry entry1 = new Entry.Builder()
+                .code("2")
                 .name("Entry 2")
                 .build();
-        Entry entry2 = new Entry.Builder("0003")
+        Entry entry2 = new Entry.Builder()
+                .code("3")
                 .name("Entry 3")
                 .build();
         entryRepository.save(entry1);
@@ -108,12 +114,14 @@ class GenericRepositoryImplTest {
     @Test
     void saveDuplicateCode() {
         // Given: 동일한 코드를 가진 두 번째 엔트리 생성
-        Entry entry1 = new Entry.Builder("0001")
+        Entry entry1 = new Entry.Builder()
+                .code("1")
                 .name("Entry 1")
                 .build();
         entryRepository.save(entry1);
 
-        Entry duplicateEntry = new Entry.Builder("0001")
+        Entry duplicateEntry = new Entry.Builder()
+                .code("1")
                 .name("Duplicate Entry")
                 .build();
 
@@ -125,6 +133,6 @@ class GenericRepositoryImplTest {
         // 예외 메시지 검증
         Throwable cause = exception.getCause();
         assertTrue(cause instanceof IllegalArgumentException);
-        assertEquals("이미 존재하는 코드입니다: 0001", cause.getMessage());
+        assertEquals("이미 존재하는 코드입니다: 1", cause.getMessage());
     }
 }

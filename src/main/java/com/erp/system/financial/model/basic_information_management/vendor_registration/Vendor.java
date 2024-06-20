@@ -9,34 +9,49 @@ import java.util.UUID;
 public class Vendor {
     private final String id; // 거래처의 고유 식별자
     private final String code; // 거래처의 고유 코드
-    private final String department_id; // 거래 담당 부서 ID
-    private final String manager_id; // 거래 담당자 ID
+    private final String departmentId; // 거래 담당 부서 ID
+    private final String managerId; // 거래 담당자 ID
 
     private String name; // 거래처명
-    private String registration_number; // 사업자 등록번호
-    private String personal_identification_number; // 주민등록번호
-    private String business_type; // 업종형태
-    private String business_item; // 종목
+    private String registrationNumber; // 사업자 등록번호
+    private String personalIdentificationNumber; // 주민등록번호
+    private String businessType; // 업종형태
+    private String businessItem; // 종목
     private String address; // 주소
 
+    public static int idIndex = 1;
+
     public static class Builder {
-        private final String id;
-        private final String code;
-        private final String department_id;
-        private final String manager_id;
+        private String id;
+        private String code;
+        private String departmentId;
+        private String managerId;
 
         private String name;
-        private String registration_number;
-        private String personal_identification_number;
-        private String business_type;
-        private String business_item;
+        private String registrationNumber;
+        private String personalIdentificationNumber;
+        private String businessType;
+        private String businessItem;
         private String address;
 
-        public Builder(String manager_id, String department_id, String code) {
-            this.id = UUID.randomUUID().toString();
-            this.manager_id = manager_id;
-            this.department_id = department_id;
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder code(String code) {
             this.code = code;
+            return this;
+        }
+
+        public Builder departmentId(String departmentId) {
+            this.departmentId = departmentId;
+            return this;
+        }
+
+        public Builder managerId(String managerId) {
+            this.managerId = managerId;
+            return this;
         }
 
         public Builder name(String name) {
@@ -44,23 +59,23 @@ public class Vendor {
             return this;
         }
 
-        public Builder registration_number(String registration_number) {
-            this.registration_number = registration_number;
+        public Builder registrationNumber(String registrationNumber) {
+            this.registrationNumber = registrationNumber;
             return this;
         }
 
-        public Builder personal_identification_number(String personal_identification_number) {
-            this.personal_identification_number = personal_identification_number;
+        public Builder personalIdentificationNumber(String personalIdentificationNumber) {
+            this.personalIdentificationNumber = personalIdentificationNumber;
             return this;
         }
 
-        public Builder business_type(String business_type) {
-            this.business_type = business_type;
+        public Builder businessType(String businessType) {
+            this.businessType = businessType;
             return this;
         }
 
-        public Builder business_item(String business_item) {
-            this.business_item = business_item;
+        public Builder businessItem(String businessItem) {
+            this.businessItem = businessItem;
             return this;
         }
 
@@ -75,16 +90,30 @@ public class Vendor {
     }
 
     private Vendor(Builder builder) {
-        this.id = builder.id;
+        this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.code = builder.code;
-        this.department_id =  builder.department_id;
-        this.manager_id =  builder.manager_id;
-        this.name =  builder.name;
-        this.registration_number =  builder.registration_number;
-        this.personal_identification_number =  builder.personal_identification_number;
-        this.business_type =  builder.business_type;
-        this.business_item =  builder.business_item;
-        this.address =  builder.address;
+        this.departmentId = builder.departmentId;
+        this.managerId = builder.managerId;
+        this.name = builder.name;
+        this.registrationNumber = builder.registrationNumber;
+        this.personalIdentificationNumber = builder.personalIdentificationNumber;
+        this.businessType = builder.businessType;
+        this.businessItem = builder.businessItem;
+        this.address = builder.address;
+    }
+
+    public Builder tobuild() {
+        return new Builder()
+                .id(this.id)
+                .code(this.code)
+                .departmentId(this.departmentId)
+                .managerId(this.managerId)
+                .name(this.name)
+                .registrationNumber(this.registrationNumber)
+                .personalIdentificationNumber(this.personalIdentificationNumber)
+                .businessType(this.businessType)
+                .businessItem(this.businessItem)
+                .address(this.address);
     }
 
     public String getId() {
@@ -95,32 +124,32 @@ public class Vendor {
         return code;
     }
 
-    public String getDepartment_id() {
-        return department_id;
+    public String getDepartmentId() {
+        return departmentId;
     }
 
-    public String getManager_id() {
-        return manager_id;
+    public String getManagerId() {
+        return managerId;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getRegistration_number() {
-        return registration_number;
+    public String getRegistrationNumber() {
+        return registrationNumber;
     }
 
-    public String getPersonal_identification_number() {
-        return personal_identification_number;
+    public String getPersonalIdentificationNumber() {
+        return personalIdentificationNumber;
     }
 
-    public String getBusiness_type() {
-        return business_type;
+    public String getBusinessType() {
+        return businessType;
     }
 
-    public String getBusiness_item() {
-        return business_item;
+    public String getBusinessItem() {
+        return businessItem;
     }
 
     public String getAddress() {

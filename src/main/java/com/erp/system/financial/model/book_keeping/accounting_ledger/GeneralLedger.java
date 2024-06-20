@@ -2,6 +2,7 @@ package com.erp.system.financial.model.book_keeping.accounting_ledger;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -11,38 +12,52 @@ import java.util.UUID;
  */
 public class GeneralLedger {
     private final String id; // 고유 식별자
-    private final String account_code; // 계정과목 코드
+    private final String code; // 총계정원장 코드
+    private final String accountCode; // 계정과목 코드
 
-    private Date date; // 거래 날짜
-    private BigDecimal opening_balance; // 개시 잔액
+    private LocalDate date; // 거래 날짜
+    private BigDecimal openingBalance; // 개시 잔액
     private BigDecimal debits; // 차변 금액
     private BigDecimal credits; // 대변 금액
-    private BigDecimal closing_balance; // 마감 잔액
-    private Timestamp updated_at; // 최종 업데이트 시각
+    private BigDecimal closingBalance; // 마감 잔액
+    private Timestamp updatedAt; // 최종 업데이트 시각
+
+    public static int idIndex = 1; // static 변수 추가
 
     public static class Builder {
-        private final String id;
-        private final String account_code;
+        private String id;
+        private String code;
+        private String accountCode;
 
-        private Date date;
-        private BigDecimal opening_balance;
+        private LocalDate date;
+        private BigDecimal openingBalance;
         private BigDecimal debits;
         private BigDecimal credits;
-        private BigDecimal closing_balance;
-        private Timestamp updated_at;
+        private BigDecimal closingBalance;
+        private Timestamp updatedAt;
 
-        public Builder(String account_code) {
-            this.id = UUID.randomUUID().toString();
-            this.account_code = account_code;
+        public Builder id(String id) {
+            this.id = id;
+            return this;
         }
 
-        public Builder date(Date date) {
+        public Builder code(String code) {
+            this.code = code;
+            return this;
+        }
+
+        public Builder accountCode(String accountCode) {
+            this.accountCode = accountCode;
+            return this;
+        }
+
+        public Builder date(LocalDate date) {
             this.date = date;
             return this;
         }
 
-        public Builder opening_balance(BigDecimal opening_balance) {
-            this.opening_balance = opening_balance;
+        public Builder openingBalance(BigDecimal openingBalance) {
+            this.openingBalance = openingBalance;
             return this;
         }
 
@@ -56,13 +71,13 @@ public class GeneralLedger {
             return this;
         }
 
-        public Builder closing_balance(BigDecimal closing_balance) {
-            this.closing_balance = closing_balance;
+        public Builder closingBalance(BigDecimal closingBalance) {
+            this.closingBalance = closingBalance;
             return this;
         }
 
-        public Builder updated_at(Timestamp updated_at) {
-            this.updated_at = updated_at;
+        public Builder updatedAt(Timestamp updatedAt) {
+            this.updatedAt = updatedAt;
             return this;
         }
 
@@ -72,30 +87,48 @@ public class GeneralLedger {
     }
 
     private GeneralLedger(Builder builder) {
-        this.id = builder.id;
-        this.account_code = builder.account_code;
+        this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
+        this.code = builder.code;
+        this.accountCode = builder.accountCode;
         this.date = builder.date;
-        this.opening_balance = builder.opening_balance;
+        this.openingBalance = builder.openingBalance;
         this.debits = builder.debits;
         this.credits = builder.credits;
-        this.closing_balance = builder.closing_balance;
-        this.updated_at = builder.updated_at;
+        this.closingBalance = builder.closingBalance;
+        this.updatedAt = builder.updatedAt;
+    }
+
+    public Builder tobuild() {
+        return new Builder()
+                .id(this.id)
+                .code(this.code)
+                .accountCode(this.accountCode)
+                .date(this.date)
+                .openingBalance(this.openingBalance)
+                .debits(this.debits)
+                .credits(this.credits)
+                .closingBalance(this.closingBalance)
+                .updatedAt(this.updatedAt);
     }
 
     public String getId() {
         return id;
     }
 
-    public String getAccount_code() {
-        return account_code;
+    public String getCode() {
+        return code;
     }
 
-    public Date getDate() {
+    public String getAccountCode() {
+        return accountCode;
+    }
+
+    public LocalDate getDate() {
         return date;
     }
 
-    public BigDecimal getOpening_balance() {
-        return opening_balance;
+    public BigDecimal getOpeningBalance() {
+        return openingBalance;
     }
 
     public BigDecimal getDebits() {
@@ -106,11 +139,11 @@ public class GeneralLedger {
         return credits;
     }
 
-    public BigDecimal getClosing_balance() {
-        return closing_balance;
+    public BigDecimal getClosingBalance() {
+        return closingBalance;
     }
 
-    public Timestamp getUpdated_at() {
-        return updated_at;
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
     }
 }

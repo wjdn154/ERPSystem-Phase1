@@ -1,6 +1,7 @@
 package com.erp.system.financial.model.basic_information_management.account_information;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -11,32 +12,43 @@ import java.util.UUID;
 public class Deposit {
     private final String id; // 고유 식별자
     private final String code;
-    private final String account_code; // 은행계좌 코드 참조
+    private final String accountCode; // 은행계좌 코드 참조
 
-    private Date maturity_date ; // 적금 만기 날짜
-    private BigDecimal interest_rate ; // 이자율
+    private LocalDate maturityDate; // 적금 만기 날짜
+    private BigDecimal interestRate; // 이자율
+
+    public static int idIndex = 1;
 
     public static class Builder {
-        private final String id;
-        private final String code;
-        private final String account_code;
+        private String id;
+        private String code;
+        private String accountCode;
 
-        private Date maturity_date;
-        private BigDecimal interest_rate;
+        private LocalDate maturityDate;
+        private BigDecimal interestRate;
 
-        public Builder(String account_code, String code) {
-            this.id = UUID.randomUUID().toString();
-            this.account_code = account_code;
-            this.code = code;
-        }
-
-        public Builder maturity_date(Date maturity_date) {
-            this.maturity_date = maturity_date;
+        public Builder id(String id) {
+            this.id = id;
             return this;
         }
 
-        public Builder interest_rate(BigDecimal interest_rate) {
-            this.interest_rate = interest_rate;
+        public Builder code(String code) {
+            this.code = code;
+            return this;
+        }
+
+        public Builder accountCode(String accountCode) {
+            this.accountCode = accountCode;
+            return this;
+        }
+
+        public Builder maturityDate(LocalDate maturityDate) {
+            this.maturityDate = maturityDate;
+            return this;
+        }
+
+        public Builder interestRate(BigDecimal interestRate) {
+            this.interestRate = interestRate;
             return this;
         }
 
@@ -46,11 +58,20 @@ public class Deposit {
     }
 
     private Deposit(Builder builder) {
-        this.id = builder.id;
+        this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.code = builder.code;
-        this.account_code = builder.account_code;
-        this.maturity_date = builder.maturity_date;
-        this.interest_rate = builder.interest_rate;
+        this.accountCode = builder.accountCode;
+        this.maturityDate = builder.maturityDate;
+        this.interestRate = builder.interestRate;
+    }
+
+    public Builder tobuild() {
+        return new Builder()
+                .id(this.id)
+                .code(this.code)
+                .accountCode(this.accountCode)
+                .maturityDate(this.maturityDate)
+                .interestRate(this.interestRate);
     }
 
     public String getId() {
@@ -61,15 +82,15 @@ public class Deposit {
         return code;
     }
 
-    public String getAccount_code() {
-        return account_code;
+    public String getAccountCode() {
+        return accountCode;
     }
 
-    public Date getMaturity_date() {
-        return maturity_date;
+    public LocalDate getMaturityDate() {
+        return maturityDate;
     }
 
-    public BigDecimal getInterest_rate() {
-        return interest_rate;
+    public BigDecimal getInterestRate() {
+        return interestRate;
     }
 }

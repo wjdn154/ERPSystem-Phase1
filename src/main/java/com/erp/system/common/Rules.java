@@ -9,4 +9,10 @@ public class Rules {
 
     // 패키지 경로
     public static final String PACKAGE_PATH = "com.erp.system";
+
+    // ID 필드명
+    public static final String ID_FIELD_NAME = "id";
+
+    // 코드 필드명
+    public static final String CODE_FIELD_NAME = "code";
 }

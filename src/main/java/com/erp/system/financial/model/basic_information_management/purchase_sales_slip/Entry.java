@@ -1,8 +1,5 @@
 package com.erp.system.financial.model.basic_information_management.purchase_sales_slip;
 
-import com.erp.system.common.NotNullValidator;
-import com.erp.system.common.annotation.NotNull;
-
 import java.util.UUID;
 
 /**
@@ -12,23 +9,24 @@ import java.util.UUID;
 public class Entry {
     private final String id; // 고유 식별자
     private final String code; // 분개 코드
-    @NotNull
-    private final String name; // 분개 이름
+
+    private String name; // 분개 이름
+
+    public static int idIndex = 1;
 
     public static class Builder {
-        private final String id;
-        private final String code;
+        private String id;
+        private String code;
         private String name;
 
-        public Builder(String code) {
-            this.id = UUID.randomUUID().toString();
-            this.code = code;
+        public Builder id(String id) {
+            this.id = id;
+            return this;
         }
 
-        private Builder(String id, String code, String name) {
-            this.id = id;
+        public Builder code(String code) {
             this.code = code;
-            this.name = name;
+            return this;
         }
 
         public Builder name(String name) {
@@ -39,14 +37,19 @@ public class Entry {
         public Entry build() {
             return new Entry(this);
         }
-
-    } // end of Builder
+    }// end of Builder
 
     private Entry(Builder builder) {
-        this.id = builder.id;
+        this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.code = builder.code;
         this.name = builder.name;
-        NotNullValidator.safeValidateFields(this);
+    }
+
+    public Builder tobuild() {
+        return new Builder()
+                .id(this.id)
+                .code(this.code)
+                .name(this.name);
     }
 
     public String getId() {
@@ -59,9 +62,5 @@ public class Entry {
 
     public String getName() {
         return name;
-    }
-
-    public Builder toBuilder() {
-        return new Builder(id, code, name);
     }
 }

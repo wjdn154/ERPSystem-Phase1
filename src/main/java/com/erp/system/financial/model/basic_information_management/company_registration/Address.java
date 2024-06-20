@@ -9,28 +9,39 @@ import java.util.UUID;
  */
 public class Address {
     private final String id; // 고유식별자
-    private final String company_id; // 연결된 회사 ID
     private final String code; // 주소 코드번호
+    private final String companyId; // 연결된 회사 ID
 
     private String address; // 사업장주소
-    private String headquarters_address; // 본점주소
-    private String business_place_code; // 사업장 동 코드 (동 ex 대연동)
-    private String headquarters_code; // 본점 동 코드
+    private String headquartersAddress; // 본점주소
+    private String businessPlaceCode; // 사업장 동 코드 (동 ex 대연동)
+    private String headquartersCode; // 본점 동 코드
+
+    public static int idIndex = 1;
 
     public static class Builder {
-        private final String id; // 고유식별자
-        private final String company_id; // 연결된 회사 ID
-        private final String code; // 주소 코드번호
+        private String id;
+        private String code;
+        private String companyId;
 
         private String address;
-        private String headquarters_address;
-        private String business_place_code;
-        private String headquarters_code;
+        private String headquartersAddress;
+        private String businessPlaceCode;
+        private String headquartersCode;
 
-        public Builder(String code, String company_id) {
-            this.id = UUID.randomUUID().toString();
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder code(String code) {
             this.code = code;
-            this.company_id = company_id;
+            return this;
+        }
+
+        public Builder companyId(String companyId) {
+            this.companyId = companyId;
+            return this;
         }
 
         public Builder address(String address) {
@@ -38,63 +49,72 @@ public class Address {
             return this;
         }
 
-        public Builder headquarters_address(String headquarters_address) {
-            this.headquarters_address = headquarters_address;
+        public Builder headquartersAddress(String headquartersAddress) {
+            this.headquartersAddress = headquartersAddress;
             return this;
         }
 
-        public Builder business_place_code(String business_place_code) {
-            this.business_place_code = business_place_code;
+        public Builder businessPlaceCode(String businessPlaceCode) {
+            this.businessPlaceCode = businessPlaceCode;
             return this;
         }
 
-        public Builder headquarters_code(String headquarters_code) {
-            this.headquarters_code = headquarters_code;
+        public Builder headquartersCode(String headquartersCode) {
+            this.headquartersCode = headquartersCode;
             return this;
         }
 
         public Address build() {
             return new Address(this);
         }
-
-
-    } // end of builder
+    }
 
     private Address(Builder builder) {
-        this.id = builder.id;
+        this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.code = builder.code;
-        this.company_id = builder.company_id;
+        this.companyId = builder.companyId;
         this.address = builder.address;
-        this.headquarters_address = builder.headquarters_address;
-        this.business_place_code = builder.business_place_code;
-        this.headquarters_code = builder.headquarters_code;
+        this.headquartersAddress = builder.headquartersAddress;
+        this.businessPlaceCode = builder.businessPlaceCode;
+        this.headquartersCode = builder.headquartersCode;
+    }
+
+    public Builder tobuild() {
+        return new Builder()
+                .id(this.id)
+                .code(this.code)
+                .companyId(this.companyId)
+                .address(this.address)
+                .headquartersAddress(this.headquartersAddress)
+                .businessPlaceCode(this.businessPlaceCode)
+                .headquartersCode(this.headquartersCode);
     }
 
     public String getId() {
         return id;
     }
 
-    public String getCompany_id() {
-        return company_id;
-    }
-
     public String getCode() {
         return code;
+    }
+
+    public String getCompanyId() {
+        return companyId;
     }
 
     public String getAddress() {
         return address;
     }
 
-    public String getHeadquarters_address() {
-        return headquarters_address;
+    public String getHeadquartersAddress() {
+        return headquartersAddress;
     }
 
-    public String getBusiness_place_code() {
-        return business_place_code;
+    public String getBusinessPlaceCode() {
+        return businessPlaceCode;
     }
 
-    public String getHeadquarters_code() {
-        return headquarters_code;
+    public String getHeadquartersCode() {
+        return headquartersCode;
     }
 }
