@@ -1,7 +1,12 @@
-package com.erp.system.common.generic_repository;
+package com.erp.system.common.generic_repository.impl;
+
+import com.erp.system.common.generic_repository.GenericRepository;
 
 import java.lang.reflect.Field;
 import java.util.*;
+
+import static com.erp.system.common.Rules.CODE_FIELD_NAME;
+import static com.erp.system.common.Rules.ID_FIELD_NAME;
 
 /**
  * 모든 유형의 엔티티에 대한 공통 메서드를 제공하는 제네릭 리포지토리 구현 클래스.
@@ -12,8 +17,6 @@ public class GenericRepositoryImpl<T> implements GenericRepository<T> {
     private final Map<String, T> store = new HashMap<>(); // ID로 엔티티를 저장할 맵
     private final Map<String, T> codeStore = new HashMap<>(); // 코드로 엔티티를 저장할 맵
     private final Class<T> entityClass; // 엔티티 클래스 타입
-    private static final String ID_FIELD_NAME = "id"; // ID 필드명 고정
-    private static final String CODE_FIELD_NAME = "code"; // 코드 필드명 고정
 
     /**
      * protected 생성자. 싱글톤 패턴 적용.
@@ -45,7 +48,7 @@ public class GenericRepositoryImpl<T> implements GenericRepository<T> {
 
             store.put(id, entity);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to save entity", e);
+            throw new RuntimeException("Entity 저장 실패", e);
         }
     }
 
@@ -85,10 +88,10 @@ public class GenericRepositoryImpl<T> implements GenericRepository<T> {
                     codeStore.put(code, entity);
                 }
             } else {
-                throw new RuntimeException("Entity not found: " + id);
+                throw new RuntimeException("Entity 를 찾을 수 없습니다. : " + id);
             }
         } catch (Exception e) {
-            throw new RuntimeException("Failed to update entity", e);
+            throw new RuntimeException("Entity 수정을 실패했습니다. : ", e);
         }
     }
 
@@ -104,7 +107,7 @@ public class GenericRepositoryImpl<T> implements GenericRepository<T> {
                 String code = getFieldValue(entity, CODE_FIELD_NAME);
                 codeStore.remove(code);
             } catch (Exception e) {
-                throw new RuntimeException("Failed to delete entity", e);
+                throw new RuntimeException("Entity 삭제를 실패했습니다. : ", e);
             }
         }
     }

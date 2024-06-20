@@ -1,8 +1,8 @@
 package com.erp.system.financial.repository.book_keeping.accounting_ledger.impl;
 
-import com.erp.system.common.DependencyInjector.Component;
-import com.erp.system.common.DependencyInjector.Priority;
-import com.erp.system.common.generic_repository.GenericRepositoryImpl;
+import com.erp.system.common.annotation.Component;
+import com.erp.system.common.annotation.Priority;
+import com.erp.system.common.generic_repository.impl.GenericRepositoryImpl;
 import com.erp.system.financial.model.book_keeping.accounting_ledger.GeneralLedger;
 import com.erp.system.financial.repository.book_keeping.accounting_ledger.GeneralLedgerRepository;
 

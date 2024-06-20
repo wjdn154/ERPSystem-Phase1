@@ -1,14 +1,9 @@
 package com.erp.system.financial.controller.book_keeping;
 
-import com.erp.system.common.DependencyInjector.Component;
-import com.erp.system.common.DependencyInjector.Priority;
-import com.erp.system.financial.model.basic_information_management.voucher_registration.Account;
-import com.erp.system.financial.model.basic_information_management.voucher_registration.Memo;
-import com.erp.system.financial.model.basic_information_management.voucher_registration.Voucher;
-import com.erp.system.financial.model.basic_information_management.voucher_registration.VoucherType;
+import com.erp.system.common.annotation.Component;
+import com.erp.system.common.annotation.Priority;
 import com.erp.system.financial.model.book_keeping.accounting_ledger.CashBook;
 import com.erp.system.financial.model.book_keeping.accounting_ledger.GeneralLedger;
-import com.erp.system.financial.service.basic_information_management.VoucherRegistrationService;
 import com.erp.system.financial.service.book_keeping.AccountingLedgerService;
 
 import java.util.Collection;

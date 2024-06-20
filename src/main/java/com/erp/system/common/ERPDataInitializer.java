@@ -1,14 +1,9 @@
 package com.erp.system.common;
 
-import com.erp.system.common.DependencyInjector.DependencyInjector;
-import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entry;
-import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.VatType;
-import com.erp.system.financial.model.book_keeping.accounting_ledger.CashBook;
-import com.erp.system.financial.repository.book_keeping.accounting_ledger.CashBookRepository;
-import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntryRepository;
-import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.VatTypeRepository;
+import com.erp.system.common.annotation.EnumMapping;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.reflections.Reflections;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -18,7 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static com.erp.system.common.Rules.DATA_FILE_PATH;
+import static com.erp.system.common.Rules.*;
 
 /**
  * Excel 파일을 읽고 각 시트의 데이터를 처리하는 클래스.
@@ -29,7 +24,7 @@ public class ERPDataInitializer {
     private final Map<Class<?>, Object> repositories = new HashMap<>();
 
     /**
-     * ERPDataInitializer 생성자
+     * ERPDataInitializer 생성자.
      */
     public ERPDataInitializer() {
         System.out.println("--------------------------- 2. ERPDataInitializer 생성 ---------------------------");
@@ -43,12 +38,12 @@ public class ERPDataInitializer {
     }
 
     /**
-     * 모든 컴포넌트를 자동으로 등록하고 매핑을 설정하는 메서드
+     * 모든 컴포넌트를 자동으로 등록하고 매핑을 설정함.
      */
     private void autoRegister() {
         Map<Class<?>, Object> allRepositories = di.getAllInstancesOfType(Object.class); // 모든 리포지토리를 가져옴
 
-        // 모든 리포지토리를 순회하며 처리
+        // 모든 리포지토리를 순회하며 처리함
         for (Map.Entry<Class<?>, Object> entry : allRepositories.entrySet()) {
             Class<?> repositoryClass = entry.getKey(); // 리포지토리 클래스
             Object repositoryInstance = entry.getValue(); // 리포지토리 인스턴스
@@ -64,19 +59,19 @@ public class ERPDataInitializer {
     }
 
     /**
-     * 리포지토리 클래스에서 도메인 클래스를 추론하는 메서드
+     * 리포지토리 클래스에서 도메인 클래스를 추론함.
      * @param repositoryClass 리포지토리 클래스
      * @return 도메인 클래스
      */
     private Class<?> getDomainClassFromRepository(Class<?> repositoryClass) {
-        Type[] genericInterfaces = repositoryClass.getGenericInterfaces(); // 리포지토리 클래스의 제네릭 인터페이스를 가져옴, ex)Repository<Entry>
+        Type[] genericInterfaces = repositoryClass.getGenericInterfaces(); // 리포지토리 클래스의 제네릭 인터페이스를 가져옴
 
         // 제네릭 인터페이스를 순회
         for (Type genericInterface : genericInterfaces) {
             // 제네릭 인터페이스가 ParameterizedType인 경우
             if (genericInterface instanceof ParameterizedType) {
                 ParameterizedType parameterizedType = (ParameterizedType) genericInterface; // ParameterizedType으로 캐스팅
-                Type[] actualTypeArguments = parameterizedType.getActualTypeArguments(); // 제네릭 타입 인수를 가져옴, ex)Repository<Entry>의 경우 Entry
+                Type[] actualTypeArguments = parameterizedType.getActualTypeArguments(); // 제네릭 타입 인수를 가져옴
 
                 // 제네릭 타입 인수가 있는 경우
                 if (actualTypeArguments.length > 0) {
@@ -89,7 +84,7 @@ public class ERPDataInitializer {
     }
 
     /**
-     * Excel 파일을 읽는 메서드
+     * Excel 파일을 읽음.
      * @param filePath 읽을 파일의 경로
      */
     public void readExcel(String filePath) {
@@ -104,84 +99,76 @@ public class ERPDataInitializer {
     }
 
     /**
-     * 각 시트를 처리하는 메서드
+     * 각 시트를 처리함.
      * 시트 내의 데이터를 읽어 엔티티 객체로 변환 후 저장
      * @param sheet 처리할 Excel 시트 객체
      */
     public void handleSheet(Sheet sheet) {
-        Row includeRow = sheet.getRow(0);
-        Row typeRow = sheet.getRow(1);
-        Row headerRow = sheet.getRow(2);
+        Row typeRow = sheet.getRow(0); // 첫 번째 행에서 데이터 타입을 읽음
+        Row headerRow = sheet.getRow(1); // 두 번째 행에서 컬럼 이름을 읽음
 
-        List<Boolean> includeInConstructor = new ArrayList<>();
-        List<String> dataTypes = new ArrayList<>();
-        List<String> columnNames = new ArrayList<>();
+        List<String> dataTypes = new ArrayList<>(); // 데이터 타입 리스트
+        List<String> columnNames = new ArrayList<>(); // 컬럼 이름 리스트
 
-        DataFormatter formatter = new DataFormatter();
-
-        for (Cell cell : includeRow) {
-            includeInConstructor.add("1".equals(formatter.formatCellValue(cell)));
-        }
+        DataFormatter formatter = new DataFormatter(); // 셀 값을 문자열로 변환하는 포맷터
 
         for (Cell cell : typeRow) {
-            dataTypes.add(formatter.formatCellValue(cell));
+            dataTypes.add(formatter.formatCellValue(cell)); // 데이터 타입을 리스트에 추가
         }
 
         for (Cell cell : headerRow) {
-            columnNames.add(formatter.formatCellValue(cell));
+            columnNames.add(formatter.formatCellValue(cell)); // 컬럼 이름을 리스트에 추가
         }
 
-        List<List<String>> allData = new ArrayList<>();
+        List<List<String>> allData = new ArrayList<>(); // 모든 데이터 리스트
 
-        for (int i = 3; i <= sheet.getLastRowNum(); i++) {
+        for (int i = 2; i <= sheet.getLastRowNum(); i++) { // 세 번째 행부터 데이터를 읽음
             Row currentRow = sheet.getRow(i);
             List<String> rowData = new ArrayList<>();
             for (int j = 0; j < currentRow.getLastCellNum(); j++) {
-                rowData.add(formatter.formatCellValue(currentRow.getCell(j)));
+                rowData.add(formatter.formatCellValue(currentRow.getCell(j))); // 각 셀의 값을 문자열로 변환하여 리스트에 추가
             }
-            allData.add(rowData);
+            allData.add(rowData); // 한 행의 데이터를 리스트에 추가
         }
 
-        saveEntity(sheet, includeInConstructor, columnNames, dataTypes, allData);
+        saveEntity(sheet, columnNames, dataTypes, allData); // 엔티티를 저장
     }
 
     /**
-     * 엔티티를 생성하고 저장하는 메서드
+     * 엔티티를 생성하고 저장함.
      * @param sheet 시트 객체
-     * @param includeInConstructor 생성자에 포함될 필드 여부 리스트
      * @param columnNames 컬럼 이름 리스트
      * @param dataTypes 데이터 타입 리스트
      * @param allData 모든 데이터 리스트
      */
-    private void saveEntity(Sheet sheet, List<Boolean> includeInConstructor, List<String> columnNames, List<String> dataTypes, List<List<String>> allData) {
-        String tableName = sheet.getSheetName();
-        Class<?> clazz = tableClassMap.get(tableName);
-        Object repository = repositories.get(clazz);
+    private void saveEntity(Sheet sheet, List<String> columnNames, List<String> dataTypes, List<List<String>> allData) {
+        String tableName = sheet.getSheetName(); // 시트 이름을 테이블 이름으로 사용
+        Class<?> clazz = tableClassMap.get(tableName); // 테이블 이름으로 도메인 클래스 조회
+        Object repository = repositories.get(clazz); // 도메인 클래스로 리포지토리 조회
 
         if (clazz == null) {
-            System.err.println("클래스를 찾을 수 없습니다: " + tableName);
+            System.err.println("클래스를 찾을 수 없습니다: " + tableName); // 클래스를 찾을 수 없는 경우 에러 메시지 출력
             return;
         }
 
-        System.out.println("\n처리 중인 시트: " + tableName);
+        System.out.println("\n처리 중인 시트: " + tableName); // 처리 중인 시트 이름 출력
 
         for (List<String> rowData : allData) {
             try {
-                Object entity = createEntity(clazz, includeInConstructor, columnNames, dataTypes, rowData);
-                Method saveMethod = repository.getClass().getMethod("save", clazz);
-                saveMethod.invoke(repository, entity);
-                System.out.println("저장된 엔티티: " + entity);
+                Object entity = createEntity(clazz, columnNames, dataTypes, rowData); // 엔티티 생성
+                Method saveMethod = repository.getClass().getMethod("save", clazz); // 리포지토리의 save 메서드 조회
+                saveMethod.invoke(repository, entity); // 엔티티를 리포지토리에 저장
+                System.out.println("저장된 엔티티: " + entity); // 저장된 엔티티 출력
             } catch (Exception e) {
-                System.out.println("엔티티 생성 또는 저장 오류: " + e.getMessage());
+                System.out.println("엔티티 생성 또는 저장 오류: " + e.getMessage()); // 엔티티 생성 또는 저장 오류 메시지 출력
                 e.printStackTrace();
             }
         }
     }
 
     /**
-     * 엔티티 객체를 생성하는 메서드.
+     * 엔티티 객체를 생성함.
      * @param clazz 클래스 객체
-     * @param includeInConstructor 생성자에 포함될 필드 여부 리스트
      * @param columnNames 컬럼 이름 리스트
      * @param dataTypes 데이터 타입 리스트
      * @param rowData 행 데이터 리스트
@@ -189,63 +176,70 @@ public class ERPDataInitializer {
      * @throws ReflectiveOperationException 리플렉션 작업 중 발생하는 예외
      * @throws ParseException 날짜 파싱 예외
      */
-    private Object createEntity(Class<?> clazz, List<Boolean> includeInConstructor, List<String> columnNames, List<String> dataTypes, List<String> rowData) throws ReflectiveOperationException, ParseException {
-        List<Class<?>> paramTypesList = new ArrayList<>();
-        List<Object> paramValuesList = new ArrayList<>();
+    private Object createEntity(Class<?> clazz, List<String> columnNames, List<String> dataTypes, List<String> rowData) throws ReflectiveOperationException, ParseException {
+        // Builder 클래스 조회
+        Class<?> builderClass = Arrays.stream(clazz.getDeclaredClasses())
+                .filter(cl -> cl.getSimpleName().equals("Builder"))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException(clazz.getSimpleName() + " 클래스에 Builder 클래스가 존재하지 않습니다."));
 
-        for (int i = 0; i < includeInConstructor.size(); i++) {
-            if (includeInConstructor.get(i)) {
-                Class<?> type = getTypeFromString(dataTypes.get(i));
-                Object value = type.isEnum() ? Enum.valueOf((Class<Enum>) type, rowData.get(i)) : convertValue(rowData.get(i), type);
-                paramTypesList.add(type);
-                paramValuesList.add(value);
+        // Builder 생성자 조회 및 인스턴스 생성
+        Constructor<?> constructor = builderClass.getDeclaredConstructors()[0]; // 첫 번째 생성자를 사용
+        constructor.setAccessible(true);
+
+        // 생성자에 필요한 매개변수 추출 및 값 할당
+        Class<?>[] paramTypes = constructor.getParameterTypes();
+        Object[] constructorArgs = new Object[paramTypes.length];
+        for (int i = 0; i < paramTypes.length; i++) {
+            int paramIndex = columnNames.indexOf(columnNames.get(i));
+            if (paramIndex == -1) {
+                throw new IllegalArgumentException("매개변수 " + columnNames.get(i) + "에 대한 컬럼을 찾을 수 없습니다.");
             }
+            constructorArgs[i] = convertValue(rowData.get(paramIndex), paramTypes[i], clazz.getSimpleName());
         }
 
+        // Builder 인스턴스 생성
+        Object builder = constructor.newInstance(constructorArgs);
 
-        Class<?>[] paramTypesArray = paramTypesList.toArray(new Class<?>[0]);
-
-        Constructor<?> matchedConstructor = null;
-        for (Constructor<?> constructor : clazz.getConstructors()) {
-            Class<?>[] constructorParamTypes = constructor.getParameterTypes();
-            if (Arrays.equals(constructorParamTypes, paramTypesArray)) {
-                matchedConstructor = constructor;
-                break;
-            }
-        }
-
-        if (matchedConstructor == null) {
-            throw new NoSuchMethodException(clazz.getName() + "에 맞는 생성자를 찾을 수 없습니다.");
-        }
-
-        Object entity = matchedConstructor.newInstance(paramValuesList.toArray());
-
+        // 나머지 선택적 필드 설정
         for (int i = 0; i < columnNames.size(); i++) {
-            if (!includeInConstructor.get(i)) {
-                String columnName = columnNames.get(i);
-                String value = rowData.get(i);
-
-                try {
-                    Field field = clazz.getDeclaredField(columnName);
-                    field.setAccessible(true);
-                    Class<?> fieldType = field.getType();
-                    Object convertedValue = fieldType.isEnum() ? Enum.valueOf((Class<Enum>) fieldType, value) : convertValue(value, fieldType);
-                    field.set(entity, convertedValue);
-                } catch (NoSuchFieldException e) {
-                    System.out.println("필드 설정 오류: " + columnName + " 필드를 찾을 수 없습니다.");
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    System.out.println("필드 설정 오류: " + columnName + " 필드에 접근할 수 없습니다.");
-                    e.printStackTrace();
-                }
-            }
+            if (Arrays.asList(constructorArgs).contains(rowData.get(i))) continue; // 이미 생성자에서 사용된 필드는 건너뜀
+            String methodName = columnNames.get(i);
+            Class<?> fieldType = getTypeFromString(dataTypes.get(i));
+            Object value = convertValue(rowData.get(i), fieldType, clazz.getSimpleName());
+            Method setterMethod = findBuilderMethod(builder.getClass(), methodName, fieldType);
+            setterMethod.invoke(builder, value);
         }
 
-        return entity;
+        // build 메서드를 호출하여 최종 객체 생성
+        Method buildMethod = builderClass.getMethod("build");
+        return buildMethod.invoke(builder);
     }
 
     /**
-     * 문자열로부터 클래스 타입을 반환하는 메서드
+     * Builder 클래스의 필드를 설정하는 메서드를 찾는 메서드.
+     * @param builderClass Builder 클래스
+     * @param fieldName 필드 이름
+     * @param parameterType 매개변수 타입
+     * @return 필드를 설정하는 메서드
+     * @throws NoSuchMethodException 메서드를 찾지 못한 경우
+     */
+    private Method findBuilderMethod(Class<?> builderClass, String fieldName, Class<?> parameterType) throws NoSuchMethodException {
+        for (Method method : builderClass.getMethods()) {
+            if (method.getName().equalsIgnoreCase(fieldName) && method.getParameterTypes().length == 1) {
+                Class<?> methodParamType = method.getParameterTypes()[0];
+                if (methodParamType.equals(parameterType) || methodParamType.isEnum()) {
+                    return method;
+                }
+            }
+        }
+        System.out.println(fieldName + "에 대한 빌더 메서드를 " + parameterType.getSimpleName() + " 타입으로 찾지 못했습니다.");
+        throw new NoSuchMethodException(builderClass.getName() + " 클래스의 빌더에서 " + fieldName + "에 대한 적절한 메서드를 찾을 수 없습니다.");
+    }
+
+
+    /**
+     * 문자열로부터 클래스 타입을 반환하는 메서드.
      * @param typeStr 타입 문자열
      * @return 클래스 타입
      */
@@ -263,21 +257,60 @@ public class ERPDataInitializer {
     }
 
     /**
-     * 문자열 값을 특정 타입으로 변환하는 메서드
+     * 문자열 값을 특정 타입으로 변환하는 메서드.
      * @param value 문자열 값
-     * @param type 변환할 클래스 타입
+     * @param expectedType 변환할 클래스 타입
+     * @param className 현재 클래스 이름
      * @return 변환된 객체
      * @throws ParseException 날짜 파싱 예외
+     * @throws ClassNotFoundException 클래스 로드 예외
      */
-    private Object convertValue(String value, Class<?> type) throws ParseException {
+    private Object convertValue(String value, Class<?> expectedType, String className) throws ParseException, ClassNotFoundException {
         if (value == null || value.isEmpty()) return null;
-        if (type == String.class) return value;
-        if (type == Integer.class || type == int.class) return Integer.parseInt(value);
-        if (type == Boolean.class || type == boolean.class) return Boolean.parseBoolean(value);
-        if (type == Double.class || type == double.class) return Double.parseDouble(value);
-        if (type == Date.class) return new SimpleDateFormat("yyyyMMdd").parse(value);
-        if (type == BigDecimal.class) return new BigDecimal(value);
-        throw new IllegalArgumentException("지원하지 않는 타입 변환: " + type.getSimpleName());
+        if (expectedType == String.class) return value;
+        if (expectedType == Integer.class || expectedType == int.class) return Integer.parseInt(value);
+        if (expectedType == Boolean.class || expectedType == boolean.class) return Boolean.parseBoolean(value);
+        if (expectedType == Double.class || expectedType == double.class) return Double.parseDouble(value);
+        if (expectedType == Date.class) return new SimpleDateFormat("yyyyMMdd").parse(value);
+        if (expectedType == BigDecimal.class) return new BigDecimal(value);
+        if (Enum.class.isAssignableFrom(expectedType)) {
+            String[] parts = value.split("\\.");
+            if (parts.length < 2) throw new IllegalArgumentException("Enum 값은 'EnumClassName.EnumValue' 형태여야 합니다: " + value);
+
+            String enumClassName = parts[0];
+            String enumValue = parts[1];
+
+            // 어노테이션을 사용하여 클래스 경로 찾기
+            Class<?> clazz = findClassBySheetName(className);
+            if (clazz == null) throw new ClassNotFoundException("클래스를 찾을 수 없습니다: " + className);
+
+            // 해당 클래스 내부에 선언된 enum을 동적으로 로드
+            for (Class<?> innerClass : clazz.getDeclaredClasses()) {
+                if (innerClass.getSimpleName().equals(enumClassName) && Enum.class.isAssignableFrom(innerClass)) {
+                    return Enum.valueOf((Class<Enum>) innerClass, enumValue);
+                }
+            }
+            throw new ClassNotFoundException("해당 enum 클래스가 존재하지 않습니다: " + enumClassName);
+        }
+        throw new IllegalArgumentException("지원하지 않는 타입 변환: " + expectedType.getSimpleName());
+    }
+
+    /**
+     * 시트명을 기반으로 클래스를 찾음.
+     * @param sheetName 시트명
+     * @return 해당 시트명을 가진 클래스
+     */
+    private Class<?> findClassBySheetName(String sheetName) {
+        Reflections reflections = new Reflections(PACKAGE_PATH); // 패키지 경로
+        Set<Class<?>> annotatedClasses = reflections.getTypesAnnotatedWith(EnumMapping.class);
+
+        for (Class<?> clazz : annotatedClasses) {
+            EnumMapping annotation = clazz.getAnnotation(EnumMapping.class);
+            if (annotation != null && clazz.getSimpleName().equals(sheetName)) {
+                return clazz;
+            }
+        }
+        return null;
     }
 
 }

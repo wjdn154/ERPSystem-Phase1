@@ -1,13 +1,11 @@
 package com.erp.system.common.generic_repository;
 
-import com.erp.system.common.DependencyInjector.DependencyInjector;
-import com.erp.system.financial.model.basic_information_management.account_information.BankAccount;
+import com.erp.system.common.DependencyInjector;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entry;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntryRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.swing.filechooser.FileSystemView;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -29,9 +27,10 @@ class GenericRepositoryImplTest {
     // 저장 및 ID 또는 코드로 조회 테스트
     @Test
     void saveAndFindByIdOrCode() {
-       //  Given: 새로운 엔트리를 저장
-        Entry entry = new Entry("0001");
-        entry.setName("Entry 1");
+        // Given: 새로운 엔트리를 저장
+        Entry entry = new Entry.Builder("0001")
+                .name("Entry 1")
+                .build();
         entryRepository.save(entry);
 
         // When: 저장된 객체를 ID 또는 코드로 조회
@@ -45,31 +44,35 @@ class GenericRepositoryImplTest {
         assertEquals(entry.getCode(), foundByCode.get().getCode(), "조회된 객체의 코드가 일치해야 함.");
     }
 
-
     // 업데이트 테스트
     @Test
     void updateEntry() {
         // Given: 새로운 엔트리를 저장하고, 업데이트할 정보 설정
-        Entry entry = new Entry("0001");
-        entry.setName("Entry 1");
+        Entry entry = new Entry.Builder("0001")
+                .name("Entry 1")
+                .build();
         entryRepository.save(entry);
 
-        entry.setName("Updated Entry");
-
         // When: 엔트리를 업데이트하고 조회
-        entryRepository.update(entry);
+        Entry updatedEntry = entry.toBuilder()
+                .name("Updated Entry")
+                .build();
+
+        entryRepository.update(updatedEntry);
         Optional<Entry> found = entryRepository.findById(entry.getId());
 
         // Then: 변경된 정보가 반영되어야 함
         assertTrue(found.isPresent(), "업데이트된 객체는 null이 아니어야 함.");
         assertEquals("Updated Entry", found.get().getName(), "업데이트된 이름이 반영되어야 함.");
     }
+
     // 삭제 테스트
     @Test
     void deleteEntry() {
         // Given: 새로운 엔트리를 저장하고, 삭제할 ID 설정
-        Entry entry = new Entry("0001");
-        entry.setName("Entry 1");
+        Entry entry = new Entry.Builder("0001")
+                .name("Entry 1")
+                .build();
         entryRepository.save(entry);
 
         // When: 엔트리를 삭제하고 조회
@@ -84,10 +87,12 @@ class GenericRepositoryImplTest {
     @Test
     void findAllEntries() {
         // Given: 여러 Entries 객체를 저장
-        Entry entry1 = new Entry("0002");
-        entry1.setName("Entry 2");
-        Entry entry2 = new Entry("0003");
-        entry2.setName("Entry 3");
+        Entry entry1 = new Entry.Builder("0002")
+                .name("Entry 2")
+                .build();
+        Entry entry2 = new Entry.Builder("0003")
+                .name("Entry 3")
+                .build();
         entryRepository.save(entry1);
         entryRepository.save(entry2);
 
@@ -103,12 +108,14 @@ class GenericRepositoryImplTest {
     @Test
     void saveDuplicateCode() {
         // Given: 동일한 코드를 가진 두 번째 엔트리 생성
-        Entry entry1 = new Entry("0001");
-        entry1.setName("Entry 1");
+        Entry entry1 = new Entry.Builder("0001")
+                .name("Entry 1")
+                .build();
         entryRepository.save(entry1);
 
-        Entry duplicateEntry = new Entry("0001");
-        duplicateEntry.setName("Duplicate Entry");
+        Entry duplicateEntry = new Entry.Builder("0001")
+                .name("Duplicate Entry")
+                .build();
 
         // When & Then: 저장 시 예외 발생 확인
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {

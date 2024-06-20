@@ -1,4 +1,4 @@
-package com.erp.system.common.DependencyInjector;
+package com.erp.system.common.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,9 +6,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 자동으로 등록할 컴포넌트를 나타내는 어노테이션.
+ * NotNull을 적용할 필드
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface Component {
+@Target(ElementType.FIELD)
+public @interface NotNull {
 }

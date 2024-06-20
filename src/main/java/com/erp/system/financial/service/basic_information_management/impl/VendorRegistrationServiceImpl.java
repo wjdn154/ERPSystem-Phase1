@@ -1,7 +1,7 @@
 package com.erp.system.financial.service.basic_information_management.impl;
 
-import com.erp.system.common.DependencyInjector.Component;
-import com.erp.system.common.DependencyInjector.Priority;
+import com.erp.system.common.annotation.Component;
+import com.erp.system.common.annotation.Priority;
 import com.erp.system.financial.model.basic_information_management.vendor_registration.Vendor;
 import com.erp.system.financial.model.basic_information_management.vendor_registration.VendorType;
 import com.erp.system.financial.repository.basic_information_management.vendor_registration.VendorRepository;
