@@ -4,6 +4,8 @@ import com.erp.system.common.annotation.Component;
 import com.erp.system.common.annotation.Priority;
 import com.erp.system.financial.model.book_keeping.accounting_ledger.CashBook;
 import com.erp.system.financial.model.book_keeping.accounting_ledger.GeneralLedger;
+import com.erp.system.financial.repository.book_keeping.accounting_ledger.CashBookRepository;
+import com.erp.system.financial.repository.book_keeping.accounting_ledger.GeneralLedgerRepository;
 import com.erp.system.financial.service.book_keeping.AccountingLedgerService;
 
 import java.util.Collection;
@@ -13,9 +15,15 @@ import java.util.Optional;
 @Priority(3)
 public class AccountingLedgerController {
     private final AccountingLedgerService accountingLedgerService;
+    private final CashBookRepository cashBookRepository;
+    private final GeneralLedgerRepository generalLedgerRepository;
 
-    public AccountingLedgerController(AccountingLedgerService accountingLedgerService) {
+    public AccountingLedgerController(AccountingLedgerService accountingLedgerService,
+                                      CashBookRepository cashBookRepository,
+                                      GeneralLedgerRepository generalLedgerRepository) {
         this.accountingLedgerService = accountingLedgerService;
+        this.cashBookRepository = cashBookRepository;
+        this.generalLedgerRepository = generalLedgerRepository;
     }
     /**
      * 현금출납장을 저장함
@@ -23,7 +31,7 @@ public class AccountingLedgerController {
      * @throws IllegalArgumentException 저장할 현금출납장이 null일 경우
      */
     public void saveCashBook(CashBook cashBook) {
-        accountingLedgerService.saveCashBook(cashBook);
+        cashBookRepository.save(cashBook);
     }
 
     /**
@@ -32,7 +40,7 @@ public class AccountingLedgerController {
      * @throws IllegalArgumentException 저장할 총계정원장이 null일 경우
      */
     public void saveGeneralLedger(GeneralLedger generalLedger) {
-        accountingLedgerService.saveGeneralLedger(generalLedger);
+        generalLedgerRepository.save(generalLedger);
     }
 
     /**
@@ -41,17 +49,9 @@ public class AccountingLedgerController {
      * @return 조회된 현금출납장을 Optional로 반환
      */
     public Optional<CashBook> findCashBookById(String id) {
-        return accountingLedgerService.findCashBookById(id);
+        return cashBookRepository.findById(id);
     }
 
-    /**
-     * 코드로 현금출납장을 조회함
-     * @param code 현금출납장의 코드
-     * @return 조회된 현금출납장을 Optional로 반환
-     */
-    public Optional<CashBook> findCashBookByCode(String code) {
-        return accountingLedgerService.findCashBookByCode(code);
-    }
 
     /**
      * ID로 총계정원장을 조회함
@@ -59,16 +59,7 @@ public class AccountingLedgerController {
      * @return 조회된 총계정원장을 Optional로 반환
      */
     public Optional<GeneralLedger> findGeneralLedgerById(String id) {
-        return accountingLedgerService.findGeneralLedgerById(id);
-    }
-
-    /**
-     * 코드로 총계정원장을 조회함
-     * @param code 총계정원장의 코드
-     * @return 조회된 총계정원장을 Optional로 반환
-     */
-    public Optional<GeneralLedger> findGeneralLedgerByCode(String code) {
-        return accountingLedgerService.findGeneralLedgerByCode(code);
+        return generalLedgerRepository.findById(id);
     }
 
     /**
@@ -76,7 +67,7 @@ public class AccountingLedgerController {
      * @return 저장된 모든 현금출납장의 컬렉션
      */
     public Collection<CashBook> findAllCashBooks() {
-        return accountingLedgerService.findAllCashBooks();
+        return cashBookRepository.findAll();
     }
 
     /**
@@ -84,6 +75,6 @@ public class AccountingLedgerController {
      * @return 저장된 모든 총계정원장의 컬렉션
      */
     public Collection<GeneralLedger> findAllGeneralLedgers() {
-        return accountingLedgerService.findAllGeneralLedgers();
+        return generalLedgerRepository.findAll();
     }
 }

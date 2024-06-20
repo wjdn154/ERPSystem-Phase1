@@ -4,6 +4,8 @@ import com.erp.system.common.annotation.Component;
 import com.erp.system.common.annotation.Priority;
 import com.erp.system.financial.model.basic_information_management.vendor_registration.Vendor;
 import com.erp.system.financial.model.basic_information_management.vendor_registration.VendorType;
+import com.erp.system.financial.repository.basic_information_management.vendor_registration.VendorRepository;
+import com.erp.system.financial.repository.basic_information_management.vendor_registration.VendorTypeRepository;
 import com.erp.system.financial.service.basic_information_management.VendorRegistrationService;
 
 import java.util.Collection;
@@ -13,16 +15,22 @@ import java.util.Optional;
 @Priority(3)
 public class VendorRegistrationController {
     private final VendorRegistrationService vendorRegistrationService;
+    private final VendorRepository vendorRepository;
+    private final VendorTypeRepository vendorTypeRepository;
 
-    public VendorRegistrationController(VendorRegistrationService vendorRegistrationService) {
+    public VendorRegistrationController(VendorRegistrationService vendorRegistrationService,
+                                        VendorRepository vendorRepository,
+                                        VendorTypeRepository vendorTypeRepository) {
         this.vendorRegistrationService = vendorRegistrationService;
+        this.vendorRepository = vendorRepository;
+        this.vendorTypeRepository = vendorTypeRepository;
     }
     /**
      * 공급업체를 저장함
      * @param vendor 저장할 공급업체
      */
     public void saveVendor(Vendor vendor) {
-        vendorRegistrationService.saveVendor(vendor);
+        vendorRepository.save(vendor);
     }
 
     /**
@@ -30,7 +38,7 @@ public class VendorRegistrationController {
      * @param vendorType 저장할 공급업체 유형
      */
     public void saveVendorType(VendorType vendorType) {
-        vendorRegistrationService.saveVendorType(vendorType);
+        vendorTypeRepository.save(vendorType);
     }
 
     /**
@@ -39,16 +47,7 @@ public class VendorRegistrationController {
      * @return 조회된 공급업체를 Optional로 반환
      */
     public Optional<Vendor> findVendorById(String id) {
-        return vendorRegistrationService.findVendorById(id);
-    }
-
-    /**
-     * 코드로 공급업체를 조회함
-     * @param code 공급업체의 코드
-     * @return 조회된 공급업체를 Optional로 반환
-     */
-    public Optional<Vendor> findVendorByCode(String code) {
-        return vendorRegistrationService.findVendorByCode(code);
+        return vendorRepository.findById(id);
     }
 
     /**
@@ -57,16 +56,7 @@ public class VendorRegistrationController {
      * @return 조회된 공급업체 유형을 Optional로 반환
      */
     public Optional<VendorType> findVendorTypeById(String id) {
-        return vendorRegistrationService.findVendorTypeById(id);
-    }
-
-    /**
-     * 코드로 공급업체 유형을 조회함
-     * @param code 공급업체 유형의 코드
-     * @return 조회된 공급업체 유형을 Optional로 반환
-     */
-    public Optional<VendorType> findVendorTypeByCode(String code) {
-        return vendorRegistrationService.findVendorTypeByCode(code);
+        return vendorTypeRepository.findById(id);
     }
 
     /**
@@ -74,7 +64,7 @@ public class VendorRegistrationController {
      * @return 저장된 모든 공급업체의 컬렉션
      */
     public Collection<Vendor> findAllVendors() {
-        return vendorRegistrationService.findAllVendors();
+        return vendorRepository.findAll();
     }
 
     /**
@@ -82,6 +72,6 @@ public class VendorRegistrationController {
      * @return 저장된 모든 공급업체 유형의 컬렉션
      */
     public Collection<VendorType> findAllVendorTypes() {
-        return vendorRegistrationService.findAllVendorTypes();
+        return vendorTypeRepository.findAll();
     }
 }

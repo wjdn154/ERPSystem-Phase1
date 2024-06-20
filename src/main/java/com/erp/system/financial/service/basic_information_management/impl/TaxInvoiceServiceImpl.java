@@ -18,45 +18,4 @@ public class TaxInvoiceServiceImpl implements TaxInvoiceService {
         this.taxInvoiceRepository = taxInvoiceRepository;
     }
 
-    /**
-     * 세금 계산서를 저장함
-     * @param taxInvoice 저장할 세금 계산서
-     * @throws IllegalArgumentException 저장할 세금 계산서가 null일 경우
-     */
-    @Override
-    public void saveTaxInvoice(TaxInvoice taxInvoice) {
-        if (taxInvoice == null) {
-            throw new IllegalArgumentException("저장할 세금 계산서는 null일 수 없습니다.");
-        }
-        taxInvoiceRepository.save(taxInvoice);
-    }
-
-    /**
-     * ID로 세금 계산서를 조회함
-     * @param id 세금 계산서의 ID
-     * @return 조회된 세금 계산서를 Optional로 반환
-     */
-    @Override
-    public Optional<TaxInvoice> findTaxInvoiceById(String id) {
-        return taxInvoiceRepository.findById(id);
-    }
-
-    /**
-     * 코드로 세금 계산서를 조회함
-     * @param code 세금 계산서의 코드
-     * @return 조회된 세금 계산서를 Optional로 반환
-     */
-    @Override
-    public Optional<TaxInvoice> findTaxInvoiceByCode(String code) {
-        return taxInvoiceRepository.findByCode(code);
-    }
-
-    /**
-     * 모든 세금 계산서를 조회함
-     * @return 저장된 모든 세금 계산서의 컬렉션
-     */
-    @Override
-    public Collection<TaxInvoice> findAllTaxInvoices() {
-        return taxInvoiceRepository.findAll();
-    }
 }

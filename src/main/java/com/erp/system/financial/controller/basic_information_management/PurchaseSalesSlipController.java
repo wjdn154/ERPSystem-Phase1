@@ -5,6 +5,9 @@ import com.erp.system.common.annotation.Priority;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entry;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.PurchaseSalesSlip;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.VatType;
+import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntryRepository;
+import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.PurchaseSalesSlipRepository;
+import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.VatTypeRepository;
 import com.erp.system.financial.service.basic_information_management.PurchaseSalesSlipService;
 
 import java.util.Collection;
@@ -14,9 +17,18 @@ import java.util.Optional;
 @Priority(3)
 public class PurchaseSalesSlipController {
     private final PurchaseSalesSlipService purchaseSalesSlipService;
+    private final EntryRepository entryRepository;
+    private final PurchaseSalesSlipRepository purchaseSalesSlipRepository;
+    private final VatTypeRepository vatTypeRepository;
 
-    public PurchaseSalesSlipController(PurchaseSalesSlipService purchaseSalesSlipService) {
+    public PurchaseSalesSlipController(PurchaseSalesSlipService purchaseSalesSlipService,
+                                       EntryRepository entryRepository,
+                                       PurchaseSalesSlipRepository purchaseSalesSlipRepository,
+                                       VatTypeRepository vatTypeRepository) {
         this.purchaseSalesSlipService = purchaseSalesSlipService;
+        this.entryRepository = entryRepository;
+        this.purchaseSalesSlipRepository = purchaseSalesSlipRepository;
+        this.vatTypeRepository = vatTypeRepository;
     }
 
     /**
@@ -24,7 +36,7 @@ public class PurchaseSalesSlipController {
      * @param entry 저장할 엔트리
      */
     public void saveEntry(Entry entry) {
-        purchaseSalesSlipService.saveEntry(entry);
+        entryRepository.save(entry);
     }
 
     /**
@@ -32,7 +44,7 @@ public class PurchaseSalesSlipController {
      * @param purchaseSalesSlip 저장할 매입매출전표
      */
     public void savePurchaseSalesSlip(PurchaseSalesSlip purchaseSalesSlip) {
-        purchaseSalesSlipService.savePurchaseSalesSlip(purchaseSalesSlip);
+        purchaseSalesSlipRepository.save(purchaseSalesSlip);
     }
 
     /**
@@ -40,7 +52,7 @@ public class PurchaseSalesSlipController {
      * @param vatType 저장할 부가세 유형
      */
     public void saveVatType(VatType vatType) {
-        purchaseSalesSlipService.saveVatType(vatType);
+        vatTypeRepository.save(vatType);
     }
 
     /**
@@ -49,16 +61,7 @@ public class PurchaseSalesSlipController {
      * @return 조회된 엔트리를 Optional로 반환
      */
     public Optional<Entry> findEntryById(String id) {
-        return purchaseSalesSlipService.findEntryById(id);
-    }
-
-    /**
-     * 코드로 엔트리를 조회함
-     * @param code 엔트리의 코드
-     * @return 조회된 엔트리를 Optional로 반환
-     */
-    public Optional<Entry> findEntryByCode(String code) {
-        return purchaseSalesSlipService.findEntryByCode(code);
+        return entryRepository.findById(id);
     }
 
     /**
@@ -67,16 +70,7 @@ public class PurchaseSalesSlipController {
      * @return 조회된 매입매출전표를 Optional로 반환
      */
     public Optional<PurchaseSalesSlip> findPurchaseSalesSlipById(String id) {
-        return purchaseSalesSlipService.findPurchaseSalesSlipById(id);
-    }
-
-    /**
-     * 코드로 매입매출전표를 조회함
-     * @param code 매입매출전표의 코드
-     * @return 조회된 매입매출전표를 Optional로 반환
-     */
-    public Optional<PurchaseSalesSlip> findPurchaseSalesSlipByCode(String code) {
-        return purchaseSalesSlipService.findPurchaseSalesSlipByCode(code);
+        return purchaseSalesSlipRepository.findById(id);
     }
 
     /**
@@ -85,24 +79,16 @@ public class PurchaseSalesSlipController {
      * @return 조회된 부가세 유형을 Optional로 반환
      */
     public Optional<VatType> findVatTypeById(String id) {
-        return purchaseSalesSlipService.findVatTypeById(id);
+        return vatTypeRepository.findById(id);
     }
 
-    /**
-     * 코드로 부가세 유형을 조회함
-     * @param code 부가세 유형의 코드
-     * @return 조회된 부가세 유형을 Optional로 반환
-     */
-    public Optional<VatType> findVatTypeByCode(String code) {
-        return purchaseSalesSlipService.findVatTypeByCode(code);
-    }
 
     /**
      * 모든 엔트리를 조회함
      * @return 저장된 모든 엔트리의 컬렉션
      */
     public Collection<Entry> findAllEntries() {
-        return purchaseSalesSlipService.findAllEntries();
+        return entryRepository.findAll();
     }
 
     /**
@@ -110,7 +96,7 @@ public class PurchaseSalesSlipController {
      * @return 저장된 모든 매입매출전표의 컬렉션
      */
     public Collection<PurchaseSalesSlip> findAllPurchaseSalesSlip() {
-        return purchaseSalesSlipService.findAllPurchaseSalesSlip();
+        return purchaseSalesSlipRepository.findAll();
     }
 
     /**
@@ -118,6 +104,6 @@ public class PurchaseSalesSlipController {
      * @return 저장된 모든 부가세 유형의 컬렉션
      */
     public Collection<VatType> findAllVatTypes() {
-        return purchaseSalesSlipService.findAllVatTypes();
+        return vatTypeRepository.findAll();
     }
 }
