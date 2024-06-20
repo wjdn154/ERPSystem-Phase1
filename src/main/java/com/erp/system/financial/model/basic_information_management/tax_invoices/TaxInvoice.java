@@ -1,5 +1,8 @@
 package com.erp.system.financial.model.basic_information_management.tax_invoices;
 
+import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.annotation.EnumMapping;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
@@ -9,6 +12,7 @@ import java.util.UUID;
  * 전자 세금 계산서 테이블
  * 전자 세금 계산서 발행 할때 필요한 정보들이 있는 테이블
  */
+@EnumMapping
 public class TaxInvoice {
     public enum TaxType { TAXABLE, EXEMPT, ZERO_RATED }
     public enum ReceiptType { RECEIPT, INVOICE }
@@ -132,6 +136,7 @@ public class TaxInvoice {
         this.supplyValue = builder.supplyValue;
         this.taxAmount = builder.taxAmount;
         this.approvalNumber = builder.approvalNumber;
+        NotNullValidator.safeValidateFields(this);
     }
 
     public Builder tobuild() {
