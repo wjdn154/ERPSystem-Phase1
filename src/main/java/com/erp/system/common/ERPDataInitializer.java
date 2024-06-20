@@ -11,6 +11,9 @@ import java.lang.reflect.*;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static com.erp.system.common.Rules.*;
@@ -229,6 +232,7 @@ public class ERPDataInitializer {
             if (method.getName().equalsIgnoreCase(fieldName) && method.getParameterTypes().length == 1) {
                 Class<?> methodParamType = method.getParameterTypes()[0];
                 if (methodParamType.equals(parameterType) || methodParamType.isEnum()) {
+                    System.out.println("method3 = " + method);
                     return method;
                 }
             }
@@ -249,7 +253,8 @@ public class ERPDataInitializer {
             case "int": return Integer.class;
             case "boolean": return Boolean.class;
             case "double": return Double.class;
-            case "date": return Date.class;
+            case "localdate": return LocalDate.class;
+            case "localdatetime": return LocalDateTime.class;
             case "bigdecimal": return BigDecimal.class;
             case "enum": return Enum.class;
             default: throw new IllegalArgumentException("지원하지 않는 타입: " + typeStr);
@@ -271,8 +276,9 @@ public class ERPDataInitializer {
         if (expectedType == Integer.class || expectedType == int.class) return Integer.parseInt(value);
         if (expectedType == Boolean.class || expectedType == boolean.class) return Boolean.parseBoolean(value);
         if (expectedType == Double.class || expectedType == double.class) return Double.parseDouble(value);
-        if (expectedType == Date.class) return new SimpleDateFormat("yyyyMMdd").parse(value);
         if (expectedType == BigDecimal.class) return new BigDecimal(value);
+        if (expectedType == LocalDate.class) return LocalDate.parse(value, DateTimeFormatter.ofPattern("M/d/yy"));
+        if (expectedType == LocalDateTime.class) return LocalDateTime.parse(value, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
         if (Enum.class.isAssignableFrom(expectedType)) {
             String[] parts = value.split("\\.");
             if (parts.length < 2) throw new IllegalArgumentException("Enum 값은 'EnumClassName.EnumValue' 형태여야 합니다: " + value);
@@ -292,6 +298,7 @@ public class ERPDataInitializer {
             }
             throw new ClassNotFoundException("해당 enum 클래스가 존재하지 않습니다: " + enumClassName);
         }
+
         throw new IllegalArgumentException("지원하지 않는 타입 변환: " + expectedType.getSimpleName());
     }
 

@@ -1,5 +1,7 @@
 package com.erp.system.financial.model.book_keeping.accounting_ledger;
 
+import com.erp.system.common.annotation.EnumMapping;
+
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -10,6 +12,7 @@ import java.util.UUID;
  * 현금출납장 테이블
  * 장부관리 탭 현급출납장 데이터 테이블
  */
+@EnumMapping
 public class CashBook {
     private final String id; // 고유 식별자
     private final String code;

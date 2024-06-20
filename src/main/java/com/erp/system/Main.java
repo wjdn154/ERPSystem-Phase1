@@ -65,9 +65,7 @@ public class Main {
         
         // 객체 수정
         BankAccount bankAccount = bankAccountRepository.findByCode("2").get();
-        bankAccount.tobuild().bankName("바꿧어요~~").build();
-
-        System.out.println("bankAccount = " + bankAccount.getBankName());
+        bankAccount = bankAccount.tobuild().bankName("수정").build();
 
         // 수정된 객체 업데이트
         bankAccountRepository.update(bankAccount);
