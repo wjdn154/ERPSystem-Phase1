@@ -6,10 +6,4 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface TaxInvoiceService {
-    void saveTaxInvoice(TaxInvoice taxInvoice);
-
-    Optional<TaxInvoice> findTaxInvoiceById(String id);
-    Optional<TaxInvoice> findTaxInvoiceByCode(String code);
-
-    Collection<TaxInvoice> findAllTaxInvoices();
 }

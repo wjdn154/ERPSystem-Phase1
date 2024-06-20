@@ -12,23 +12,4 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface VoucherRegistrationService {
-
-    void saveAccount(Account account);
-    void saveMemo(Memo memo);
-    void saveVoucher(Voucher voucher);
-    void saveVoucherType(VoucherType voucherType);
-
-    Optional<Account> findAccountById(String id);
-    Optional<Account> findAccountByCode(String code);
-    Optional<Memo> findMemoById(String id);
-    Optional<Memo> findMemoByCode(String code);
-    Optional<Voucher> findVoucherById(String id);
-    Optional<Voucher> findVoucherByCode(String code);
-    Optional<VoucherType> findVoucherTypeById(String id);
-    Optional<VoucherType> findVoucherTypeByCode(String code);
-
-    Collection<Account> findAllAccounts();
-    Collection<Memo> findAllMemos();
-    Collection<Voucher> findAllVouchers();
-    Collection<VoucherType> findAllVoucherTypes();
 }

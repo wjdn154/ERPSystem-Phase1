@@ -11,18 +11,4 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface AccountInformationService {
-    void saveBankAccount(BankAccount bankAccount);
-    void saveBankTransaction(BankTransaction bankTransaction);
-    void saveDeposit(Deposit deposit);
-
-    Optional<BankAccount> findBankAccountById(String id);
-    Optional<BankAccount> findBankAccountByCode(String code);
-    Optional<BankTransaction> findBankTransactionById(String id);
-    Optional<BankTransaction> findBankTransactionByCode(String code);
-    Optional<Deposit> findDepositById(String id);
-    Optional<Deposit> findDepositByCode(String code);
-
-    Collection<BankAccount> findAllBankAccounts();
-    Collection<BankTransaction> findAllBankTransactions();
-    Collection<Deposit> findAllDeposits();
 }

@@ -3,7 +3,9 @@ package com.erp.system.financial.controller.basic_information_management;
 import com.erp.system.common.annotation.Component;
 import com.erp.system.common.annotation.Priority;
 import com.erp.system.financial.model.basic_information_management.company_registration.*;
+import com.erp.system.financial.repository.basic_information_management.company_registration.*;
 import com.erp.system.financial.service.basic_information_management.CompanyRegistrationService;
+import org.apache.commons.math3.analysis.function.Add;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -12,16 +14,31 @@ import java.util.Optional;
 @Priority(3)
 public class CompanyRegistrationController {
     private final CompanyRegistrationService companyRegistrationService;
+    private final AddressRepository addressRepository;
+    private final CompanyRepository companyRepository;
+    private final ContactRepository contactRepository;
+    private final CorporateKindRepository corporateKindRepository;
+    private final CorporateTypeRepository corporateTypeRepository;
+    private final RepresentativeRepository representativeRepository;
+    private final TaxRepository taxRepository;
 
-    public CompanyRegistrationController(CompanyRegistrationService companyRegistrationService) {
+
+    public CompanyRegistrationController(CompanyRegistrationService companyRegistrationService,
+                                         AddressRepository addressRepository,
+                                         CompanyRepository companyRepository,
+                                         ContactRepository contactRepository,
+                                         CorporateKindRepository corporateKindRepository,
+                                         CorporateTypeRepository corporateTypeRepository,
+                                         RepresentativeRepository representativeRepository,
+                                         TaxRepository taxRepository) {
         this.companyRegistrationService = companyRegistrationService;
-    }
-    /**
-     * 회사를 저장함
-     * @param company 저장할 회사
-     */
-    public void saveCompany(Company company) {
-        companyRegistrationService.saveCompany(company);
+        this.addressRepository = addressRepository;
+        this.companyRepository = companyRepository;
+        this.contactRepository = contactRepository;
+        this.corporateKindRepository = corporateKindRepository;
+        this.corporateTypeRepository = corporateTypeRepository;
+        this.representativeRepository = representativeRepository;
+        this.taxRepository = taxRepository;
     }
 
     /**
@@ -29,7 +46,15 @@ public class CompanyRegistrationController {
      * @param address 저장할 주소
      */
     public void saveAddress(Address address) {
-        companyRegistrationService.saveAddress(address);
+        addressRepository.save(address);
+    }
+
+    /**
+     * 회사를 저장함
+     * @param company 저장할 회사
+     */
+    public void saveCompany(Company company) {
+        companyRepository.save(company);
     }
 
     /**
@@ -37,7 +62,7 @@ public class CompanyRegistrationController {
      * @param contact 저장할 연락처
      */
     public void saveContact(Contact contact) {
-        companyRegistrationService.saveContact(contact);
+        contactRepository.save(contact);
     }
 
     /**
@@ -45,7 +70,7 @@ public class CompanyRegistrationController {
      * @param corporateKind 저장할 법인 종류
      */
     public void saveCorporateKind(CorporateKind corporateKind) {
-        companyRegistrationService.saveCorporateKind(corporateKind);
+        corporateKindRepository.save(corporateKind);
     }
 
     /**
@@ -53,7 +78,7 @@ public class CompanyRegistrationController {
      * @param corporateType 저장할 법인 유형
      */
     public void saveCorporateType(CorporateType corporateType) {
-        companyRegistrationService.saveCorporateType(corporateType);
+        corporateTypeRepository.save(corporateType);
     }
 
     /**
@@ -61,7 +86,7 @@ public class CompanyRegistrationController {
      * @param representative 저장할 대표자
      */
     public void saveRepresentative(Representative representative) {
-        companyRegistrationService.saveRepresentative(representative);
+        representativeRepository.save(representative);
     }
 
     /**
@@ -69,25 +94,7 @@ public class CompanyRegistrationController {
      * @param tax 저장할 세금
      */
     public void saveTax(Tax tax) {
-        companyRegistrationService.saveTax(tax);
-    }
-
-    /**
-     * ID로 회사를 조회함
-     * @param id 회사의 ID
-     * @return 조회된 회사를 Optional로 반환
-     */
-    public Optional<Company> findCompanyById(String id) {
-        return companyRegistrationService.findCompanyById(id);
-    }
-
-    /**
-     * 코드로 회사를 조회함
-     * @param code 회사의 코드
-     * @return 조회된 회사를 Optional로 반환
-     */
-    public Optional<Company> findCompanyByCode(String code) {
-        return companyRegistrationService.findCompanyByCode(code);
+        taxRepository.save(tax);
     }
 
     /**
@@ -96,16 +103,17 @@ public class CompanyRegistrationController {
      * @return 조회된 주소를 Optional로 반환
      */
     public Optional<Address> findAddressById(String id) {
-        return companyRegistrationService.findAddressById(id);
+        return addressRepository.findById(id);
     }
 
     /**
-     * 코드로 주소를 조회함
-     * @param code 주소의 코드
-     * @return 조회된 주소를 Optional로 반환
+     * ID로 회사를 조회함
+     * @param id 회사의 ID
+     * @return 조회된 회사를 Optional로 반환
      */
-    public Optional<Address> findAddressByCode(String code) {
-        return companyRegistrationService.findAddressByCode(code);
+
+    public Optional<Company> findCompanyById(String id) {
+        return companyRepository.findById(id);
     }
 
     /**
@@ -114,16 +122,7 @@ public class CompanyRegistrationController {
      * @return 조회된 연락처를 Optional로 반환
      */
     public Optional<Contact> findContactById(String id) {
-        return companyRegistrationService.findContactById(id);
-    }
-
-    /**
-     * 코드로 연락처를 조회함
-     * @param code 연락처의 코드
-     * @return 조회된 연락처를 Optional로 반환
-     */
-    public Optional<Contact> findContactByCode(String code) {
-        return companyRegistrationService.findContactByCode(code);
+        return contactRepository.findById(id);
     }
 
     /**
@@ -132,16 +131,7 @@ public class CompanyRegistrationController {
      * @return 조회된 법인 종류를 Optional로 반환
      */
     public Optional<CorporateKind> findCorporateKindById(String id) {
-        return companyRegistrationService.findCorporateKindById(id);
-    }
-
-    /**
-     * 코드로 법인 종류를 조회함
-     * @param code 법인 종류의 코드
-     * @return 조회된 법인 종류를 Optional로 반환
-     */
-    public Optional<CorporateKind> findCorporateKindByCode(String code) {
-        return companyRegistrationService.findCorporateKindByCode(code);
+        return corporateKindRepository.findById(id);
     }
 
     /**
@@ -150,16 +140,7 @@ public class CompanyRegistrationController {
      * @return 조회된 법인 유형을 Optional로 반환
      */
     public Optional<CorporateType> findCorporateTypeById(String id) {
-        return companyRegistrationService.findCorporateTypeById(id);
-    }
-
-    /**
-     * 코드로 법인 유형을 조회함
-     * @param code 법인 유형의 코드
-     * @return 조회된 법인 유형을 Optional로 반환
-     */
-    public Optional<CorporateType> findCorporateTypeByCode(String code) {
-        return companyRegistrationService.findCorporateTypeByCode(code);
+        return corporateTypeRepository.findById(id);
     }
 
     /**
@@ -168,16 +149,7 @@ public class CompanyRegistrationController {
      * @return 조회된 대표자를 Optional로 반환
      */
     public Optional<Representative> findRepresentativeById(String id) {
-        return companyRegistrationService.findRepresentativeById(id);
-    }
-
-    /**
-     * 코드로 대표자를 조회함
-     * @param code 대표자의 코드
-     * @return 조회된 대표자를 Optional로 반환
-     */
-    public Optional<Representative> findRepresentativeByCode(String code) {
-        return companyRegistrationService.findRepresentativeByCode(code);
+        return representativeRepository.findById(id);
     }
 
     /**
@@ -186,24 +158,7 @@ public class CompanyRegistrationController {
      * @return 조회된 세금을 Optional로 반환
      */
     public Optional<Tax> findTaxById(String id) {
-        return companyRegistrationService.findTaxById(id);
-    }
-
-    /**
-     * 코드로 세금을 조회함
-     * @param code 세금의 코드
-     * @return 조회된 세금을 Optional로 반환
-     */
-    public Optional<Tax> findTaxByCode(String code) {
-        return companyRegistrationService.findTaxByCode(code);
-    }
-
-    /**
-     * 모든 회사를 조회함
-     * @return 저장된 모든 회사의 컬렉션
-     */
-    public Collection<Company> findAllCompanies() {
-        return companyRegistrationService.findAllCompanies();
+        return taxRepository.findById(id);
     }
 
     /**
@@ -211,7 +166,15 @@ public class CompanyRegistrationController {
      * @return 저장된 모든 주소의 컬렉션
      */
     public Collection<Address> findAllAddresses() {
-        return companyRegistrationService.findAllAddresses();
+        return addressRepository.findAll();
+    }
+
+    /**
+     * 모든 회사를 조회함
+     * @return 저장된 모든 회사의 컬렉션
+     */
+    public Collection<Company> findAllCompanies() {
+        return companyRepository.findAll();
     }
 
     /**
@@ -219,7 +182,7 @@ public class CompanyRegistrationController {
      * @return 저장된 모든 연락처의 컬렉션
      */
     public Collection<Contact> findAllContacts() {
-        return companyRegistrationService.findAllContacts();
+        return contactRepository.findAll();
     }
 
     /**
@@ -227,7 +190,7 @@ public class CompanyRegistrationController {
      * @return 저장된 모든 법인 종류의 컬렉션
      */
     public Collection<CorporateKind> findAllCorporateKinds() {
-        return companyRegistrationService.findAllCorporateKinds();
+        return corporateKindRepository.findAll();
     }
 
     /**
@@ -235,7 +198,7 @@ public class CompanyRegistrationController {
      * @return 저장된 모든 법인 유형의 컬렉션
      */
     public Collection<CorporateType> findAllCorporateTypes() {
-        return companyRegistrationService.findAllCorporateTypes();
+        return corporateTypeRepository.findAll();
     }
 
     /**
@@ -243,7 +206,7 @@ public class CompanyRegistrationController {
      * @return 저장된 모든 대표자의 컬렉션
      */
     public Collection<Representative> findAllRepresentatives() {
-        return companyRegistrationService.findAllRepresentatives();
+        return representativeRepository.findAll();
     }
 
     /**
@@ -251,6 +214,6 @@ public class CompanyRegistrationController {
      * @return 저장된 모든 세금의 컬렉션
      */
     public Collection<Tax> findAllTaxes() {
-        return companyRegistrationService.findAllTaxes();
+        return taxRepository.findAll();
     }
 }
