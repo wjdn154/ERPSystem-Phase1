@@ -1,5 +1,8 @@
 package com.erp.system.financial.model.basic_information_management.company_registration;
 
+import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.annotation.NotNull;
+
 import java.util.UUID;
 
 /**
@@ -8,20 +11,24 @@ import java.util.UUID;
  * 
  */
 public class Tax {
+    @NotNull
     private final String id; // 고유식별자
-    private final String code; // 세무 정보 코드
+    @NotNull
     private final String companyId; // 연결된 회사 ID
+    @NotNull
     private final String businessTaxOfficeId; // 사업장관할세무서 ID
+    @NotNull
     private final String headquartersTaxOfficeId; // 본점관할세무서 ID
+    @NotNull
     private final String localCorporateTaxCategoryId; // 지방세법인구분 ID
 
+    @NotNull
     private String localIncomeTaxOffice; // 지방소득세납세지
 
     public static int idIndex = 1;
 
     public static class Builder {
         private String id;
-        private String code;
         private String companyId;
         private String businessTaxOfficeId;
         private String headquartersTaxOfficeId;
@@ -31,11 +38,6 @@ public class Tax {
 
         public Builder id(String id) {
             this.id = id;
-            return this;
-        }
-
-        public Builder code(String code) {
-            this.code = code;
             return this;
         }
 
@@ -71,18 +73,17 @@ public class Tax {
 
     private Tax(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.code = builder.code;
         this.companyId = builder.companyId;
         this.businessTaxOfficeId = builder.businessTaxOfficeId;
         this.headquartersTaxOfficeId = builder.headquartersTaxOfficeId;
         this.localCorporateTaxCategoryId = builder.localCorporateTaxCategoryId;
         this.localIncomeTaxOffice = builder.localIncomeTaxOffice;
+        NotNullValidator.safeValidateFields(this);
     }
 
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .code(this.code)
                 .companyId(this.companyId)
                 .businessTaxOfficeId(this.businessTaxOfficeId)
                 .headquartersTaxOfficeId(this.headquartersTaxOfficeId)
@@ -92,10 +93,6 @@ public class Tax {
 
     public String getId() {
         return id;
-    }
-
-    public String getCode() {
-        return code;
     }
 
     public String getCompanyId() {

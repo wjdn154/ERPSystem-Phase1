@@ -1,5 +1,8 @@
 package com.erp.system.financial.model.basic_information_management.company_registration;
 
+import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.annotation.NotNull;
+
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
@@ -9,32 +12,48 @@ import java.util.UUID;
  * 회사 기본 정보 등록시 사용하는 테이블
  */
 public class Company {
+    @NotNull
     private final String id; // 고유식별자
-    private final String code; // 회사코드
+    @NotNull
     private final String corporateType; // 법인구분 테이블 참조코드
+    @NotNull
     private final String corporateKinds; // 법인종류 테이블 참조코드
+    @NotNull
     private final String representativeId; // 대표자 정보 테이블 참조코드
+    @NotNull
     private final String addressId; // 주소 정보 테이블 참조코드
+    @NotNull
     private final String contactId; // 연락처 정보 테이블 참조코드
+    @NotNull
     private final String taxId; // 세무 정보 테이블 참조코드
 
+    @NotNull
     private boolean isSme; // 중소기업여부
+    @NotNull
     private String businessRegistrationNumber; // 사업자등록번호
+    @NotNull
     private String corporateRegistrationNumber; // 법인등록번호
+    @NotNull
     private LocalDate establishmentDate; // 설립연월일
+    @NotNull
     private String name; // 회사명
+    @NotNull
     private String type; // 구분 (법인, 개인)
+    @NotNull
     private boolean active; // 사용여부(사용, 미사용)
+    @NotNull
     private LocalDate fiscalYearStart; // 회계연도 시작일
+    @NotNull
     private LocalDate fiscalYearEnd; // 회계연도 마지막일
+    @NotNull
     private int fiscalCardinalNumber; // 회계연도 기수
-    private String mainIndustryCode; // 주업종코드
+    @NotNull
+    private String mainIndustryId; // 주업종코드
 
     public static int idIndex = 1;
 
     public static class Builder {
         private String id;
-        private String code;
         private String corporateType;
         private String corporateKinds;
         private String representativeId;
@@ -52,15 +71,10 @@ public class Company {
         private LocalDate fiscalYearStart;
         private LocalDate fiscalYearEnd;
         private int fiscalCardinalNumber;
-        private String mainIndustryCode;
+        private String mainIndustryId;
 
         public Builder id(String id) {
             this.id = id;
-            return this;
-        }
-
-        public Builder code(String code) {
-            this.code = code;
             return this;
         }
 
@@ -144,8 +158,8 @@ public class Company {
             return this;
         }
 
-        public Builder mainIndustryCode(String mainIndustryCode) {
-            this.mainIndustryCode = mainIndustryCode;
+        public Builder mainIndustryId(String mainIndustryId) {
+            this.mainIndustryId = mainIndustryId;
             return this;
         }
 
@@ -156,7 +170,6 @@ public class Company {
 
     private Company(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.code = builder.code;
         this.corporateType = builder.corporateType;
         this.corporateKinds = builder.corporateKinds;
         this.representativeId = builder.representativeId;
@@ -173,7 +186,8 @@ public class Company {
         this.fiscalYearStart = builder.fiscalYearStart;
         this.fiscalYearEnd = builder.fiscalYearEnd;
         this.fiscalCardinalNumber = builder.fiscalCardinalNumber;
-        this.mainIndustryCode = builder.mainIndustryCode;
+        this.mainIndustryId = builder.mainIndustryId;
+        NotNullValidator.safeValidateFields(this);
     }
 
     public Builder tobuild() {
@@ -189,15 +203,11 @@ public class Company {
                 .fiscalYearStart(this.fiscalYearStart)
                 .fiscalYearEnd(this.fiscalYearEnd)
                 .fiscalCardinalNumber(this.fiscalCardinalNumber)
-                .mainIndustryCode(this.mainIndustryCode);
+                .mainIndustryId(this.mainIndustryId);
     }
 
     public String getId() {
         return id;
-    }
-
-    public String getCode() {
-        return code;
     }
 
     public String getCorporateType() {
@@ -264,7 +274,7 @@ public class Company {
         return fiscalCardinalNumber;
     }
 
-    public String getMainIndustryCode() {
-        return mainIndustryCode;
+    public String getMainIndustryId() {
+        return mainIndustryId;
     }
 }

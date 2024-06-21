@@ -13,6 +13,4 @@ public class Rules {
     // ID 필드명
     public static final String ID_FIELD_NAME = "id";
 
-    // 코드 필드명
-    public static final String CODE_FIELD_NAME = "code";
 }

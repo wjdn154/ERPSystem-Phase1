@@ -5,7 +5,6 @@ import com.erp.system.common.generic_repository.GenericRepository;
 import java.lang.reflect.Field;
 import java.util.*;
 
-import static com.erp.system.common.Rules.CODE_FIELD_NAME;
 import static com.erp.system.common.Rules.ID_FIELD_NAME;
 
 /**
@@ -15,7 +14,6 @@ import static com.erp.system.common.Rules.ID_FIELD_NAME;
 public class GenericRepositoryImpl<T> implements GenericRepository<T> {
 
     private final Map<String, T> store = new HashMap<>(); // ID로 엔티티를 저장할 맵
-    private final Map<String, T> codeStore = new HashMap<>(); // 코드로 엔티티를 저장할 맵
     private final Class<T> entityClass; // 엔티티 클래스 타입
 
     /**
@@ -38,14 +36,6 @@ public class GenericRepositoryImpl<T> implements GenericRepository<T> {
                 throw new IllegalArgumentException("이미 존재하는 ID입니다: " + id);
             }
 
-            if (hasField(entity, CODE_FIELD_NAME)) {
-                String code = getFieldValue(entity, CODE_FIELD_NAME);
-                if (codeStore.containsKey(code)) {
-                    throw new IllegalArgumentException("이미 존재하는 코드입니다: " + code);
-                }
-                codeStore.put(code, entity);
-            }
-
             store.put(id, entity);
         } catch (Exception e) {
             throw new RuntimeException("Entity 저장 실패", e);
@@ -63,16 +53,6 @@ public class GenericRepositoryImpl<T> implements GenericRepository<T> {
     }
 
     /**
-     * 코드로 엔티티를 조회함.
-     * @param code 엔티티의 코드
-     * @return 조회된 엔티티를 Optional로 반환
-     */
-    @Override
-    public Optional<T> findByCode(String code) {
-        return Optional.ofNullable(codeStore.get(code));
-    }
-
-    /**
      * 엔티티를 업데이트함.
      * @param entity 업데이트할 엔티티
      */
@@ -83,10 +63,6 @@ public class GenericRepositoryImpl<T> implements GenericRepository<T> {
             if (store.containsKey(id)) {
                 store.put(id, entity);
 
-                if (hasField(entity, CODE_FIELD_NAME)) {
-                    String code = getFieldValue(entity, CODE_FIELD_NAME);
-                    codeStore.put(code, entity);
-                }
             } else {
                 throw new RuntimeException("Entity 를 찾을 수 없습니다. : " + id);
             }
@@ -101,14 +77,10 @@ public class GenericRepositoryImpl<T> implements GenericRepository<T> {
      */
     @Override
     public void delete(String id) {
-        T entity = store.remove(id);
-        if (entity != null && hasField(entity, CODE_FIELD_NAME)) {
-            try {
-                String code = getFieldValue(entity, CODE_FIELD_NAME);
-                codeStore.remove(code);
-            } catch (Exception e) {
-                throw new RuntimeException("Entity 삭제를 실패했습니다. : ", e);
-            }
+        try {
+            T entity = store.remove(id);
+        } catch (Exception e) {
+            throw new RuntimeException("Entity 삭제를 실패했습니다. : ", e);
         }
     }
 
@@ -158,6 +130,5 @@ public class GenericRepositoryImpl<T> implements GenericRepository<T> {
     @Override
     public void reset() {
         store.clear();
-        codeStore.clear();
     }
 }

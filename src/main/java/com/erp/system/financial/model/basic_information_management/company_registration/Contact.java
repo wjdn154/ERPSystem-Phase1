@@ -1,5 +1,8 @@
 package com.erp.system.financial.model.basic_information_management.company_registration;
 
+import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.annotation.NotNull;
+
 import java.util.UUID;
 
 /**
@@ -8,10 +11,12 @@ import java.util.UUID;
  *
  */
 public class Contact {
+    @NotNull
     private final String id; // 고유식별자
-    private final String code; // 연락처 코드
+    @NotNull
     private final String companyId; // 연결된 회사 ID
 
+    @NotNull
     private String businessPhone; // 사업장 전화번호
     private String fax; // 팩스번호
 
@@ -19,7 +24,6 @@ public class Contact {
 
     public static class Builder {
         private String id;
-        private String code;
         private String companyId;
 
         private String businessPhone;
@@ -27,11 +31,6 @@ public class Contact {
 
         public Builder id(String id) {
             this.id = id;
-            return this;
-        }
-
-        public Builder code(String code) {
-            this.code = code;
             return this;
         }
 
@@ -57,16 +56,15 @@ public class Contact {
 
     private Contact(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.code = builder.code;
         this.companyId = builder.companyId;
         this.businessPhone = builder.businessPhone;
         this.fax = builder.fax;
+        NotNullValidator.safeValidateFields(this);
     }
 
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .code(this.code)
                 .companyId(this.companyId)
                 .businessPhone(this.businessPhone)
                 .fax(this.fax);
@@ -74,10 +72,6 @@ public class Contact {
 
     public String getId() {
         return id;
-    }
-
-    public String getCode() {
-        return code;
     }
 
     public String getCompanyId() {

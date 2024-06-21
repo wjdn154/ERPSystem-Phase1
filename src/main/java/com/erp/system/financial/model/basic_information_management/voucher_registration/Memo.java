@@ -1,5 +1,8 @@
 package com.erp.system.financial.model.basic_information_management.voucher_registration;
 
+import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.annotation.NotNull;
+
 import java.util.UUID;
 
 /**
@@ -7,19 +10,21 @@ import java.util.UUID;
  * 적요 데이터 정보 저장 테이블
  */
 public class Memo {
+    @NotNull
     private final String id; // 적요의 고유 식별자
-    private final String code; // 적요의 고유 코드
-    private final String accountCode; // 계정과목 참조 코드
+    @NotNull
+    private final String accountId; // 계정과목 참조 코드
 
+    @NotNull
     private String description; // 적요 설명(계정과목에 따라 달라진다)
+    @NotNull
     private boolean immutable; // 수정불가 여부
 
     public static int idIndex = 1; // static 변수 추가
 
     public static class Builder {
         private String id;
-        private String code;
-        private String accountCode;
+        private String accountId;
 
         private String description;
         private boolean immutable;
@@ -29,13 +34,8 @@ public class Memo {
             return this;
         }
 
-        public Builder code(String code) {
-            this.code = code;
-            return this;
-        }
-
-        public Builder accountCode(String accountCode) {
-            this.accountCode = accountCode;
+        public Builder accountId(String accountId) {
+            this.accountId = accountId;
             return this;
         }
 
@@ -56,17 +56,16 @@ public class Memo {
 
     private Memo(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.code = builder.code;
-        this.accountCode = builder.accountCode;
+        this.accountId = builder.accountId;
         this.description = builder.description;
         this.immutable = builder.immutable;
+        NotNullValidator.safeValidateFields(this);
     }
 
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .code(this.code)
-                .accountCode(this.accountCode)
+                .accountId(this.accountId)
                 .description(this.description)
                 .immutable(this.immutable);
     }
@@ -75,12 +74,8 @@ public class Memo {
         return id;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public String getAccountCode() {
-        return accountCode;
+    public String getAccountId() {
+        return accountId;
     }
 
     public String getDescription() {

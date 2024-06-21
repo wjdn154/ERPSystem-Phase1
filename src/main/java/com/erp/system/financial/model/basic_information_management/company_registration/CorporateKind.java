@@ -1,5 +1,8 @@
 package com.erp.system.financial.model.basic_information_management.company_registration;
 
+import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.annotation.NotNull;
+
 import java.util.UUID;
 
 /**
@@ -8,28 +11,24 @@ import java.util.UUID;
  * 
  */
 public class CorporateKind {
+    @NotNull
     private final String id; // 고유 식별자
-    private final String code; // 법인종류 코드
 
+    @NotNull
     private String kind; // 법인종류
+    @NotNull
     private String description; // 법인종류 설명
 
     public static int idIndex = 1;
 
     public static class Builder {
         private String id;
-        private String code;
 
         private String kind;
         private String description;
 
         public Builder id(String id) {
             this.id = id;
-            return this;
-        }
-
-        public Builder code(String code) {
-            this.code = code;
             return this;
         }
 
@@ -50,25 +49,20 @@ public class CorporateKind {
 
     private CorporateKind(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.code = builder.code;
         this.kind = builder.kind;
         this.description = builder.description;
+        NotNullValidator.safeValidateFields(this);
     }
 
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .code(this.code)
                 .kind(this.kind)
                 .description(this.description);
     }
 
     public String getId() {
         return id;
-    }
-
-    public String getCode() {
-        return code;
     }
 
     public String getKind() {
