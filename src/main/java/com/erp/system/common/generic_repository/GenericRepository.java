@@ -12,7 +12,6 @@ public interface GenericRepository<T> {
     void save(T entity);
 
     Optional<T> findById(String id);
-    Optional<T> findByCode(String code);
     List<T> findAll();
 
     void update(T entity);

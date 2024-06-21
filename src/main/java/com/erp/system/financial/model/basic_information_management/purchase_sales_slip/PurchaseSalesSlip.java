@@ -1,5 +1,8 @@
 package com.erp.system.financial.model.basic_information_management.purchase_sales_slip;
 
+import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.annotation.NotNull;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
@@ -10,28 +13,37 @@ import java.util.UUID;
  * 매입매출전표 등록 할때 필요한 정보들이 있는 테이블
  */
 public class PurchaseSalesSlip {
+    @NotNull
     private final String id; // 고유 식별자
-    private final String code; // 매입매출전표 코드
-    private final String vatTypeCode; // 부가세유형 참조 코드
-    private final String supplierCode; // 공급처 코드 (거래처 테이블 참조)
-    private final String entryCode; // 분개 코드 (분개 관련 정보 참조)
+    @NotNull
+    private final String vatTypeId; // 부가세유형 참조 코드
+    @NotNull
+    private final String supplierId; // 공급처 코드 (거래처 테이블 참조)
+    @NotNull
+    private final String entryId; // 분개 코드 (분개 관련 정보 참조)
 
+    @NotNull
     private LocalDate date; // 전표 날짜
+    @NotNull
     private String itemName; // 품목명
+    @NotNull
     private BigDecimal quantity; // 수량
+    @NotNull
     private BigDecimal unitPrice; // 단가
+    @NotNull
     private BigDecimal supplyValue; // 공급가액
+    @NotNull
     private BigDecimal vat; // 부가세
+    @NotNull
     private Boolean electronicTaxInvoiceIssued; // 전자세금계산서 발행여부
 
     public static int idIndex = 1;
 
     public static class Builder {
         private String id;
-        private String code;
-        private String vatTypeCode;
-        private String supplierCode;
-        private String entryCode;
+        private String vatTypeId;
+        private String supplierId;
+        private String entryId;
 
         private LocalDate date;
         private String itemName;
@@ -46,23 +58,18 @@ public class PurchaseSalesSlip {
             return this;
         }
 
-        public Builder code(String code) {
-            this.code = code;
+        public Builder vatTypeId(String vatTypeId) {
+            this.vatTypeId = vatTypeId;
             return this;
         }
 
-        public Builder vatTypeCode(String vatTypeCode) {
-            this.vatTypeCode = vatTypeCode;
+        public Builder supplierId(String supplierId) {
+            this.supplierId = supplierId;
             return this;
         }
 
-        public Builder supplierCode(String supplierCode) {
-            this.supplierCode = supplierCode;
-            return this;
-        }
-
-        public Builder entryCode(String entryCode) {
-            this.entryCode = entryCode;
+        public Builder entryId(String entryId) {
+            this.entryId = entryId;
             return this;
         }
 
@@ -108,10 +115,9 @@ public class PurchaseSalesSlip {
 
     private PurchaseSalesSlip(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.code = builder.code;
-        this.vatTypeCode = builder.vatTypeCode;
-        this.supplierCode = builder.supplierCode;
-        this.entryCode = builder.entryCode;
+        this.vatTypeId = builder.vatTypeId;
+        this.supplierId = builder.supplierId;
+        this.entryId = builder.entryId;
         this.date = builder.date;
         this.itemName = builder.itemName;
         this.quantity = builder.quantity;
@@ -119,15 +125,15 @@ public class PurchaseSalesSlip {
         this.supplyValue = builder.supplyValue;
         this.vat = builder.vat;
         this.electronicTaxInvoiceIssued = builder.electronicTaxInvoiceIssued;
+        NotNullValidator.safeValidateFields(this);
     }
 
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .code(this.code)
-                .vatTypeCode(this.vatTypeCode)
-                .supplierCode(this.supplierCode)
-                .entryCode(this.entryCode)
+                .vatTypeId(this.vatTypeId)
+                .supplierId(this.supplierId)
+                .entryId(this.entryId)
                 .date(this.date)
                 .itemName(this.itemName)
                 .quantity(this.quantity)
@@ -141,20 +147,16 @@ public class PurchaseSalesSlip {
         return id;
     }
 
-    public String getCode() {
-        return code;
+    public String getVatTypeId() {
+        return vatTypeId;
     }
 
-    public String getVatTypeCode() {
-        return vatTypeCode;
+    public String getSupplierId() {
+        return supplierId;
     }
 
-    public String getSupplierCode() {
-        return supplierCode;
-    }
-
-    public String getEntryCode() {
-        return entryCode;
+    public String getEntryId() {
+        return entryId;
     }
 
     public LocalDate getDate() {

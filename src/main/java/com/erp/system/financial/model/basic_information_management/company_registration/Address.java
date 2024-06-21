@@ -1,5 +1,8 @@
 package com.erp.system.financial.model.basic_information_management.company_registration;
 
+import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.annotation.NotNull;
+
 import java.util.UUID;
 
 /**
@@ -8,34 +11,33 @@ import java.util.UUID;
  *
  */
 public class Address {
+    @NotNull
     private final String id; // 고유식별자
-    private final String code; // 주소 코드번호
+    @NotNull
     private final String companyId; // 연결된 회사 ID
 
+    @NotNull
     private String address; // 사업장주소
+    @NotNull
     private String headquartersAddress; // 본점주소
-    private String businessPlaceCode; // 사업장 동 코드 (동 ex 대연동)
-    private String headquartersCode; // 본점 동 코드
+    @NotNull
+    private String businessPlaceId; // 사업장 동 코드 (동 ex 대연동)
+    @NotNull
+    private String headquartersId; // 본점 동 코드
 
     public static int idIndex = 1;
 
     public static class Builder {
         private String id;
-        private String code;
         private String companyId;
 
         private String address;
         private String headquartersAddress;
-        private String businessPlaceCode;
-        private String headquartersCode;
+        private String businessPlaceId;
+        private String headquartersId;
 
         public Builder id(String id) {
             this.id = id;
-            return this;
-        }
-
-        public Builder code(String code) {
-            this.code = code;
             return this;
         }
 
@@ -54,13 +56,13 @@ public class Address {
             return this;
         }
 
-        public Builder businessPlaceCode(String businessPlaceCode) {
-            this.businessPlaceCode = businessPlaceCode;
+        public Builder businessPlaceId(String businessPlaceId) {
+            this.businessPlaceId = businessPlaceId;
             return this;
         }
 
-        public Builder headquartersCode(String headquartersCode) {
-            this.headquartersCode = headquartersCode;
+        public Builder headquartersId(String headquartersId) {
+            this.headquartersId = headquartersId;
             return this;
         }
 
@@ -71,31 +73,26 @@ public class Address {
 
     private Address(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.code = builder.code;
         this.companyId = builder.companyId;
         this.address = builder.address;
         this.headquartersAddress = builder.headquartersAddress;
-        this.businessPlaceCode = builder.businessPlaceCode;
-        this.headquartersCode = builder.headquartersCode;
+        this.businessPlaceId = builder.businessPlaceId;
+        this.headquartersId = builder.headquartersId;
+        NotNullValidator.safeValidateFields(this);
     }
 
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .code(this.code)
                 .companyId(this.companyId)
                 .address(this.address)
                 .headquartersAddress(this.headquartersAddress)
-                .businessPlaceCode(this.businessPlaceCode)
-                .headquartersCode(this.headquartersCode);
+                .businessPlaceId(this.businessPlaceId)
+                .headquartersId(this.headquartersId);
     }
 
     public String getId() {
         return id;
-    }
-
-    public String getCode() {
-        return code;
     }
 
     public String getCompanyId() {
@@ -110,11 +107,11 @@ public class Address {
         return headquartersAddress;
     }
 
-    public String getBusinessPlaceCode() {
-        return businessPlaceCode;
+    public String getBusinessPlaceId() {
+        return businessPlaceId;
     }
 
-    public String getHeadquartersCode() {
-        return headquartersCode;
+    public String getHeadquartersId() {
+        return headquartersId;
     }
 }

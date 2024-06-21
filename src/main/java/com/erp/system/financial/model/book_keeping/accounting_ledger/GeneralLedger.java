@@ -1,5 +1,8 @@
 package com.erp.system.financial.model.book_keeping.accounting_ledger;
 
+import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.annotation.NotNull;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -11,23 +14,29 @@ import java.util.UUID;
  * 장부관리 탭에서 총계정원장 데이터 테이블
  */
 public class GeneralLedger {
+    @NotNull
     private final String id; // 고유 식별자
-    private final String code; // 총계정원장 코드
-    private final String accountCode; // 계정과목 코드
+    @NotNull
+    private final String accountId; // 계정과목 코드
 
+    @NotNull
     private LocalDate date; // 거래 날짜
+    @NotNull
     private BigDecimal openingBalance; // 개시 잔액
+    @NotNull
     private BigDecimal debits; // 차변 금액
+    @NotNull
     private BigDecimal credits; // 대변 금액
+    @NotNull
     private BigDecimal closingBalance; // 마감 잔액
+    @NotNull
     private Timestamp updatedAt; // 최종 업데이트 시각
 
     public static int idIndex = 1; // static 변수 추가
 
     public static class Builder {
         private String id;
-        private String code;
-        private String accountCode;
+        private String accountId;
 
         private LocalDate date;
         private BigDecimal openingBalance;
@@ -41,13 +50,8 @@ public class GeneralLedger {
             return this;
         }
 
-        public Builder code(String code) {
-            this.code = code;
-            return this;
-        }
-
-        public Builder accountCode(String accountCode) {
-            this.accountCode = accountCode;
+        public Builder accountId(String accountId) {
+            this.accountId = accountId;
             return this;
         }
 
@@ -88,21 +92,20 @@ public class GeneralLedger {
 
     private GeneralLedger(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.code = builder.code;
-        this.accountCode = builder.accountCode;
+        this.accountId = builder.accountId;
         this.date = builder.date;
         this.openingBalance = builder.openingBalance;
         this.debits = builder.debits;
         this.credits = builder.credits;
         this.closingBalance = builder.closingBalance;
         this.updatedAt = builder.updatedAt;
+        NotNullValidator.safeValidateFields(this);
     }
 
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .code(this.code)
-                .accountCode(this.accountCode)
+                .accountId(this.accountId)
                 .date(this.date)
                 .openingBalance(this.openingBalance)
                 .debits(this.debits)
@@ -115,12 +118,8 @@ public class GeneralLedger {
         return id;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public String getAccountCode() {
-        return accountCode;
+    public String getAccountId() {
+        return accountId;
     }
 
     public LocalDate getDate() {

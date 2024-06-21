@@ -11,9 +11,11 @@ import com.erp.system.financial.model.basic_information_management.account_infor
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entry;
 import com.erp.system.financial.repository.basic_information_management.account_information.BankAccountRepository;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import static com.erp.system.common.PrintAllEntities.printAllEntities;
+import static com.erp.system.common.Rules.ID_FIELD_NAME;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -30,47 +32,55 @@ public class Main {
         TaxInvoiceController taxInvoiceController = injector.getInstance(TaxInvoiceController.class);
         AccountInformationController accountInformationController = injector.getInstance(AccountInformationController.class);
 
-        printAllEntities(purchaseSalesSlipController.findAllEntries(), "code"); // Entry 출력
-        printAllEntities(purchaseSalesSlipController.findAllVatTypes(), "code"); // VatType 출력
-        printAllEntities(accountingLedgerController.findAllCashBooks(), "code"); // CashBook 출력
-        printAllEntities(taxInvoiceController.findAllTaxInvoices(), "code"); // TaxInvoice 출력
-
+        printAllEntities(purchaseSalesSlipController.findAllEntries(), ID_FIELD_NAME); // Entry 출력
+        printAllEntities(purchaseSalesSlipController.findAllVatTypes(), ID_FIELD_NAME); // VatType 출력
+        printAllEntities(accountingLedgerController.findAllCashBooks(), ID_FIELD_NAME); // CashBook 출력
+        printAllEntities(taxInvoiceController.findAllTaxInvoices(), ID_FIELD_NAME); // TaxInvoice 출력
 
         // 테스트 객체 생성
         BankAccount BA = new BankAccount.Builder()
-                .code("1")
                 .bankName("original")
                 .branchLocation("this.branchLocation")
                 .number("this.number")
                 .owner("this.owner")
                 .depositType("this.depositType")
+                .openingDate(LocalDate.parse("2021-05-01"))
                 .build();
         BankAccount BA2 = new BankAccount.Builder()
-                .code("2")
                 .bankName("original")
                 .branchLocation("this.branchLocation")
                 .number("this.number")
                 .owner("this.owner")
                 .depositType("this.depositType")
+                .openingDate(LocalDate.parse("2021-05-01"))
+                .build();
+        BankAccount BA3 = new BankAccount.Builder()
+                .bankName("original")
+                .branchLocation("this.branchLocation")
+                .number("this.number")
+                .owner("this.owner")
+                .depositType("this.depositType")
+                .openingDate(LocalDate.parse("2021-05-01"))
                 .build();
 
         // 저장
         accountInformationController.saveBankAccount(BA); 
         accountInformationController.saveBankAccount(BA2);
+        accountInformationController.saveBankAccount(BA3);
 
         // 수정 전 조회
-        printAllEntities(accountInformationController.findAllBankAccounts(), "code");
+        printAllEntities(accountInformationController.findAllBankAccounts(), ID_FIELD_NAME);
         
         BankAccountRepository bankAccountRepository = injector.getInstance(BankAccountRepository.class);
         
         // 객체 수정
-        BankAccount bankAccount = bankAccountRepository.findByCode("2").get();
+        BankAccount bankAccount = bankAccountRepository.findById("1").get();
         bankAccount = bankAccount.tobuild().bankName("수정").build();
 
         // 수정된 객체 업데이트
         bankAccountRepository.update(bankAccount);
         
         // 수정 후 조회
-        printAllEntities(accountInformationController.findAllBankAccounts(), "code");
+        printAllEntities(accountInformationController.findAllBankAccounts(), ID_FIELD_NAME);
     }
 }

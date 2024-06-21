@@ -1,5 +1,8 @@
 package com.erp.system.financial.model.basic_information_management.vendor_registration;
 
+import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.annotation.NotNull;
+
 import java.util.UUID;
 
 /**
@@ -7,12 +10,16 @@ import java.util.UUID;
  * 거래처 정보 데이터 테이블
  */
 public class Vendor {
+    @NotNull
     private final String id; // 거래처의 고유 식별자
-    private final String code; // 거래처의 고유 코드
+    @NotNull
     private final String departmentId; // 거래 담당 부서 ID
+    @NotNull
     private final String managerId; // 거래 담당자 ID
 
+    @NotNull
     private String name; // 거래처명
+    @NotNull
     private String registrationNumber; // 사업자 등록번호
     private String personalIdentificationNumber; // 주민등록번호
     private String businessType; // 업종형태
@@ -23,7 +30,6 @@ public class Vendor {
 
     public static class Builder {
         private String id;
-        private String code;
         private String departmentId;
         private String managerId;
 
@@ -36,11 +42,6 @@ public class Vendor {
 
         public Builder id(String id) {
             this.id = id;
-            return this;
-        }
-
-        public Builder code(String code) {
-            this.code = code;
             return this;
         }
 
@@ -91,7 +92,6 @@ public class Vendor {
 
     private Vendor(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.code = builder.code;
         this.departmentId = builder.departmentId;
         this.managerId = builder.managerId;
         this.name = builder.name;
@@ -100,12 +100,12 @@ public class Vendor {
         this.businessType = builder.businessType;
         this.businessItem = builder.businessItem;
         this.address = builder.address;
+        NotNullValidator.safeValidateFields(this);
     }
 
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .code(this.code)
                 .departmentId(this.departmentId)
                 .managerId(this.managerId)
                 .name(this.name)
@@ -118,10 +118,6 @@ public class Vendor {
 
     public String getId() {
         return id;
-    }
-
-    public String getCode() {
-        return code;
     }
 
     public String getDepartmentId() {

@@ -1,5 +1,8 @@
 package com.erp.system.financial.model.basic_information_management.account_information;
 
+import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.annotation.NotNull;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
@@ -10,9 +13,10 @@ import java.util.UUID;
  * 예적금 현황에 대한 정보가 있는 테이블
  */
 public class Deposit {
+    @NotNull
     private final String id; // 고유 식별자
-    private final String code;
-    private final String accountCode; // 은행계좌 코드 참조
+    @NotNull
+    private final String accountId; // 은행계좌 코드 참조
 
     private LocalDate maturityDate; // 적금 만기 날짜
     private BigDecimal interestRate; // 이자율
@@ -21,8 +25,7 @@ public class Deposit {
 
     public static class Builder {
         private String id;
-        private String code;
-        private String accountCode;
+        private String accountId;
 
         private LocalDate maturityDate;
         private BigDecimal interestRate;
@@ -32,13 +35,8 @@ public class Deposit {
             return this;
         }
 
-        public Builder code(String code) {
-            this.code = code;
-            return this;
-        }
-
-        public Builder accountCode(String accountCode) {
-            this.accountCode = accountCode;
+        public Builder accountId(String accountId) {
+            this.accountId = accountId;
             return this;
         }
 
@@ -59,17 +57,16 @@ public class Deposit {
 
     private Deposit(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.code = builder.code;
-        this.accountCode = builder.accountCode;
+        this.accountId = builder.accountId;
         this.maturityDate = builder.maturityDate;
         this.interestRate = builder.interestRate;
+        NotNullValidator.safeValidateFields(this);
     }
 
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .code(this.code)
-                .accountCode(this.accountCode)
+                .accountId(this.accountId)
                 .maturityDate(this.maturityDate)
                 .interestRate(this.interestRate);
     }
@@ -78,12 +75,8 @@ public class Deposit {
         return id;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public String getAccountCode() {
-        return accountCode;
+    public String getAccountId() {
+        return accountId;
     }
 
     public LocalDate getMaturityDate() {

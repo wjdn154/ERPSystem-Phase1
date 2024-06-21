@@ -1,6 +1,8 @@
 package com.erp.system.financial.model.book_keeping.accounting_ledger;
 
+import com.erp.system.common.NotNullValidator;
 import com.erp.system.common.annotation.EnumMapping;
+import com.erp.system.common.annotation.NotNull;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -14,25 +16,31 @@ import java.util.UUID;
  */
 @EnumMapping
 public class CashBook {
+    @NotNull
     private final String id; // 고유 식별자
-    private final String code;
-    private final String transactionCode; // 거래코드 참조키
-    private final String memosCode; // 적요 코드 참조키
-    private final String vendorCode; // 거래처 코드 참조키
+    @NotNull
+    private final String transactionId; // 거래코드 참조키
+    @NotNull
+    private final String memosId; // 적요 코드 참조키
+    @NotNull
+    private final String vendorId; // 거래처 코드 참조키
 
+    @NotNull
     private BigDecimal debit; // 입금 금액
+    @NotNull
     private BigDecimal credit; // 출금 금액
+    @NotNull
     private BigDecimal balanceForward; // 이월 금액
+    @NotNull
     private LocalDate date; // 거래 날짜
 
     public static int idIndex = 1; // static 변수 추가
 
     public static class Builder {
         private String id;
-        private String code;
-        private String transactionCode;
-        private String memosCode;
-        private String vendorCode;
+        private String transactionId;
+        private String memosId;
+        private String vendorId;
 
         private BigDecimal debit;
         private BigDecimal credit;
@@ -44,23 +52,18 @@ public class CashBook {
             return this;
         }
 
-        public Builder code(String code) {
-            this.code = code;
+        public Builder transactionId(String transactionId) {
+            this.transactionId = transactionId;
             return this;
         }
 
-        public Builder transactionCode(String transactionCode) {
-            this.transactionCode = transactionCode;
+        public Builder memosId(String memosId) {
+            this.memosId = memosId;
             return this;
         }
 
-        public Builder memosCode(String memosCode) {
-            this.memosCode = memosCode;
-            return this;
-        }
-
-        public Builder vendorCode(String vendorCode) {
-            this.vendorCode = vendorCode;
+        public Builder vendorId(String vendorId) {
+            this.vendorId = vendorId;
             return this;
         }
 
@@ -91,23 +94,22 @@ public class CashBook {
 
     private CashBook(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.code = builder.code;
-        this.transactionCode = builder.transactionCode;
-        this.memosCode = builder.memosCode;
-        this.vendorCode = builder.vendorCode;
+        this.transactionId = builder.transactionId;
+        this.memosId = builder.memosId;
+        this.vendorId = builder.vendorId;
         this.debit = builder.debit;
         this.credit = builder.credit;
         this.balanceForward = builder.balanceForward;
         this.date = builder.date;
+        NotNullValidator.safeValidateFields(this);
     }
 
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .code(this.code)
-                .transactionCode(this.transactionCode)
-                .memosCode(this.memosCode)
-                .vendorCode(this.vendorCode)
+                .transactionId(this.transactionId)
+                .memosId(this.memosId)
+                .vendorId(this.vendorId)
                 .debit(this.debit)
                 .credit(this.credit)
                 .balanceForward(this.balanceForward)
@@ -118,20 +120,16 @@ public class CashBook {
         return id;
     }
 
-    public String getCode() {
-        return code;
+    public String getTransactionId() {
+        return transactionId;
     }
 
-    public String getTransactionCode() {
-        return transactionCode;
+    public String getMemosId() {
+        return memosId;
     }
 
-    public String getMemosCode() {
-        return memosCode;
-    }
-
-    public String getVendorCode() {
-        return vendorCode;
+    public String getVendorId() {
+        return vendorId;
     }
 
     public BigDecimal getDebit() {

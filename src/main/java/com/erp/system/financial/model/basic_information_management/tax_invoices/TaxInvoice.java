@@ -2,6 +2,7 @@ package com.erp.system.financial.model.basic_information_management.tax_invoices
 
 import com.erp.system.common.NotNullValidator;
 import com.erp.system.common.annotation.EnumMapping;
+import com.erp.system.common.annotation.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -19,18 +20,28 @@ public class TaxInvoice {
     public enum IssueStatus { THIRD_PARTY, SELF_ISSUED }
     public enum NTSStatus { TRANSMITTED, PENDING }
 
+    @NotNull
     private final String id; // 세금 계산서의 고유 식별자
-    private final String code; // 세금 계산서 코드
-    private final String vendorCode; // 거래처 코드 참조
+    @NotNull
+    private final String vendorId; // 거래처 코드 참조
 
+    @NotNull
     private TaxType type; // 과세유형 (과세, 영세, 면세)
+    @NotNull
     private ReceiptType receiptType; // 영수증 타입 (영수, 청구)
+    @NotNull
     private IssueStatus issueStatus; // 발행 상태 (타사발행, 자체발행)
+    @NotNull
     private NTSStatus ntsTransmissionStatus; // 국세청 전송 상태 (전송 완료, 전송 대기)
+    @NotNull
     private LocalDate issueDate; // 세금계산서의 작성 일자
+    @NotNull
     private Boolean attachmentIncluded; // 거래명세서 첨부 여부
+    @NotNull
     private String itemDescription; // 거래 품목 설명
+    @NotNull
     private BigDecimal supplyValue; // 공급가액
+    @NotNull
     private BigDecimal taxAmount; // 세금 금액
     private String approvalNumber; // 승인번호 (국세청 승인 시 부여되는 번호)
 
@@ -38,8 +49,7 @@ public class TaxInvoice {
     
     public static class Builder {
         private String id;
-        private String code;
-        private String vendorCode;
+        private String vendorId;
 
         private TaxType type;
         private ReceiptType receiptType;
@@ -57,13 +67,8 @@ public class TaxInvoice {
             return this;
         }
 
-        public Builder code(String code) {
-            this.code = code;
-            return this;
-        }
-
-        public Builder vendorCode(String vendorCode) {
-            this.vendorCode = vendorCode;
+        public Builder vendorId(String vendorId) {
+            this.vendorId = vendorId;
             return this;
         }
 
@@ -124,8 +129,7 @@ public class TaxInvoice {
 
     private TaxInvoice(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.code = builder.code;
-        this.vendorCode = builder.vendorCode;
+        this.vendorId = builder.vendorId;
         this.type = builder.type;
         this.receiptType = builder.receiptType;
         this.issueStatus = builder.issueStatus;
@@ -142,8 +146,7 @@ public class TaxInvoice {
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .code(this.code)
-                .vendorCode(this.vendorCode)
+                .vendorId(this.vendorId)
                 .type(this.type)
                 .receiptType(this.receiptType)
                 .issueStatus(this.issueStatus)
@@ -160,12 +163,8 @@ public class TaxInvoice {
         return id;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public String getVendorCode() {
-        return vendorCode;
+    public String getVendorId() {
+        return vendorId;
     }
 
     public TaxType getType() {

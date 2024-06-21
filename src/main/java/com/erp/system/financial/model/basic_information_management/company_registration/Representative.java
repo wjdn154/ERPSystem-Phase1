@@ -1,5 +1,8 @@
 package com.erp.system.financial.model.basic_information_management.company_registration;
 
+import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.annotation.NotNull;
+
 import java.util.UUID;
 
 /**
@@ -7,19 +10,22 @@ import java.util.UUID;
  * 회사 등록시 필요한 대표자 데이터 테이블
  */
 public class Representative {
+    @NotNull
     private final String id; // 고유 식별자
-    private final String code; // 회사 대표자 코드
+    @NotNull
     private final String companyId; // 연결된 회사 ID
 
+    @NotNull
     private String name; // 대표자명
+    @NotNull
     private String idNumber; // 대표자 주민번호
+    @NotNull
     private boolean foreign; // 대표자 외국인여부
 
     public static int idIndex = 1;
 
     public static class Builder {
         private String id;
-        private String code;
         private String companyId;
 
         private String name;
@@ -28,11 +34,6 @@ public class Representative {
 
         public Builder id(String id) {
             this.id = id;
-            return this;
-        }
-
-        public Builder code(String code) {
-            this.code = code;
             return this;
         }
 
@@ -63,17 +64,16 @@ public class Representative {
 
     private Representative(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.code = builder.code;
         this.companyId = builder.companyId;
         this.name = builder.name;
         this.idNumber = builder.idNumber;
         this.foreign = builder.foreign;
+        NotNullValidator.safeValidateFields(this);
     }
 
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .code(this.code)
                 .companyId(this.companyId)
                 .name(this.name)
                 .idNumber(this.idNumber)
@@ -82,10 +82,6 @@ public class Representative {
 
     public String getId() {
         return id;
-    }
-
-    public String getCode() {
-        return code;
     }
 
     public String getCompanyId() {

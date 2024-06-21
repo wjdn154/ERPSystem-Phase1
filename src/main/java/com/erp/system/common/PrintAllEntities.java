@@ -54,7 +54,7 @@ public class PrintAllEntities {
      */
     private static <T> String formatEntity(T entity) {
         return Arrays.stream(entity.getClass().getDeclaredFields())
-                .filter(field -> !field.getName().equalsIgnoreCase("id"))
+                .filter(field -> !field.getName().equalsIgnoreCase("idIndex"))
                 .map(field -> {
                     field.setAccessible(true);
                     try {
