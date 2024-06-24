@@ -9,4 +9,5 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface CompanyRegistrationService {
+    public void register(String corporateType, String corporateKinds);
 }

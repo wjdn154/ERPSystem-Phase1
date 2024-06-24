@@ -216,4 +216,7 @@ public class CompanyRegistrationController {
     public Collection<Tax> findAllTaxes() {
         return taxRepository.findAll();
     }
+
+
+
 }

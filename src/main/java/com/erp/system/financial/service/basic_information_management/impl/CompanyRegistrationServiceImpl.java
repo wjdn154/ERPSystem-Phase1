@@ -7,7 +7,10 @@ import com.erp.system.financial.repository.basic_information_management.company_
 import com.erp.system.financial.service.basic_information_management.CompanyRegistrationService;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
+
+import static com.erp.system.common.Rules.ID_FIELD_NAME;
 
 @Component
 @Priority(2)
@@ -36,4 +39,20 @@ public class CompanyRegistrationServiceImpl implements CompanyRegistrationServic
         this.taxesRepository = taxesRepository;
     }
 
+    /**
+     * 참고용
+     * @param corporateType
+     * @param corporateKinds
+     */
+    @Override
+    public void register(String corporateType, String corporateKinds) {
+        String id;
+        for (CorporateType cType : corporateTypesRepository
+                                .findAll()
+                                .stream()
+                                .filter(s -> s.getType().equals(corporateType))
+                                .toList()){
+            id = cType.getId();
+        }
+    }
 }

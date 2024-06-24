@@ -8,7 +8,6 @@ import java.util.UUID;
 /**
  * 주소 정보 테이블
  * 회사등록 시 필요한 주소 데이터 테이블
- *
  */
 public class Address {
     @NotNull
@@ -21,9 +20,9 @@ public class Address {
     @NotNull
     private String headquartersAddress; // 본점주소
     @NotNull
-    private String businessPlaceId; // 사업장 동 코드 (동 ex 대연동)
+    private String businessPlace; // 사업장 동 코드 (동 ex 대연동)
     @NotNull
-    private String headquartersId; // 본점 동 코드
+    private String headquarters; // 본점 동 코드
 
     public static int idIndex = 1;
 
@@ -33,8 +32,8 @@ public class Address {
 
         private String address;
         private String headquartersAddress;
-        private String businessPlaceId;
-        private String headquartersId;
+        private String businessPlace;
+        private String headquarters;
 
         public Builder id(String id) {
             this.id = id;
@@ -56,13 +55,13 @@ public class Address {
             return this;
         }
 
-        public Builder businessPlaceId(String businessPlaceId) {
-            this.businessPlaceId = businessPlaceId;
+        public Builder businessPlace(String businessPlace) {
+            this.businessPlace = businessPlace;
             return this;
         }
 
-        public Builder headquartersId(String headquartersId) {
-            this.headquartersId = headquartersId;
+        public Builder headquarters(String headquarters) {
+            this.headquarters = headquarters;
             return this;
         }
 
@@ -76,8 +75,8 @@ public class Address {
         this.companyId = builder.companyId;
         this.address = builder.address;
         this.headquartersAddress = builder.headquartersAddress;
-        this.businessPlaceId = builder.businessPlaceId;
-        this.headquartersId = builder.headquartersId;
+        this.businessPlace = builder.businessPlace;
+        this.headquarters = builder.headquarters;
         NotNullValidator.safeValidateFields(this);
     }
 
@@ -87,8 +86,8 @@ public class Address {
                 .companyId(this.companyId)
                 .address(this.address)
                 .headquartersAddress(this.headquartersAddress)
-                .businessPlaceId(this.businessPlaceId)
-                .headquartersId(this.headquartersId);
+                .businessPlace(this.businessPlace)
+                .headquarters(this.headquarters);
     }
 
     public String getId() {
@@ -107,11 +106,11 @@ public class Address {
         return headquartersAddress;
     }
 
-    public String getBusinessPlaceId() {
-        return businessPlaceId;
+    public String getBusinessPlace() {
+        return businessPlace;
     }
 
-    public String getHeadquartersId() {
-        return headquartersId;
+    public String getHeadquarters() {
+        return headquarters;
     }
 }
