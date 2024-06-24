@@ -12,6 +12,7 @@ import com.erp.system.financial.model.basic_information_management.account_infor
 import com.erp.system.financial.model.basic_information_management.company_registration.Company;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entry;
 import com.erp.system.financial.repository.basic_information_management.account_information.BankAccountRepository;
+import com.erp.system.financial.service.basic_information_management.CompanyRegistrationService;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -41,6 +42,18 @@ public class Main {
         printAllEntities(purchaseSalesSlipController.findAllVatTypes(), ID_FIELD_NAME); // VatType 출력
         printAllEntities(accountingLedgerController.findAllCashBooks(), ID_FIELD_NAME); // CashBook 출력
         printAllEntities(taxInvoiceController.findAllTaxInvoices(), ID_FIELD_NAME); // TaxInvoice 출력
+
+
+        CompanyRegistrationService c = injector.getInstance(CompanyRegistrationService.class);
+        c.register("외투법인", "내국법인");
+
+
+
+
+
+
+
+
 
         // 테스트 객체 생성
         BankAccount BA = new BankAccount.Builder()
