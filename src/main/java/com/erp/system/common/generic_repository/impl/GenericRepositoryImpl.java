@@ -102,6 +102,7 @@ public class GenericRepositoryImpl<T> implements GenericRepository<T> {
      * @throws NoSuchFieldException 필드를 찾을 수 없는 경우
      * @throws IllegalAccessException 필드 접근이 불가능한 경우
      */
+
     @SuppressWarnings("unchecked")
     private <V> V getFieldValue(T entity, String fieldName) throws NoSuchFieldException, IllegalAccessException {
         Field field = entityClass.getDeclaredField(fieldName);
