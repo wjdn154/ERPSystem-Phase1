@@ -19,6 +19,7 @@ public class PrintAllEntities {
      * @param <T>         엔티티 타입
      */
     public static <T> void printAllEntities(Collection<T> entities, String sortByField) {
+        System.out.println("Entity : " + entities.toArray()[0].getClass().getSimpleName());
         entities.stream()
                 .sorted((e1, e2) -> {
                     try {

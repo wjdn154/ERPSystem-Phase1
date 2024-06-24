@@ -33,7 +33,10 @@ public class ERPDataInitializer {
         System.out.println("--------------------------- 2. ERPDataInitializer 생성 ---------------------------");
         long startTime = System.nanoTime(); // 시작 시간 기록
         autoRegister();
-        readExcel(DATA_FILE_PATH);
+        readExcel(FINANCIAL_ACCOUNTING_DATA_FILE_PATH); // 회계 데이터
+//        readExcel(HUMAN_RESOURCES_DATA_FILE_PATH); // 인사 데이터
+//        readExcel(LOGISTICS_DATA_FILE_PATH); // 물류 데이터
+//        readExcel(PRODUCTION_DATA_FILE_PATH); // 생산 데이터
         long endTime = System.nanoTime(); // 종료 시간 기록
         long duration = endTime - startTime; // 실행 시간 계산
         System.out.println("\n실행 시간: " + duration / 1_000_000 + " ms");
@@ -232,7 +235,6 @@ public class ERPDataInitializer {
             if (method.getName().equalsIgnoreCase(fieldName) && method.getParameterTypes().length == 1) {
                 Class<?> methodParamType = method.getParameterTypes()[0];
                 if (methodParamType.equals(parameterType) || methodParamType.isEnum()) {
-                    System.out.println("method3 = " + method);
                     return method;
                 }
             }

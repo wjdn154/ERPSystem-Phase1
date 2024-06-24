@@ -15,7 +15,6 @@ public class CorporateType {
 
     @NotNull
     private String type; // 법인구분
-    @NotNull
     private String description; // 법인구분 설명
 
     public static int idIndex = 1;

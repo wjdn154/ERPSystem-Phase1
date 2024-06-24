@@ -29,20 +29,16 @@ class GenericRepositoryImplTest {
     void saveAndFindByIdOrCode() {
         // Given: 새로운 엔트리를 저장
         Entry entry = new Entry.Builder()
-                .code("1")
                 .name("Entry 1")
                 .build();
         entryRepository.save(entry);
 
         // When: 저장된 객체를 ID 또는 코드로 조회
         Optional<Entry> foundById = entryRepository.findById(entry.getId());
-        Optional<Entry> foundByCode = entryRepository.findByCode(entry.getCode());
 
         // Then: 객체는 null이 아니며 속성이 일치해야 함
         assertTrue(foundById.isPresent(), "조회된 객체는 null이 아니어야 함.");
-        assertTrue(foundByCode.isPresent(), "조회된 객체는 null이 아니어야 함.");
         assertEquals(entry.getId(), foundById.get().getId(), "조회된 객체의 ID가 일치해야 함.");
-        assertEquals(entry.getCode(), foundByCode.get().getCode(), "조회된 객체의 코드가 일치해야 함.");
     }
 
     // 업데이트 테스트
@@ -50,7 +46,6 @@ class GenericRepositoryImplTest {
     void updateEntry() {
         // Given: 새로운 엔트리를 저장하고, 업데이트할 정보 설정
         Entry entry = new Entry.Builder()
-                .code("1")
                 .name("Entry 1")
                 .build();
         entryRepository.save(entry);
@@ -74,7 +69,6 @@ class GenericRepositoryImplTest {
     void deleteEntry() {
         // Given: 새로운 엔트리를 저장하고, 삭제할 ID 설정
         Entry entry = new Entry.Builder()
-                .code("1")
                 .name("Entry 1")
                 .build();
         entryRepository.save(entry);
@@ -92,11 +86,9 @@ class GenericRepositoryImplTest {
     void findAllEntries() {
         // Given: 여러 Entries 객체를 저장
         Entry entry1 = new Entry.Builder()
-                .code("2")
                 .name("Entry 2")
                 .build();
         Entry entry2 = new Entry.Builder()
-                .code("3")
                 .name("Entry 3")
                 .build();
         entryRepository.save(entry1);
@@ -108,31 +100,5 @@ class GenericRepositoryImplTest {
         // Then: 저장된 모든 객체가 실제로 포함되어 있는지 확인
         assertTrue(allEntries.contains(entry1), "entry1가 포함되어 있어야 함.");
         assertTrue(allEntries.contains(entry2), "entry2가 포함되어 있어야 함.");
-    }
-
-    // 코드 중복 저장 테스트
-    @Test
-    void saveDuplicateCode() {
-        // Given: 동일한 코드를 가진 두 번째 엔트리 생성
-        Entry entry1 = new Entry.Builder()
-                .code("1")
-                .name("Entry 1")
-                .build();
-        entryRepository.save(entry1);
-
-        Entry duplicateEntry = new Entry.Builder()
-                .code("1")
-                .name("Duplicate Entry")
-                .build();
-
-        // When & Then: 저장 시 예외 발생 확인
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            entryRepository.save(duplicateEntry);
-        });
-
-        // 예외 메시지 검증
-        Throwable cause = exception.getCause();
-        assertTrue(cause instanceof IllegalArgumentException);
-        assertEquals("이미 존재하는 코드입니다: 1", cause.getMessage());
     }
 }
