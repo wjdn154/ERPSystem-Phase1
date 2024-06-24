@@ -6,8 +6,8 @@ import com.erp.system.common.annotation.NotNull;
 import java.util.UUID;
 
 /**
- * 법인종류 테이블
- * 법인종류 데이터 테이블
+ * 법인종류별 구분 테이블
+ * 법인종류별 구분 데이터 테이블
  * 
  */
 public class CorporateKind {
@@ -16,7 +16,6 @@ public class CorporateKind {
 
     @NotNull
     private String kind; // 법인종류
-    @NotNull
     private String description; // 법인종류 설명
 
     public static int idIndex = 1;

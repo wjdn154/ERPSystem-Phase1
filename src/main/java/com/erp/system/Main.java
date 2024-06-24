@@ -3,11 +3,13 @@ package com.erp.system;
 
 import com.erp.system.common.DependencyInjector;
 import com.erp.system.financial.controller.basic_information_management.AccountInformationController;
+import com.erp.system.financial.controller.basic_information_management.CompanyRegistrationController;
 import com.erp.system.financial.controller.basic_information_management.PurchaseSalesSlipController;
 import com.erp.system.common.ERPDataInitializer;
 import com.erp.system.financial.controller.basic_information_management.TaxInvoiceController;
 import com.erp.system.financial.controller.book_keeping.AccountingLedgerController;
 import com.erp.system.financial.model.basic_information_management.account_information.BankAccount;
+import com.erp.system.financial.model.basic_information_management.company_registration.Company;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entry;
 import com.erp.system.financial.repository.basic_information_management.account_information.BankAccountRepository;
 
@@ -31,7 +33,10 @@ public class Main {
         AccountingLedgerController accountingLedgerController = injector.getInstance(AccountingLedgerController.class);
         TaxInvoiceController taxInvoiceController = injector.getInstance(TaxInvoiceController.class);
         AccountInformationController accountInformationController = injector.getInstance(AccountInformationController.class);
+        CompanyRegistrationController companyRegistrationController = injector.getInstance(CompanyRegistrationController.class);
 
+        printAllEntities(companyRegistrationController.findAllCorporateTypes(), ID_FIELD_NAME); // CorporateType 출력
+        printAllEntities(companyRegistrationController.findAllCorporateKinds(), ID_FIELD_NAME); // CorporateKind 출력
         printAllEntities(purchaseSalesSlipController.findAllEntries(), ID_FIELD_NAME); // Entry 출력
         printAllEntities(purchaseSalesSlipController.findAllVatTypes(), ID_FIELD_NAME); // VatType 출력
         printAllEntities(accountingLedgerController.findAllCashBooks(), ID_FIELD_NAME); // CashBook 출력
