@@ -50,7 +50,7 @@ public class CorporateKind {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.kind = builder.kind;
         this.description = builder.description;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {

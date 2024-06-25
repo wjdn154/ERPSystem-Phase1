@@ -101,7 +101,7 @@ public class CashBook {
         this.credit = builder.credit;
         this.balanceForward = builder.balanceForward;
         this.date = builder.date;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {

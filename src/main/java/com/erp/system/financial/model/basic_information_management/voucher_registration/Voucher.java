@@ -116,7 +116,7 @@ public class Voucher {
         this.debit = builder.debit;
         this.credit = builder.credit;
         this.date = builder.date;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {

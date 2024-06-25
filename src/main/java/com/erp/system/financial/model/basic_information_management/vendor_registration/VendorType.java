@@ -42,7 +42,7 @@ public class VendorType {
     private VendorType(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.category = builder.category;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {

@@ -59,7 +59,7 @@ public class Memo {
         this.accountId = builder.accountId;
         this.description = builder.description;
         this.immutable = builder.immutable;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {

@@ -59,7 +59,7 @@ public class Contact {
         this.companyId = builder.companyId;
         this.businessPhone = builder.businessPhone;
         this.fax = builder.fax;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {

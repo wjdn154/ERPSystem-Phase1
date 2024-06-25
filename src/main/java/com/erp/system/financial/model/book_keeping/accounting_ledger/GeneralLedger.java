@@ -99,7 +99,7 @@ public class GeneralLedger {
         this.credits = builder.credits;
         this.closingBalance = builder.closingBalance;
         this.updatedAt = builder.updatedAt;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {

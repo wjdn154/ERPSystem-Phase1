@@ -100,7 +100,7 @@ public class Vendor {
         this.businessType = builder.businessType;
         this.businessItem = builder.businessItem;
         this.address = builder.address;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {

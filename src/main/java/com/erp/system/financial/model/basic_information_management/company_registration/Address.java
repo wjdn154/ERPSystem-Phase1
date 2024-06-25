@@ -77,7 +77,7 @@ public class Address {
         this.headquartersAddress = builder.headquartersAddress;
         this.businessPlace = builder.businessPlace;
         this.headquarters = builder.headquarters;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {

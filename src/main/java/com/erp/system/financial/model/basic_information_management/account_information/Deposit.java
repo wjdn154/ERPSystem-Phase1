@@ -60,7 +60,7 @@ public class Deposit {
         this.accountId = builder.accountId;
         this.maturityDate = builder.maturityDate;
         this.interestRate = builder.interestRate;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {

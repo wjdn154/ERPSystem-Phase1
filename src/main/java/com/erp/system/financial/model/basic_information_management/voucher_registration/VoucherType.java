@@ -40,7 +40,7 @@ public class VoucherType {
     private VoucherType(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.name = builder.name;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     // tobuild() 메서드 추가

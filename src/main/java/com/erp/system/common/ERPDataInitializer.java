@@ -22,7 +22,7 @@ import static com.erp.system.common.Rules.*;
  * Excel 파일을 읽고 각 시트의 데이터를 처리하는 클래스.
  */
 public class ERPDataInitializer {
-    private final DependencyInjector di = DependencyInjector.getInstance();
+    private final DependencyInjector injector = DependencyInjector.getInstance();
     private final Map<String, Class<?>> tableClassMap = new HashMap<>();
     private final Map<Class<?>, Object> repositories = new HashMap<>();
 
@@ -47,7 +47,7 @@ public class ERPDataInitializer {
      * 모든 컴포넌트를 자동으로 등록하고 매핑을 설정함.
      */
     private void autoRegister() {
-        Map<Class<?>, Object> allRepositories = di.getAllInstancesOfType(Object.class); // 모든 리포지토리를 가져옴
+        Map<Class<?>, Object> allRepositories = injector.getAllInstancesOfType(Object.class); // 모든 리포지토리를 가져옴
 
         // 모든 리포지토리를 순회하며 처리함
         for (Map.Entry<Class<?>, Object> entry : allRepositories.entrySet()) {

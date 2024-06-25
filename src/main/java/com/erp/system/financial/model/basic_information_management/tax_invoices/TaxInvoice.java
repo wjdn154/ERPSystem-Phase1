@@ -140,7 +140,7 @@ public class TaxInvoice {
         this.supplyValue = builder.supplyValue;
         this.taxAmount = builder.taxAmount;
         this.approvalNumber = builder.approvalNumber;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {

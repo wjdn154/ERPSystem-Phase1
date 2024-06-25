@@ -156,4 +156,21 @@ public class DependencyInjector {
         return result;
     }
 
+    /**
+     * 주어진 타입에 해당하는 인스턴스를 반환.
+     * @param baseType 검색할 클래스의 기반 타입
+     * @param type 반환될 인스턴스의 타입
+     * @return 찾은 인스턴스, 없으면 null
+     */
+    public Object getInstancesOfType(Class<?> baseType, Class<?> type) {
+        for (Map.Entry<Class<?>, Object> entry : instances.entrySet()) {
+            // 'type'의 이름이 포함되어 있고, 'baseType'이 'entry.getKey()'에 할당 가능한 경우 해당 인스턴스 반환
+            if (entry.getKey().getName().contains(type.getSimpleName()) && baseType.isAssignableFrom(entry.getKey())) {
+                return entry.getValue();
+            }
+        }
+        return null;
+    }
+
+
 }

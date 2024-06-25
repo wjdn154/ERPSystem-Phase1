@@ -1,7 +1,10 @@
 package com.erp.system.financial.repository.basic_information_management.purchase_sales_slip;
 
 import com.erp.system.common.generic_repository.GenericRepository;
+import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.PurchaseSalesSlip;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.VatType;
+
+import java.util.List;
 
 /**
  * 부가세유형 엔티티에 대한 리포지토리 인터페이스.
@@ -9,4 +12,7 @@ import com.erp.system.financial.model.basic_information_management.purchase_sale
 public interface VatTypeRepository extends GenericRepository<VatType> {
     @Override
     void save(VatType entity);
+
+    @Override
+    List<VatType> findAll();
 }
