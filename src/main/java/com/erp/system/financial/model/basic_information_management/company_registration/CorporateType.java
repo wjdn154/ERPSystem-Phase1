@@ -49,7 +49,7 @@ public class CorporateType {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.type = builder.type;
         this.description = builder.description;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {

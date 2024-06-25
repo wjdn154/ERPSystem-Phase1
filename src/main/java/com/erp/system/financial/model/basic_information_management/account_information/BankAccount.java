@@ -89,7 +89,7 @@ public class BankAccount {
         this.number = builder.number;
         this.owner = builder.owner;
         this.depositType = builder.depositType;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {

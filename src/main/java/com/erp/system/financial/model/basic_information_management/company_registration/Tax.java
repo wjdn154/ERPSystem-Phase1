@@ -78,7 +78,7 @@ public class Tax {
         this.headquartersTaxOfficeId = builder.headquartersTaxOfficeId;
         this.localCorporateTaxCategoryId = builder.localCorporateTaxCategoryId;
         this.localIncomeTaxOffice = builder.localIncomeTaxOffice;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {

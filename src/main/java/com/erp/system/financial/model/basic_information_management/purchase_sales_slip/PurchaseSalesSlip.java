@@ -1,7 +1,9 @@
 package com.erp.system.financial.model.basic_information_management.purchase_sales_slip;
 
 import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.UniqueValidator;
 import com.erp.system.common.annotation.NotNull;
+import com.erp.system.common.annotation.Unique;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -24,6 +26,7 @@ public class PurchaseSalesSlip {
 
     @NotNull
     private LocalDate date; // 전표 날짜
+    @Unique
     @NotNull
     private String itemName; // 품목명
     @NotNull
@@ -125,7 +128,8 @@ public class PurchaseSalesSlip {
         this.supplyValue = builder.supplyValue;
         this.vat = builder.vat;
         this.electronicTaxInvoiceIssued = builder.electronicTaxInvoiceIssued;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
+        UniqueValidator.validateFields(this);
     }
 
     public Builder tobuild() {

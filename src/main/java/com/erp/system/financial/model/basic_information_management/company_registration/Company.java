@@ -187,7 +187,7 @@ public class Company {
         this.fiscalYearEnd = builder.fiscalYearEnd;
         this.fiscalCardinalNumber = builder.fiscalCardinalNumber;
         this.mainIndustryId = builder.mainIndustryId;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {

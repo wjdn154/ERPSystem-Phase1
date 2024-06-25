@@ -68,7 +68,7 @@ public class Representative {
         this.name = builder.name;
         this.idNumber = builder.idNumber;
         this.foreign = builder.foreign;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {

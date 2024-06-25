@@ -50,7 +50,7 @@ public class VatType {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.category = builder.category;
         this.name = builder.name;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {

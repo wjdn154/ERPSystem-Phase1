@@ -90,7 +90,7 @@ public class BankTransaction {
         this.amount = builder.amount;
         this.date = builder.date;
         this.currentBalance = builder.currentBalance;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {
