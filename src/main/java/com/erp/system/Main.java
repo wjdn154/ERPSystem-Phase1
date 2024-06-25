@@ -38,9 +38,6 @@ public class Main {
         // 모든 객체 출력
         printAll(result);
 
-        //hashJoin 테스트
-        hashJoinTest(result.purchaseSalesSlipController());
-
         // service 테스트
         serviceTest(injector);
 
@@ -105,24 +102,13 @@ public class Main {
                                             VoucherRegistrationController voucherRegistrationController) {
     }
 
-    private static void hashJoinTest(PurchaseSalesSlipController purchaseSalesSlipController) {
-        List<PurchaseSalesSlip> purchaseSalesSlip = purchaseSalesSlipController.findAllPurchaseSalesSlip().stream().toList(); // 조인할 엔티티 List 1
-        List<Entry> entries = purchaseSalesSlipController.findAllEntries().stream().toList(); // 조인할 엔티티 List 2
-        List<VatType> vatTypes = purchaseSalesSlipController.findAllVatTypes().stream().toList(); // 조인할 엔티티 List 3
-
-        List<Map<String, Object>> joinedList = HashJoin.hashJoin(purchaseSalesSlip, entries, PurchaseSalesSlip::getId, Entry::getId); // 엔티티 1 and 엔티티 2 hash 조인
-        joinedList.forEach(System.out::println); // 결과 출력
-
-        List<Map<String, Object>> secondJoinResults = HashJoin.hashJoin(joinedList, vatTypes, map -> (String) map.get("vatTypeId"), VatType::getId); // 조인된 결과 and 엔티티 3 hash 조인
-        secondJoinResults.forEach(System.out::println); // 결과 출력
-    }
-
     private static void serviceTest(DependencyInjector injector) {
         CompanyRegistrationService c = injector.getInstance(CompanyRegistrationService.class);
         c.register("외투법인", "내국법인");
     }
 
     private static void modifyBuilderPatternTest(AccountInformationController accountInformationController, DependencyInjector injector) {
+        System.out.println("-------------------------- modifyBuilderPatternTest Test --------------------------");
         BankAccount BA = new BankAccount.Builder()
                 .bankName("original")
                 .branchLocation("this.branchLocation")
@@ -167,5 +153,6 @@ public class Main {
 
         // 수정 후 조회
         printAllEntities(accountInformationController.findAllBankAccounts(), ID_FIELD_NAME);
+        System.out.println("-------------------------- modifyBuilderPatternTest Test --------------------------");
     }
 }
