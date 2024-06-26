@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * 클래스들을 자동으로 등록하고 인스턴스화하여 의존성을 관리함.
  */
 public class DependencyInjector {
-    private static DependencyInjector instance; // 싱글톤 인스턴스
+    private static volatile DependencyInjector instance; // 싱글톤 인스턴스
     private final Map<Class<?>, Object> instances = new HashMap<>(); // 등록된 인스턴스를 저장하는 맵
 
     /**
@@ -70,9 +70,9 @@ public class DependencyInjector {
         Set<Class<?>> allTypes = reflections.getTypesAnnotatedWith(Component.class);
         List<Class<?>> sortedTypes = sortTypesByDependencyOrder(allTypes);
 
-        for (Class<?> type : sortedTypes) {
-            if (!instances.containsKey(type)) {
-                registerInstance(type);
+        for (Class<?> clazz : sortedTypes) {
+            if (!instances.containsKey(clazz)) {
+                registerInstance(clazz);
             }
         }
     }
@@ -108,10 +108,10 @@ public class DependencyInjector {
 
     /**
      * 주어진 클래스의 인스턴스를 생성하고 등록함.
-     * @param type 등록할 클래스
+     * @param clazz 등록할 클래스
      */
-    private void registerInstance(Class<?> type) {
-        Constructor<?>[] constructors = type.getDeclaredConstructors();
+    private void registerInstance(Class<?> clazz) {
+        Constructor<?>[] constructors = clazz.getDeclaredConstructors();
         Arrays.sort(constructors, Comparator.comparingInt(Constructor::getParameterCount)); // 매개변수가 적은 생성자 우선
 
         for (Constructor<?> constructor : constructors) {
@@ -121,25 +121,25 @@ public class DependencyInjector {
                         .map(param -> instances.get(param)) // 맵에서 인스턴스를 가져옴
                         .toArray();
                 Object instance = constructor.newInstance(params);
-                Class<?> keyType = findInterfaceType(type);
-                instances.put(keyType != null ? keyType : type, instance);
-                System.out.println("등록 성공 : " + type.getName());
+                Class<?> keyType = findInterfaceType(clazz);
+                instances.put(keyType != null ? keyType : clazz, instance);
+                System.out.println("등록 성공 : " + clazz.getName());
                 return;
             } catch (Exception e) {
-                System.err.println("등록 실패 : " + type.getName() + "\n 사유 : " + e.getMessage());
+                System.err.println("등록 실패 : " + clazz.getName() + "\n 사유 : " + e.getMessage());
             }
         }
-        System.err.println(type.getName() + "에 적합한 생성자를 찾을 수 없습니다.");
+        System.err.println(clazz.getName() + "에 적합한 생성자를 찾을 수 없습니다.");
     }
 
     /**
      * 클래스 타입에 따른 인터페이스 타입을 찾음.
-     * @param type 찾을 클래스
+     * @param clazz 찾을 클래스
      * @return 찾아진 인터페이스 타입 또는 null
      */
-    private Class<?> findInterfaceType(Class<?> type) {
+    private Class<?> findInterfaceType(Class<?> clazz) {
         // 여러 인터페이스가 구현된 경우 특정 인터페이스를 선택할 수 있도록 확장 가능
-        return Arrays.stream(type.getInterfaces()).findFirst().orElse(null);
+        return Arrays.stream(clazz.getInterfaces()).findFirst().orElse(null);
     }
 
     /**

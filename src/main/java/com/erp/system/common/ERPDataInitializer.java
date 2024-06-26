@@ -1,6 +1,7 @@
 package com.erp.system.common;
 
 import com.erp.system.common.annotation.EnumMapping;
+import com.erp.system.common.generic_repository.GenericRepository;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.reflections.Reflections;
@@ -47,7 +48,7 @@ public class ERPDataInitializer {
      * 모든 컴포넌트를 자동으로 등록하고 매핑을 설정함.
      */
     private void autoRegister() {
-        Map<Class<?>, Object> allRepositories = injector.getAllInstancesOfType(Object.class); // 모든 리포지토리를 가져옴
+        Map<Class<?>, Object> allRepositories = injector.getAllInstancesOfType(GenericRepository.class); // 모든 리포지토리를 가져옴
 
         // 모든 리포지토리를 순회하며 처리함
         for (Map.Entry<Class<?>, Object> entry : allRepositories.entrySet()) {
@@ -70,13 +71,13 @@ public class ERPDataInitializer {
      * @return 도메인 클래스
      */
     private Class<?> getDomainClassFromRepository(Class<?> repositoryClass) {
-        Type[] genericInterfaces = repositoryClass.getGenericInterfaces(); // 리포지토리 클래스의 제네릭 인터페이스를 가져옴
+        Type[] interfaces = repositoryClass.getGenericInterfaces(); // 리포지토리 클래스의 인터페이스를 가져옴
 
-        // 제네릭 인터페이스를 순회
-        for (Type genericInterface : genericInterfaces) {
-            // 제네릭 인터페이스가 ParameterizedType인 경우
-            if (genericInterface instanceof ParameterizedType) {
-                ParameterizedType parameterizedType = (ParameterizedType) genericInterface; // ParameterizedType으로 캐스팅
+        // 인터페이스를 순회
+        for (Type getInterface : interfaces) {
+            // 인터페이스가 ParameterizedType(제네릭이 적용된 타입)인 경우
+            if (getInterface instanceof ParameterizedType) {
+                ParameterizedType parameterizedType = (ParameterizedType) getInterface; // ParameterizedType으로 캐스팅
                 Type[] actualTypeArguments = parameterizedType.getActualTypeArguments(); // 제네릭 타입 인수를 가져옴
 
                 // 제네릭 타입 인수가 있는 경우
