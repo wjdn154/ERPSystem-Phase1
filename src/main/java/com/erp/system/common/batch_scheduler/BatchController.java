@@ -44,4 +44,19 @@ public class BatchController {
     public void cancelJob(String jobId) {
         scheduler.cancelJob(jobId);
     }
+
+    /**
+     * 모든 스케줄링된 작업을 중지하고 스케줄러를 정지함.
+     */
+    public void stopScheduler() {
+        scheduler.stop();
+    }
+
+    /**
+     * 현재 스케줄러에 등록된 모든 작업의 상태를 출력함.
+     * @return 현재 등록된 작업 목록의 문자열 표현
+     */
+    public String listScheduledJobs() {
+        return scheduler.listScheduledJobs();
+    }
 }

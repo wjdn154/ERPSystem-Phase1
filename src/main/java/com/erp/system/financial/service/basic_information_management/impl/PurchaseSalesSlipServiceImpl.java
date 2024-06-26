@@ -27,10 +27,4 @@ public class PurchaseSalesSlipServiceImpl implements PurchaseSalesSlipService {
         this.purchaseSalesSlipRepository = purchaseSalesSlipRepository;
         this.vatTypesRepository = vatTypesRepository;
     }
-
-
-    @Override
-    public void test() {
-        System.out.println("test");
-    }
 }
