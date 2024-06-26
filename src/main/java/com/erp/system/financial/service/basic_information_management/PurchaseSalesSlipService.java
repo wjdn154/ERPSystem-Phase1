@@ -8,5 +8,4 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface PurchaseSalesSlipService {
-    public void test();
 }

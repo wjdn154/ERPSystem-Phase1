@@ -48,35 +48,6 @@ public class Main {
         // builder 패턴 수정 테스트
         modifyBuilderPatternTest(result.accountInformationController(), injector);
 
-
-        batchSchedulerTest(injector);
-
-
-    }
-
-    private static void batchSchedulerTest(DependencyInjector injector) {
-        // BatchScheduler, BatchController, Batch 등록할 메소드가 있는 Service 인스턴스 생성
-        BatchScheduler scheduler = injector.getInstance(BatchScheduler.class);
-        BatchController controller = injector.getInstance(BatchController.class);
-        PurchaseSalesSlipService service = injector.getInstance(PurchaseSalesSlipService.class);
-
-        // 서비스 메소드를 1초 간격으로 스케줄링
-        controller.scheduleServiceTask("task1", service::test, 0, 1, TimeUnit.SECONDS);
-
-        // 애플리케이션을 계속 실행하며, 예시를 위해 10초 후 작업을 취소하고 스케줄러를 정지
-        try {
-            Thread.sleep(5000); // 10초 대기
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-
-        // 작업 취소
-        controller.cancelJob("task1");
-
-        // 스케줄러 정지
-        scheduler.stop();
-
-        System.out.println("스케줄러가 중지되었습니다.");
     }
 
     private static void printAll(createControllerInstance result) {
