@@ -1,12 +1,10 @@
 package com.erp.system.financial.model.basic_information_management.account_information;
 
-import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.UUID;
 
 /**
  * 예적금 현황 테이블

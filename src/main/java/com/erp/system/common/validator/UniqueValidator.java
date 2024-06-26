@@ -1,21 +1,13 @@
-package com.erp.system.common;
+package com.erp.system.common.validator;
 
-import com.erp.system.common.annotation.NotNull;
+import com.erp.system.common.DependencyInjector;
 import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.generic_repository.GenericRepository;
-import com.erp.system.common.generic_repository.impl.GenericRepositoryImpl;
-import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.PurchaseSalesSlip;
-import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.PurchaseSalesSlipRepository;
-import org.apache.poi.ss.formula.functions.T;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.Map;
-
-import static com.erp.system.common.PrintAllEntities.printAllEntities;
-import static com.erp.system.common.Rules.ID_FIELD_NAME;
 
 public class UniqueValidator {
 
@@ -66,7 +58,7 @@ public class UniqueValidator {
             entityField.setAccessible(true);
             Object entityFieldValue = entityField.get(entity);
             if (fieldValue != null && fieldValue.equals(entityFieldValue)) {
-                throw new IllegalArgumentException(field.getName() + " 필드는 Unique 값만 입력할 수 있습니다.");
+                throw new IllegalArgumentException(field.getName() + "[" + fieldValue + "] 필드는 Unique 값만 입력할 수 있습니다.");
             }
         }
     }

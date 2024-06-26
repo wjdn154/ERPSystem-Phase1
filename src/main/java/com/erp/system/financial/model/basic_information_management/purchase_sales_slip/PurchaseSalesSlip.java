@@ -1,14 +1,12 @@
 package com.erp.system.financial.model.basic_information_management.purchase_sales_slip;
 
-import com.erp.system.common.NotNullValidator;
-import com.erp.system.common.UniqueValidator;
+import com.erp.system.common.validator.NotNullValidator;
+import com.erp.system.common.validator.UniqueValidator;
 import com.erp.system.common.annotation.NotNull;
 import com.erp.system.common.annotation.Unique;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.UUID;
 
 /**
  * 매입매출전표

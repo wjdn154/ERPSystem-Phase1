@@ -1,4 +1,4 @@
-package com.erp.system.common;
+package com.erp.system.common.validator;
 
 import com.erp.system.common.annotation.NotNull;
 

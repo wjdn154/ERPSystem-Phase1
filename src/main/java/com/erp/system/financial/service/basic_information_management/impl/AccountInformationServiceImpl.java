@@ -1,7 +1,6 @@
 package com.erp.system.financial.service.basic_information_management.impl;
 
 import com.erp.system.common.annotation.Component;
-import com.erp.system.common.annotation.Priority;
 import com.erp.system.financial.model.basic_information_management.account_information.BankAccount;
 import com.erp.system.financial.model.basic_information_management.account_information.BankTransaction;
 import com.erp.system.financial.model.basic_information_management.account_information.Deposit;
@@ -14,7 +13,6 @@ import java.util.Collection;
 import java.util.Optional;
 
 @Component
-@Priority(2)
 public class AccountInformationServiceImpl implements AccountInformationService {
     private final BankAccountRepository bankAccountsRepository;
     private final BankTransactionRepository bankTransactionsRepository;

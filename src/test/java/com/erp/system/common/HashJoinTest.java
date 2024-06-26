@@ -48,7 +48,7 @@ class HashJoinTest {
 
     @Test
     void testPerformJoin2() {
-        // Given: 공통 조인 키가 있는 세 데이터 집합
+        // Given: 공통 조인 키가 있는 두 데이터 집합
         List<Map<String, Object>> table1 = Arrays.asList(
                 Map.of("id", "1", "JoinId", "1", "name", "Alice"),
                 Map.of("id", "2", "JoinId", "2","name", "Bob")

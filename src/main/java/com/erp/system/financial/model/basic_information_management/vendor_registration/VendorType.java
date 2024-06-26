@@ -1,9 +1,7 @@
 package com.erp.system.financial.model.basic_information_management.vendor_registration;
 
-import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
-
-import java.util.UUID;
 
 /**
  * 거래처 유형 테이블

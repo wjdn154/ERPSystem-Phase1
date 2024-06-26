@@ -1,11 +1,9 @@
 package com.erp.system.financial.model.basic_information_management.company_registration;
 
-import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.UUID;
 
 /**
  * 회사 기본 정보 테이블
