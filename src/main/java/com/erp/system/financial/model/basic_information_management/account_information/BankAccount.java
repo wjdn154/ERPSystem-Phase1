@@ -1,12 +1,10 @@
 package com.erp.system.financial.model.basic_information_management.account_information;
 
-import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
-import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entry;
+import com.erp.system.common.annotation.Unique;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.UUID;
 
 /**
  * 은행 계좌 테이블
@@ -22,6 +20,7 @@ public class BankAccount {
     private  String bankName; // 은행명
     @NotNull
     private  String branchLocation; // 계좌계설지점
+    @Unique
     @NotNull
     private  String number; // 계좌번호
     @NotNull

@@ -3,6 +3,8 @@ package com.erp.system;
 
 import com.erp.system.common.DependencyInjector;
 import com.erp.system.common.HashJoin;
+import com.erp.system.common.batch_scheduler.BatchController;
+import com.erp.system.common.batch_scheduler.BatchScheduler;
 import com.erp.system.financial.controller.basic_information_management.*;
 import com.erp.system.common.ERPDataInitializer;
 import com.erp.system.financial.controller.book_keeping.AccountingLedgerController;
@@ -14,11 +16,13 @@ import com.erp.system.financial.model.basic_information_management.purchase_sale
 import com.erp.system.financial.model.basic_information_management.voucher_registration.Voucher;
 import com.erp.system.financial.repository.basic_information_management.account_information.BankAccountRepository;
 import com.erp.system.financial.service.basic_information_management.CompanyRegistrationService;
+import com.erp.system.financial.service.basic_information_management.PurchaseSalesSlipService;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import static com.erp.system.common.PrintAllEntities.printAllEntities;
 import static com.erp.system.common.Rules.ID_FIELD_NAME;
@@ -43,13 +47,45 @@ public class Main {
 
         // builder 패턴 수정 테스트
         modifyBuilderPatternTest(result.accountInformationController(), injector);
+
+
+        batchSchedulerTest(injector);
+
+
+    }
+
+    private static void batchSchedulerTest(DependencyInjector injector) {
+        // BatchScheduler, BatchController, Batch 등록할 메소드가 있는 Service 인스턴스 생성
+        BatchScheduler scheduler = injector.getInstance(BatchScheduler.class);
+        BatchController controller = injector.getInstance(BatchController.class);
+        PurchaseSalesSlipService service = injector.getInstance(PurchaseSalesSlipService.class);
+
+        // 서비스 메소드를 1초 간격으로 스케줄링
+        controller.scheduleServiceTask("task1", service::test, 0, 1, TimeUnit.SECONDS);
+
+        // 애플리케이션을 계속 실행하며, 예시를 위해 10초 후 작업을 취소하고 스케줄러를 정지
+        try {
+            Thread.sleep(5000); // 10초 대기
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+        // 작업 취소
+        controller.cancelJob("task1");
+
+        // 스케줄러 정지
+        scheduler.stop();
+
+        System.out.println("스케줄러가 중지되었습니다.");
     }
 
     private static void printAll(createControllerInstance result) {
+        // 계좌정보
         printAllEntities(result.accountInformationController().findAllBankAccounts(), ID_FIELD_NAME); // BankAccount 출력
         printAllEntities(result.accountInformationController().findAllBankTransactions(), ID_FIELD_NAME); // BankTransaction 출력
         printAllEntities(result.accountInformationController().findAllDeposits(), ID_FIELD_NAME); //Deposit 출력
 
+        // 회사등록
         printAllEntities(result.companyRegistrationController().findAllAddresses(), ID_FIELD_NAME); // Address 출력
         printAllEntities(result.companyRegistrationController().findAllCompanies(), ID_FIELD_NAME); // Company 출력
         printAllEntities(result.companyRegistrationController().findAllContacts(), ID_FIELD_NAME); // Contact 출력
@@ -58,20 +94,25 @@ public class Main {
         printAllEntities(result.companyRegistrationController().findAllRepresentatives(), ID_FIELD_NAME); // Representative 출력
         printAllEntities(result.companyRegistrationController().findAllTaxes(), ID_FIELD_NAME); // Tax 출력
 
+        // 매출매입전표 등록
         printAllEntities(result.purchaseSalesSlipController().findAllEntries(), ID_FIELD_NAME); // Entry 출력
         printAllEntities(result.purchaseSalesSlipController().findAllPurchaseSalesSlip(), ID_FIELD_NAME); // PurchaseSalesSlip 출력
         printAllEntities(result.purchaseSalesSlipController().findAllVatTypes(), ID_FIELD_NAME); // VatType 출력
 
+        // 전자세금계산서
         printAllEntities(result.taxInvoiceController().findAllTaxInvoices(), ID_FIELD_NAME); // TaxInvoice 출력
 
+        // 거래처 등록
         printAllEntities(result.vendorRegistrationController().findAllVendors(), ID_FIELD_NAME); // Vendor 출력
         printAllEntities(result.vendorRegistrationController().findAllVendorTypes(), ID_FIELD_NAME); // VendorType 출력
 
+        // 전표 입력
         printAllEntities(result.voucherRegistrationController().findAllAccounts(), ID_FIELD_NAME); // Account 출력
         printAllEntities(result.voucherRegistrationController().findAllMemos(), ID_FIELD_NAME); // Memo 출력
         printAllEntities(result.voucherRegistrationController().findAllVouchers(), ID_FIELD_NAME); // Voucher 출력
         printAllEntities(result.voucherRegistrationController().findAllVoucherTypes(), ID_FIELD_NAME); // VoucherType 출력
 
+        // 장부 관리
         printAllEntities(result.accountingLedgerController().findAllCashBooks(), ID_FIELD_NAME); // CashBook 출력
         printAllEntities(result.accountingLedgerController().findAllGeneralLedgers(), ID_FIELD_NAME); // GeneralLedger 출력
     }

@@ -1,10 +1,7 @@
 package com.erp.system.financial.model.basic_information_management.voucher_registration;
 
-import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
-import com.erp.system.financial.model.basic_information_management.vendor_registration.VendorType;
-
-import java.util.UUID;
 
 /**
  * 계정과목 테이블

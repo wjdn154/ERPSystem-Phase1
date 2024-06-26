@@ -94,14 +94,16 @@ public class DependencyInjector {
      * @return 설정된 우선순위 값
      */
     private int setOrder(Class<?> type) {
-        if (type.getSimpleName().contains("Repository")) {
+        if (type.getSimpleName().contains("BatchScheduler")) {
             return 1;
-        } else if (type.getSimpleName().contains("Service")) {
+        } else if (type.getSimpleName().contains("Repository")) {
             return 2;
-        } else if (type.getSimpleName().contains("Controller")) {
+        } else if (type.getSimpleName().contains("Service")) {
             return 3;
+        } else if (type.getSimpleName().contains("Controller")) {
+            return 4;
         }
-        return 4; // 기타 경우
+        return 5; // 기타 경우
     }
 
     /**

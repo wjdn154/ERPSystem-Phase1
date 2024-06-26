@@ -1,7 +1,6 @@
 package com.erp.system.financial.service.basic_information_management.impl;
 
 import com.erp.system.common.annotation.Component;
-import com.erp.system.common.annotation.Priority;
 import com.erp.system.financial.model.basic_information_management.company_registration.*;
 import com.erp.system.financial.repository.basic_information_management.company_registration.*;
 import com.erp.system.financial.service.basic_information_management.CompanyRegistrationService;
@@ -13,7 +12,6 @@ import java.util.Optional;
 import static com.erp.system.common.Rules.ID_FIELD_NAME;
 
 @Component
-@Priority(2)
 public class CompanyRegistrationServiceImpl implements CompanyRegistrationService {
     private final AddressRepository addressesRepository;
     private final CompanyRepository companiesRepository;

@@ -1,7 +1,6 @@
 package com.erp.system.financial.controller.book_keeping;
 
 import com.erp.system.common.annotation.Component;
-import com.erp.system.common.annotation.Priority;
 import com.erp.system.financial.model.book_keeping.accounting_ledger.CashBook;
 import com.erp.system.financial.model.book_keeping.accounting_ledger.GeneralLedger;
 import com.erp.system.financial.repository.book_keeping.accounting_ledger.CashBookRepository;
@@ -12,7 +11,6 @@ import java.util.Collection;
 import java.util.Optional;
 
 @Component
-@Priority(3)
 public class AccountingLedgerController {
     private final AccountingLedgerService accountingLedgerService;
     private final CashBookRepository cashBookRepository;

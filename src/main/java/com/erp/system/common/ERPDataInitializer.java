@@ -93,7 +93,7 @@ public class ERPDataInitializer {
      * Excel 파일을 읽음.
      * @param filePath 읽을 파일의 경로
      */
-    public void readExcel(String filePath) {
+    private void readExcel(String filePath) {
         try (FileInputStream fis = new FileInputStream(filePath);
              Workbook workbook = new XSSFWorkbook(fis)) {
             for (Sheet sheet : workbook) {
@@ -109,7 +109,7 @@ public class ERPDataInitializer {
      * 시트 내의 데이터를 읽어 엔티티 객체로 변환 후 저장
      * @param sheet 처리할 Excel 시트 객체
      */
-    public void handleSheet(Sheet sheet) {
+    private void handleSheet(Sheet sheet) {
         Row typeRow = sheet.getRow(0); // 첫 번째 행에서 데이터 타입을 읽음
         Row headerRow = sheet.getRow(1); // 두 번째 행에서 컬럼 이름을 읽음
 

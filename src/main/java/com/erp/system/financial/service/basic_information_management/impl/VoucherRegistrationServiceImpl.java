@@ -1,7 +1,6 @@
 package com.erp.system.financial.service.basic_information_management.impl;
 
 import com.erp.system.common.annotation.Component;
-import com.erp.system.common.annotation.Priority;
 import com.erp.system.financial.model.basic_information_management.voucher_registration.Account;
 import com.erp.system.financial.model.basic_information_management.voucher_registration.Memo;
 import com.erp.system.financial.model.basic_information_management.voucher_registration.Voucher;
@@ -16,7 +15,6 @@ import java.util.Collection;
 import java.util.Optional;
 
 @Component
-@Priority(2)
 public class VoucherRegistrationServiceImpl implements VoucherRegistrationService {
     private final AccountRepository accountRepository;
     private final MemoRepository memoRepository;
