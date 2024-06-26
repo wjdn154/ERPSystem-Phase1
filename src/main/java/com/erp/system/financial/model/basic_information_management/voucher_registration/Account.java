@@ -13,7 +13,6 @@ public class Account {
 
     @NotNull
     private String name; // 계정과목명
-    @NotNull
     private String reference; // 참고 사항
 
     public static int idIndex = 1; // static 변수 추가
