@@ -7,8 +7,8 @@ import com.erp.system.financial.repository.basic_information_management.company_
 
 
 @Component
-public class AddressesRepositoryImpl extends GenericRepositoryImpl<Address> implements AddressRepository {
-    private AddressesRepositoryImpl() {
+public class AddressRepositoryImpl extends GenericRepositoryImpl<Address> implements AddressRepository {
+    private AddressRepositoryImpl() {
         super(Address.class);
     }
 }

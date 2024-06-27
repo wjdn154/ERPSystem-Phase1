@@ -6,8 +6,8 @@ import com.erp.system.financial.model.basic_information_management.company_regis
 import com.erp.system.financial.repository.basic_information_management.company_registration.RepresentativeRepository;
 
 @Component
-public class RepresentativesRepositoryImpl extends GenericRepositoryImpl<Representative> implements RepresentativeRepository {
-    private RepresentativesRepositoryImpl() {
+public class RepresentativeRepositoryImpl extends GenericRepositoryImpl<Representative> implements RepresentativeRepository {
+    private RepresentativeRepositoryImpl() {
         super(Representative.class);
     }
 }

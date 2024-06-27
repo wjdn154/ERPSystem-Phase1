@@ -6,8 +6,8 @@ import com.erp.system.financial.model.basic_information_management.company_regis
 import com.erp.system.financial.repository.basic_information_management.company_registration.ContactRepository;
 
 @Component
-public class ContactsRepositoryImpl extends GenericRepositoryImpl<Contact> implements ContactRepository {
-    private ContactsRepositoryImpl() {
+public class ContactRepositoryImpl extends GenericRepositoryImpl<Contact> implements ContactRepository {
+    private ContactRepositoryImpl() {
         super(Contact.class);
     }
 }

@@ -163,7 +163,7 @@ public class CompanyRegistrationController {
      * 모든 주소를 조회함
      * @return 저장된 모든 주소의 컬렉션
      */
-    public Collection<Address> findAllAddresses() {
+    public Collection<Address> findAllAddress() {
         return addressRepository.findAll();
     }
 
@@ -171,7 +171,7 @@ public class CompanyRegistrationController {
      * 모든 회사를 조회함
      * @return 저장된 모든 회사의 컬렉션
      */
-    public Collection<Company> findAllCompanies() {
+    public Collection<Company> findAllCompany() {
         return companyRepository.findAll();
     }
 
@@ -179,7 +179,7 @@ public class CompanyRegistrationController {
      * 모든 연락처를 조회함
      * @return 저장된 모든 연락처의 컬렉션
      */
-    public Collection<Contact> findAllContacts() {
+    public Collection<Contact> findAllContact() {
         return contactRepository.findAll();
     }
 
@@ -187,7 +187,7 @@ public class CompanyRegistrationController {
      * 모든 법인 종류를 조회함
      * @return 저장된 모든 법인 종류의 컬렉션
      */
-    public Collection<CorporateKind> findAllCorporateKinds() {
+    public Collection<CorporateKind> findAllCorporateKind() {
         return corporateKindRepository.findAll();
     }
 
@@ -195,7 +195,7 @@ public class CompanyRegistrationController {
      * 모든 법인 유형을 조회함
      * @return 저장된 모든 법인 유형의 컬렉션
      */
-    public Collection<CorporateType> findAllCorporateTypes() {
+    public Collection<CorporateType> findAllCorporateType() {
         return corporateTypeRepository.findAll();
     }
 
@@ -203,7 +203,7 @@ public class CompanyRegistrationController {
      * 모든 대표자를 조회함
      * @return 저장된 모든 대표자의 컬렉션
      */
-    public Collection<Representative> findAllRepresentatives() {
+    public Collection<Representative> findAllRepresentative() {
         return representativeRepository.findAll();
     }
 
@@ -211,7 +211,7 @@ public class CompanyRegistrationController {
      * 모든 세금을 조회함
      * @return 저장된 모든 세금의 컬렉션
      */
-    public Collection<Tax> findAllTaxes() {
+    public Collection<Tax> findAllTax() {
         return taxRepository.findAll();
     }
 

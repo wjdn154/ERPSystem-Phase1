@@ -14,6 +14,7 @@ import com.erp.system.financial.model.basic_information_management.purchase_sale
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.PurchaseSalesSlip;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.VatType;
 import com.erp.system.financial.model.basic_information_management.voucher_registration.Voucher;
+import com.erp.system.financial.model.dto.CompanyRegistrationDto;
 import com.erp.system.financial.repository.basic_information_management.account_information.BankAccountRepository;
 import com.erp.system.financial.service.basic_information_management.CompanyRegistrationService;
 import com.erp.system.financial.service.basic_information_management.PurchaseSalesSlipService;
@@ -42,9 +43,6 @@ public class Main {
         // 모든 객체 출력
         printAll(result);
 
-        // service 테스트
-        serviceTest(injector);
-
         // builder 패턴 수정 테스트
         modifyBuilderPatternTest(result.accountInformationController(), injector);
 
@@ -57,13 +55,13 @@ public class Main {
         printAllEntities(result.accountInformationController().findAllDeposits(), ID_FIELD_NAME); //Deposit 출력
 
         // 회사등록
-        printAllEntities(result.companyRegistrationController().findAllAddresses(), ID_FIELD_NAME); // Address 출력
-        printAllEntities(result.companyRegistrationController().findAllCompanies(), ID_FIELD_NAME); // Company 출력
-        printAllEntities(result.companyRegistrationController().findAllContacts(), ID_FIELD_NAME); // Contact 출력
-        printAllEntities(result.companyRegistrationController().findAllCorporateKinds(), ID_FIELD_NAME); // CorporateKind 출력
-        printAllEntities(result.companyRegistrationController().findAllCorporateTypes(), ID_FIELD_NAME); // CorporateType 출력
-        printAllEntities(result.companyRegistrationController().findAllRepresentatives(), ID_FIELD_NAME); // Representative 출력
-        printAllEntities(result.companyRegistrationController().findAllTaxes(), ID_FIELD_NAME); // Tax 출력
+        printAllEntities(result.companyRegistrationController().findAllAddress(), ID_FIELD_NAME); // Address 출력
+        printAllEntities(result.companyRegistrationController().findAllCompany(), ID_FIELD_NAME); // Company 출력
+        printAllEntities(result.companyRegistrationController().findAllContact(), ID_FIELD_NAME); // Contact 출력
+        printAllEntities(result.companyRegistrationController().findAllCorporateKind(), ID_FIELD_NAME); // CorporateKind 출력
+        printAllEntities(result.companyRegistrationController().findAllCorporateType(), ID_FIELD_NAME); // CorporateType 출력
+        printAllEntities(result.companyRegistrationController().findAllRepresentative(), ID_FIELD_NAME); // Representative 출력
+        printAllEntities(result.companyRegistrationController().findAllTax(), ID_FIELD_NAME); // Tax 출력
 
         // 매출매입전표 등록
         printAllEntities(result.purchaseSalesSlipController().findAllEntries(), ID_FIELD_NAME); // Entry 출력
@@ -114,13 +112,8 @@ public class Main {
                                             VoucherRegistrationController voucherRegistrationController) {
     }
 
-    private static void serviceTest(DependencyInjector injector) {
-        CompanyRegistrationService c = injector.getInstance(CompanyRegistrationService.class);
-        c.register("외투법인", "내국법인");
-    }
-
     private static void modifyBuilderPatternTest(AccountInformationController accountInformationController, DependencyInjector injector) {
-        System.out.println("-------------------------- modifyBuilderPatternTest Test --------------------------");
+        System.out.println("-------------------------- 빌더 패턴 수정 Test --------------------------");
         BankAccount BA = new BankAccount.Builder()
                 .bankName("original")
                 .branchLocation("this.branchLocation")
@@ -165,6 +158,6 @@ public class Main {
 
         // 수정 후 조회
         printAllEntities(accountInformationController.findAllBankAccounts(), ID_FIELD_NAME);
-        System.out.println("-------------------------- modifyBuilderPatternTest Test --------------------------");
+        System.out.println("-------------------------- 빌더 패턴 수정 Test --------------------------");
     }
 }

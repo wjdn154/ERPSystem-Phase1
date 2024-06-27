@@ -6,8 +6,8 @@ import com.erp.system.financial.model.basic_information_management.company_regis
 import com.erp.system.financial.repository.basic_information_management.company_registration.CorporateKindRepository;
 
 @Component
-public class CorporateKindsRepositoryImpl extends GenericRepositoryImpl<CorporateKind> implements CorporateKindRepository {
-    private CorporateKindsRepositoryImpl() {
+public class CorporateKindRepositoryImpl extends GenericRepositoryImpl<CorporateKind> implements CorporateKindRepository {
+    private CorporateKindRepositoryImpl() {
         super(CorporateKind.class);
     }
 }

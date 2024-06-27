@@ -10,8 +10,6 @@ import com.erp.system.common.annotation.NotNull;
 public class Representative {
     @NotNull
     private final String id; // 고유 식별자
-    @NotNull
-    private final String companyId; // 연결된 회사 ID
 
     @NotNull
     private String name; // 대표자명
@@ -24,7 +22,6 @@ public class Representative {
 
     public static class Builder {
         private String id;
-        private String companyId;
 
         private String name;
         private String idNumber;
@@ -32,11 +29,6 @@ public class Representative {
 
         public Builder id(String id) {
             this.id = id;
-            return this;
-        }
-
-        public Builder companyId(String companyId) {
-            this.companyId = companyId;
             return this;
         }
 
@@ -62,7 +54,6 @@ public class Representative {
 
     private Representative(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.companyId = builder.companyId;
         this.name = builder.name;
         this.idNumber = builder.idNumber;
         this.foreign = builder.foreign;
@@ -72,7 +63,6 @@ public class Representative {
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .companyId(this.companyId)
                 .name(this.name)
                 .idNumber(this.idNumber)
                 .foreign(this.foreign);
@@ -80,10 +70,6 @@ public class Representative {
 
     public String getId() {
         return id;
-    }
-
-    public String getCompanyId() {
-        return companyId;
     }
 
     public String getName() {
@@ -96,5 +82,15 @@ public class Representative {
 
     public boolean isForeign() {
         return foreign;
+    }
+
+    @Override
+    public String toString() {
+        return "Representative{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", idNumber='" + idNumber + '\'' +
+                ", foreign=" + foreign +
+                '}';
     }
 }

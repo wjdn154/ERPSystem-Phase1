@@ -7,8 +7,8 @@ import com.erp.system.financial.repository.basic_information_management.company_
 
 
 @Component
-public class CompaniesRepositoryImpl extends GenericRepositoryImpl<Company> implements CompanyRepository {
-    private CompaniesRepositoryImpl() {
+public class CompanyRepositoryImpl extends GenericRepositoryImpl<Company> implements CompanyRepository {
+    private CompanyRepositoryImpl() {
         super(Company.class);
     }
 }

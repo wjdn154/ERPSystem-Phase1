@@ -11,14 +11,12 @@ import com.erp.system.common.annotation.NotNull;
 public class Tax {
     @NotNull
     private final String id; // 고유식별자
-    @NotNull
-    private final String companyId; // 연결된 회사 ID
-    @NotNull
-    private final String businessTaxOfficeId; // 사업장관할세무서 ID
-    @NotNull
-    private final String headquartersTaxOfficeId; // 본점관할세무서 ID
-    @NotNull
-    private final String localCorporateTaxCategoryId; // 지방세법인구분 ID
+//    @NotNull
+//    private final String businessTaxOfficeId; // 사업장관할세무서 ID
+//    @NotNull
+//    private final String headquartersTaxOfficeId; // 본점관할세무서 ID
+//    @NotNull
+//    private final String localCorporateTaxCategoryId; // 지방세법인구분 ID
 
     @NotNull
     private String localIncomeTaxOffice; // 지방소득세납세지
@@ -27,10 +25,9 @@ public class Tax {
 
     public static class Builder {
         private String id;
-        private String companyId;
-        private String businessTaxOfficeId;
-        private String headquartersTaxOfficeId;
-        private String localCorporateTaxCategoryId;
+//        private String businessTaxOfficeId;
+//        private String headquartersTaxOfficeId;
+//        private String localCorporateTaxCategoryId;
 
         private String localIncomeTaxOffice;
 
@@ -39,25 +36,20 @@ public class Tax {
             return this;
         }
 
-        public Builder companyId(String companyId) {
-            this.companyId = companyId;
-            return this;
-        }
-
-        public Builder businessTaxOfficeId(String businessTaxOfficeId) {
-            this.businessTaxOfficeId = businessTaxOfficeId;
-            return this;
-        }
-
-        public Builder headquartersTaxOfficeId(String headquartersTaxOfficeId) {
-            this.headquartersTaxOfficeId = headquartersTaxOfficeId;
-            return this;
-        }
-
-        public Builder localCorporateTaxCategoryId(String localCorporateTaxCategoryId) {
-            this.localCorporateTaxCategoryId = localCorporateTaxCategoryId;
-            return this;
-        }
+//        public Builder businessTaxOfficeId(String businessTaxOfficeId) {
+//            this.businessTaxOfficeId = businessTaxOfficeId;
+//            return this;
+//        }
+//
+//        public Builder headquartersTaxOfficeId(String headquartersTaxOfficeId) {
+//            this.headquartersTaxOfficeId = headquartersTaxOfficeId;
+//            return this;
+//        }
+//
+//        public Builder localCorporateTaxCategoryId(String localCorporateTaxCategoryId) {
+//            this.localCorporateTaxCategoryId = localCorporateTaxCategoryId;
+//            return this;
+//        }
 
         public Builder localIncomeTaxOffice(String localIncomeTaxOffice) {
             this.localIncomeTaxOffice = localIncomeTaxOffice;
@@ -71,10 +63,9 @@ public class Tax {
 
     private Tax(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.companyId = builder.companyId;
-        this.businessTaxOfficeId = builder.businessTaxOfficeId;
-        this.headquartersTaxOfficeId = builder.headquartersTaxOfficeId;
-        this.localCorporateTaxCategoryId = builder.localCorporateTaxCategoryId;
+//        this.businessTaxOfficeId = builder.businessTaxOfficeId;
+//        this.headquartersTaxOfficeId = builder.headquartersTaxOfficeId;
+//        this.localCorporateTaxCategoryId = builder.localCorporateTaxCategoryId;
         this.localIncomeTaxOffice = builder.localIncomeTaxOffice;
         NotNullValidator.validateFields(this);
     }
@@ -82,10 +73,9 @@ public class Tax {
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .companyId(this.companyId)
-                .businessTaxOfficeId(this.businessTaxOfficeId)
-                .headquartersTaxOfficeId(this.headquartersTaxOfficeId)
-                .localCorporateTaxCategoryId(this.localCorporateTaxCategoryId)
+//                .businessTaxOfficeId(this.businessTaxOfficeId)
+//                .headquartersTaxOfficeId(this.headquartersTaxOfficeId)
+//                .localCorporateTaxCategoryId(this.localCorporateTaxCategoryId)
                 .localIncomeTaxOffice(this.localIncomeTaxOffice);
     }
 
@@ -93,23 +83,28 @@ public class Tax {
         return id;
     }
 
-    public String getCompanyId() {
-        return companyId;
-    }
 
-    public String getBusinessTaxOfficeId() {
-        return businessTaxOfficeId;
-    }
-
-    public String getHeadquartersTaxOfficeId() {
-        return headquartersTaxOfficeId;
-    }
-
-    public String getLocalCorporateTaxCategoryId() {
-        return localCorporateTaxCategoryId;
-    }
+//    public String getBusinessTaxOfficeId() {
+//        return businessTaxOfficeId;
+//    }
+//
+//    public String getHeadquartersTaxOfficeId() {
+//        return headquartersTaxOfficeId;
+//    }
+//
+//    public String getLocalCorporateTaxCategoryId() {
+//        return localCorporateTaxCategoryId;
+//    }
 
     public String getLocalIncomeTaxOffice() {
         return localIncomeTaxOffice;
+    }
+
+    @Override
+    public String toString() {
+        return "Tax{" +
+                "id='" + id + '\'' +
+                ", localIncomeTaxOffice='" + localIncomeTaxOffice + '\'' +
+                '}';
     }
 }
