@@ -10,8 +10,6 @@ import com.erp.system.common.annotation.NotNull;
 public class Address {
     @NotNull
     private final String id; // 고유식별자
-    @NotNull
-    private final String companyId; // 연결된 회사 ID
 
     @NotNull
     private String address; // 사업장주소
@@ -26,7 +24,6 @@ public class Address {
 
     public static class Builder {
         private String id;
-        private String companyId;
 
         private String address;
         private String headquartersAddress;
@@ -35,11 +32,6 @@ public class Address {
 
         public Builder id(String id) {
             this.id = id;
-            return this;
-        }
-
-        public Builder companyId(String companyId) {
-            this.companyId = companyId;
             return this;
         }
 
@@ -70,7 +62,6 @@ public class Address {
 
     private Address(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.companyId = builder.companyId;
         this.address = builder.address;
         this.headquartersAddress = builder.headquartersAddress;
         this.businessPlace = builder.businessPlace;
@@ -81,7 +72,6 @@ public class Address {
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .companyId(this.companyId)
                 .address(this.address)
                 .headquartersAddress(this.headquartersAddress)
                 .businessPlace(this.businessPlace)
@@ -90,10 +80,6 @@ public class Address {
 
     public String getId() {
         return id;
-    }
-
-    public String getCompanyId() {
-        return companyId;
     }
 
     public String getAddress() {
@@ -110,5 +96,16 @@ public class Address {
 
     public String getHeadquarters() {
         return headquarters;
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "id='" + id + '\'' +
+                ", address='" + address + '\'' +
+                ", headquartersAddress='" + headquartersAddress + '\'' +
+                ", businessPlace='" + businessPlace + '\'' +
+                ", headquarters='" + headquarters + '\'' +
+                '}';
     }
 }

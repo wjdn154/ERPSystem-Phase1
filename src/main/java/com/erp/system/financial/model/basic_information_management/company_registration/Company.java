@@ -275,4 +275,28 @@ public class Company {
     public String getMainIndustryId() {
         return mainIndustryId;
     }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "id='" + id + '\'' +
+                ", corporateTypeId='" + corporateTypeId + '\'' +
+                ", corporateKindsId='" + corporateKindsId + '\'' +
+                ", representativeId='" + representativeId + '\'' +
+                ", addressId='" + addressId + '\'' +
+                ", contactId='" + contactId + '\'' +
+                ", taxId='" + taxId + '\'' +
+                ", isSme=" + isSme +
+                ", businessRegistrationNumber='" + businessRegistrationNumber + '\'' +
+                ", corporateRegistrationNumber='" + corporateRegistrationNumber + '\'' +
+                ", establishmentDate=" + establishmentDate +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", active=" + active +
+                ", fiscalYearStart=" + fiscalYearStart +
+                ", fiscalYearEnd=" + fiscalYearEnd +
+                ", fiscalCardinalNumber=" + fiscalCardinalNumber +
+                ", mainIndustryId='" + mainIndustryId + '\'' +
+                '}';
+    }
 }

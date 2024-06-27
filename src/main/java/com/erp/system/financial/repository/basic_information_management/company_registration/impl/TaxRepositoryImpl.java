@@ -6,8 +6,8 @@ import com.erp.system.financial.model.basic_information_management.company_regis
 import com.erp.system.financial.repository.basic_information_management.company_registration.TaxRepository;
 
 @Component
-public class TaxesRepositoryImpl extends GenericRepositoryImpl<Tax> implements TaxRepository {
-    private TaxesRepositoryImpl() {
+public class TaxRepositoryImpl extends GenericRepositoryImpl<Tax> implements TaxRepository {
+    private TaxRepositoryImpl() {
         super(Tax.class);
     }
 }

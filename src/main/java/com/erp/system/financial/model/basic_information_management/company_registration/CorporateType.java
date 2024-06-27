@@ -68,6 +68,15 @@ public class CorporateType {
     public String getDescription() {
         return description;
     }
+
+    @Override
+    public String toString() {
+        return "CorporateType{" +
+                "id='" + id + '\'' +
+                ", type='" + type + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
 
 
