@@ -45,10 +45,10 @@ public class CompanyRegistrationServiceImpl implements CompanyRegistrationServic
     public void registerCompany(CompanyRegistrationDto companyRegistrationDto) {
         try {
             Address address = createAddress(companyRegistrationDto);
-            Contact contact = createAndSaveContact(companyRegistrationDto);
-            Representative representative = createAndSaveRepresentative(companyRegistrationDto);
-            Tax tax = createAndSaveTax(companyRegistrationDto);
-            Company company = createAndSaveCompany(companyRegistrationDto, address.getId(), contact.getId(), representative.getId(), tax.getId());
+            Contact contact = createContact(companyRegistrationDto);
+            Representative representative = createRepresentative(companyRegistrationDto);
+            Tax tax = createTax(companyRegistrationDto);
+            Company company = createCompany(companyRegistrationDto, address.getId(), contact.getId(), representative.getId(), tax.getId());
 
             addressRepository.save(address);
             contactRepository.save(contact);
@@ -79,7 +79,7 @@ public class CompanyRegistrationServiceImpl implements CompanyRegistrationServic
      * @param dto 회사 등록을 위한 정보가 담긴 DTO
      * @return 저장된 연락처 객체
      */
-    private Contact createAndSaveContact(CompanyRegistrationDto dto) {
+    private Contact createContact(CompanyRegistrationDto dto) {
         return new Contact.Builder()
                 .businessPhone(dto.getBusinessPhone())
                 .fax(dto.getFax())
@@ -91,7 +91,7 @@ public class CompanyRegistrationServiceImpl implements CompanyRegistrationServic
      * @param dto 회사 등록을 위한 정보가 담긴 DTO
      * @return 저장된 대표자 객체
      */
-    private Representative createAndSaveRepresentative(CompanyRegistrationDto dto) {
+    private Representative createRepresentative(CompanyRegistrationDto dto) {
         return new Representative.Builder()
                 .name(dto.getRepresentativeName())
                 .idNumber(dto.getIdNumber())
@@ -104,7 +104,7 @@ public class CompanyRegistrationServiceImpl implements CompanyRegistrationServic
      * @param dto 회사 등록을 위한 정보가 담긴 DTO
      * @return 저장된 세금 객체
      */
-    private Tax createAndSaveTax(CompanyRegistrationDto dto) {
+    private Tax createTax(CompanyRegistrationDto dto) {
         return new Tax.Builder()
                 .localIncomeTaxOffice(dto.getLocalIncomeTaxOffice())
                 .build();
@@ -119,7 +119,7 @@ public class CompanyRegistrationServiceImpl implements CompanyRegistrationServic
      * @param representativeId 생성된 대표자의 ID
      * @param taxId 생성된 세금 정보의 ID
      */
-    private Company createAndSaveCompany(CompanyRegistrationDto dto, String addressId, String contactId, String representativeId, String taxId) {
+    private Company createCompany(CompanyRegistrationDto dto, String addressId, String contactId, String representativeId, String taxId) {
         return new Company.Builder()
                 .corporateTypeId(dto.getCorporateTypeId())
                 .corporateKindsId(dto.getCorporateKindId())
