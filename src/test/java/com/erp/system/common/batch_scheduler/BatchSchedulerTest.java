@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BatchSchedulerTest {
-    DependencyInjector injector;
+    private DependencyInjector injector;
     private BatchController batchController;
 
     @BeforeEach
