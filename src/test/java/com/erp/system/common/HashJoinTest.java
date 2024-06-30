@@ -68,7 +68,6 @@ class HashJoinTest {
         );
 
         assertEquals(expected, result);
-
     }
 
 }
