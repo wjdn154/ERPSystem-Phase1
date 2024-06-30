@@ -30,6 +30,8 @@ public class CompanyRegistrationDto {
     private String RepresentativeName; // 대표자명
     private String idNumber; // 대표자 주민번호
     private boolean foreign; // 대표자 외국인여부
+    private String businessTaxOfficeId; // 사업장관할 세무서 id
+    private String headquartersTaxOfficeId; // 본점관할 세무서 id
     private String localIncomeTaxOffice; // 지방소득세납세지
 
     public String getAddress() {
@@ -206,6 +208,22 @@ public class CompanyRegistrationDto {
 
     public void setForeign(boolean foreign) {
         this.foreign = foreign;
+    }
+
+    public String getBusinessTaxOfficeId() {
+        return businessTaxOfficeId;
+    }
+
+    public void setBusinessTaxOfficeId(String businessTaxOfficeId) {
+        this.businessTaxOfficeId = businessTaxOfficeId;
+    }
+
+    public String getHeadquartersTaxOfficeId() {
+        return headquartersTaxOfficeId;
+    }
+
+    public void setHeadquartersTaxOfficeId(String headquartersTaxOfficeId) {
+        this.headquartersTaxOfficeId = headquartersTaxOfficeId;
     }
 
     public String getLocalIncomeTaxOffice() {

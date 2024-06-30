@@ -47,13 +47,12 @@ public class CompanyRegistrationServiceImpl implements CompanyRegistrationServic
             Address address = createAddress(companyRegistrationDto);
             Contact contact = createContact(companyRegistrationDto);
             Representative representative = createRepresentative(companyRegistrationDto);
-            Tax tax = createTax(companyRegistrationDto);
-            Company company = createCompany(companyRegistrationDto, address.getId(), contact.getId(), representative.getId(), tax.getId());
+            Company company = createCompany(companyRegistrationDto, address.getId(), contact.getId(), representative.getId());
 
             addressRepository.save(address);
             contactRepository.save(contact);
             representativeRepository.save(representative);
-            taxRepository.save(tax);
+            //taxRepository.save(taxOffice);
             companyRepository.save(company);
         } catch (Exception e) {
             System.err.println("회사 등록 중 에러 발생: " + e.getMessage());
@@ -100,33 +99,23 @@ public class CompanyRegistrationServiceImpl implements CompanyRegistrationServic
     }
 
     /**
-     * 세금 정보를 생성하고 저장함.
-     * @param dto 회사 등록을 위한 정보가 담긴 DTO
-     * @return 저장된 세금 객체
-     */
-    private Tax createTax(CompanyRegistrationDto dto) {
-        return new Tax.Builder()
-                .localIncomeTaxOffice(dto.getLocalIncomeTaxOffice())
-                .build();
-    }
-
-    /**
      * 회사 정보를 생성하고 저장함.
      *
      * @param dto  회사 등록을 위한 정보가 담긴 DTO
      * @param addressId 생성된 주소의 ID
      * @param contactId 생성된 연락처의 ID
      * @param representativeId 생성된 대표자의 ID
-     * @param taxId 생성된 세금 정보의 ID
      */
-    private Company createCompany(CompanyRegistrationDto dto, String addressId, String contactId, String representativeId, String taxId) {
+    private Company createCompany(CompanyRegistrationDto dto, String addressId, String contactId, String representativeId) {
         return new Company.Builder()
                 .corporateTypeId(dto.getCorporateTypeId())
                 .corporateKindsId(dto.getCorporateKindId())
                 .representativeId(representativeId)
                 .addressId(addressId)
                 .contactId(contactId)
-                .taxId(taxId)
+                .businessTaxOfficeId(dto.getBusinessTaxOfficeId())
+                .headquartersTaxOfficeId(dto.getHeadquartersTaxOfficeId())
+                .localIncomeTaxOffice(dto.getLocalIncomeTaxOffice())
                 .isSme(dto.isSme())
                 .businessRegistrationNumber(dto.getBusinessRegistrationNumber())
                 .corporateRegistrationNumber(dto.getCorporateRegistrationNumber())

@@ -23,8 +23,12 @@ public class Company {
     @NotNull
     private final String contactId; // 연락처 정보 테이블 참조코드
     @NotNull
-    private final String taxId; // 세무 정보 테이블 참조코드
+    private final String businessTaxOfficeId; // 사업장관할 세무서 id
+    @NotNull
+    private final String headquartersTaxOfficeId; // 본점관할 세무서 id
 
+    @NotNull
+    private String localIncomeTaxOffice; // 지방소득세납세지
     @NotNull
     private boolean isSme; // 중소기업여부
     @NotNull
@@ -57,8 +61,9 @@ public class Company {
         private String representativeId;
         private String addressId;
         private String contactId;
-        private String taxId;
-
+        private String businessTaxOfficeId;
+        private String headquartersTaxOfficeId;
+        private String localIncomeTaxOffice;
         private boolean isSme;
         private String businessRegistrationNumber;
         private String corporateRegistrationNumber;
@@ -70,6 +75,7 @@ public class Company {
         private LocalDate fiscalYearEnd;
         private int fiscalCardinalNumber;
         private String mainIndustryId;
+
 
         public Builder id(String id) {
             this.id = id;
@@ -101,8 +107,18 @@ public class Company {
             return this;
         }
 
-        public Builder taxId(String taxId) {
-            this.taxId = taxId;
+        public Builder businessTaxOfficeId(String businessTaxOfficeId) {
+            this.businessTaxOfficeId = businessTaxOfficeId;
+            return this;
+        }
+
+        public Builder headquartersTaxOfficeId(String headquartersTaxOfficeId) {
+            this.headquartersTaxOfficeId = headquartersTaxOfficeId;
+            return this;
+        }
+
+        public Builder localIncomeTaxOffice(String localIncomeTaxOffice) {
+            this.localIncomeTaxOffice = localIncomeTaxOffice;
             return this;
         }
 
@@ -161,6 +177,8 @@ public class Company {
             return this;
         }
 
+
+
         public Company build() {
             return new Company(this);
         }
@@ -173,7 +191,9 @@ public class Company {
         this.representativeId = builder.representativeId;
         this.addressId = builder.addressId;
         this.contactId = builder.contactId;
-        this.taxId = builder.taxId;
+        this.businessTaxOfficeId = builder.businessTaxOfficeId;
+        this.headquartersTaxOfficeId = builder.headquartersTaxOfficeId;
+        this.localIncomeTaxOffice = builder.localIncomeTaxOffice;
         this.isSme = builder.isSme;
         this.businessRegistrationNumber = builder.businessRegistrationNumber;
         this.corporateRegistrationNumber = builder.corporateRegistrationNumber;
@@ -191,6 +211,14 @@ public class Company {
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
+                .corporateTypeId(this.corporateTypeId)
+                .corporateKindsId(this.corporateKindsId)
+                .representativeId(this.representativeId)
+                .addressId(this.addressId)
+                .contactId(this.contactId)
+                .businessTaxOfficeId(this.businessTaxOfficeId)
+                .headquartersTaxOfficeId(this.headquartersTaxOfficeId)
+                .localIncomeTaxOffice(this.localIncomeTaxOffice)
                 .isSme(this.isSme)
                 .businessRegistrationNumber(this.businessRegistrationNumber)
                 .corporateRegistrationNumber(this.corporateRegistrationNumber)
@@ -228,8 +256,16 @@ public class Company {
         return contactId;
     }
 
-    public String getTaxId() {
-        return taxId;
+    public String getBusinessTaxOfficeId() {
+        return businessTaxOfficeId;
+    }
+
+    public String getHeadquartersTaxOfficeId() {
+        return headquartersTaxOfficeId;
+    }
+
+    public String getLocalIncomeTaxOffice() {
+        return localIncomeTaxOffice;
     }
 
     public boolean isSme() {
@@ -285,7 +321,9 @@ public class Company {
                 ", representativeId='" + representativeId + '\'' +
                 ", addressId='" + addressId + '\'' +
                 ", contactId='" + contactId + '\'' +
-                ", taxId='" + taxId + '\'' +
+                ", businessTaxOfficeId='" + businessTaxOfficeId + '\'' +
+                ", headquartersTaxOfficeId='" + headquartersTaxOfficeId + '\'' +
+                ", localIncomeTaxOffice='" + localIncomeTaxOffice + '\'' +
                 ", isSme=" + isSme +
                 ", businessRegistrationNumber='" + businessRegistrationNumber + '\'' +
                 ", corporateRegistrationNumber='" + corporateRegistrationNumber + '\'' +

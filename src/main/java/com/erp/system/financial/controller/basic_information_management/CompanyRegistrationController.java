@@ -4,7 +4,6 @@ import com.erp.system.common.annotation.Component;
 import com.erp.system.financial.model.basic_information_management.company_registration.*;
 import com.erp.system.financial.repository.basic_information_management.company_registration.*;
 import com.erp.system.financial.service.basic_information_management.CompanyRegistrationService;
-import org.apache.commons.math3.analysis.function.Add;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -89,10 +88,10 @@ public class CompanyRegistrationController {
 
     /**
      * 세금을 저장함
-     * @param tax 저장할 세금
+     * @param taxOffice 저장할 세금
      */
-    public void saveTax(Tax tax) {
-        taxRepository.save(tax);
+    public void saveTax(TaxOffice taxOffice) {
+        taxRepository.save(taxOffice);
     }
 
     /**
@@ -155,7 +154,7 @@ public class CompanyRegistrationController {
      * @param id 세금의 ID
      * @return 조회된 세금을 Optional로 반환
      */
-    public Optional<Tax> findTaxById(String id) {
+    public Optional<TaxOffice> findTaxById(String id) {
         return taxRepository.findById(id);
     }
 
@@ -211,7 +210,7 @@ public class CompanyRegistrationController {
      * 모든 세금을 조회함
      * @return 저장된 모든 세금의 컬렉션
      */
-    public Collection<Tax> findAllTax() {
+    public Collection<TaxOffice> findAllTax() {
         return taxRepository.findAll();
     }
 
