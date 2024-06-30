@@ -103,6 +103,7 @@ public class BankAccount {
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
+                .ERPCompanyId(this.ERPCompanyId)
                 .bankName(this.bankName)
                 .branchLocation(this.branchLocation)
                 .openingDate(this.openingDate)

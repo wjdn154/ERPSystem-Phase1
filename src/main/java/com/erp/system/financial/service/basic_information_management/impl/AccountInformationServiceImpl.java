@@ -105,12 +105,7 @@ public class AccountInformationServiceImpl implements AccountInformationService 
 
     @Override
     public List<Deposit> getDepositLedgerDetails(String ERPCompanyId, LocalDate startDate, LocalDate endDate) {
-        try {
-            return depositRepository.findByDateBetween(ERPCompanyId, startDate, endDate);
-        } catch (Exception e) {
-            System.err.println("예적금 원장 조회 중 에러 발생: " + e.getMessage());
-            throw new RuntimeException("조회 실패", e);
-        }
+        return null;
     }
 
     /**
