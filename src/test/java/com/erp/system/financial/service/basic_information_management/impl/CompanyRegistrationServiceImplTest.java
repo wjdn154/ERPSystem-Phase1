@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CompanyRegistrationServiceImplTest {
     private CompanyRegistrationService companyRegistrationService;
-    CompanyRepository companyRepository;
+    private CompanyRepository companyRepository;
     private AddressRepository addressRepository;
     private ContactRepository contactRepository;
     private CorporateKindRepository corporateKindRepository;
@@ -30,7 +30,6 @@ class CompanyRegistrationServiceImplTest {
     void setUp() {
         // 싱글톤 인스턴스를 사용하여 저장소 초기화
         DependencyInjector di = DependencyInjector.getInstance();
-        new ERPDataInitializer();
 
         companyRegistrationService = di.getInstance(CompanyRegistrationService.class);
         addressRepository = di.getInstance(AddressRepository.class);
