@@ -13,6 +13,7 @@ import com.erp.system.financial.service.basic_information_management.AccountInfo
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -69,8 +70,11 @@ public class AccountInformationServiceImpl implements AccountInformationService 
             BankTransaction bankTransaction = new BankTransaction.Builder()
                     .accountId(accountInformationDto.getId())
                     .type(accountInformationDto.getType())
-                    .credit(accountInformationDto.getCredit())
+                    .description(accountInformationDto.getDescription())
                     .debit(accountInformationDto.getDebit())
+                    .carriedOverDebit(accountInformationDto.getCarriedOverDebit())
+                    .credit(accountInformationDto.getCredit())
+                    .carriedOverCredit(accountInformationDto.getCarriedOverCredit())
                     .date(accountInformationDto.getDate())
                     .currentBalance(accountInformationDto.getCurrentBalance())
                     .build();
@@ -104,19 +108,34 @@ public class AccountInformationServiceImpl implements AccountInformationService 
     }
 
     /**
-     * 지정된 ERP 회사 ID와 날짜 범위에 해당하는 입금 잔액을 조회.
+     * 지정된 ERP 회사 ID와 날짜 범위에 따른 입금 잔액을 조회함.
      *
-     * @param ERPCompanyId 조회할 ERP 회사의 ID.
-     * @param startDate 조회할 날짜 시작일.
-     * @param endDate 조회할 날짜 종료일.
-     * @return 조회된 입금 잔액 목록과 총 잔액을 포함한 Map을 반환.
+     * @param ERPCompanyId 조회할 ERP 회사의 ID
+     * @param startDate 조회 시작 날짜
+     * @param endDate 조회 종료 날짜
+     * @return 조회된 입금 잔액 목록과 총 잔액을 포함한 Map을 반환함
      */
     @Override
-    public List<Deposit> getDepositLedgerDetails(String ERPCompanyId, LocalDate startDate, LocalDate endDate) {
+    public Map<String, Object> getDepositLedgerDetails(String ERPCompanyId, LocalDate startDate, LocalDate endDate) {
         List<BankAccount> bankAccounts = getBankAccountsForCompany(ERPCompanyId);
         List<String> accountIds = extractAccountIds(bankAccounts);
-        //여기해야함
-        return null;
+        List<BankTransaction> bankTransactions = getTransactionsForDate(accountIds, startDate, endDate);
+        Map<String, List<BankTransaction>> transactionsByAccountId = bankTransactions.stream().collect(Collectors.groupingBy(BankTransaction::getAccountId));
+
+        List<Map<String, Object>> accountDetailsList = buildAccountDetails(bankAccounts);
+        List<Map<String, Object>> carriedOverAmountsList = calculateCarriedOverAmounts(transactionsByAccountId);
+        List<Map<String, Object>> transactionDetailsList = buildTransactionDetails(transactionsByAccountId);
+        List<Map<String, Object>> monthlySummaryList = calculateMonthlySummary(transactionsByAccountId);
+        List<Map<String, Object>> cumulativeSummaryList = calculateCumulativeSummary(transactionsByAccountId, carriedOverAmountsList);
+
+        Map<String, Object> results = new HashMap<>();
+        results.put("계좌정보", accountDetailsList);
+        results.put("이월금액", carriedOverAmountsList);
+        results.put("거래내역", transactionDetailsList);
+        results.put("월계", monthlySummaryList);
+        results.put("누계", cumulativeSummaryList);
+
+        return results;
     }
 
     /**
@@ -158,6 +177,24 @@ public class AccountInformationServiceImpl implements AccountInformationService 
                 .collect(Collectors.toList());
     }
 
+    /**
+     * 지정된 계좌 ID와 날짜에 해당하는 거래 내역을 조회.
+     *
+     * @param accountIds 조회할 계좌 ID 목록.
+     * @param startDate 조회할 날짜 시작일.
+     * @param endDate 조회할 날짜 종료일.
+     * @return 조회된 거래 내역 목록.
+     */
+    private List<BankTransaction> getTransactionsForDate(List<String> accountIds, LocalDate startDate, LocalDate endDate) {
+        return bankTransactionRepository.findAll()
+                .stream()
+                .filter(transaction -> accountIds.contains(transaction.getAccountId()) &&
+                        !transaction.getDate().isBefore(startDate) &&
+                        !transaction.getDate().isAfter(endDate))
+                .collect(Collectors.toList());
+    }
+
+    
     /**
      * 조인된 리스트에서 총 잔액을 계산.
      *
@@ -202,7 +239,130 @@ public class AccountInformationServiceImpl implements AccountInformationService 
     private Map<String, Object> createResultMap(List<Map<String, Object>> results, BigDecimal totalBalance) {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("results", results);
-        resultMap.put("totalBalance", totalBalance);
+        resultMap.put("합계", totalBalance);
         return resultMap;
     }
+
+
+    /**
+     * 계좌의 기본 정보를 리스트 형태로 구성.
+     *
+     * @param bankAccounts 계좌 목록
+     * @return 계좌 기본 정보가 담긴 Map 리스트
+     */
+    private List<Map<String, Object>> buildAccountDetails(List<BankAccount> bankAccounts) {
+        return bankAccounts.stream().map(account -> {
+            Map<String, Object> details = new HashMap<>();
+            details.put("계좌ID", account.getId());
+            details.put("계좌명", account.getBankName());
+            details.put("계좌번호", account.getNumber());
+            return details;
+        }).collect(Collectors.toList());
+    }
+
+    /**
+     * 계좌별 이월 금액을 계산.
+     *
+     * @param transactionsByAccountId 계좌 ID별 거래 목록
+     * @return 계좌별 이월 금액이 담긴 Map 리스트
+     */
+    private List<Map<String, Object>> calculateCarriedOverAmounts(Map<String, List<BankTransaction>> transactionsByAccountId) {
+        return transactionsByAccountId.entrySet().stream().map(entry -> {
+            Map<String, Object> carriedOver = new HashMap<>();
+            String accountId = entry.getKey();
+            List<BankTransaction> transactions = entry.getValue();
+            BigDecimal carriedOverDebit = transactions.isEmpty() ? BigDecimal.ZERO : transactions.get(0).getCarriedOverDebit();
+            BigDecimal carriedOverCredit = transactions.isEmpty() ? BigDecimal.ZERO : transactions.get(0).getCarriedOverCredit();
+            BigDecimal carriedOverBalance = carriedOverDebit.subtract(carriedOverCredit);
+
+            carriedOver.put("계좌ID", accountId);
+            carriedOver.put("차변 이월금액", carriedOverDebit);
+            carriedOver.put("대변 이월금액", carriedOverCredit);
+            carriedOver.put("잔액 이월금액", carriedOverBalance);
+            return carriedOver;
+        }).collect(Collectors.toList());
+    }
+
+    /**
+     * 거래 내역을 구성.
+     *
+     * @param transactionsByAccountId 계좌 ID별 거래 목록
+     * @return 거래 내역이 담긴 Map 리스트
+     */
+    private List<Map<String, Object>> buildTransactionDetails(Map<String, List<BankTransaction>> transactionsByAccountId) {
+        List<Map<String, Object>> transactionDetails = new ArrayList<>();
+        transactionsByAccountId.forEach((accountId, transactions) -> {
+            transactions.forEach(transaction -> {
+                Map<String, Object> detail = new HashMap<>();
+                detail.put("계좌ID", accountId);
+                detail.put("거래일자", transaction.getDate());
+                detail.put("적요", transaction.getDescription());
+                detail.put("차변", transaction.getDebit());
+                detail.put("대변", transaction.getCredit());
+                detail.put("잔액", transaction.getCurrentBalance());
+                transactionDetails.add(detail);
+            });
+        });
+        return transactionDetails;
+    }
+
+    /**
+     * 월별 차변과 대변의 누계를 계산.
+     *
+     * @param transactionsByAccountId 계좌 ID별 거래 목록
+     * @return 월별 차변과 대변의 누계가 담긴 Map 리스트
+     */
+    private List<Map<String, Object>> calculateMonthlySummary(Map<String, List<BankTransaction>> transactionsByAccountId) {
+        Map<String, Map<YearMonth, BigDecimal>> monthlyDebits = new HashMap<>();
+        Map<String, Map<YearMonth, BigDecimal>> monthlyCredits = new HashMap<>();
+
+        transactionsByAccountId.forEach((accountId, transactions) -> {
+            transactions.forEach(transaction -> {
+                YearMonth ym = YearMonth.from(transaction.getDate());
+                monthlyDebits.computeIfAbsent(accountId, k -> new HashMap<>()).merge(ym, transaction.getDebit(), BigDecimal::add);
+                monthlyCredits.computeIfAbsent(accountId, k -> new HashMap<>()).merge(ym, transaction.getCredit(), BigDecimal::add);
+            });
+        });
+
+        List<Map<String, Object>> monthlySummaryList = new ArrayList<>();
+        monthlyDebits.forEach((accountId, monthlyMap) -> {
+            monthlyMap.forEach((ym, totalDebit) -> {
+                BigDecimal totalCredit = monthlyCredits.getOrDefault(accountId, new HashMap<>()).getOrDefault(ym, BigDecimal.ZERO);
+                Map<String, Object> monthlySummary = new HashMap<>();
+                monthlySummary.put("계좌ID", accountId);
+                monthlySummary.put("월", ym);
+                monthlySummary.put("월계 차변", totalDebit);
+                monthlySummary.put("월계 대변", totalCredit);
+                monthlySummaryList.add(monthlySummary);
+            });
+        });
+        return monthlySummaryList;
+    }
+
+    /**
+     * 이월 금액과 월별 누계 합을 계산하여 누적 집계를 제공.
+     *
+     * @param transactionsByAccountId 계좌 ID별 거래 목록
+     * @param carriedOverAmountsList 이월 금액 목록
+     * @return 누적 집계 정보가 담긴 Map 리스트
+     */
+    private List<Map<String, Object>> calculateCumulativeSummary(Map<String, List<BankTransaction>> transactionsByAccountId, List<Map<String, Object>> carriedOverAmountsList) {
+
+        List<Map<String, Object>> cumulativeSummaryList = new ArrayList<>();
+        transactionsByAccountId.forEach((accountId, transactions) -> {
+            BigDecimal carriedOverDebit = transactions.isEmpty() ? BigDecimal.ZERO : transactions.get(0).getCarriedOverDebit();
+            BigDecimal carriedOverCredit = transactions.isEmpty() ? BigDecimal.ZERO : transactions.get(0).getCarriedOverCredit();
+            BigDecimal cumulativeDebit = transactions.stream().map(BankTransaction::getDebit).reduce(BigDecimal.ZERO, BigDecimal::add);
+            BigDecimal cumulativeCredit = transactions.stream().map(BankTransaction::getCredit).reduce(BigDecimal.ZERO, BigDecimal::add);
+
+
+            Map<String, Object> cumulativeSummary = new HashMap<>();
+            cumulativeSummary.put("계좌ID", accountId);
+            cumulativeSummary.put("누계 차변", carriedOverDebit.add(cumulativeDebit));
+            cumulativeSummary.put("누계 대변", carriedOverCredit.add(cumulativeCredit));
+            cumulativeSummaryList.add(cumulativeSummary);
+        });
+        return cumulativeSummaryList;
+    }
+
 }
