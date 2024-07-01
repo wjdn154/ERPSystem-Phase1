@@ -114,36 +114,6 @@ public class Main {
 
     private static void modifyBuilderPatternTest(AccountInformationController accountInformationController, DependencyInjector injector) {
         System.out.println("-------------------------- 빌더 패턴 수정 Test --------------------------");
-        BankAccount BA = new BankAccount.Builder()
-                .bankName("original")
-                .branchLocation("this.branchLocation")
-                .number("this.number")
-                .owner("this.owner")
-                .depositType("this.depositType")
-                .openingDate(LocalDate.parse("2021-05-01"))
-                .build();
-        BankAccount BA2 = new BankAccount.Builder()
-                .bankName("original")
-                .branchLocation("this.branchLocation")
-                .number("this.number")
-                .owner("this.owner")
-                .depositType("this.depositType")
-                .openingDate(LocalDate.parse("2021-05-01"))
-                .build();
-        BankAccount BA3 = new BankAccount.Builder()
-                .bankName("original")
-                .branchLocation("this.branchLocation")
-                .number("this.number")
-                .owner("this.owner")
-                .depositType("this.depositType")
-                .openingDate(LocalDate.parse("2021-05-01"))
-                .build();
-
-        // 저장
-        accountInformationController.saveBankAccount(BA);
-        accountInformationController.saveBankAccount(BA2);
-        accountInformationController.saveBankAccount(BA3);
-
         // 수정 전 조회
         printAllEntities(accountInformationController.findAllBankAccounts(), ID_FIELD_NAME);
 
