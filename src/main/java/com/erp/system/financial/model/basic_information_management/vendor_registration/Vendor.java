@@ -16,7 +16,6 @@ public class Vendor {
     private final String departmentId; // 거래 담당 부서 ID
     @NotNull
     private final String managerId; // 거래 담당자 ID
-
     @NotNull
     private String name; // 거래처명
     @Unique

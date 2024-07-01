@@ -24,6 +24,7 @@ public class PurchaseSalesSlipDto {
     private Boolean electronicTaxInvoiceIssued; // 전자세금계산서 발행여부
     private String category; // 매입 또는 매출 구분
     private String vatTypeName; // 항목명
+    private String ERPCompanyId; // ERP 사용자 계정 회사 ID
 
     public String getEntryName() {
         return entryName;
@@ -127,5 +128,13 @@ public class PurchaseSalesSlipDto {
 
     public void setVatTypeName(String vatTypeName) {
         this.vatTypeName = vatTypeName;
+    }
+
+    public String getERPCompanyId() {
+        return ERPCompanyId;
+    }
+
+    public void setERPCompanyId(String ERPCompanyId) {
+        this.ERPCompanyId = ERPCompanyId;
     }
 }

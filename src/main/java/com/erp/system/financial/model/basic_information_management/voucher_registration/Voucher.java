@@ -14,7 +14,7 @@ public class Voucher {
     @NotNull
     private final String id; // 전표의 고유 식별자
     @NotNull
-    private final String companyId; // 회사 코드
+    private final String ERPCompanyId; // ERP 사용자 계정 회사 ID
     @NotNull
     private final String voucherTypeId; // 전표타입 코드
     @NotNull
@@ -37,7 +37,7 @@ public class Voucher {
 
     public static class Builder {
         private String id;
-        private String companyId;
+        private String ERPCompanyId;
         private String voucherTypeId;
         private String accountId;
         private String vendorId;
@@ -53,8 +53,8 @@ public class Voucher {
             return this;
         }
 
-        public Builder companyId(String companyId) {
-            this.companyId = companyId;
+        public Builder ERPCompanyId(String ERPCompanyId) {
+            this.ERPCompanyId = ERPCompanyId;
             return this;
         }
 
@@ -105,7 +105,7 @@ public class Voucher {
 
     private Voucher(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.companyId = builder.companyId;
+        this.ERPCompanyId = builder.ERPCompanyId;
         this.voucherTypeId = builder.voucherTypeId;
         this.accountId = builder.accountId;
         this.vendorId = builder.vendorId;
@@ -120,7 +120,7 @@ public class Voucher {
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .companyId(this.companyId)
+                .ERPCompanyId(this.ERPCompanyId)
                 .voucherTypeId(this.voucherTypeId)
                 .accountId(this.accountId)
                 .vendorId(this.vendorId)
@@ -135,8 +135,8 @@ public class Voucher {
         return id;
     }
 
-    public String getCompanyId() {
-        return companyId;
+    public String getERPCompanyId() {
+        return ERPCompanyId;
     }
 
     public String getVoucherTypeId() {

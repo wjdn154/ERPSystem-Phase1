@@ -16,6 +16,8 @@ public class PurchaseSalesSlip {
     @NotNull
     private final String id; // 고유 식별자
     @NotNull
+    private final String ERPCompanyId; // ERP 사용자 계정 회사 ID
+    @NotNull
     private final String vatTypeId; // 부가세유형 참조 코드
     @NotNull
     private final String vendorId; // 거래처 코드 (거래처 테이블 참조)
@@ -42,6 +44,7 @@ public class PurchaseSalesSlip {
 
     public static class Builder {
         private String id;
+        private String ERPCompanyId;
         private String vatTypeId;
         private String vendorId;
         private String entryId;
@@ -71,6 +74,11 @@ public class PurchaseSalesSlip {
 
         public Builder entryId(String entryId) {
             this.entryId = entryId;
+            return this;
+        }
+
+        public Builder ERPCompanyId(String ERPCompanyId) {
+            this.ERPCompanyId = ERPCompanyId;
             return this;
         }
 
@@ -116,6 +124,7 @@ public class PurchaseSalesSlip {
 
     private PurchaseSalesSlip(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
+        this.ERPCompanyId = builder.ERPCompanyId;
         this.vatTypeId = builder.vatTypeId;
         this.vendorId = builder.vendorId;
         this.entryId = builder.entryId;
@@ -136,6 +145,7 @@ public class PurchaseSalesSlip {
                 .vatTypeId(this.vatTypeId)
                 .vendorId(this.vendorId)
                 .entryId(this.entryId)
+                .ERPCompanyId(this.ERPCompanyId)
                 .date(this.date)
                 .itemName(this.itemName)
                 .quantity(this.quantity)
@@ -153,12 +163,16 @@ public class PurchaseSalesSlip {
         return vatTypeId;
     }
 
-    public String getvendorId() {
+    public String getVendorId() {
         return vendorId;
     }
 
     public String getEntryId() {
         return entryId;
+    }
+
+    public String ERPCompanyId() {
+        return ERPCompanyId;
     }
 
     public LocalDate getDate() {
