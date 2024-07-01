@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 public interface AccountInformationService {
-    void registerBankAccount(AccountInformationDto accountInformationDto);
+    void registerBankAccount(String ERPCompanyId, AccountInformationDto accountInformationDto);
     void registerBankTransaction(AccountInformationDto accountInformationDto);
     Map<String, Object> getDepositBalance(String ERPCompanyId, LocalDate date);
-    List<Deposit> getDepositLedgerDetails(String ERPCompanyId, LocalDate startDate, LocalDate endDate);
+    Map<String, Object>  getDepositLedgerDetails(String ERPCompanyId, LocalDate startDate, LocalDate endDate);
 }
