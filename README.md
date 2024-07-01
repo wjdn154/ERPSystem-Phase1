@@ -1,33 +1,59 @@
 # ERP System
 
-This is an ERP System implemented in pure Java.
+## 개요
+- 이 프로젝트는 순수 자바를 기반으로 시작하여, 점차적으로 웹 통합과 클라우드 기반 기술로 확장됩니다.
+- 복잡한 비즈니스 요구사항을 충족시키기 위해 세 단계에 걸쳐 개발됩니다.
 
-## Modules
-
+## 모듈
 - Financial
 - Human Resources (HR)
 - Logistics
 - Production
 
-## Directory Structure
+## 디렉토리 구조
+프로젝트는 다음과 같은 디렉토리 구조로 구성됩니다:
 
-The project is organized into the following directory structure:
+## 개발 단계
+### 1단계: 자바를 활용한 기초 구축 (2024.05.28 ~ 2024.07.02)
+#### 목적:
+- 자바와 주요 프레임워크 및 데이터베이스 구조의 이해도 증가
+- 디자인 패턴 적용 및 이해
+#### 주요 구현 사항:
+- 자바 기반 아키텍처: MVC 아키텍처를 사용하여 애플리케이션의 구조를 명확히 하고, 각 컴포넌트의 독립성을 보장합니다.
+- 데이터 처리: 자바의 컬렉션 프레임워크를 활용하여 데이터 처리와 메모리 관리를 최적화합니다.
+- 모듈화: 각 기능을 독립적인 모듈로 개발하여 시스템의 확장성과 유지보수성을 향상시킵니다.
+- 코드 최적화: 체계적인 리팩토링과 성능 개선 작업을 통해 응답성과 효율성을 극대화합니다.
+- 테스트 자동화: JUnit을 활용한 광범위한 자동 테스트를 구현하여 코드의 안정성을 검증합니다.
+### 2단계: 웹 통합과 동적 기능 개발 (2024.07.02 ~ 2024.09.01)
+#### 목적:
+- 동적 웹 기능의 통합 및 사용자 경험 혁신
+- 데이터 관리 및 보안 기능 강화
+#### 주요 구현 사항:
+- 스프링 통합: Spring Boot를 사용하여 백엔드 로직을 구현하고, 스프링의 다양한 기능을 통해 보안 및 데이터 관리를 강화합니다.
+- 프론트엔드 개발: React를 사용하여 인터랙티브하고 반응형 웹 인터페이스를 구축합니다.
+- API 설계: REST API를 설계하고 구현하여 프론트엔드와 백엔드 간의 효율적인 데이터 통신을 가능하게 합니다.
+- 사용자 인증: Spring Security와 JWT를 통합하여 강력한 사용자 인증 및 권한 관리 시스템을 구축합니다.
+### 3단계: 클라우드 솔루션과 확장성 (2024.09.01 ~ 2024.10.01)
+#### 목적:
+- 전 세계 사용자를 대상으로 한 서비스의 접근성 및 확장성 증대
+- 지속 가능하고 유연한 서비스 제공
+#### 주요 구현 사항:
+- 클라우드 마이그레이션: AWS를 사용하여 인프라를 클라우드로 이전하고, 전 세계 사용자에게 서비스를 제공합니다.
+- 컨테이너화: Docker를 사용하여 애플리케이션을 컨테이너화하고, 배포 및 테스트 프로세스를 간소화합니다.
+- 마이크로서비스 아키텍처: 각 기능을 독립적인 마이크로서비스로 구현하여 서비스의 유연성과 확장성을 극대화합니다.
+- 자동화된 배포: CI/CD 파이프라인을 구축하여 코드 변경 사항을 자동으로 통합, 배포합니다.
 
-## Setup
+## 설정 및 실행
+1. 리포지토리를 Clone 합니다.
+2. 프로젝트 디렉토리로 이동합니다.
+3. 원하는 Java IDE 또는 command line 을 사용하여 프로젝트를 실행하세요.
 
-1. Clone the repository.
-2. Navigate to the project directory.
-3. Run the project using your preferred Java IDE or command line.
+## 테스트 실행
+1. 프로젝트 디렉토리로 이동합니다.
+2. 선호하는 Java IDE 또는 command line 을 사용하여 테스트를 실행하세요.
 
-## Running Tests
+## 기여하기
+기여 지침은 docs 디렉토리에 있는 문서를 참조해 주세요.
 
-1. Navigate to the project directory.
-2. Run the tests using your preferred Java IDE or command line.
-
-## Contributing
-
-Please refer to the contribution guidelines in the `docs` directory.
-
-## License
-
-This project is licensed under the MIT License.
+## 라이선스
+이 프로젝트는 MIT 라이선스 하에 있습니다.

@@ -59,6 +59,7 @@ public class CompanyRegistrationServiceImpl implements CompanyRegistrationServic
             throw new RuntimeException("등록 실패", e);
         }
     }
+
     /**
      * 주소 정보를 생성하고 저장함.
      * @param dto 회사 등록을 위한 정보가 담긴 DTO
