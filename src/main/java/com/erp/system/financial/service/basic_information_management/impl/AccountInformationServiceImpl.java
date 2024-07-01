@@ -37,11 +37,11 @@ public class AccountInformationServiceImpl implements AccountInformationService 
      * @throws RuntimeException 등록 중 발생한 예외를 처리함
      */
     @Override
-    public void registerBankAccount(AccountInformationDto accountInformationDto) {
+    public void registerBankAccount(String ERPCompanyId, AccountInformationDto accountInformationDto) {
         try {
 
         BankAccount bankAccount = new BankAccount.Builder()
-                .ERPCompanyId(accountInformationDto.getERPCompanyId())
+                .ERPCompanyId(ERPCompanyId)
                 .openingDate(accountInformationDto.getOpeningDate())
                 .bankName(accountInformationDto.getBankName())
                 .branchLocation(accountInformationDto.getBranchLocation())
@@ -103,8 +103,19 @@ public class AccountInformationServiceImpl implements AccountInformationService 
         return createResultMap(results, totalBalance);
     }
 
+    /**
+     * 지정된 ERP 회사 ID와 날짜 범위에 해당하는 입금 잔액을 조회.
+     *
+     * @param ERPCompanyId 조회할 ERP 회사의 ID.
+     * @param startDate 조회할 날짜 시작일.
+     * @param endDate 조회할 날짜 종료일.
+     * @return 조회된 입금 잔액 목록과 총 잔액을 포함한 Map을 반환.
+     */
     @Override
     public List<Deposit> getDepositLedgerDetails(String ERPCompanyId, LocalDate startDate, LocalDate endDate) {
+        List<BankAccount> bankAccounts = getBankAccountsForCompany(ERPCompanyId);
+        List<String> accountIds = extractAccountIds(bankAccounts);
+        //여기해야함
         return null;
     }
 

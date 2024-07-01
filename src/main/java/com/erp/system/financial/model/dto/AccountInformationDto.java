@@ -11,7 +11,6 @@ import java.time.LocalDate;
  */
 public class AccountInformationDto {
     private String id; // 계좌의 고유 식별자
-    private String ERPCompanyId; // ERP 사용자 계정 회사 ID
     private LocalDate openingDate; // 개설일
     private String bankName; // 은행명
     private String branchLocation; // 계좌계설지점
@@ -33,14 +32,6 @@ public class AccountInformationDto {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getERPCompanyId() {
-        return ERPCompanyId;
-    }
-
-    public void setERPCompanyId(String ERPCompanyId) {
-        this.ERPCompanyId = ERPCompanyId;
     }
 
     public LocalDate getOpeningDate() {

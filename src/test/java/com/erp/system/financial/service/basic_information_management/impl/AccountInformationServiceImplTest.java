@@ -48,16 +48,16 @@ class AccountInformationServiceImplTest {
     public void registerBankAccountTest() {
         // Given: 테스트 데이터 설정
         AccountInformationDto accountInformationDto = new AccountInformationDto();
-        accountInformationDto.setERPCompanyId("1");
         accountInformationDto.setOpeningDate(LocalDate.of(2021, 1, 1));
         accountInformationDto.setBankName("국민은행");
         accountInformationDto.setBranchLocation("부산");
         accountInformationDto.setNumber("123-456-789");
         accountInformationDto.setOwner("홍길동");
         accountInformationDto.setDepositType("예금");
+        String ERPCompanyId = "1";
 
         // When: 은행 계좌 등록
-        accountInformationService.registerBankAccount(accountInformationDto);
+        accountInformationService.registerBankAccount(ERPCompanyId, accountInformationDto);
 
         // Then: 은행 계좌가 등록되었는지 확인
 //        System.out.println(bankAccountRepository.findById(String.valueOf(BankAccount.idIndex-1)).get().toString());
@@ -103,8 +103,8 @@ class AccountInformationServiceImplTest {
         Map<String, Object> joinedList = accountInformationService.getDepositBalance("1", LocalDate.of(2024, 7, 1));
 
 
-        System.out.println("joinedList.get() = " + joinedList.get("results"));
-        System.out.println("joinedList.get() = " + joinedList.get("totalBalance"));
+        System.out.println("joinedList.get(results) = " + joinedList.get("results"));
+        System.out.println("joinedList.get(totalBalance) = " + joinedList.get("totalBalance"));
     }
 
     @Test
