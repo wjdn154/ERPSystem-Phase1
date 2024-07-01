@@ -52,7 +52,6 @@ public class CompanyRegistrationServiceImpl implements CompanyRegistrationServic
             addressRepository.save(address);
             contactRepository.save(contact);
             representativeRepository.save(representative);
-            //taxRepository.save(taxOffice);
             companyRepository.save(company);
         } catch (Exception e) {
             System.err.println("회사 등록 중 에러 발생: " + e.getMessage());

@@ -7,9 +7,11 @@ import com.erp.system.financial.model.basic_information_management.voucher_regis
 import com.erp.system.financial.model.basic_information_management.voucher_registration.Memo;
 import com.erp.system.financial.model.basic_information_management.voucher_registration.Voucher;
 import com.erp.system.financial.model.basic_information_management.voucher_registration.VoucherType;
+import com.erp.system.financial.model.dto.VoucherDto;
 
 import java.util.Collection;
 import java.util.Optional;
 
 public interface VoucherRegistrationService {
+    void registerVoucher(VoucherDto dto);
 }

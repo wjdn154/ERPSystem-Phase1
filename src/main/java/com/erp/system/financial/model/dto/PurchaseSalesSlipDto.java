@@ -11,7 +11,6 @@ import java.time.LocalDate;
  */
 public class PurchaseSalesSlipDto {
 
-    private String entryName; // 분개 이름
     private String vatTypeId; // 부가세유형 참조 코드
     private String vendorId; // 거래처 코드 (거래처 테이블 참조)
     private String entryId; // 분개 코드 (분개 관련 정보 참조)
@@ -22,17 +21,8 @@ public class PurchaseSalesSlipDto {
     private BigDecimal supplyValue; // 공급가액
     private BigDecimal vat; // 부가세
     private Boolean electronicTaxInvoiceIssued; // 전자세금계산서 발행여부
-    private String category; // 매입 또는 매출 구분
-    private String vatTypeName; // 항목명
     private String ERPCompanyId; // ERP 사용자 계정 회사 ID
 
-    public String getEntryName() {
-        return entryName;
-    }
-
-    public void setEntryName(String entryName) {
-        this.entryName = entryName;
-    }
 
     public String getVatTypeId() {
         return vatTypeId;
@@ -114,21 +104,6 @@ public class PurchaseSalesSlipDto {
         this.electronicTaxInvoiceIssued = electronicTaxInvoiceIssued;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getVatTypeName() {
-        return vatTypeName;
-    }
-
-    public void setVatTypeName(String vatTypeName) {
-        this.vatTypeName = vatTypeName;
-    }
 
     public String getERPCompanyId() {
         return ERPCompanyId;

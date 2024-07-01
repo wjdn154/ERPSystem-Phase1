@@ -28,27 +28,29 @@ public class PurchaseSalesSlipServiceImpl implements PurchaseSalesSlipService {
         this.vatTypesRepository = vatTypesRepository;
     }
 
+    /**
+     * 매출매입전표 등록 메소드
+     * DTO를 바탕으로 매출매입전표 와 관련된 모든 정보를 생성하고 저장함
+     * @param dto 매출매입전표 등록을 위한 전달 객체
+     * @throws RuntimeException 등록 중 발생한 예외를 처리함
+     */
     @Override
-    public void registerPurchaseSalesSlip(PurchaseSalesSlipDto purchaseSalesSlipDto) {
+    public void registerPurchaseSalesSlip(PurchaseSalesSlipDto dto) {
         try {
-            VatType vatType = createVatType(purchaseSalesSlipDto);
-            PurchaseSalesSlip purchaseSalesSlip = createPurchaseSalesSlip(purchaseSalesSlipDto);
-
-            vatTypesRepository.save(vatType);
+            PurchaseSalesSlip purchaseSalesSlip = createPurchaseSalesSlip(dto);
             purchaseSalesSlipRepository.save(purchaseSalesSlip);
         } catch (Exception e) {
-            System.err.println("전표 등록 중 에러 발생: " + e.getMessage());
+            System.err.println("매출매입전표 등록 중 에러 발생: " + e.getMessage());
             throw new RuntimeException("등록 실패", e);
         }
     }
 
-    public VatType createVatType(PurchaseSalesSlipDto dto) {
-        return new VatType.Builder()
-                .name(dto.getVatTypeName())
-                .category(dto.getCategory())
-                .build();
-    }
 
+    /**
+     * 매출매입전표 객체 생성.
+     * @param dto 매출매입전표 등록을 위한 정보가 담긴 DTO
+     * @return 저장된 매출매입전표 객체
+     */
     public PurchaseSalesSlip createPurchaseSalesSlip(PurchaseSalesSlipDto dto) {
         return new PurchaseSalesSlip.Builder()
                 .ERPCompanyId(dto.getERPCompanyId())

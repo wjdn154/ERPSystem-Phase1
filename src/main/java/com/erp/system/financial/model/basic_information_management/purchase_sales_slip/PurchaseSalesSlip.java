@@ -171,7 +171,7 @@ public class PurchaseSalesSlip {
         return entryId;
     }
 
-    public String ERPCompanyId() {
+    public String getERPCompanyId() {
         return ERPCompanyId;
     }
 
