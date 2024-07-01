@@ -162,10 +162,6 @@ public class ERPDataInitializer {
 
         for (List<String> rowData : allData) {
             try {
-                System.out.println(columnNames);
-                System.out.println(clazz);
-                System.out.println(dataTypes);
-                System.out.println(rowData);
                 Object entity = createEntity(clazz, columnNames, dataTypes, rowData); // 엔티티 생성
                 Method saveMethod = repository.getClass().getMethod("save", clazz); // 리포지토리의 save 메서드 조회
                 saveMethod.invoke(repository, entity); // 엔티티를 리포지토리에 저장
