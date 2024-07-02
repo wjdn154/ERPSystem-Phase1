@@ -38,11 +38,11 @@ public class AccountInformationServiceImpl implements AccountInformationService 
      * @throws RuntimeException 등록 중 발생한 예외를 처리함
      */
     @Override
-    public void registerBankAccount(String ERPCompanyId, AccountInformationDto accountInformationDto) {
+    public void registerBankAccount(String userCompanyId, AccountInformationDto accountInformationDto) {
         try {
 
         BankAccount bankAccount = new BankAccount.Builder()
-                .ERPCompanyId(ERPCompanyId)
+                .userCompanyId(userCompanyId)
                 .openingDate(accountInformationDto.getOpeningDate())
                 .bankName(accountInformationDto.getBankName())
                 .branchLocation(accountInformationDto.getBranchLocation())
@@ -90,13 +90,13 @@ public class AccountInformationServiceImpl implements AccountInformationService 
     /**
      * 지정된 ERP 회사 ID와 날짜에 해당하는 입금 잔액을 조회.
      *
-     * @param ERPCompanyId 조회할 ERP 회사의 ID.
+     * @param userCompanyId 조회할 ERP 회사의 ID.
      * @param date 조회할 날짜.
      * @return 조회된 입금 잔액 목록과 총 잔액을 포함한 Map을 반환.
      */
     @Override
-    public Map<String, Object> getDepositBalance(String ERPCompanyId, LocalDate date) {
-        List<BankAccount> bankAccounts = getBankAccountsForCompany(ERPCompanyId);
+    public Map<String, Object> getDepositBalance(String userCompanyId, LocalDate date) {
+        List<BankAccount> bankAccounts = getBankAccountsForCompany(userCompanyId);
         List<String> accountIds = extractAccountIds(bankAccounts);
         List<BankTransaction> bankTransactions = getTransactionsForDate(accountIds, date);
         List<Map<String, Object>> joinedList = HashJoin.hashJoin(bankAccounts, bankTransactions, BankAccount::getId, BankTransaction::getAccountId);
@@ -110,23 +110,24 @@ public class AccountInformationServiceImpl implements AccountInformationService 
     /**
      * 지정된 ERP 회사 ID와 날짜 범위에 따른 입금 잔액을 조회함.
      *
-     * @param ERPCompanyId 조회할 ERP 회사의 ID
+     * @param userCompanyId 조회할 ERP 회사의 ID
      * @param startDate 조회 시작 날짜
      * @param endDate 조회 종료 날짜
      * @return 조회된 입금 잔액 목록과 총 잔액을 포함한 Map을 반환함
      */
     @Override
-    public Map<String, Object> getDepositLedgerDetails(String ERPCompanyId, LocalDate startDate, LocalDate endDate) {
-        List<BankAccount> bankAccounts = getBankAccountsForCompany(ERPCompanyId);
-        List<String> accountIds = extractAccountIds(bankAccounts);
-        List<BankTransaction> bankTransactions = getTransactionsForDate(accountIds, startDate, endDate);
-        Map<String, List<BankTransaction>> transactionsByAccountId = bankTransactions.stream().collect(Collectors.groupingBy(BankTransaction::getAccountId));
+    public Map<String, Object> getDepositLedgerDetails(String userCompanyId, LocalDate startDate, LocalDate endDate) {
+        List<BankAccount> bankAccounts = getBankAccountsForCompany(userCompanyId); // ERPId에 해당하는 모든 bankAccount
+        List<String> accountIds = extractAccountIds(bankAccounts); // 위 bankAccount 의 id 추출
+        List<BankTransaction> bankTransactions = getTransactionsForDate(accountIds, startDate, endDate); // 기간 중 발생한 모든 bankTransaction && id = accountId
+        Map<String, List<BankTransaction>> transactionsByAccountId = bankTransactions.stream().collect(Collectors.groupingBy(BankTransaction::getAccountId)); // group by accountId
+        System.out.println("transactionsByAccountId = " + transactionsByAccountId);
 
-        List<Map<String, Object>> accountDetailsList = buildAccountDetails(bankAccounts);
-        List<Map<String, Object>> carriedOverAmountsList = calculateCarriedOverAmounts(transactionsByAccountId);
-        List<Map<String, Object>> transactionDetailsList = buildTransactionDetails(transactionsByAccountId);
-        List<Map<String, Object>> monthlySummaryList = calculateMonthlySummary(transactionsByAccountId);
-        List<Map<String, Object>> cumulativeSummaryList = calculateCumulativeSummary(transactionsByAccountId, carriedOverAmountsList);
+        List<Map<String, Object>> accountDetailsList = buildAccountDetails(bankAccounts); // 계좌정보
+        List<Map<String, Object>> carriedOverAmountsList = calculateCarriedOverAmounts(transactionsByAccountId); // 계좌별 이월금액
+        List<Map<String, Object>> transactionDetailsList = buildTransactionDetails(transactionsByAccountId); // 계좌별 거래내역
+        List<Map<String, Object>> monthlySummaryList = calculateMonthlySummary(transactionsByAccountId); // 계좌별 월계
+        List<Map<String, Object>> cumulativeSummaryList = calculateCumulativeSummary(transactionsByAccountId, carriedOverAmountsList); // 계좌별 누계
 
         Map<String, Object> results = new HashMap<>();
         results.put("계좌정보", accountDetailsList);
@@ -141,13 +142,13 @@ public class AccountInformationServiceImpl implements AccountInformationService 
     /**
      * 주어진 ERP 회사 ID에 해당하는 모든 은행 계좌를 조회.
      *
-     * @param ERPCompanyId 조회할 ERP 회사의 ID.
+     * @param userCompanyId 조회할 ERP 회사의 ID.
      * @return 조회된 은행 계좌 목록.
      */
-    private List<BankAccount> getBankAccountsForCompany(String ERPCompanyId) {
+    private List<BankAccount> getBankAccountsForCompany(String userCompanyId) {
         return bankAccountRepository.findAll()
                 .stream()
-                .filter(bankAccount -> bankAccount.getERPCompanyId().equals(ERPCompanyId))
+                .filter(bankAccount -> bankAccount.getUserCompanyId().equals(userCompanyId))
                 .collect(Collectors.toList());
     }
 

@@ -53,10 +53,10 @@ class AccountInformationServiceImplTest {
     public void registeringBankAccountTest() {
         // Given: 테스트 데이터 설정
         AccountInformationDto accountDto = createAccountInformationDto();
-        String ERPCompanyId = "1";
+        String userCompanyId = "1";
 
         // When: 은행 계좌 등록
-        accountInformationService.registerBankAccount(ERPCompanyId, accountDto);
+        accountInformationService.registerBankAccount(userCompanyId, accountDto);
 
         // Then: 은행 계좌가 등록되었는지 확인
         bankAccountRepository.findById("1").ifPresent(bankAccount -> {
@@ -162,7 +162,7 @@ class AccountInformationServiceImplTest {
      */
     private void prepareTestData() {
         BankAccount account = new BankAccount.Builder()
-                .ERPCompanyId("1")
+                .userCompanyId("1")
                 .openingDate(LocalDate.of(2024, 1, 1))
                 .bankName("국민은행")
                 .branchLocation("부산")
@@ -173,7 +173,7 @@ class AccountInformationServiceImplTest {
         bankAccountRepository.save(account);
 
         BankTransaction transaction = new BankTransaction.Builder()
-                .accountId("2")
+                .accountId("1")
                 .type("Deposit")
                 .debit(BigDecimal.valueOf(500000))
                 .carriedOverDebit(BigDecimal.ZERO)
