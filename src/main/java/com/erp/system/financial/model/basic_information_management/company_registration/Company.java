@@ -1,5 +1,6 @@
 package com.erp.system.financial.model.basic_information_management.company_registration;
 
+import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 
@@ -10,6 +11,7 @@ import java.time.LocalDate;
  * 회사 기본 정보 등록시 사용하는 테이블
  */
 public class Company {
+    @Unique
     @NotNull
     private final String id; // 고유식별자
     @NotNull

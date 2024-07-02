@@ -11,6 +11,7 @@ import java.time.LocalDate;
  * 은행 계좌에대한 정보가 있는 테이블
  */
 public class BankAccount {
+    @Unique
     @NotNull
     private final String id; // 계좌의 고유 식별자
     @NotNull

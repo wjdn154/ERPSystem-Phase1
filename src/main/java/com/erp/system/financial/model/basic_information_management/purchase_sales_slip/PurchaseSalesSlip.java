@@ -13,6 +13,7 @@ import java.time.LocalDate;
  * 매입매출전표 등록 할때 필요한 정보들이 있는 테이블
  */
 public class PurchaseSalesSlip {
+    @Unique
     @NotNull
     private final String id; // 고유 식별자
     @NotNull
@@ -23,6 +24,8 @@ public class PurchaseSalesSlip {
     private final String vendorId; // 거래처 코드 (거래처 테이블 참조)
     @NotNull
     private final String entryId; // 분개 코드 (분개 관련 정보 참조)
+    @NotNull
+    private final String departmentId; // 작성 부서 ID
 
     @NotNull
     private LocalDate date; // 전표 날짜
@@ -48,6 +51,7 @@ public class PurchaseSalesSlip {
         private String vatTypeId;
         private String vendorId;
         private String entryId;
+        private String departmentId;
 
         private LocalDate date;
         private String itemName;
@@ -79,6 +83,11 @@ public class PurchaseSalesSlip {
 
         public Builder entryId(String entryId) {
             this.entryId = entryId;
+            return this;
+        }
+
+        public Builder departmentId(String departmentId) {
+            this.departmentId = departmentId;
             return this;
         }
 
@@ -128,6 +137,7 @@ public class PurchaseSalesSlip {
         this.vatTypeId = builder.vatTypeId;
         this.vendorId = builder.vendorId;
         this.entryId = builder.entryId;
+        this.departmentId = builder.departmentId;
         this.date = builder.date;
         this.itemName = builder.itemName;
         this.quantity = builder.quantity;
@@ -146,6 +156,7 @@ public class PurchaseSalesSlip {
                 .vatTypeId(this.vatTypeId)
                 .vendorId(this.vendorId)
                 .entryId(this.entryId)
+                .departmentId(this.departmentId)
                 .date(this.date)
                 .itemName(this.itemName)
                 .quantity(this.quantity)
@@ -173,6 +184,10 @@ public class PurchaseSalesSlip {
 
     public String getEntryId() {
         return entryId;
+    }
+
+    public String getDepartmentId() {
+        return departmentId;
     }
 
     public LocalDate getDate() {

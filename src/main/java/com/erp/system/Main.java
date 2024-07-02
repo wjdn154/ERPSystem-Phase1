@@ -79,8 +79,6 @@ public class Main {
         printAllEntities(result.voucherRegistrationController().findAllAccounts(), ID_FIELD_NAME); // Account 출력
         printAllEntities(result.voucherRegistrationController().findAllMemos(), ID_FIELD_NAME); // Memo 출력
         printAllEntities(result.voucherRegistrationController().findAllVouchers(), ID_FIELD_NAME); // Voucher 출력
-        printAllEntities(result.voucherRegistrationController().findAllVoucherTypes(), ID_FIELD_NAME); // VoucherType 출력
-
         // 장부 관리
         printAllEntities(result.accountingLedgerController().findAllCashBooks(), ID_FIELD_NAME); // CashBook 출력
         printAllEntities(result.accountingLedgerController().findAllGeneralLedgers(), ID_FIELD_NAME); // GeneralLedger 출력

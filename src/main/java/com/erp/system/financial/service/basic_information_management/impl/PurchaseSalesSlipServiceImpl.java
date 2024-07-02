@@ -53,9 +53,10 @@ public class PurchaseSalesSlipServiceImpl implements PurchaseSalesSlipService {
      */
     public PurchaseSalesSlip createPurchaseSalesSlip(PurchaseSalesSlipDto dto) {
         return new PurchaseSalesSlip.Builder()
-                .ERPCompanyId(dto.getERPCompanyId())
+                .userCompanyId(dto.getUserCompanyId())
                 .date(dto.getDate())
                 .entryId(dto.getEntryId())
+                .departmentId(dto.getDepartmentId())
                 .electronicTaxInvoiceIssued(dto.getElectronicTaxInvoiceIssued())
                 .itemName(dto.getItemName())
                 .vat(dto.getVat())

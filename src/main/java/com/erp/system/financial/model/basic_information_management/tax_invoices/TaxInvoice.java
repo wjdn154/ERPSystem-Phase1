@@ -1,5 +1,6 @@
 package com.erp.system.financial.model.basic_information_management.tax_invoices;
 
+import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.EnumMapping;
 import com.erp.system.common.annotation.NotNull;
@@ -18,6 +19,7 @@ public class TaxInvoice {
     public enum IssueStatus { THIRD_PARTY, SELF_ISSUED }
     public enum NTSStatus { TRANSMITTED, PENDING }
 
+    @Unique
     @NotNull
     private final String id; // 세금 계산서의 고유 식별자
     @NotNull

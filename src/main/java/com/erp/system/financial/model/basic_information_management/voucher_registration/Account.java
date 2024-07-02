@@ -1,5 +1,6 @@
 package com.erp.system.financial.model.basic_information_management.voucher_registration;
 
+import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 
@@ -8,6 +9,7 @@ import com.erp.system.common.annotation.NotNull;
  * 계정과목 데이터 테이블
  */
 public class Account {
+    @Unique
     @NotNull
     private final String id; // 계정 과목의 고유 식별자
 

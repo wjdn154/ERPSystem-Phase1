@@ -1,5 +1,6 @@
 package com.erp.system.financial.model.basic_information_management.voucher_registration;
 
+import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 
@@ -11,18 +12,23 @@ import java.time.LocalDate;
  * 전표 작성시 전표 데이터 저장 테이블
  */
 public class Voucher {
+    public enum VoucherType {DISBURSEMENT,DEPOSIT,DEBIT,CREDIT};
+
+    @Unique
     @NotNull
     private final String id; // 전표의 고유 식별자
     @NotNull
-    private final String ERPCompanyId; // ERP 사용자 계정 회사 ID
+    private final String userCompanyId; // ERP 사용자 계정 회사 ID
     @NotNull
-    private final String voucherTypeId; // 전표타입 코드
+    private final VoucherType voucherType; // 전표타입
     @NotNull
     private final String accountId; // 계정과목 코드
     @NotNull
     private final String vendorId; // 거래처 코드
     @NotNull
     private final String memoId; // 적요 코드
+    @NotNull
+    private final String departmentId; // 작성 부서 ID
 
     @NotNull
     private String description; // 거래 설명
@@ -37,11 +43,12 @@ public class Voucher {
 
     public static class Builder {
         private String id;
-        private String ERPCompanyId;
-        private String voucherTypeId;
+        private String userCompanyId;
+        private VoucherType voucherType;
         private String accountId;
         private String vendorId;
         private String memoId;
+        private String departmentId;
 
         private String description;
         private BigDecimal debit;
@@ -53,13 +60,13 @@ public class Voucher {
             return this;
         }
 
-        public Builder ERPCompanyId(String ERPCompanyId) {
-            this.ERPCompanyId = ERPCompanyId;
+        public Builder userCompanyId(String userCompanyId) {
+            this.userCompanyId = userCompanyId;
             return this;
         }
 
-        public Builder voucherTypeId(String voucherTypeId) {
-            this.voucherTypeId = voucherTypeId;
+        public Builder voucherType(VoucherType voucherType) {
+            this.voucherType = voucherType;
             return this;
         }
 
@@ -75,6 +82,11 @@ public class Voucher {
 
         public Builder memoId(String memoId) {
             this.memoId = memoId;
+            return this;
+        }
+
+        public Builder departmentId(String departmentId) {
+            this.departmentId = departmentId;
             return this;
         }
 
@@ -105,11 +117,12 @@ public class Voucher {
 
     private Voucher(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.ERPCompanyId = builder.ERPCompanyId;
-        this.voucherTypeId = builder.voucherTypeId;
+        this.userCompanyId = builder.userCompanyId;
+        this.voucherType = builder.voucherType;
         this.accountId = builder.accountId;
         this.vendorId = builder.vendorId;
         this.memoId = builder.memoId;
+        this.departmentId = builder.departmentId;
         this.description = builder.description;
         this.debit = builder.debit;
         this.credit = builder.credit;
@@ -120,11 +133,12 @@ public class Voucher {
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .ERPCompanyId(this.ERPCompanyId)
-                .voucherTypeId(this.voucherTypeId)
+                .userCompanyId(this.userCompanyId)
+                .voucherType(this.voucherType)
                 .accountId(this.accountId)
                 .vendorId(this.vendorId)
                 .memoId(this.memoId)
+                .departmentId(this.departmentId)
                 .description(this.description)
                 .debit(this.debit)
                 .credit(this.credit)
@@ -135,12 +149,12 @@ public class Voucher {
         return id;
     }
 
-    public String getERPCompanyId() {
-        return ERPCompanyId;
+    public String getUserCompanyId() {
+        return userCompanyId;
     }
 
-    public String getVoucherTypeId() {
-        return voucherTypeId;
+    public VoucherType getVoucherType() {
+        return voucherType;
     }
 
     public String getAccountId() {
@@ -153,6 +167,10 @@ public class Voucher {
 
     public String getMemoId() {
         return memoId;
+    }
+
+    public String getDepartmentId() {
+        return departmentId;
     }
 
     public String getDescription() {
