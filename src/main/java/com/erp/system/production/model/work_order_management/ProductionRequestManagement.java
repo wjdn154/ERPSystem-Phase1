@@ -26,9 +26,7 @@ public class ProductionRequestManagement {
     @NotNull
     private LocalDate requestDate; // 요청 일자
     @NotNull
-    private String requesterId; // 요청자 ID: 생산 요청을 한 사람의 고유 ID (FK, 참조: User.id, not null)
-    private String requesterName; // 요청자 이름: 사람이 읽기 쉽게 요청자의 이름
-    private String requesterDepartment; // 요청자 부서: 요청자가 속한 부서
+    private String requesterId; // 요청자 ID: 생산 요청을 한 사람의 고유 ID (FK, 참조: User.id, not null) - 요청자명, 요청자부서
     @NotNull
     private BigDecimal requestQuantity; // 요청 수량
     @NotNull
@@ -44,8 +42,6 @@ public class ProductionRequestManagement {
         private String requestName;
         private LocalDate requestDate;
         private String requesterId;
-        private String requesterName;
-        private String requesterDepartment;
         private BigDecimal requestQuantity;
         private String itemCode;
         private Status status;
@@ -68,16 +64,6 @@ public class ProductionRequestManagement {
 
         public Builder requesterId(String requesterId) {
             this.requesterId = requesterId;
-            return this;
-        }
-
-        public Builder requesterName(String requesterName) {
-            this.requesterName = requesterName;
-            return this;
-        }
-
-        public Builder requesterDepartment(String requesterDepartment) {
-            this.requesterDepartment = requesterDepartment;
             return this;
         }
 
@@ -111,8 +97,6 @@ public class ProductionRequestManagement {
         this.requestName = builder.requestName;
         this.requestDate = builder.requestDate;
         this.requesterId = builder.requesterId;
-        this.requesterName = builder.requesterName;
-        this.requesterDepartment = builder.requesterDepartment;
         this.requestQuantity = builder.requestQuantity;
         this.itemCode = builder.itemCode;
         this.status = builder.status;
@@ -127,8 +111,6 @@ public class ProductionRequestManagement {
                 .requestName(this.requestName)
                 .requestDate(this.requestDate)
                 .requesterId(this.requesterId)
-                .requesterName(this.requesterName)
-                .requesterDepartment(this.requesterDepartment)
                 .requestQuantity(this.requestQuantity)
                 .itemCode(this.itemCode)
                 .status(this.status)
@@ -150,14 +132,6 @@ public class ProductionRequestManagement {
 
     public String getRequesterId() {
         return requesterId;
-    }
-
-    public String getRequesterName() {
-        return requesterName;
-    }
-
-    public String getRequesterDepartment() {
-        return requesterDepartment;
     }
 
     public BigDecimal getRequestQuantity() {
@@ -187,8 +161,6 @@ public class ProductionRequestManagement {
                 ", requestName='" + requestName + '\'' +
                 ", requestDate=" + requestDate +
                 ", requesterId='" + requesterId + '\'' +
-                ", requesterName='" + requesterName + '\'' +
-                ", requesterDepartment='" + requesterDepartment + '\'' +
                 ", requestQuantity=" + requestQuantity +
                 ", itemCode='" + itemCode + '\'' +
                 ", status=" + status +
