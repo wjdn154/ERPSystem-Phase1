@@ -15,7 +15,7 @@ import java.time.LocalDate;
 
 @EnumMapping
 public class MaterialRequirementStandard {
-    private enum Unit { KG, L, PCS, EA, SET }; // 단위 (예: kg, L, pcs)
+    public enum Unit { KG, L, PCS, EA, SET }; // 단위 (예: kg, L, pcs)
 
     @NotNull
     @Unique

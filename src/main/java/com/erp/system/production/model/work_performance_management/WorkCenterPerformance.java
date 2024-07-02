@@ -1,5 +1,6 @@
 package com.erp.system.production.model.work_performance_management;
 
+import com.erp.system.common.annotation.EnumMapping;
 import com.erp.system.common.annotation.NotNull;
 import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
@@ -13,7 +14,7 @@ import java.time.LocalDate;
  */
 @EnumMapping
 public class WorkCenterPerformance {
-    private enum Status { ENROLLED, CONFIRMED, CANCELED }
+    public enum Status { ENROLLED, CONFIRMED, CANCELED }
 
     @NotNull
     @Unique

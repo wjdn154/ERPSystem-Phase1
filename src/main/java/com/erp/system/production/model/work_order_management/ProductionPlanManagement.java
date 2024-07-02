@@ -16,8 +16,8 @@ import java.time.LocalDate;
 
 @EnumMapping
 public class ProductionPlanManagement {
-    private enum PlanType { DAILY, WEEKLY, MONTHLY, YEARLY };
-    private enum Status { PLAN, IN_PROGRESS, COMPLETED };
+    public enum PlanType { DAILY, WEEKLY, MONTHLY, YEARLY };
+    public enum Status { PLAN, IN_PROGRESS, COMPLETED };
 
     @NotNull
     @Unique

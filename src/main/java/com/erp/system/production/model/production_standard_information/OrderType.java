@@ -12,10 +12,10 @@ import com.erp.system.common.validator.UniqueValidator;
 
 @EnumMapping
 public class OrderType {
-    private enum InboundType { RAW_MATERIAL, SEMI_FINISHED_PRODUCT, FINISHED_PRODUCT, REWORKED_PRODUCT };
-    private enum OutsourcingPurchaseType { FULL_SERVICE, PARTIAL_SERVICE, LABOR_ONLY, MATERIAL_ONLY };
-    private enum ProductionType { MASS, JOB, CUSTOM };
-    private enum WorkType { DAY_SHIFT, NIGHT_SHIFT, ROTATING_SHIFT };
+    public enum InboundType { RAW_MATERIAL, SEMI_FINISHED_PRODUCT, FINISHED_PRODUCT, REWORKED_PRODUCT };
+    public enum OutsourcingPurchaseType { FULL_SERVICE, PARTIAL_SERVICE, LABOR_ONLY, MATERIAL_ONLY };
+    public enum ProductionType { MASS, JOB, CUSTOM };
+    public enum WorkType { DAY_SHIFT, NIGHT_SHIFT, ROTATING_SHIFT };
 
     @Unique
     @NotNull
