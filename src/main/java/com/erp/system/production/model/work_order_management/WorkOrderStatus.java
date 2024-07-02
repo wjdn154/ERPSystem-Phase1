@@ -14,7 +14,7 @@ import java.math.BigDecimal;
  */
 @EnumMapping
 public class WorkOrderStatus {
-    public enum Status { REGISTERED, IN_PROGRESS, COMPLETED, CANCELED }
+    private enum Status { REGISTERED, IN_PROGRESS, COMPLETED, CANCELED }
 
     @NotNull
     @Unique
@@ -24,7 +24,7 @@ public class WorkOrderStatus {
     @NotNull
     private LocalDate workOrderDate; // 작업 지시 일자
     @NotNull
-    private String workOrderer; // 지시자: 작업 지시를 한 사람 (FK, 인사)
+    private String workOrdererId; // 지시자: 작업 지시를 한 사람 (FK, 인사)
     @NotNull
     private BigDecimal workOrderQuantity; // 작업 지시 수량
     @NotNull
@@ -41,7 +41,7 @@ public class WorkOrderStatus {
         private String id;
         private String workOrderName;
         private LocalDate workOrderDate;
-        private String workOrderer;
+        private String workOrdererId;
         private BigDecimal workOrderQuantity;
         private String itemCode;
         private String itemName;
@@ -63,8 +63,8 @@ public class WorkOrderStatus {
             return this;
         }
 
-        public Builder workOrderer(String workOrderer) {
-            this.workOrderer = workOrderer;
+        public Builder workOrdererId(String workOrdererId) {
+            this.workOrdererId = workOrdererId;
             return this;
         }
 
@@ -102,7 +102,7 @@ public class WorkOrderStatus {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.workOrderName = builder.workOrderName;
         this.workOrderDate = builder.workOrderDate;
-        this.workOrderer = builder.workOrderer;
+        this.workOrdererId = builder.workOrdererId;
         this.workOrderQuantity = builder.workOrderQuantity;
         this.itemCode = builder.itemCode;
         this.itemName = builder.itemName;
@@ -117,7 +117,7 @@ public class WorkOrderStatus {
                 .id(this.id)
                 .workOrderName(this.workOrderName)
                 .workOrderDate(this.workOrderDate)
-                .workOrderer(this.workOrderer)
+                .workOrdererId(this.workOrdererId)
                 .workOrderQuantity(this.workOrderQuantity)
                 .itemCode(this.itemCode)
                 .itemName(this.itemName)
@@ -138,8 +138,8 @@ public class WorkOrderStatus {
         return workOrderDate;
     }
 
-    public String getWorkOrderer() {
-        return workOrderer;
+    public String getWorkOrdererId() {
+        return workOrdererId;
     }
 
     public BigDecimal getWorkOrderQuantity() {
@@ -172,7 +172,7 @@ public class WorkOrderStatus {
                 "id='" + id + '\'' +
                 ", workOrderName='" + workOrderName + '\'' +
                 ", workOrderDate=" + workOrderDate +
-                ", workOrderer='" + workOrderer + '\'' +
+                ", workOrdererId='" + workOrdererId + '\'' +
                 ", workOrderQuantity=" + workOrderQuantity +
                 ", itemCode='" + itemCode + '\'' +
                 ", itemName='" + itemName + '\'' +

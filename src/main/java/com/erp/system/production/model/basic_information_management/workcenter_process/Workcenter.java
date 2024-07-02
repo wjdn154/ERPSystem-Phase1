@@ -12,7 +12,7 @@ import com.erp.system.common.annotation.Unique;
 
 @EnumMapping
 public class Workcenter {
-    public enum WorkcenterType { PRODUCTION, ASSEMBLY, QUALITY_CONTROL, STORAGE };
+    private enum WorkcenterType { PRODUCTION, ASSEMBLY, QUALITY_CONTROL, STORAGE };
 
     @Unique
     @NotNull

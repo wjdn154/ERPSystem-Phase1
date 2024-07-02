@@ -15,7 +15,7 @@ import java.time.LocalDate;
 
 @EnumMapping
 public class WorkPerformanceSummary {
-    public enum Status { ENROLLED, CONFIRMED, CANCELED }
+    private enum Status { ENROLLED, CONFIRMED, CANCELED }
 
     @NotNull
     @Unique
@@ -25,17 +25,15 @@ public class WorkPerformanceSummary {
     @NotNull
     private LocalDate performanceDate; // 실적 일자
     @NotNull
-    private String performer; // 실적자 (FK, 인사)
+    private String performerId; // 실적자 (FK, 인사)
     @NotNull
     private BigDecimal performanceQuantity; // 실적 수량
     @NotNull
     private String itemCode; // 품목 코드 (FK, 참조: ItemRegistration.id, not null)
     @NotNull
-    private String itemName; // 품목 이름
+    private String performanceDepartmentId; // 실적 부서 (FK, 부서 테이블)
     @NotNull
-    private String performanceDepartment; // 실적 부서 (FK, 부서 테이블)
-    @NotNull
-    private String performanceTeam; // 작업팀 단위 (FK, 팀 테이블)
+    private String performanceTeamId; // 작업팀 단위 (FK, 팀 테이블)
     @NotNull
     private Status status; // 실적의 상태 (등록, 확정, 취소)
     private String remarks; // 비고
@@ -51,12 +49,11 @@ public class WorkPerformanceSummary {
         private String id;
         private String performanceName;
         private LocalDate performanceDate;
-        private String performer;
+        private String performerId;
         private BigDecimal performanceQuantity;
         private String itemCode;
-        private String itemName;
-        private String performanceDepartment;
-        private String performanceTeam;
+        private String performanceDepartmentId;
+        private String performanceTeamId;
         private Status status;
         private String remarks;
         private String workCenterPerformanceId;
@@ -77,8 +74,8 @@ public class WorkPerformanceSummary {
             return this;
         }
 
-        public Builder performer(String performer) {
-            this.performer = performer;
+        public Builder performerId(String performerId) {
+            this.performerId = performerId;
             return this;
         }
 
@@ -92,18 +89,13 @@ public class WorkPerformanceSummary {
             return this;
         }
 
-        public Builder itemName(String itemName) {
-            this.itemName = itemName;
+        public Builder performanceDepartmentId(String performanceDepartmentId) {
+            this.performanceDepartmentId = performanceDepartmentId;
             return this;
         }
 
-        public Builder performanceDepartment(String performanceDepartment) {
-            this.performanceDepartment = performanceDepartment;
-            return this;
-        }
-
-        public Builder performanceTeam(String performanceTeam) {
-            this.performanceTeam = performanceTeam;
+        public Builder performanceTeamId(String performanceTeamId) {
+            this.performanceTeamId = performanceTeamId;
             return this;
         }
 
@@ -136,12 +128,11 @@ public class WorkPerformanceSummary {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.performanceName = builder.performanceName;
         this.performanceDate = builder.performanceDate;
-        this.performer = builder.performer;
+        this.performerId = builder.performerId;
         this.performanceQuantity = builder.performanceQuantity;
         this.itemCode = builder.itemCode;
-        this.itemName = builder.itemName;
-        this.performanceDepartment = builder.performanceDepartment;
-        this.performanceTeam = builder.performanceTeam;
+        this.performanceDepartmentId = builder.performanceDepartmentId;
+        this.performanceTeamId = builder.performanceTeamId;
         this.status = builder.status;
         this.remarks = builder.remarks;
         this.workCenterPerformanceId = builder.workCenterPerformanceId;
@@ -155,12 +146,11 @@ public class WorkPerformanceSummary {
                 .id(this.id)
                 .performanceName(this.performanceName)
                 .performanceDate(this.performanceDate)
-                .performer(this.performer)
+                .performerId(this.performerId)
                 .performanceQuantity(this.performanceQuantity)
                 .itemCode(this.itemCode)
-                .itemName(this.itemName)
-                .performanceDepartment(this.performanceDepartment)
-                .performanceTeam(this.performanceTeam)
+                .performanceDepartmentId(this.performanceDepartmentId)
+                .performanceTeamId(this.performanceTeamId)
                 .status(this.status)
                 .remarks(this.remarks)
                 .workCenterPerformanceId(this.workCenterPerformanceId)
@@ -180,8 +170,8 @@ public class WorkPerformanceSummary {
         return performanceDate;
     }
 
-    public String getPerformer() {
-        return performer;
+    public String getPerformerId() {
+        return performerId;
     }
 
     public BigDecimal getPerformanceQuantity() {
@@ -192,16 +182,12 @@ public class WorkPerformanceSummary {
         return itemCode;
     }
 
-    public String getItemName() {
-        return itemName;
+    public String getPerformanceDepartmentId() {
+        return performanceDepartmentId;
     }
 
-    public String getPerformanceDepartment() {
-        return performanceDepartment;
-    }
-
-    public String getPerformanceTeam() {
-        return performanceTeam;
+    public String getPerformanceTeamId() {
+        return performanceTeamId;
     }
 
     public Status getStatus() {
@@ -230,12 +216,11 @@ public class WorkPerformanceSummary {
                 "id='" + id + '\'' +
                 ", performanceName='" + performanceName + '\'' +
                 ", performanceDate=" + performanceDate +
-                ", performer='" + performer + '\'' +
+                ", performerId='" + performerId + '\'' +
                 ", performanceQuantity=" + performanceQuantity +
                 ", itemCode='" + itemCode + '\'' +
-                ", itemName='" + itemName + '\'' +
-                ", performanceDepartment='" + performanceDepartment + '\'' +
-                ", performanceTeam='" + performanceTeam + '\'' +
+                ", performanceDepartmentId='" + performanceDepartmentId + '\'' +
+                ", performanceTeamId='" + performanceTeamId + '\'' +
                 ", status='" + status + '\'' +
                 ", remarks='" + remarks + '\'' +
                 ", workCenterPerformanceId='" + workCenterPerformanceId + '\'' +
