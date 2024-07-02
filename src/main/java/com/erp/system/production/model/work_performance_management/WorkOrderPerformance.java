@@ -21,13 +21,11 @@ public class WorkOrderPerformance {
     @NotNull
     private LocalDate performanceDate; // 실적 일자
     @NotNull
-    private String performer; // 실적자 (FK, 인사)
+    private String performerId; // 실적자 (FK, 인사)
     @NotNull
     private BigDecimal performanceQuantity; // 실적 수량
     @NotNull
     private String itemCode; // 품목 코드 (FK, 참조: ItemRegistration.id, not null)
-    @NotNull
-    private String itemName; // 품목 이름
     @NotNull
     private String performanceDepartment; // 실적 부서 (FK, 부서 테이블)
     @NotNull
@@ -42,10 +40,9 @@ public class WorkOrderPerformance {
         private String id;
         private String workOrderId;
         private LocalDate performanceDate;
-        private String performer;
+        private String performerId;
         private BigDecimal performanceQuantity;
         private String itemCode;
-        private String itemName;
         private String performanceDepartment;
         private String performanceTeam;
         private WorkPerformanceSummary.Status status;
@@ -66,8 +63,8 @@ public class WorkOrderPerformance {
             return this;
         }
 
-        public Builder performer(String performer) {
-            this.performer = performer;
+        public Builder performerId(String performerId) {
+            this.performerId = performerId;
             return this;
         }
 
@@ -78,11 +75,6 @@ public class WorkOrderPerformance {
 
         public Builder itemCode(String itemCode) {
             this.itemCode = itemCode;
-            return this;
-        }
-
-        public Builder itemName(String itemName) {
-            this.itemName = itemName;
             return this;
         }
 
@@ -115,10 +107,9 @@ public class WorkOrderPerformance {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.workOrderId = builder.workOrderId;
         this.performanceDate = builder.performanceDate;
-        this.performer = builder.performer;
+        this.performerId = builder.performerId;
         this.performanceQuantity = builder.performanceQuantity;
         this.itemCode = builder.itemCode;
-        this.itemName = builder.itemName;
         this.performanceDepartment = builder.performanceDepartment;
         this.performanceTeam = builder.performanceTeam;
         this.status = builder.status;
@@ -132,10 +123,9 @@ public class WorkOrderPerformance {
                 .id(this.id)
                 .workOrderId(this.workOrderId)
                 .performanceDate(this.performanceDate)
-                .performer(this.performer)
+                .performerId(this.performerId)
                 .performanceQuantity(this.performanceQuantity)
                 .itemCode(this.itemCode)
-                .itemName(this.itemName)
                 .performanceDepartment(this.performanceDepartment)
                 .performanceTeam(this.performanceTeam)
                 .status(this.status)
@@ -155,8 +145,8 @@ public class WorkOrderPerformance {
         return performanceDate;
     }
 
-    public String getPerformer() {
-        return performer;
+    public String getPerformerId() {
+        return performerId;
     }
 
     public BigDecimal getPerformanceQuantity() {
@@ -165,10 +155,6 @@ public class WorkOrderPerformance {
 
     public String getItemCode() {
         return itemCode;
-    }
-
-    public String getItemName() {
-        return itemName;
     }
 
     public String getPerformanceDepartment() {
@@ -197,10 +183,9 @@ public class WorkOrderPerformance {
                 "id='" + id + '\'' +
                 ", workOrderId='" + workOrderId + '\'' +
                 ", performanceDate=" + performanceDate +
-                ", performer='" + performer + '\'' +
+                ", performerId='" + performerId + '\'' +
                 ", performanceQuantity=" + performanceQuantity +
                 ", itemCode='" + itemCode + '\'' +
-                ", itemName='" + itemName + '\'' +
                 ", performanceDepartment='" + performanceDepartment + '\'' +
                 ", performanceTeam='" + performanceTeam + '\'' +
                 ", status=" + status +
