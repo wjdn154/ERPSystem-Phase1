@@ -14,7 +14,7 @@ import java.math.BigDecimal;
  */
 @EnumMapping
 public class WorkOrderStatus {
-    public enum Status { REGISTERED, IN_PROGRESS, COMPLETED, CANCELED }
+    private enum Status { REGISTERED, IN_PROGRESS, COMPLETED, CANCELED }
 
     @NotNull
     @Unique

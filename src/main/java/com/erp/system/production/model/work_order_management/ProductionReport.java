@@ -11,7 +11,7 @@ import java.time.LocalDate;
 
 @EnumMapping
 public class ProductionReport {
-    public enum ReportType { DAILY, MONTHLY }
+    private enum ReportType { DAILY, MONTHLY }
 
     @NotNull
     @Unique

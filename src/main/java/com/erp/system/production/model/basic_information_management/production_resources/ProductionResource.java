@@ -14,7 +14,7 @@ import com.erp.system.common.validator.UniqueValidator;
 
 @EnumMapping
 public class ProductionResource {
-    public enum Type { MACHINE, HUMAN_RESOURCE, TOOL, MATERIAL, SYSTEM }
+    private enum Type { MACHINE, HUMAN_RESOURCE, TOOL, MATERIAL, SYSTEM }
 
     @NotNull
     @Unique

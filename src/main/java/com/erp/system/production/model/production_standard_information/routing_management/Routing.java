@@ -14,7 +14,7 @@ import com.erp.system.common.annotation.Unique;
 
 @EnumMapping
 public class Routing {
-    public enum ProcessRouteType { TYPE_A, TYPE_B, TYPE_C };
+    private enum ProcessRouteType { TYPE_A, TYPE_B, TYPE_C };
 
     @NotNull
     @Unique
