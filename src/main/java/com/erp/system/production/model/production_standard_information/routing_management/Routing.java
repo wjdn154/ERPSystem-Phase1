@@ -6,40 +6,45 @@ import com.erp.system.common.validator.UniqueValidator;
 import com.erp.system.common.annotation.NotNull;
 import com.erp.system.common.annotation.Unique;
 
+import java.util.List;
+
 /**
- * 공정경로 정보 관리 테이블 : 각 생산품목에 대해 공정 경로를 정의하고 관리하여
+ * Routing 정보 관리 테이블 : 각 생산품목에 대해 공정 경로를 정의하고 관리하여
  * 생산 공정의 효율성을 극대화하기 위해 사용
  * 제품을 만들기 위해 어떤 작업을 어떤 순서로 해야 하는지 기록하고 관리
  */
 
 @EnumMapping
 public class Routing {
-    public enum ProcessRouteType { TYPE_A, TYPE_B, TYPE_C };
+    public enum Type { TYPE_A, TYPE_B, TYPE_C }
 
     @NotNull
     @Unique
     private final String id; // 공정경로코드: 공정 경로 코드 (PK, not null, unique)
     @NotNull
     @Unique
-    private String name; // 경로명: 공정 경로의 이름
+    private String name; // Routing의 이름
     @NotNull
-    private ProcessRouteType type; // 공정 경로 유형
+    private Type type; // 공정 경로 유형
     @NotNull
-    private String description; // 경로 설명
+    private String description; // Routing 설명
     @NotNull
     private boolean isStandard; // 표준 여부
     @NotNull
     private boolean isActive; // 사용 여부
+    @NotNull
+    private List<RoutingStep> steps; // 공정 경로의 작업 단계 목록
 
     public static int idIndex = 1;
 
     public static class Builder {
         private String id;
         private String name;
-        private ProcessRouteType type;
+        private Type type;
         private String description;
         private boolean isStandard;
         private boolean isActive;
+        private List<RoutingStep> steps;
 
         public Builder id(String id) {
             this.id = id;
@@ -51,7 +56,7 @@ public class Routing {
             return this;
         }
 
-        public Builder type(ProcessRouteType type) {
+        public Builder type(Type type) {
             this.type = type;
             return this;
         }
@@ -71,6 +76,11 @@ public class Routing {
             return this;
         }
 
+        public Builder steps(List<RoutingStep> steps) {
+            this.steps = steps;
+            return this;
+        }
+
         public Routing build() {
             return new Routing(this);
         }
@@ -83,6 +93,7 @@ public class Routing {
         this.description = builder.description;
         this.isStandard = builder.isStandard;
         this.isActive = builder.isActive;
+        this.steps = builder.steps;
         NotNullValidator.validateFields(this);
         UniqueValidator.validateFields(this);
     }
@@ -94,7 +105,8 @@ public class Routing {
                 .type(this.type)
                 .description(this.description)
                 .isStandard(this.isStandard)
-                .isActive(this.isActive);
+                .isActive(this.isActive)
+                .steps(this.steps);
     }
 
     // Getters
@@ -106,7 +118,7 @@ public class Routing {
         return name;
     }
 
-    public ProcessRouteType getType() {
+    public Type getType() {
         return type;
     }
 
@@ -122,6 +134,10 @@ public class Routing {
         return isActive;
     }
 
+    public List<RoutingStep> getSteps() {
+        return steps;
+    }
+
     public static int getIdIndex() {
         return idIndex;
     }
@@ -131,10 +147,11 @@ public class Routing {
         return "Routing{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", type=" + type +
+                ", type=" + type + '\'' +
                 ", description='" + description + '\'' +
-                ", isStandard=" + isStandard +
-                ", isActive=" + isActive +
+                ", isStandard=" + isStandard + '\'' +
+                ", isActive=" + isActive + '\'' +
+                ", steps=" + steps +
                 '}';
     }
 }

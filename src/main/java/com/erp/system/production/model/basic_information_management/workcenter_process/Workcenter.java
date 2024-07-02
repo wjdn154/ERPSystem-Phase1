@@ -12,7 +12,7 @@ import com.erp.system.common.annotation.Unique;
 
 @EnumMapping
 public class Workcenter {
-    public enum WorkcenterType { PRODUCTION, ASSEMBLY, QUALITY_CONTROL, STORAGE };
+    public enum WorkcenterType { PRODUCTION, ASSEMBLY, QUALITY_CONTROL, PACKAGING, MAINTENANCE, R_AND_D, TEST, LOGISTICS };
 
     @Unique
     @NotNull
@@ -21,13 +21,13 @@ public class Workcenter {
     @Unique
     private String name; // 작업장명
     @NotNull
-    private WorkcenterType type; // 작업장구분 (예: 생산, 조립, 품질 관리, 창고 등)
+    private WorkcenterType type; // 작업장구분 (예: 생산, 조립, 품질 관리 등)
     @NotNull
     private String primaryResourceId; // 주작업자원 (FK, 생산자원코드)
     @NotNull
     private String description; // 작업장에 대한 설명
 
-    private int inputPersonnel; // 투입인원수
+    private int inputPersonnel; // 투입인원수 ( 변동 잦을 수 있는 값이라 nullable )
 
     public static int idIndex = 1;
 

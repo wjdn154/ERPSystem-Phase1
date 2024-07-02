@@ -1,7 +1,9 @@
-package com.erp.system.production.model.production_standard_information;
+package com.erp.system.production.model.production_standard_information.standard_information_management;
 
 import com.erp.system.common.annotation.NotNull;
 import com.erp.system.common.annotation.Unique;
+import com.erp.system.common.validator.NotNullValidator;
+import com.erp.system.common.validator.UniqueValidator;
 
 import java.time.Year;
 
@@ -102,6 +104,8 @@ public class ProductionEquipmentStandard {
         this.purchaseYear = builder.purchaseYear;
         this.description = builder.description;
         this.isOperational = builder.isOperational;
+        NotNullValidator.validateFields(this);
+        UniqueValidator.validateFields(this);
     }
 
     // tobuild()

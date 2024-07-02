@@ -6,6 +6,9 @@ import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.validator.UniqueValidator;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
 /** 생산 활동에 필요한 인력, 기계, 도구 등의 자원을 관리하여
  *  각 공정에서 어떤 자원을 사용할지 정의하고 최적화하기 위한 테이블
  *  제품을 만들 때 필요한 사람, 기계, 도구 등의 정보를 기록하고 관리하는 정보
@@ -14,7 +17,9 @@ import com.erp.system.common.validator.UniqueValidator;
 
 @EnumMapping
 public class ProductionResource {
-    public enum Type { MACHINE, HUMAN_RESOURCE, TOOL, MATERIAL, SYSTEM }
+    public enum Type { MACHINE, HUMAN_RESOURCE, TOOL, MATERIAL, SYSTEM, ENERGY, SOFTWARE, VEHICLE }
+    public enum Status { AVAILABLE, IN_USE, MAINTENANCE, DEACTIVATED }
+
 
     @NotNull
     @Unique
@@ -25,6 +30,11 @@ public class ProductionResource {
     @NotNull
     private Type type; // 생산자원 유형 (예: 기계, 인력, 도구 등)
     private String description; // 설명
+    private Status status; // 자원의 상태
+    private String location; // 자원의 위치 (nullable)
+    private LocalDate purchaseDate; // 구매 날짜 (nullable)
+    private Integer lifecycle; // 예상 수명 주기 (연 단위, nullable) *기본형 int는 null 값 허용x 항상 0 초기화
+    private BigDecimal cost; // 비용 정보 (nullable)
 
     public static int idIndex = 1;
 

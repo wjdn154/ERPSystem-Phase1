@@ -4,6 +4,7 @@ import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.EnumMapping;
 import com.erp.system.common.annotation.NotNull;
 import com.erp.system.common.annotation.Unique;
+import com.erp.system.common.validator.UniqueValidator;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -133,6 +134,7 @@ public class ProductionPlanManagement {
         this.estimatedCost = builder.estimatedCost;
         this.actualCost = builder.actualCost;
         NotNullValidator.validateFields(this);
+        UniqueValidator.validateFields(this);
     }
 
     // tobuild()

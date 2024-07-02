@@ -1,4 +1,4 @@
-package com.erp.system.production.model.production_standard_information;
+package com.erp.system.production.model.production_standard_information.standard_information_management;
 
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.validator.UniqueValidator;
