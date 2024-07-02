@@ -20,10 +20,15 @@ public class BankTransaction {
     private String type; // 거래 유형
     @NotNull
     private LocalDate date; // 거래 날짜
+    private String description; // 거래 내용
     @NotNull
     private BigDecimal debit; // 차변 금액
     @NotNull
+    private BigDecimal carriedOverDebit; // 이월 차변금액
+    @NotNull
     private BigDecimal credit; // 대변 금액
+    @NotNull
+    private BigDecimal carriedOverCredit; // 이월 대변금액
     @NotNull
     private BigDecimal currentBalance; // 현재 잔액
 
@@ -34,9 +39,12 @@ public class BankTransaction {
         private String accountId;
 
         private String type;
-        private BigDecimal debit;
-        private BigDecimal credit;
+        private String description;
         private LocalDate date;
+        private BigDecimal debit;
+        private BigDecimal carriedOverDebit;
+        private BigDecimal credit;
+        private BigDecimal carriedOverCredit;
         private BigDecimal currentBalance;
 
         public Builder id(String id) {
@@ -54,6 +62,20 @@ public class BankTransaction {
             return this;
         }
 
+        public Builder date(LocalDate date) {
+            this.date = date;
+            return this;
+        }
+
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder carriedOverDebit(BigDecimal carriedOverDebit) {
+            this.carriedOverDebit = carriedOverDebit;
+            return this;
+        }
         public Builder debit(BigDecimal debit) {
             this.debit = debit;
             return this;
@@ -63,9 +85,8 @@ public class BankTransaction {
             this.credit = credit;
             return this;
         }
-
-        public Builder date(LocalDate date) {
-            this.date = date;
+        public Builder carriedOverCredit(BigDecimal carriedOverCredit) {
+            this.carriedOverCredit = carriedOverCredit;
             return this;
         }
 
@@ -83,9 +104,12 @@ public class BankTransaction {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.accountId = builder.accountId;
         this.type = builder.type;
-        this.debit = builder.debit;
-        this.credit = builder.credit;
         this.date = builder.date;
+        this.description = builder.description;
+        this.debit = builder.debit;
+        this.carriedOverDebit = builder.carriedOverDebit;
+        this.credit = builder.credit;
+        this.carriedOverCredit = builder.carriedOverCredit;
         this.currentBalance = builder.currentBalance;
         NotNullValidator.validateFields(this);
     }
@@ -95,9 +119,12 @@ public class BankTransaction {
                 .id(this.id)
                 .accountId(this.accountId)
                 .type(this.type)
-                .debit(this.debit)
-                .credit(this.credit)
                 .date(this.date)
+                .description(this.description)
+                .debit(this.debit)
+                .carriedOverDebit(this.carriedOverDebit)
+                .credit(this.credit)
+                .carriedOverCredit(this.carriedOverCredit)
                 .currentBalance(this.currentBalance);
     }
 
@@ -113,17 +140,29 @@ public class BankTransaction {
         return type;
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     public BigDecimal getDebit() {
         return debit;
+    }
+
+    public BigDecimal getCarriedOverDebit() {
+        return carriedOverDebit;
     }
 
     public BigDecimal getCredit() {
         return credit;
     }
-
-    public LocalDate getDate() {
-        return date;
+    public BigDecimal getCarriedOverCredit() {
+        return carriedOverCredit;
     }
+
 
     public BigDecimal getCurrentBalance() {
         return currentBalance;
@@ -136,8 +175,11 @@ public class BankTransaction {
                 ", accountId='" + accountId + '\'' +
                 ", type='" + type + '\'' +
                 ", date=" + date +
+                ", description='" + description + '\'' +
                 ", debit=" + debit +
+                ", carriedOverDebit=" + carriedOverDebit +
                 ", credit=" + credit +
+                ", carriedOverCredit=" + carriedOverCredit +
                 ", currentBalance=" + currentBalance +
                 '}';
     }

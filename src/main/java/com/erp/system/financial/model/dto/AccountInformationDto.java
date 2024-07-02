@@ -19,8 +19,11 @@ public class AccountInformationDto {
     private String depositType; // 예금종류
     private String BankTransactionBankName; // 거래 은행명
     private String type; // 거래 유형
+    private String description; // 적요
     private BigDecimal debit; // 차변 금액
+    private BigDecimal carriedOverDebit; // 차변 이월 금액
     private BigDecimal credit; // 대변 금액
+    private BigDecimal carriedOverCredit; // 대변 이월 금액
     private LocalDate date; // 거래 날짜
     private BigDecimal currentBalance; // 현재 잔액
     private LocalDate maturityDate; // 적금 만기 날짜
@@ -98,6 +101,14 @@ public class AccountInformationDto {
         this.type = type;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public BigDecimal getDebit() {
         return debit;
     }
@@ -106,12 +117,28 @@ public class AccountInformationDto {
         this.debit = debit;
     }
 
+    public BigDecimal getCarriedOverDebit() {
+        return carriedOverDebit;
+    }
+
+    public void setCarriedOverDebit(BigDecimal carriedOverDebit) {
+        this.carriedOverDebit = carriedOverDebit;
+    }
+
     public BigDecimal getCredit() {
         return credit;
     }
 
     public void setCredit(BigDecimal credit) {
         this.credit = credit;
+    }
+
+    public BigDecimal getCarriedOverCredit() {
+        return carriedOverCredit;
+    }
+
+    public void setCarriedOverCredit(BigDecimal carriedOverCredit) {
+        this.carriedOverCredit = carriedOverCredit;
     }
 
     public LocalDate getDate() {
