@@ -1,12 +1,10 @@
 package com.erp.system.financial.model.basic_information_management.voucher_registration;
 
-import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.UUID;
 
 /**
  * 전표 테이블
@@ -116,7 +114,7 @@ public class Voucher {
         this.debit = builder.debit;
         this.credit = builder.credit;
         this.date = builder.date;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {

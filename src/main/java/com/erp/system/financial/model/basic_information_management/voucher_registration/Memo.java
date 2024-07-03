@@ -1,9 +1,7 @@
 package com.erp.system.financial.model.basic_information_management.voucher_registration;
 
-import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
-
-import java.util.UUID;
 
 /**
  * 적요 테이블
@@ -59,7 +57,7 @@ public class Memo {
         this.accountId = builder.accountId;
         this.description = builder.description;
         this.immutable = builder.immutable;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {

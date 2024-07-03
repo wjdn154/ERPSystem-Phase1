@@ -1,7 +1,6 @@
 package com.erp.system.financial.controller.basic_information_management;
 
 import com.erp.system.common.annotation.Component;
-import com.erp.system.common.annotation.Priority;
 import com.erp.system.financial.model.basic_information_management.vendor_registration.Vendor;
 import com.erp.system.financial.model.basic_information_management.vendor_registration.VendorType;
 import com.erp.system.financial.repository.basic_information_management.vendor_registration.VendorRepository;
@@ -12,7 +11,6 @@ import java.util.Collection;
 import java.util.Optional;
 
 @Component
-@Priority(3)
 public class VendorRegistrationController {
     private final VendorRegistrationService vendorRegistrationService;
     private final VendorRepository vendorRepository;

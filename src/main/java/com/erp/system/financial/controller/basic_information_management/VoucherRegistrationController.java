@@ -1,7 +1,6 @@
 package com.erp.system.financial.controller.basic_information_management;
 
 import com.erp.system.common.annotation.Component;
-import com.erp.system.common.annotation.Priority;
 import com.erp.system.financial.model.basic_information_management.voucher_registration.Account;
 import com.erp.system.financial.model.basic_information_management.voucher_registration.Memo;
 import com.erp.system.financial.model.basic_information_management.voucher_registration.Voucher;
@@ -16,7 +15,6 @@ import java.util.Collection;
 import java.util.Optional;
 
 @Component
-@Priority(3)
 public class VoucherRegistrationController {
     private final VoucherRegistrationService voucherRegistrationService;
     private final AccountRepository accountRepository;

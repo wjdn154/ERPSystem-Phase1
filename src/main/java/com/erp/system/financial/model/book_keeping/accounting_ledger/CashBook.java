@@ -1,14 +1,11 @@
 package com.erp.system.financial.model.book_keeping.accounting_ledger;
 
-import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.EnumMapping;
 import com.erp.system.common.annotation.NotNull;
 
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.UUID;
 
 /**
  * 현금출납장 테이블
@@ -101,7 +98,7 @@ public class CashBook {
         this.credit = builder.credit;
         this.balanceForward = builder.balanceForward;
         this.date = builder.date;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {

@@ -1,12 +1,10 @@
 package com.erp.system.financial.model.basic_information_management.account_information;
 
-import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
-import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entry;
+import com.erp.system.common.annotation.Unique;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.UUID;
 
 /**
  * 은행 계좌 테이블
@@ -15,24 +13,28 @@ import java.util.UUID;
 public class BankAccount {
     @NotNull
     private final String id; // 계좌의 고유 식별자
+    @NotNull
+    private final String userCompanyId; // ERP 사용자 계정 회사 ID
 
     @NotNull
-    private  LocalDate openingDate; // 개설일
+    private LocalDate openingDate; // 개설일
     @NotNull
-    private  String bankName; // 은행명
+    private String bankName; // 은행명
     @NotNull
-    private  String branchLocation; // 계좌계설지점
+    private String branchLocation; // 계좌계설지점
+    @Unique
     @NotNull
-    private  String number; // 계좌번호
+    private String number; // 계좌번호
     @NotNull
-    private  String owner; // 계좌 소유자
+    private String owner; // 계좌 소유자
     @NotNull
-    private  String depositType; // 예금종류
+    private String depositType; // 예금종류
 
     public static int idIndex = 1;
 
     public static class Builder {
         private String id;
+        private String userCompanyId;
 
         private LocalDate openingDate;
         private String bankName;
@@ -43,6 +45,11 @@ public class BankAccount {
 
         public Builder id(String id) {
             this.id = id;
+            return this;
+        }
+
+        public Builder userCompanyId(String userCompanyId) {
+            this.userCompanyId = userCompanyId;
             return this;
         }
 
@@ -83,18 +90,20 @@ public class BankAccount {
 
     private BankAccount(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
+        this.userCompanyId = builder.userCompanyId;
         this.openingDate = builder.openingDate;
         this.bankName = builder.bankName;
         this.branchLocation = builder.branchLocation;
         this.number = builder.number;
         this.owner = builder.owner;
         this.depositType = builder.depositType;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
+                .userCompanyId(this.userCompanyId)
                 .bankName(this.bankName)
                 .branchLocation(this.branchLocation)
                 .openingDate(this.openingDate)
@@ -105,6 +114,10 @@ public class BankAccount {
 
     public String getId() {
         return id;
+    }
+
+    public String getUserCompanyId() {
+        return userCompanyId;
     }
 
     public LocalDate getOpeningDate() {
@@ -129,5 +142,19 @@ public class BankAccount {
 
     public String getDepositType() {
         return depositType;
+    }
+
+    @Override
+    public String toString() {
+        return "BankAccount{" +
+                "id='" + id + '\'' +
+                ", userCompanyId='" + userCompanyId + '\'' +
+                ", openingDate=" + openingDate +
+                ", bankName='" + bankName + '\'' +
+                ", branchLocation='" + branchLocation + '\'' +
+                ", number='" + number + '\'' +
+                ", owner='" + owner + '\'' +
+                ", depositType='" + depositType + '\'' +
+                '}';
     }
 }

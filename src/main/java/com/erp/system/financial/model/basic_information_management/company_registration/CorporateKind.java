@@ -1,13 +1,11 @@
 package com.erp.system.financial.model.basic_information_management.company_registration;
 
-import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 
-import java.util.UUID;
-
 /**
- * 법인종류 테이블
- * 법인종류 데이터 테이블
+ * 법인종류별 구분 테이블
+ * 법인종류별 구분 데이터 테이블
  * 
  */
 public class CorporateKind {
@@ -16,7 +14,6 @@ public class CorporateKind {
 
     @NotNull
     private String kind; // 법인종류
-    @NotNull
     private String description; // 법인종류 설명
 
     public static int idIndex = 1;
@@ -51,7 +48,7 @@ public class CorporateKind {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.kind = builder.kind;
         this.description = builder.description;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {
@@ -71,5 +68,14 @@ public class CorporateKind {
 
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public String toString() {
+        return "CorporateKind{" +
+                "id='" + id + '\'' +
+                ", kind='" + kind + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

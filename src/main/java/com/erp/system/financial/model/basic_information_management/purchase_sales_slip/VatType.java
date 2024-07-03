@@ -1,9 +1,7 @@
 package com.erp.system.financial.model.basic_information_management.purchase_sales_slip;
 
-import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
-
-import java.util.UUID;
 
 /**
  * 부가세유형 테이블
@@ -50,7 +48,7 @@ public class VatType {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.category = builder.category;
         this.name = builder.name;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {

@@ -1,13 +1,11 @@
 package com.erp.system.financial.model.basic_information_management.tax_invoices;
 
-import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.EnumMapping;
 import com.erp.system.common.annotation.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.UUID;
 
 /**
  * 전자 세금 계산서 테이블
@@ -140,7 +138,7 @@ public class TaxInvoice {
         this.supplyValue = builder.supplyValue;
         this.taxAmount = builder.taxAmount;
         this.approvalNumber = builder.approvalNumber;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {
