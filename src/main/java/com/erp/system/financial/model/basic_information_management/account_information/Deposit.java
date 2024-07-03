@@ -86,4 +86,14 @@ public class Deposit {
     public BigDecimal getInterestRate() {
         return interestRate;
     }
+
+    @Override
+    public String toString() {
+        return "Deposit{" +
+                "id='" + id + '\'' +
+                ", accountId='" + accountId + '\'' +
+                ", maturityDate=" + maturityDate +
+                ", interestRate=" + interestRate +
+                '}';
+    }
 }

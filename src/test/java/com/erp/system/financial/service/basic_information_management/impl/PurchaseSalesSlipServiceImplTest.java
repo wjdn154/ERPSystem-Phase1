@@ -1,9 +1,8 @@
 package com.erp.system.financial.service.basic_information_management.impl;
 
 import com.erp.system.common.DependencyInjector;
-import com.erp.system.common.ERPDataInitializer;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.PurchaseSalesSlip;
-import com.erp.system.financial.model.dto.PurchaseSalesSlipDto;
+import com.erp.system.financial.model.dto.PurchaseSalesSlipRegistrationDto;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntryRepository;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.PurchaseSalesSlipRepository;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.VatTypeRepository;
@@ -13,10 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PurchaseSalesSlipServiceImplTest {
@@ -45,37 +41,39 @@ public class PurchaseSalesSlipServiceImplTest {
         @Test
         public void registerPurchaseSalesSlipTest() {
             // Given: 테스트 데이터 설정
-            PurchaseSalesSlipDto purchaseSalesSlipDto = new PurchaseSalesSlipDto();
-            purchaseSalesSlipDto.setElectronicTaxInvoiceIssued(true);
-            purchaseSalesSlipDto.setDate(LocalDate.of(24,7,2));
-            purchaseSalesSlipDto.setEntryId("2");
-            purchaseSalesSlipDto.setDepartmentId("1");
-            purchaseSalesSlipDto.setQuantity(BigDecimal.valueOf(50));
-            purchaseSalesSlipDto.setUserCompanyId("1");
-            purchaseSalesSlipDto.setItemName("김밥");
-            purchaseSalesSlipDto.setSupplyValue(BigDecimal.valueOf(10000));
-            purchaseSalesSlipDto.setUnitPrice(BigDecimal.valueOf(1000));
-            purchaseSalesSlipDto.setVat(BigDecimal.valueOf(100000));
-            purchaseSalesSlipDto.setVatTypeId("2");
-            purchaseSalesSlipDto.setVendorId("1");
+            PurchaseSalesSlipRegistrationDto purchaseSalesSlipRegistrationDto = new PurchaseSalesSlipRegistrationDto();
+            purchaseSalesSlipRegistrationDto.setElectronicTaxInvoiceIssued(true);
+            purchaseSalesSlipRegistrationDto.setDate(LocalDate.of(24,7,2));
+            purchaseSalesSlipRegistrationDto.setEntryId("2");
+            purchaseSalesSlipRegistrationDto.setDepartmentId("1");
+            purchaseSalesSlipRegistrationDto.setQuantity(BigDecimal.valueOf(50));
+            purchaseSalesSlipRegistrationDto.setUserCompanyId("1");
+            purchaseSalesSlipRegistrationDto.setItemName("김밥");
+            purchaseSalesSlipRegistrationDto.setSupplyValue(BigDecimal.valueOf(10000));
+            purchaseSalesSlipRegistrationDto.setUnitPrice(BigDecimal.valueOf(1000));
+            purchaseSalesSlipRegistrationDto.setVat(BigDecimal.valueOf(100000));
+            purchaseSalesSlipRegistrationDto.setVatTypeId("2");
+            purchaseSalesSlipRegistrationDto.setVendorId("1");
 
             // When: 매출매입전표 등록
-            purchaseSalesSlipService.registerPurchaseSalesSlip(purchaseSalesSlipDto);
+            purchaseSalesSlipService.registerPurchaseSalesSlip(purchaseSalesSlipRegistrationDto);
 
             // Then: 매출매입전표가 등록되었는지 확인
             purchaseSalesSlipRepository.findById(String.valueOf(PurchaseSalesSlip.idIndex-1)).ifPresent(purchaseSalesSlip -> {
-                assertEquals(purchaseSalesSlipDto.getElectronicTaxInvoiceIssued(), purchaseSalesSlip.getElectronicTaxInvoiceIssued());
-                assertEquals(purchaseSalesSlipDto.getDate(), purchaseSalesSlip.getDate());
-                assertEquals(purchaseSalesSlipDto.getEntryId(), purchaseSalesSlip.getEntryId());
-                assertEquals(purchaseSalesSlipDto.getDepartmentId(), purchaseSalesSlip.getDepartmentId());
-                assertEquals(purchaseSalesSlipDto.getQuantity(),purchaseSalesSlip.getQuantity());
-                assertEquals(purchaseSalesSlipDto.getUserCompanyId(),purchaseSalesSlip.getUserCompanyId());
-                assertEquals(purchaseSalesSlipDto.getItemName(),purchaseSalesSlip.getItemName());
-                assertEquals(purchaseSalesSlipDto.getSupplyValue(),purchaseSalesSlip.getSupplyValue());
-                assertEquals(purchaseSalesSlipDto.getUnitPrice(),purchaseSalesSlip.getUnitPrice());
-                assertEquals(purchaseSalesSlipDto.getVat(),purchaseSalesSlip.getVat());
-                assertEquals(purchaseSalesSlipDto.getVatTypeId(),purchaseSalesSlip.getVatTypeId());
-                assertEquals(purchaseSalesSlipDto.getVendorId(),purchaseSalesSlip.getVendorId());
+                System.out.println("전송 객체 ::: " + purchaseSalesSlipRegistrationDto.toString());
+                System.out.println("저장 객체 ::: " + purchaseSalesSlip.toString());
+                assertEquals(purchaseSalesSlipRegistrationDto.getElectronicTaxInvoiceIssued(), purchaseSalesSlip.getElectronicTaxInvoiceIssued());
+                assertEquals(purchaseSalesSlipRegistrationDto.getDate(), purchaseSalesSlip.getDate());
+                assertEquals(purchaseSalesSlipRegistrationDto.getEntryId(), purchaseSalesSlip.getEntryId());
+                assertEquals(purchaseSalesSlipRegistrationDto.getDepartmentId(), purchaseSalesSlip.getDepartmentId());
+                assertEquals(purchaseSalesSlipRegistrationDto.getQuantity(),purchaseSalesSlip.getQuantity());
+                assertEquals(purchaseSalesSlipRegistrationDto.getUserCompanyId(),purchaseSalesSlip.getUserCompanyId());
+                assertEquals(purchaseSalesSlipRegistrationDto.getItemName(),purchaseSalesSlip.getItemName());
+                assertEquals(purchaseSalesSlipRegistrationDto.getSupplyValue(),purchaseSalesSlip.getSupplyValue());
+                assertEquals(purchaseSalesSlipRegistrationDto.getUnitPrice(),purchaseSalesSlip.getUnitPrice());
+                assertEquals(purchaseSalesSlipRegistrationDto.getVat(),purchaseSalesSlip.getVat());
+                assertEquals(purchaseSalesSlipRegistrationDto.getVatTypeId(),purchaseSalesSlip.getVatTypeId());
+                assertEquals(purchaseSalesSlipRegistrationDto.getVendorId(),purchaseSalesSlip.getVendorId());
             });
         }
 

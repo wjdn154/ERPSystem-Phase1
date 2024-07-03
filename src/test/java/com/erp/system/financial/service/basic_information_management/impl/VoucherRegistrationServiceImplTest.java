@@ -52,12 +52,14 @@ public class VoucherRegistrationServiceImplTest {
         voucherDto.setVendorId("1");
         voucherDto.setDepartmentId("1");
 
-        // When: 매출매입전표 등록
+        // When: 전표 등록
         voucherRegistrationService.registerVoucher(voucherDto);
 
-        // Then: 매출매입전표가 등록되었는지 확인
+        // Then: 전표가 등록되었는지 확인
 
         voucherRepository.findById(String.valueOf(Voucher.idIndex-1)).ifPresent(voucher -> {
+            System.out.println("전송 객체 ::: " + voucherDto.toString());
+            System.out.println("저장 객체 ::: " + voucher.toString());
             assertEquals(Voucher.idIndex-1, Integer.parseInt(voucher.getId()));
             assertEquals(voucherDto.getAccountId(),voucher.getAccountId());
             assertEquals(voucherDto.getCredit(),voucher.getCredit());

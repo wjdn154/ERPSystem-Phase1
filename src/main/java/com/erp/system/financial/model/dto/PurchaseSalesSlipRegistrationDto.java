@@ -1,16 +1,13 @@
 package com.erp.system.financial.model.dto;
 
-import com.erp.system.common.annotation.NotNull;
-import com.erp.system.common.annotation.Unique;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
  * 매출매입전표 등록을 위한 데이터 전송 객체 (DTO).
  */
-public class PurchaseSalesSlipDto {
-
+public class PurchaseSalesSlipRegistrationDto {
+    private String userCompanyId; // ERP 사용자 계정 회사 ID
     private String vatTypeId; // 부가세유형 참조 코드
     private String vendorId; // 거래처 코드 (거래처 테이블 참조)
     private String entryId; // 분개 코드 (분개 관련 정보 참조)
@@ -22,7 +19,6 @@ public class PurchaseSalesSlipDto {
     private BigDecimal supplyValue; // 공급가액
     private BigDecimal vat; // 부가세
     private Boolean electronicTaxInvoiceIssued; // 전자세금계산서 발행여부
-    private String userCompanyId; // ERP 사용자 계정 회사 ID
 
 
     public String getVatTypeId() {
@@ -120,5 +116,23 @@ public class PurchaseSalesSlipDto {
 
     public void setDepartmentId(String departmentId) {
         this.departmentId = departmentId;
+    }
+
+    @Override
+    public String toString() {
+        return "PurchaseSalesSlipRegistrationDto{" +
+                "vatTypeId='" + vatTypeId + '\'' +
+                ", vendorId='" + vendorId + '\'' +
+                ", entryId='" + entryId + '\'' +
+                ", departmentId='" + departmentId + '\'' +
+                ", date=" + date +
+                ", itemName='" + itemName + '\'' +
+                ", quantity=" + quantity +
+                ", unitPrice=" + unitPrice +
+                ", supplyValue=" + supplyValue +
+                ", vat=" + vat +
+                ", electronicTaxInvoiceIssued=" + electronicTaxInvoiceIssued +
+                ", userCompanyId='" + userCompanyId + '\'' +
+                '}';
     }
 }

@@ -85,4 +85,14 @@ public class Memo {
     public boolean isImmutable() {
         return immutable;
     }
+
+    @Override
+    public String toString() {
+        return "Memo{" +
+                "id='" + id + '\'' +
+                ", accountId='" + accountId + '\'' +
+                ", description='" + description + '\'' +
+                ", immutable=" + immutable +
+                '}';
+    }
 }

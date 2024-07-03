@@ -1,5 +1,6 @@
 package com.erp.system.financial.model.basic_information_management.vendor_registration;
 
+import com.erp.system.common.annotation.EnumMapping;
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.validator.UniqueValidator;
 import com.erp.system.common.annotation.NotNull;
@@ -9,7 +10,14 @@ import com.erp.system.common.annotation.Unique;
  * 거래처 테이블
  * 거래처 정보 데이터 테이블
  */
+@EnumMapping
 public class Vendor {
+    public enum BusinessStatus {BUSINESS, NONBUSINESS}; // 사업자여부 (사업자 , 비사업자)
+    public enum Relationship {SUPPLIER, MANUFACTURER, WHOLESALER, RETAILER,
+        DISTRIBUTOR, SERVICEPROVIDER, CUSTOMER, PARTNER};
+    // 거래처의 유형 (공급업체, 제조업체, 도매업체, 소매업체, 유통업체, 서비스제공업체, 고객사, 파트너사)
+
+
     @Unique
     @NotNull
     private final String id; // 거래처의 고유 식별자
@@ -42,6 +50,10 @@ public class Vendor {
     private String contactPerson; // 거래처 담당자
     @NotNull
     private String email; // 거래처 담당자 이메일
+    @NotNull
+    private BusinessStatus businessStatus; // 사업자 비사업자 여부
+    @NotNull
+    private Relationship relationship; // 거래처 유형
 
 
 
@@ -65,6 +77,8 @@ public class Vendor {
         private String website;
         private String contactPerson;
         private String email;
+        private BusinessStatus businessStatus;
+        private Relationship relationship;
 
         public Builder id(String id) {
             this.id = id;
@@ -112,7 +126,7 @@ public class Vendor {
         }
 
         public Builder representativeName(String representativeName) {
-            this.address = representativeName;
+            this.representativeName = representativeName;
             return this;
         }
 
@@ -146,6 +160,16 @@ public class Vendor {
             return this;
         }
 
+        public Builder businessStatus(BusinessStatus businessStatus) {
+            this.businessStatus = businessStatus;
+            return this;
+        }
+
+        public Builder relationship(Relationship relationship) {
+            this.relationship = relationship;
+            return this;
+        }
+
         public Vendor build() {
             return new Vendor(this);
         }
@@ -168,6 +192,8 @@ public class Vendor {
         this.website = builder.website;
         this.contactPerson = builder.contactPerson;
         this.email = builder.email;
+        this.businessStatus = builder.businessStatus;
+        this.relationship = builder.relationship;
         NotNullValidator.validateFields(this);
         UniqueValidator.validateFields(this);
     }
@@ -189,7 +215,9 @@ public class Vendor {
                 .postalCode(this.postalCode)
                 .website(this.website)
                 .contactPerson(this.contactPerson)
-                .email(this.email);
+                .email(this.email)
+                .businessStatus(this.businessStatus)
+                .relationship(this.relationship);
     }
 
     public String getId() {
@@ -254,5 +282,37 @@ public class Vendor {
 
     public String getEmail() {
         return email;
+    }
+
+    public BusinessStatus getBusinessStatus() {
+        return businessStatus;
+    }
+
+    public Relationship getRelationship() {
+        return relationship;
+    }
+
+    @Override
+    public String toString() {
+        return "Vendor{" +
+                "id='" + id + '\'' +
+                ", departmentId='" + departmentId + '\'' +
+                ", managerId='" + managerId + '\'' +
+                ", name='" + name + '\'' +
+                ", registrationNumber='" + registrationNumber + '\'' +
+                ", personalIdentificationNumber='" + personalIdentificationNumber + '\'' +
+                ", businessType='" + businessType + '\'' +
+                ", businessItem='" + businessItem + '\'' +
+                ", address='" + address + '\'' +
+                ", representativeName='" + representativeName + '\'' +
+                ", concat='" + concat + '\'' +
+                ", fax='" + fax + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", website='" + website + '\'' +
+                ", contactPerson='" + contactPerson + '\'' +
+                ", email='" + email + '\'' +
+                ", businessStatus=" + businessStatus +
+                ", relationship=" + relationship +
+                '}';
     }
 }

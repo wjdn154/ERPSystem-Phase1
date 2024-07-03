@@ -69,4 +69,13 @@ public class Account {
     public String getReference() {
         return reference;
     }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", reference='" + reference + '\'' +
+                '}';
+    }
 }

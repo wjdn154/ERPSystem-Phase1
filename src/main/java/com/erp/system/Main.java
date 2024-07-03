@@ -73,8 +73,6 @@ public class Main {
 
         // 거래처 등록
         printAllEntities(result.vendorRegistrationController().findAllVendors(), ID_FIELD_NAME); // Vendor 출력
-        printAllEntities(result.vendorRegistrationController().findAllVendorTypes(), ID_FIELD_NAME); // VendorType 출력
-
         // 전표 입력
         printAllEntities(result.voucherRegistrationController().findAllAccounts(), ID_FIELD_NAME); // Account 출력
         printAllEntities(result.voucherRegistrationController().findAllMemos(), ID_FIELD_NAME); // Memo 출력

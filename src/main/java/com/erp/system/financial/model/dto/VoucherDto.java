@@ -5,6 +5,9 @@ import com.erp.system.financial.model.basic_information_management.voucher_regis
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+/**
+ * 전표 등록을 위한 데이터 전송 객체 (DTO)
+ */
 public class VoucherDto {
     private String userCompanyId; // ERP 사용자 계정 회사 ID
     private Voucher.VoucherType voucherType; // 전표타입 코드
@@ -95,5 +98,21 @@ public class VoucherDto {
 
     public void setDepartmentId(String departmentId) {
         this.departmentId = departmentId;
+    }
+
+    @Override
+    public String toString() {
+        return "VoucherDto{" +
+                "userCompanyId='" + userCompanyId + '\'' +
+                ", voucherType=" + voucherType +
+                ", accountId='" + accountId + '\'' +
+                ", vendorId='" + vendorId + '\'' +
+                ", memoId='" + memoId + '\'' +
+                ", departmentId='" + departmentId + '\'' +
+                ", description='" + description + '\'' +
+                ", debit=" + debit +
+                ", credit=" + credit +
+                ", date=" + date +
+                '}';
     }
 }

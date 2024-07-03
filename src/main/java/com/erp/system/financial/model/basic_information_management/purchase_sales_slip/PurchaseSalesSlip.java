@@ -217,4 +217,23 @@ public class PurchaseSalesSlip {
     public Boolean getElectronicTaxInvoiceIssued() {
         return electronicTaxInvoiceIssued;
     }
+
+    @Override
+    public String toString() {
+        return "PurchaseSalesSlip{" +
+                "id='" + id + '\'' +
+                ", userCompanyId='" + userCompanyId + '\'' +
+                ", vatTypeId='" + vatTypeId + '\'' +
+                ", vendorId='" + vendorId + '\'' +
+                ", entryId='" + entryId + '\'' +
+                ", departmentId='" + departmentId + '\'' +
+                ", date=" + date +
+                ", itemName='" + itemName + '\'' +
+                ", quantity=" + quantity +
+                ", unitPrice=" + unitPrice +
+                ", supplyValue=" + supplyValue +
+                ", vat=" + vat +
+                ", electronicTaxInvoiceIssued=" + electronicTaxInvoiceIssued +
+                '}';
+    }
 }

@@ -233,4 +233,35 @@ public class CompanyRegistrationDto {
     public void setLocalIncomeTaxOffice(String localIncomeTaxOffice) {
         this.localIncomeTaxOffice = localIncomeTaxOffice;
     }
+
+    @Override
+    public String toString() {
+        return "CompanyRegistrationDto{" +
+                "address='" + address + '\'' +
+                ", headquartersAddress='" + headquartersAddress + '\'' +
+                ", businessPlace='" + businessPlace + '\'' +
+                ", headquarters='" + headquarters + '\'' +
+                ", isSme=" + isSme +
+                ", businessRegistrationNumber='" + businessRegistrationNumber + '\'' +
+                ", corporateRegistrationNumber='" + corporateRegistrationNumber + '\'' +
+                ", establishmentDate=" + establishmentDate +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", active=" + active +
+                ", fiscalYearStart=" + fiscalYearStart +
+                ", fiscalYearEnd=" + fiscalYearEnd +
+                ", fiscalCardinalNumber=" + fiscalCardinalNumber +
+                ", mainIndustryId='" + mainIndustryId + '\'' +
+                ", businessPhone='" + businessPhone + '\'' +
+                ", fax='" + fax + '\'' +
+                ", corporateKindId='" + corporateKindId + '\'' +
+                ", corporateTypeId='" + corporateTypeId + '\'' +
+                ", RepresentativeName='" + RepresentativeName + '\'' +
+                ", idNumber='" + idNumber + '\'' +
+                ", foreign=" + foreign +
+                ", businessTaxOfficeId='" + businessTaxOfficeId + '\'' +
+                ", headquartersTaxOfficeId='" + headquartersTaxOfficeId + '\'' +
+                ", localIncomeTaxOffice='" + localIncomeTaxOffice + '\'' +
+                '}';
+    }
 }

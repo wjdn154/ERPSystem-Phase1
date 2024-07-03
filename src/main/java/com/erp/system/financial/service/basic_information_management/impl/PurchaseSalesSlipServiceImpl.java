@@ -1,13 +1,8 @@
 package com.erp.system.financial.service.basic_information_management.impl;
 
 import com.erp.system.common.annotation.Component;
-import com.erp.system.financial.model.basic_information_management.company_registration.Address;
-import com.erp.system.financial.model.basic_information_management.company_registration.Company;
-import com.erp.system.financial.model.basic_information_management.company_registration.Contact;
-import com.erp.system.financial.model.basic_information_management.company_registration.Representative;
 import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.PurchaseSalesSlip;
-import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.VatType;
-import com.erp.system.financial.model.dto.PurchaseSalesSlipDto;
+import com.erp.system.financial.model.dto.PurchaseSalesSlipRegistrationDto;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntryRepository;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.PurchaseSalesSlipRepository;
 import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.VatTypeRepository;
@@ -35,7 +30,7 @@ public class PurchaseSalesSlipServiceImpl implements PurchaseSalesSlipService {
      * @throws RuntimeException 등록 중 발생한 예외를 처리함
      */
     @Override
-    public void registerPurchaseSalesSlip(PurchaseSalesSlipDto dto) {
+    public void registerPurchaseSalesSlip(PurchaseSalesSlipRegistrationDto dto) {
         try {
             PurchaseSalesSlip purchaseSalesSlip = createPurchaseSalesSlip(dto);
             purchaseSalesSlipRepository.save(purchaseSalesSlip);
@@ -51,7 +46,7 @@ public class PurchaseSalesSlipServiceImpl implements PurchaseSalesSlipService {
      * @param dto 매출매입전표 등록을 위한 정보가 담긴 DTO
      * @return 저장된 매출매입전표 객체
      */
-    public PurchaseSalesSlip createPurchaseSalesSlip(PurchaseSalesSlipDto dto) {
+    public PurchaseSalesSlip createPurchaseSalesSlip(PurchaseSalesSlipRegistrationDto dto) {
         return new PurchaseSalesSlip.Builder()
                 .userCompanyId(dto.getUserCompanyId())
                 .date(dto.getDate())

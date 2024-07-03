@@ -188,4 +188,21 @@ public class Voucher {
     public LocalDate getDate() {
         return date;
     }
+
+    @Override
+    public String toString() {
+        return "Voucher{" +
+                "id='" + id + '\'' +
+                ", userCompanyId='" + userCompanyId + '\'' +
+                ", voucherType=" + voucherType +
+                ", accountId='" + accountId + '\'' +
+                ", vendorId='" + vendorId + '\'' +
+                ", memoId='" + memoId + '\'' +
+                ", departmentId='" + departmentId + '\'' +
+                ", description='" + description + '\'' +
+                ", debit=" + debit +
+                ", credit=" + credit +
+                ", date=" + date +
+                '}';
+    }
 }
