@@ -14,7 +14,7 @@ public class Overtime {
     @NotNull
     private final String employeeId; // 직원 ID 참조
     @NotNull
-    private final String managerId; // 부서 관리자 ID 참조
+    private final String managerId; // 부서 관리자 ID 참조 // ->  승인을 직원이 하면 이거 필요없음.
 
     @NotNull
     private Date date; // 초과 근무 날짜

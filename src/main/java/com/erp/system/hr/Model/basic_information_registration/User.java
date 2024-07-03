@@ -19,7 +19,6 @@ public class User {
     private String password; // 사용자 비밀번호
     @NotNull
     private String role; // 사용자 역할
-    @NotNull
     private String email; // 사용자 이메일
 
     public static int idIndex = 1;

@@ -4,6 +4,7 @@ import com.erp.system.common.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 import org.apache.poi.hpsf.Decimal;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 // 급여 테이블
@@ -15,7 +16,7 @@ public class Salary {
     @NotNull
     private String baseSalary; // 기본 급여
     @NotNull
-    private Decimal bonus; // 보너스
+    private BigDecimal bonus; // 보너스
     @NotNull
     private String payDate; // 지급일
 
@@ -24,7 +25,7 @@ public class Salary {
     public static class Builder {
         private String id;
         private String baseSalary;
-        private Decimal bonus;
+        private BigDecimal bonus;
         private String payDate;
 
         public Builder id(String id){
@@ -37,7 +38,7 @@ public class Salary {
             return this;
         }
 
-        public Builder bonus(Decimal bonus){
+        public Builder bonus(BigDecimal bonus){
             this.bonus = bonus;
             return this;
         }
@@ -63,6 +64,6 @@ public class Salary {
     }
     public String getId() {return id;}
     public String geBaseSalary() {return baseSalary;}
-    public Decimal getBonus() {return bonus;}
+    public BigDecimal getBonus() {return bonus;}
     public String getPayDate() {return payDate;}
 }

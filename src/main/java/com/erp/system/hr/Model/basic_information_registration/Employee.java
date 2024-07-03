@@ -33,7 +33,6 @@ public class Employee {
     private String gender; // 성별
     @NotNull
     private String phoneNumber; // 전화번호
-    @NotNull
     private String email; // 이메일
     @NotNull
     private String address; // 주소

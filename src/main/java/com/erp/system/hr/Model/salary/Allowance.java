@@ -3,6 +3,7 @@ package com.erp.system.hr.Model.salary;
 import com.erp.system.common.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 // 수당 등록 테이블
@@ -14,7 +15,7 @@ public class Allowance {
     @NotNull
     private String allowanceType; // 수당 종류
     @NotNull
-    private Integer amount; // 수당 금액
+    private BigDecimal amount; // 수당 금액
     @NotNull
     private LocalDate issueDate; // 수당 지급 날짜
     @NotNull
@@ -27,7 +28,7 @@ public class Allowance {
     public static class Builder {
         private String id;
         private String allowanceType;
-        private Integer amount;
+        private BigDecimal amount;
         private LocalDate issueDate;
         private String description;
         private String approvalStatus;
@@ -42,7 +43,7 @@ public class Allowance {
             return this;
         }
 
-        public Builder amount(Integer amount){
+        public Builder amount(BigDecimal amount){
             this.amount = amount;
             return this;
         }
@@ -82,7 +83,7 @@ public class Allowance {
         }
     public String getId() {return id;}
     public String getAllowanceType() {return allowanceType;}
-    public Integer getAmount() {return amount;}
+    public BigDecimal getAmount() {return amount;}
     public LocalDate getIssueDate() {return issueDate;}
     public String getDescription() {return description;}
     public String getApprovalStatus() {return approvalStatus;}
