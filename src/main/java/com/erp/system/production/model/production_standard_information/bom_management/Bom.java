@@ -24,15 +24,11 @@ public class Bom {
     @Unique
     private final String id; // PK
     @NotNull
-    private final String parentProductId; // 부모 품목 ID (FK, Product.id)
-    @NotNull
     private final String childProductId; // 자식 품목 ID (FK, Product.id)
     @NotNull
     private final String materialId; // 자재 ID (FK, Material.id)
     @NotNull
     private BigDecimal quantity; // 자재 수량
-    @NotNull
-    private final String priceId; // 단가 ID (FK, Price.id) - 추가된 필드
     private String description; // 설명
     private double lossRate; // LOSS(%): 손실율
     private boolean subcontractingType; // 사급구분: 자재(0) 또는 사급(1)
@@ -48,7 +44,6 @@ public class Bom {
 
     public static class Builder {
         private String id;
-        private String parentProductId;
         private String childProductId;
         private String materialId;
         private BigDecimal quantity;
@@ -64,11 +59,6 @@ public class Bom {
 
         public Builder id(String id) {
             this.id = id;
-            return this;
-        }
-
-        public Builder parentProductId(String parentProductId) {
-            this.parentProductId = parentProductId;
             return this;
         }
 
@@ -139,11 +129,9 @@ public class Bom {
 
     private Bom(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.parentProductId = builder.parentProductId;
         this.childProductId = builder.childProductId;
         this.materialId = builder.materialId;
         this.quantity = builder.quantity;
-        this.priceId = builder.priceId;
         this.description = builder.description;
         this.lossRate = builder.lossRate;
         this.subcontractingType = builder.subcontractingType;
@@ -159,11 +147,9 @@ public class Bom {
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .parentProductId(this.parentProductId)
                 .childProductId(this.childProductId)
                 .materialId(this.materialId)
                 .quantity(this.quantity)
-                .priceId(this.priceId)
                 .description(this.description)
                 .lossRate(this.lossRate)
                 .subcontractingType(this.subcontractingType)
@@ -177,10 +163,6 @@ public class Bom {
     // Getters
     public String getId() {
         return id;
-    }
-
-    public String getParentProductId() {
-        return parentProductId;
     }
 
     public String getChildProductId() {
@@ -198,8 +180,6 @@ public class Bom {
     public String getDescription() {
         return description;
     }
-
-    public String getPriceId() { return priceId; }
 
     public double getLossRate() {
         return lossRate;
@@ -237,11 +217,9 @@ public class Bom {
     public String toString() {
         return "Bom{" +
                 "id='" + id + '\'' +
-                ", parentProductId='" + parentProductId + '\'' +
                 ", childProductId='" + childProductId + '\'' +
                 ", materialId='" + materialId + '\'' +
                 ", quantity=" + quantity + '\'' +
-                ", priceId=" + priceId + '\'' +
                 ", description='" + description + '\'' +
                 ", lossRate=" + lossRate + '\'' +
                 ", subcontractingType=" + subcontractingType +

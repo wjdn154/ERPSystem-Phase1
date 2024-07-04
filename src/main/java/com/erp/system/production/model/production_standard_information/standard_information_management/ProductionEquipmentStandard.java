@@ -26,7 +26,6 @@ public class ProductionEquipmentStandard {
     @NotNull
     private Year purchaseYear; // 구입 연도
     private String description; // 설명
-    private boolean isOperational; // 작동 여부
 
     public static int idIndex = 1;
 
@@ -81,11 +80,6 @@ public class ProductionEquipmentStandard {
             return this;
         }
 
-        public Builder isOperational(boolean isOperational) {
-            this.isOperational = isOperational;
-            return this;
-        }
-
         public ProductionEquipmentStandard build() {
             return new ProductionEquipmentStandard(this);
         }
@@ -103,7 +97,6 @@ public class ProductionEquipmentStandard {
         this.modelNumber = builder.modelNumber;
         this.purchaseYear = builder.purchaseYear;
         this.description = builder.description;
-        this.isOperational = builder.isOperational;
         NotNullValidator.validateFields(this);
         UniqueValidator.validateFields(this);
     }
@@ -118,8 +111,7 @@ public class ProductionEquipmentStandard {
                 .manufacturerId(this.manufacturerId)
                 .modelNumber(this.modelNumber)
                 .purchaseYear(this.purchaseYear)
-                .description(this.description)
-                .isOperational(this.isOperational);
+                .description(this.description);
     }
 
     // getters
@@ -157,10 +149,6 @@ public class ProductionEquipmentStandard {
         return description;
     }
 
-    public boolean isOperational() {
-        return isOperational;
-    }
-
     public static int getIdIndex() {
         return idIndex;
     }
@@ -177,7 +165,6 @@ public class ProductionEquipmentStandard {
                 ", modelNumber='" + modelNumber + '\'' +
                 ", purchaseYear=" + purchaseYear +
                 ", description='" + description + '\'' +
-                ", isOperational=" + isOperational +
                 '}';
     }
 }
