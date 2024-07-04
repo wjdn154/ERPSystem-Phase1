@@ -1,17 +1,14 @@
 package com.erp.system.financial.service.basic_information_management.impl;
 
 import com.erp.system.common.DependencyInjector;
-import com.erp.system.common.ERPDataInitializer;
 import com.erp.system.financial.model.basic_information_management.company_registration.*;
 import com.erp.system.financial.model.dto.CompanyRegistrationDto;
 import com.erp.system.financial.repository.basic_information_management.company_registration.*;
-import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntryRepository;
 import com.erp.system.financial.service.basic_information_management.CompanyRegistrationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -75,7 +72,10 @@ class CompanyRegistrationServiceImplTest {
         companyRegistrationDto.setRepresentativeName("홍길동");
         companyRegistrationDto.setIdNumber("900101-1234567");
         companyRegistrationDto.setForeign(false);
-        companyRegistrationDto.setLocalIncomeTaxOffice("부산시청");
+        companyRegistrationDto.setBusinessTaxOfficeId("1");   // << 새로추가된거
+        companyRegistrationDto.setHeadquartersTaxOfficeId("2"); // << 새로 추가된거
+        companyRegistrationDto.setLocalIncomeTaxOffice("부산시청"); // << 방법이바뀐거
+
 
         // When: 메소드 호출
         companyRegistrationService.registerCompany(companyRegistrationDto);
@@ -105,6 +105,7 @@ class CompanyRegistrationServiceImplTest {
             assertEquals("001", company.getMainIndustryId());
             assertEquals("100-200-300", company.getBusinessRegistrationNumber());
             assertEquals("400-500-600", company.getCorporateRegistrationNumber());
+            assertEquals("부산시청",company.getLocalIncomeTaxOffice());
             assertTrue(company.isSme());
         });
 
@@ -119,8 +120,14 @@ class CompanyRegistrationServiceImplTest {
             assertFalse(representative.isForeign());
         });
 
-        taxRepository.findById(String.valueOf(Tax.idIndex-1)).ifPresent(tax -> {
-            assertEquals("부산시청", tax.getLocalIncomeTaxOffice());
+
+        taxRepository.findById("1").ifPresent(tax -> {
+            assertNull(tax.getName());
         });
+
+        taxRepository.findById("2").ifPresent(tax -> {
+            assertNull(tax.getName());
+        });
+
     }
 }

@@ -1,25 +1,19 @@
 package com.erp.system.financial.model.basic_information_management.vendor_registration;
 
-import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
+import com.erp.system.common.annotation.Unique;
 
-/**
- * 거래처 유형 테이블
- * 거래처의 데이터 저장 테이블
- */
-
-public class VendorType {
+public class VendorCategory {
+    @Unique
     @NotNull
-    private final String id; // 거래처 유형의 고유 식별자
-
+    private final String id; // 거래처 업태종류 고유 식별자
     @NotNull
-    private String category; // 구분(매입,매출 동시)
+    private String category; // 업종형태
 
     public static int idIndex = 1;
 
     public static class Builder {
         private String id;
-
         private String category;
 
         public Builder id(String id) {
@@ -32,15 +26,14 @@ public class VendorType {
             return this;
         }
 
-        public VendorType build() {
-            return new VendorType(this);
+        public VendorCategory build() {
+            return new VendorCategory(this);
         }
-    }// end of Builder
+    } // end of Builder
 
-    private VendorType(Builder builder) {
+    private VendorCategory(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.category = builder.category;
-        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {
@@ -56,6 +49,12 @@ public class VendorType {
     public String getCategory() {
         return category;
     }
+
+    @Override
+    public String toString() {
+        return "VendorCategory{" +
+                "id='" + id + '\'' +
+                ", category='" + category + '\'' +
+                '}';
+    }
 }
-
-

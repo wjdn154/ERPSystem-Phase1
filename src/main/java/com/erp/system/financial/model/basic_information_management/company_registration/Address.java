@@ -1,5 +1,6 @@
 package com.erp.system.financial.model.basic_information_management.company_registration;
 
+import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 
@@ -8,6 +9,7 @@ import com.erp.system.common.annotation.NotNull;
  * 회사등록 시 필요한 주소 데이터 테이블
  */
 public class Address {
+    @Unique
     @NotNull
     private final String id; // 고유식별자
 
@@ -16,9 +18,9 @@ public class Address {
     @NotNull
     private String headquartersAddress; // 본점주소
     @NotNull
-    private String businessPlace; // 사업장 동 코드 (동 ex 대연동)
+    private String businessPlace; // 사업장 동 (동 ex 대연동)
     @NotNull
-    private String headquarters; // 본점 동 코드
+    private String headquarters; // 본점 동
 
     public static int idIndex = 1;
 

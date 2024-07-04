@@ -5,31 +5,25 @@ import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 
 /**
- * 회사 대표자 정보 테이블
- * 회사 등록시 필요한 대표자 데이터 테이블
+ * 세무서 테이블
+ * 회사와 연결될 세무서 정보 데이터 테이블
+ * 
  */
-public class Representative {
+public class TaxOffice {
     @Unique
     @NotNull
-    private final String id; // 고유 식별자
-
-    @Unique
+    private final String id; // 고유식별자
     @NotNull
-    private String name; // 대표자명
-    @Unique
+    private final String name; // 세무서명
     @NotNull
-    private String idNumber; // 대표자 주민번호
-    @NotNull
-    private boolean foreign; // 대표자 외국인여부
+    private final String region; // 세무서 지역
 
     public static int idIndex = 1;
 
     public static class Builder {
         private String id;
-
         private String name;
-        private String idNumber;
-        private boolean foreign;
+        private String region;
 
         public Builder id(String id) {
             this.id = id;
@@ -41,26 +35,21 @@ public class Representative {
             return this;
         }
 
-        public Builder idNumber(String idNumber) {
-            this.idNumber = idNumber;
+        public Builder region(String region) {
+            this.region = region;
             return this;
         }
 
-        public Builder foreign(boolean foreign) {
-            this.foreign = foreign;
-            return this;
+        public TaxOffice build() {
+            return new TaxOffice(this);
         }
 
-        public Representative build() {
-            return new Representative(this);
-        }
-    } // end of Builder
+    }// end of Builder
 
-    private Representative(Builder builder) {
+    private TaxOffice(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.name = builder.name;
-        this.idNumber = builder.idNumber;
-        this.foreign = builder.foreign;
+        this.region = builder.region;
         NotNullValidator.validateFields(this);
     }
 
@@ -68,8 +57,7 @@ public class Representative {
         return new Builder()
                 .id(this.id)
                 .name(this.name)
-                .idNumber(this.idNumber)
-                .foreign(this.foreign);
+                .region(this.region);
     }
 
     public String getId() {
@@ -80,21 +68,17 @@ public class Representative {
         return name;
     }
 
-    public String getIdNumber() {
-        return idNumber;
+    public String getRegion() {
+        return region;
     }
 
-    public boolean isForeign() {
-        return foreign;
-    }
 
     @Override
     public String toString() {
-        return "Representative{" +
+        return "TaxOffice{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", idNumber='" + idNumber + '\'' +
-                ", foreign=" + foreign +
+                ", region='" + region + '\'' +
                 '}';
     }
 }
