@@ -28,7 +28,6 @@ public class Factory {
     @NotNull
     private String managerDepartmentId; // 공장 관리자 부서 ID (FK, 인사 Department.id)
     private String contactNumber; // 공장 연락처
-    private int capacityPerDay; // 공장 하루 생산 능력 (단위: 제품 수량)
 
     public static int idIndex = 1;
 
@@ -41,7 +40,6 @@ public class Factory {
         private String managerId;
         private String managerDepartmentId;
         private String contactNumber;
-        private int capacityPerDay;
 
         public Builder id(String id) {
             this.id = id;
@@ -83,11 +81,6 @@ public class Factory {
             return this;
         }
 
-        public Builder capacityPerDay(int capacityPerDay) {
-            this.capacityPerDay = capacityPerDay;
-            return this;
-        }
-
         public Factory build() {
             return new Factory(this);
         }
@@ -102,7 +95,6 @@ public class Factory {
         this.managerId = builder.managerId;
         this.managerDepartmentId = builder.managerDepartmentId;
         this.contactNumber = builder.contactNumber;
-        this.capacityPerDay = builder.capacityPerDay;
         NotNullValidator.validateFields(this);
         UniqueValidator.validateFields(this);
     }
@@ -117,7 +109,6 @@ public class Factory {
                 .managerId(this.managerId)
                 .managerDepartmentId(this.managerDepartmentId)
                 .contactNumber(this.contactNumber)
-                .capacityPerDay(this.capacityPerDay);
     }
 
     // Getters
@@ -154,10 +145,6 @@ public class Factory {
         return contactNumber;
     }
 
-    public int getCapacityPerDay() {
-        return capacityPerDay;
-    }
-
     public static int getIdIndex() {
         return idIndex;
     }
@@ -173,7 +160,6 @@ public class Factory {
                 ", managerId='" + managerId + '\'' +
                 ", managerDepartmentId='" + managerDepartmentId + '\'' +
                 ", contactNumber='" + contactNumber + '\'' +
-                ", capacityPerDay=" + capacityPerDay +
                 '}';
     }
 }

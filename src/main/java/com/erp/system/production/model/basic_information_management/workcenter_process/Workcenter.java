@@ -18,15 +18,17 @@ public class Workcenter {
     @NotNull
     private final String id; // 작업장코드 (PK)
     @NotNull
+    private final String factoryId; // 공장코드 (FK)
+    @NotNull
+    private String primaryResourceId; // 주작업자원 (FK, 생산자원코드)
+    @NotNull
     @Unique
     private String name; // 작업장명
     @NotNull
     private WorkcenterType type; // 작업장구분 (예: 생산, 조립, 품질 관리 등)
     @NotNull
-    private String primaryResourceId; // 주작업자원 (FK, 생산자원코드)
-    @NotNull
     private String description; // 작업장에 대한 설명
-
+    @NotNull
     private int inputPersonnel; // 투입인원수 ( 변동 잦을 수 있는 값이라 nullable )
 
     public static int idIndex = 1;
@@ -34,14 +36,24 @@ public class Workcenter {
     public static class Builder {
         private String id;
         private String name;
-
+        private String factoryId;
+        private String primaryResourceId;
         private WorkcenterType type;
         private String description;
-        private String primaryResourceId;
         private int inputPersonnel;
 
         public Builder id(String id) {
             this.id = id;
+            return this;
+        }
+
+        public Builder factoryId(String id) {
+            this.factoryId = factoryId;
+            return this;
+        }
+
+        public Builder primaryResourceId(String primaryResourceId) {
+            this.primaryResourceId = primaryResourceId;
             return this;
         }
 
@@ -60,10 +72,6 @@ public class Workcenter {
             return this;
         }
 
-        public Builder primaryResourceId(String primaryResourceId) {
-            this.primaryResourceId = primaryResourceId;
-            return this;
-        }
 
         public Builder inputPersonnel(int inputPersonnel) {
             this.inputPersonnel = inputPersonnel;
@@ -77,10 +85,11 @@ public class Workcenter {
 
     private Workcenter(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
+        this.factoryId = builder.factoryId;
+        this.primaryResourceId = builder.primaryResourceId;
         this.name = builder.name;
         this.type = builder.type;
         this.description = builder.description;
-        this.primaryResourceId = builder.primaryResourceId;
         this.inputPersonnel = builder.inputPersonnel;
         NotNullValidator.validateFields(this);
         UniqueValidator.validateFields(this);
@@ -89,10 +98,11 @@ public class Workcenter {
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
+                .factoryId(this.factoryId)
+                .primaryResourceId(this.primaryResourceId)
                 .name(this.name)
                 .type(this.type)
                 .description(this.description)
-                .primaryResourceId(this.primaryResourceId)
                 .inputPersonnel(this.inputPersonnel);
 
     }
@@ -104,17 +114,13 @@ public class Workcenter {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getFactoryId() { return factoryId;}
 
-    public WorkcenterType getType() {
-        return type;
-    }
+    public String getPrimaryResourceId() { return primaryResourceId; }
 
-    public String getPrimaryResourceId() {
-        return primaryResourceId;
-    }
+    public String getName() { return name; }
+
+    public WorkcenterType getType() { return type; }
 
     public String getDescription() {
         return description;
@@ -132,10 +138,11 @@ public class Workcenter {
     public String toString() {
         return "Workcenter{" +
                 "id='" + id + '\'' +
+                ", factoryId'" + factoryId + '\'' +
+                ", primaryResourceType=" + primaryResourceId +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", type=" + type +
-                ", primaryResourceType=" + primaryResourceId +
                 ", inputPersonnel=" + inputPersonnel +
                 '}';
     }
