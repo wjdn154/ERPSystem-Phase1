@@ -17,6 +17,7 @@ import java.time.LocalDate;
 @EnumMapping
 public class ProductionRequestManagement {
     public enum Status { ENROLLED, CONFIRMED, CANCELED };
+    public enum ProductionType { MASS, CUSTOM }
 
     @NotNull
     @Unique
@@ -33,6 +34,9 @@ public class ProductionRequestManagement {
     private BigDecimal requestQuantity; // 요청 수량
     @NotNull
     private Status status; // 요청의 상태 (등록, 확정, 취소)
+    @NotNull
+    private ProductionType productionType; // 생산유형
+    private boolean isActive; // 사용 여부
     private String remarks; // 비고
 
     public static int idIndex = 1;

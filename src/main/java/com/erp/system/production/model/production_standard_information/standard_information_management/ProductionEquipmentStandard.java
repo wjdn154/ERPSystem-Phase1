@@ -11,20 +11,16 @@ public class ProductionEquipmentStandard {
     @NotNull
     @Unique
     private final String id; // PK
+    @NotNull
+    private String supplierId; // 공급업체 ID (FK, 거래처 테이블)
+    @NotNull
+    private String manufacturerId; // 제조업체 ID (FK, 거래처 테이블)
     @Unique
     @NotNull
     private final String equipmentName; // 설비 이름
     @NotNull
     private String equipmentType; // 설비 종류
-    @NotNull
-    private String supplierId; // 공급업체 ID (FK, 거래처 테이블)
-    @NotNull
-    private String manufacturerId; // 제조업체 ID (FK, 거래처 테이블)
-    @NotNull
-    @Unique
-    private final String modelNumber; // 모델 번호
-    @NotNull
-    private Year purchaseYear; // 구입 연도
+
     private String description; // 설명
 
     public static int idIndex = 1;

@@ -32,8 +32,6 @@ public class Routing {
     private boolean isStandard; // 표준 여부
     @NotNull
     private boolean isActive; // 사용 여부
-    @NotNull
-    private List<RoutingStep> steps; // 공정 경로의 작업 단계 목록
 
     public static int idIndex = 1;
 

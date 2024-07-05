@@ -13,11 +13,11 @@ public class RoutingStep {
     @Unique
     private final String id; // 단계 ID (PK, not null, unique)
     @NotNull
+    private final String routingId; // FK
+    @NotNull
     private String stepName; // 단계명
     @NotNull
     private int sequence; // 단계 순서
-    @NotNull
-    private String equipment; // 사용할 장비
     @NotNull
     private double time; // 소요 시간
 
