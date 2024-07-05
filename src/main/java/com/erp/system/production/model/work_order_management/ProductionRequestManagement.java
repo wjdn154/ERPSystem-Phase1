@@ -43,7 +43,7 @@ public class ProductionRequestManagement {
         private LocalDate requestDate;
         private String requesterId;
         private BigDecimal requestQuantity;
-        private String itemCode;
+        private String productId;
         private Status status;
         private String remarks;
 
@@ -72,8 +72,8 @@ public class ProductionRequestManagement {
             return this;
         }
 
-        public Builder itemCode(String itemCode) {
-            this.itemCode = itemCode;
+        public Builder productId(String productId) {
+            this.productId = productId;
             return this;
         }
 
@@ -98,7 +98,7 @@ public class ProductionRequestManagement {
         this.requestDate = builder.requestDate;
         this.requesterId = builder.requesterId;
         this.requestQuantity = builder.requestQuantity;
-        this.itemCode = builder.itemCode;
+        this.productId = builder.productId;
         this.status = builder.status;
         this.remarks = builder.remarks;
         NotNullValidator.validateFields(this);
@@ -112,7 +112,7 @@ public class ProductionRequestManagement {
                 .requestDate(this.requestDate)
                 .requesterId(this.requesterId)
                 .requestQuantity(this.requestQuantity)
-                .itemCode(this.itemCode)
+                .productId(this.productId)
                 .status(this.status)
                 .remarks(this.remarks);
     }
@@ -138,8 +138,8 @@ public class ProductionRequestManagement {
         return requestQuantity;
     }
 
-    public String getItemCode() {
-        return itemCode;
+    public String getProductId() {
+        return productId;
     }
 
     public Status getStatus() {
@@ -162,7 +162,7 @@ public class ProductionRequestManagement {
                 ", requestDate=" + requestDate +
                 ", requesterId='" + requesterId + '\'' +
                 ", requestQuantity=" + requestQuantity +
-                ", itemCode='" + itemCode + '\'' +
+                ", productId='" + productId + '\'' +
                 ", status=" + status +
                 ", remarks='" + remarks + '\'' +
                 '}';
