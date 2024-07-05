@@ -1,4 +1,4 @@
-package com.erp.system.production.model.production_standard_information;
+package com.erp.system.production.model.production_standard_information.standard_information_management;
 
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.validator.UniqueValidator;
@@ -15,7 +15,7 @@ import java.time.LocalDate;
 
 @EnumMapping
 public class MaterialRequirementStandard {
-    private enum Unit { KG, L, PCS, EA, SET }; // 단위 (예: kg, L, pcs)
+    public enum Unit { KG, L, PCS, EA, SET }; // 단위 (예: kg, L, pcs)
 
     @NotNull
     @Unique

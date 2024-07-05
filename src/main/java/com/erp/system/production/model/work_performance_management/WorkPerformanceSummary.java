@@ -15,7 +15,7 @@ import java.time.LocalDate;
 
 @EnumMapping
 public class WorkPerformanceSummary {
-    private enum Status { ENROLLED, CONFIRMED, CANCELED }
+    public enum Status { ENROLLED, CONFIRMED, CANCELED }
 
     @NotNull
     @Unique

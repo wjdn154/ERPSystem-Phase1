@@ -15,9 +15,9 @@ import java.time.LocalDate;
 public class BomExcel {
     @NotNull
     @Unique
-    private final String id; // 품목코드 (PK, not null, unique)
+    private final String id; // PK
     @NotNull
-    private String name; // 품목 이름 (not null)
+    private String name;
     @NotNull
     private BigDecimal netQuantity; // 정미 수량
     @NotNull
