@@ -23,19 +23,19 @@ public class WorkOrderPerformance {
     @NotNull
     private String workOrderId; // 작업지시 ID (FK, 참조: WorkOrder.id, not null)
     @NotNull
-    private LocalDate performanceDate; // 실적 일자
-    @NotNull
     private String performerId; // 실적자 (FK, 인사)
     @NotNull
-    private BigDecimal performanceQuantity; // 실적 수량
-    @NotNull
-    private String itemCode; // 품목 코드 (FK, 참조: ItemRegistration.id, not null)
+    private String productId; // 품목 코드 (FK, 참조: Product.id, not null)
     @NotNull
     private String performanceDepartmentId; // 실적 부서 (FK, 부서 테이블)
     @NotNull
-    private String performanceTeamId; // 작업팀 단위 (FK, 팀 테이블)
+    private String performanceTeamId; // 작업팀 단위 (FK, 팀 테이블) // TODO : 인사에서 생산부서 작업팀 분류? 혹은 이 필드 제거
     @NotNull
-    private Status status; // 실적의 상태 (등록, 확정, 취소)
+    private LocalDate performanceDate; // 실적 일자
+    @NotNull
+    private BigDecimal performanceQuantity; // 실적 수량
+    @NotNull
+    private Status status; // 실적의 상태 (등록, 확정, 취소) TODO: 생각해보니.. 실적은 실적인데 계획도 아니고 이게 등록확정취소..?
     private String remarks; // 비고
 
     public static int idIndex = 1;
@@ -43,12 +43,12 @@ public class WorkOrderPerformance {
     public static class Builder {
         private String id;
         private String workOrderId;
-        private LocalDate performanceDate;
         private String performerId;
-        private BigDecimal performanceQuantity;
-        private String itemCode;
+        private String productId;
         private String performanceDepartmentId;
         private String performanceTeamId;
+        private LocalDate performanceDate;
+        private BigDecimal performanceQuantity;
         private Status status;
         private String remarks;
 
@@ -62,23 +62,13 @@ public class WorkOrderPerformance {
             return this;
         }
 
-        public Builder performanceDate(LocalDate performanceDate) {
-            this.performanceDate = performanceDate;
-            return this;
-        }
-
         public Builder performerId(String performerId) {
             this.performerId = performerId;
             return this;
         }
 
-        public Builder performanceQuantity(BigDecimal performanceQuantity) {
-            this.performanceQuantity = performanceQuantity;
-            return this;
-        }
-
-        public Builder itemCode(String itemCode) {
-            this.itemCode = itemCode;
+        public Builder productId(String productId) {
+            this.productId = productId;
             return this;
         }
 
@@ -89,6 +79,16 @@ public class WorkOrderPerformance {
 
         public Builder performanceTeamId(String performanceTeamId) {
             this.performanceTeamId = performanceTeamId;
+            return this;
+        }
+
+        public Builder performanceDate(LocalDate performanceDate) {
+            this.performanceDate = performanceDate;
+            return this;
+        }
+
+        public Builder performanceQuantity(BigDecimal performanceQuantity) {
+            this.performanceQuantity = performanceQuantity;
             return this;
         }
 
@@ -110,12 +110,12 @@ public class WorkOrderPerformance {
     private WorkOrderPerformance(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.workOrderId = builder.workOrderId;
-        this.performanceDate = builder.performanceDate;
         this.performerId = builder.performerId;
-        this.performanceQuantity = builder.performanceQuantity;
-        this.itemCode = builder.itemCode;
+        this.productId = builder.productId;
         this.performanceDepartmentId = builder.performanceDepartmentId;
         this.performanceTeamId = builder.performanceTeamId;
+        this.performanceDate = builder.performanceDate;
+        this.performanceQuantity = builder.performanceQuantity;
         this.status = builder.status;
         this.remarks = builder.remarks;
         NotNullValidator.validateFields(this);
@@ -126,12 +126,12 @@ public class WorkOrderPerformance {
         return new Builder()
                 .id(this.id)
                 .workOrderId(this.workOrderId)
-                .performanceDate(this.performanceDate)
                 .performerId(this.performerId)
-                .performanceQuantity(this.performanceQuantity)
-                .itemCode(this.itemCode)
+                .productId(this.productId)
                 .performanceDepartmentId(this.performanceDepartmentId)
                 .performanceTeamId(this.performanceTeamId)
+                .performanceDate(this.performanceDate)
+                .performanceQuantity(this.performanceQuantity)
                 .status(this.status)
                 .remarks(this.remarks);
     }
@@ -145,20 +145,12 @@ public class WorkOrderPerformance {
         return workOrderId;
     }
 
-    public LocalDate getPerformanceDate() {
-        return performanceDate;
-    }
-
     public String getPerformerId() {
         return performerId;
     }
 
-    public BigDecimal getPerformanceQuantity() {
-        return performanceQuantity;
-    }
-
-    public String getItemCode() {
-        return itemCode;
+    public String getProductId() {
+        return productId;
     }
 
     public String getPerformanceDepartmentId() {
@@ -167,6 +159,14 @@ public class WorkOrderPerformance {
 
     public String getPerformanceTeamId() {
         return performanceTeamId;
+    }
+
+    public LocalDate getPerformanceDate() {
+        return performanceDate;
+    }
+
+    public BigDecimal getPerformanceQuantity() {
+        return performanceQuantity;
     }
 
     public Status getStatus() {
@@ -186,12 +186,12 @@ public class WorkOrderPerformance {
         return "WorkOrderPerformance{" +
                 "id='" + id + '\'' +
                 ", workOrderId='" + workOrderId + '\'' +
-                ", performanceDate=" + performanceDate +
                 ", performerId='" + performerId + '\'' +
-                ", performanceQuantity=" + performanceQuantity +
-                ", itemCode='" + itemCode + '\'' +
+                ", productId='" + productId + '\'' +
                 ", performanceDepartmentId='" + performanceDepartmentId + '\'' +
                 ", performanceTeamId='" + performanceTeamId + '\'' +
+                ", performanceDate=" + performanceDate +
+                ", performanceQuantity=" + performanceQuantity +
                 ", status=" + status +
                 ", remarks='" + remarks + '\'' +
                 '}';

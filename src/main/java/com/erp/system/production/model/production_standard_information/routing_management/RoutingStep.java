@@ -15,6 +15,8 @@ public class RoutingStep {
     @NotNull
     private final String routingId; // FK
     @NotNull
+    private final String productionProcessId; //FK
+    @NotNull
     private String stepName; // 단계명
     @NotNull
     private int sequence; // 단계 순서
@@ -25,13 +27,24 @@ public class RoutingStep {
 
     public static class Builder {
         private String id;
+        private String routingId;
+        private String productionProcessId;
         private String stepName;
         private int sequence;
-        private String equipment;
         private double time;
 
         public Builder id(String id) {
             this.id = id;
+            return this;
+        }
+
+        public Builder routingId(String routingId) {
+            this.routingId = routingId;
+            return this;
+        }
+
+        public Builder productionProcessId(String productionProcessId) {
+            this.productionProcessId = productionProcessId;
             return this;
         }
 
@@ -42,11 +55,6 @@ public class RoutingStep {
 
         public Builder sequence(int sequence) {
             this.sequence = sequence;
-            return this;
-        }
-
-        public Builder equipment(String equipment) {
-            this.equipment = equipment;
             return this;
         }
 
@@ -62,9 +70,10 @@ public class RoutingStep {
 
     private RoutingStep(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
+        this.routingId = builder.routingId;
+        this.productionProcessId = builder.productionProcessId;
         this.stepName = builder.stepName;
         this.sequence = builder.sequence;
-        this.equipment = builder.equipment;
         this.time = builder.time;
         NotNullValidator.validateFields(this);
         UniqueValidator.validateFields(this);
@@ -73,9 +82,10 @@ public class RoutingStep {
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
+                .routingId(this.routingId)
+                .productionProcessId(this.productionProcessId)
                 .stepName(this.stepName)
                 .sequence(this.sequence)
-                .equipment(this.equipment)
                 .time(this.time);
     }
 
@@ -84,16 +94,20 @@ public class RoutingStep {
         return id;
     }
 
+    public String getRoutingId() {
+        return routingId;
+    }
+
+    public String getProductionProcessId() {
+        return productionProcessId;
+    }
+
     public String getStepName() {
         return stepName;
     }
 
     public int getSequence() {
         return sequence;
-    }
-
-    public String getEquipment() {
-        return equipment;
     }
 
     public double getTime() {
@@ -108,9 +122,10 @@ public class RoutingStep {
     public String toString() {
         return "RoutingStep{" +
                 "id='" + id + '\'' +
+                ", routingId='" + routingId + '\'' +
+                ", productionProcessId='" + productionProcessId + '\'' +
                 ", stepName='" + stepName + '\'' +
                 ", sequence=" + sequence +
-                ", equipment='" + equipment + '\'' +
                 ", time=" + time +
                 '}';
     }

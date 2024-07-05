@@ -15,9 +15,9 @@ import java.time.LocalDate;
  */
 
 @EnumMapping
-public class ProductionRequestManagement {
+public class ProductionRequest {
     public enum Status { ENROLLED, CONFIRMED, CANCELED };
-    public enum ProductionType { MASS, CUSTOM }
+    public enum RequestProductionType { MAKE_TO_ORDER, MAKE_TO_STOCK, ASSEMBLE_TO_ORDER, CUSTOM_DESIGN_REQUEST, PROTOTYPE_REQUEST }
 
     @NotNull
     @Unique
@@ -25,7 +25,7 @@ public class ProductionRequestManagement {
     @NotNull
     private String requesterId; // 요청자 ID: 생산 요청을 한 사람의 고유 ID (FK, 참조: User.id, not null) - 요청자명, 요청자부서
     @NotNull
-    private String productId; // 제품 코드 (FK, 참조: Product.id, not null)
+    private String productId; // 제품 ID (FK, 참조: Product.id, not null)
     @NotNull
     private String requestName; // 요청명: 생산 요청의 이름
     @NotNull
@@ -35,7 +35,7 @@ public class ProductionRequestManagement {
     @NotNull
     private Status status; // 요청의 상태 (등록, 확정, 취소)
     @NotNull
-    private ProductionType productionType; // 생산유형
+    private RequestProductionType requestProductionType; // 생산유형
     private boolean isActive; // 사용 여부
     private String remarks; // 비고
 
@@ -43,16 +43,27 @@ public class ProductionRequestManagement {
 
     public static class Builder {
         private String id;
+        private String requesterId;
+        private String productId;
         private String requestName;
         private LocalDate requestDate;
-        private String requesterId;
         private BigDecimal requestQuantity;
-        private String productId;
         private Status status;
+        private RequestProductionType requestProductionType;
         private String remarks;
 
         public Builder id(String id) {
             this.id = id;
+            return this;
+        }
+
+        public Builder requesterId(String requesterId) {
+            this.requesterId = requesterId;
+            return this;
+        }
+
+        public Builder productId(String productId) {
+            this.productId = productId;
             return this;
         }
 
@@ -66,18 +77,8 @@ public class ProductionRequestManagement {
             return this;
         }
 
-        public Builder requesterId(String requesterId) {
-            this.requesterId = requesterId;
-            return this;
-        }
-
         public Builder requestQuantity(BigDecimal requestQuantity) {
             this.requestQuantity = requestQuantity;
-            return this;
-        }
-
-        public Builder productId(String productId) {
-            this.productId = productId;
             return this;
         }
 
@@ -86,24 +87,30 @@ public class ProductionRequestManagement {
             return this;
         }
 
+        public Builder requestProductionType(RequestProductionType requestProductionType) {
+            this.requestProductionType = requestProductionType;
+            return this;
+        }
+
         public Builder remarks(String remarks) {
             this.remarks = remarks;
             return this;
         }
 
-        public ProductionRequestManagement build() {
-            return new ProductionRequestManagement(this);
+        public ProductionRequest build() {
+            return new ProductionRequest(this);
         }
     }
 
-    private ProductionRequestManagement(Builder builder) {
+    private ProductionRequest(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.requestName = builder.requestName;
-        this.requestDate = builder.requestDate;
         this.requesterId = builder.requesterId;
-        this.requestQuantity = builder.requestQuantity;
         this.productId = builder.productId;
+        this.requestDate = builder.requestDate;
+        this.requestName = builder.requestName;
+        this.requestQuantity = builder.requestQuantity;
         this.status = builder.status;
+        this.requestProductionType = builder.requestProductionType;
         this.remarks = builder.remarks;
         NotNullValidator.validateFields(this);
         UniqueValidator.validateFields(this);
@@ -112,18 +119,27 @@ public class ProductionRequestManagement {
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
+                .requesterId(this.requesterId)
+                .productId(this.productId)
                 .requestName(this.requestName)
                 .requestDate(this.requestDate)
-                .requesterId(this.requesterId)
                 .requestQuantity(this.requestQuantity)
-                .productId(this.productId)
                 .status(this.status)
+                .requestProductionType(this.requestProductionType)
                 .remarks(this.remarks);
     }
 
     // Getters
     public String getId() {
         return id;
+    }
+
+    public String getRequesterId() {
+        return requesterId;
+    }
+
+    public String getProductId() {
+        return productId;
     }
 
     public String getRequestName() {
@@ -134,21 +150,15 @@ public class ProductionRequestManagement {
         return requestDate;
     }
 
-    public String getRequesterId() {
-        return requesterId;
-    }
-
     public BigDecimal getRequestQuantity() {
         return requestQuantity;
-    }
-
-    public String getProductId() {
-        return productId;
     }
 
     public Status getStatus() {
         return status;
     }
+
+    public RequestProductionType getRequestProductionType() { return requestProductionType; }
 
     public String getRemarks() {
         return remarks;
@@ -160,14 +170,15 @@ public class ProductionRequestManagement {
 
     @Override
     public String toString() {
-        return "ProductionRequestManagement{" +
+        return "ProductionRequest{" +
                 "id='" + id + '\'' +
+                ", requesterId='" + requesterId + '\'' +
+                ", productId='" + productId + '\'' +
                 ", requestName='" + requestName + '\'' +
                 ", requestDate=" + requestDate +
-                ", requesterId='" + requesterId + '\'' +
                 ", requestQuantity=" + requestQuantity +
-                ", productId='" + productId + '\'' +
-                ", status=" + status +
+                ", status=" + status + '\'' +
+                ", requestProductionType=" + requestProductionType + '\'' +
                 ", remarks='" + remarks + '\'' +
                 '}';
     }

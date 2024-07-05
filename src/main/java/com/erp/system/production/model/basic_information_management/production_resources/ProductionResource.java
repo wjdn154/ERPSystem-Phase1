@@ -37,6 +37,7 @@ public class ProductionResource {
         private String name;
         private Type type;
         private String description;
+        private BigDecimal cost;
 
         public Builder id(String id) {
             this.id = id;
@@ -58,6 +59,11 @@ public class ProductionResource {
             return this;
         }
 
+        public Builder cost(BigDecimal cost) {
+            this.cost = cost;
+            return this;
+        }
+
         public ProductionResource build() {
             return new ProductionResource(this);
         }
@@ -69,6 +75,7 @@ public class ProductionResource {
         this.name = builder.name;
         this.type = builder.type;
         this.description = builder.description;
+        this.cost = builder.cost;
         NotNullValidator.validateFields(this);
         UniqueValidator.validateFields(this);
     }
@@ -78,7 +85,8 @@ public class ProductionResource {
                 .id(this.id)
                 .name(this.name)
                 .type(this.type)
-                .description(this.description);
+                .description(this.description)
+                .cost(this.cost);
     }
 
     // Getters
@@ -98,6 +106,8 @@ public class ProductionResource {
         return description;
     }
 
+    public BigDecimal getCost() { return cost; }
+
     public static int getIdIndex() {
         return idIndex;
     }
@@ -110,6 +120,7 @@ public class ProductionResource {
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
                 ", description='" + description + '\'' +
+                ", cost='" + cost + '\'' +
                 '}';
     }
 }

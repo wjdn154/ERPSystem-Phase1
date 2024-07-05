@@ -33,16 +33,26 @@ public class Factory {
 
     public static class Builder {
         private String id;
+        private String managerId;
+        private String managerDepartmentId;
         private Type type;
         private String name;
         private String location;
         private String description;
-        private String managerId;
-        private String managerDepartmentId;
         private String contactNumber;
 
         public Builder id(String id) {
             this.id = id;
+            return this;
+        }
+
+        public Builder managerId(String managerId) {
+            this.managerId = managerId;
+            return this;
+        }
+
+        public Builder managerDepartmentId(String managerDepartmentId) {
+            this.managerDepartmentId = managerDepartmentId;
             return this;
         }
 
@@ -66,16 +76,6 @@ public class Factory {
             return this;
         }
 
-        public Builder managerId(String managerId) {
-            this.managerId = managerId;
-            return this;
-        }
-
-        public Builder managerDepartmentId(String managerDepartmentId) {
-            this.managerDepartmentId = managerDepartmentId;
-            return this;
-        }
-
         public Builder contactNumber(String contactNumber) {
             this.contactNumber = contactNumber;
             return this;
@@ -88,12 +88,12 @@ public class Factory {
 
     private Factory(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
+        this.managerId = builder.managerId;
+        this.managerDepartmentId = builder.managerDepartmentId;
         this.type = builder.type;
         this.name = builder.name;
         this.location = builder.location;
         this.description = builder.description;
-        this.managerId = builder.managerId;
-        this.managerDepartmentId = builder.managerDepartmentId;
         this.contactNumber = builder.contactNumber;
         NotNullValidator.validateFields(this);
         UniqueValidator.validateFields(this);
@@ -102,12 +102,12 @@ public class Factory {
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
+                .managerId(this.managerId)
+                .managerDepartmentId(this.managerDepartmentId)
                 .type(this.type)
                 .name(this.name)
                 .location(this.location)
                 .description(this.description)
-                .managerId(this.managerId)
-                .managerDepartmentId(this.managerDepartmentId)
                 .contactNumber(this.contactNumber);
     }
 
@@ -115,6 +115,14 @@ public class Factory {
 
     public String getId() {
         return id;
+    }
+
+    public String getManagerId() {
+        return managerId;
+    }
+
+    public String getManagerDepartmentId() {
+        return managerDepartmentId;
     }
 
     public Type getType() {
@@ -133,14 +141,6 @@ public class Factory {
         return description;
     }
 
-    public String getManagerId() {
-        return managerId;
-    }
-
-    public String getManagerDepartmentId() {
-        return managerDepartmentId;
-    }
-
     public String getContactNumber() {
         return contactNumber;
     }
@@ -153,12 +153,12 @@ public class Factory {
     public String toString() {
         return "Factory{" +
                 "id='" + id + '\'' +
-                ", type='" + type + '\'' +
-                ", name='" + name + '\'' +
-                ", location='" + location + '\'' +
                 ", description='" + description + '\'' +
                 ", managerId='" + managerId + '\'' +
                 ", managerDepartmentId='" + managerDepartmentId + '\'' +
+                ", type='" + type + '\'' +
+                ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
                 ", contactNumber='" + contactNumber + '\'' +
                 '}';
     }

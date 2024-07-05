@@ -22,17 +22,17 @@ public class WorkCenterPerformance {
     @NotNull
     private String workCenterId; // 작업장 ID (FK, 참조: WorkCenter.id, not null)
     @NotNull
-    private LocalDate performanceDate; // 실적 일자
-    @NotNull
     private String performerId; // 실적자 (FK, 인사)
     @NotNull
-    private BigDecimal performanceQuantity; // 실적 수량
-    @NotNull
-    private String itemCode; // 품목 코드 (FK, 참조: ItemRegistration.id, not null)
+    private String productId; // 제품 코드 (FK, 참조: Product.id, not null)
     @NotNull
     private String performanceDepartmentId; // 실적 부서 (FK, 부서 테이블)
     @NotNull
     private String performanceTeamId; // 작업팀 단위 (FK, 팀 테이블)
+    @NotNull
+    private LocalDate performanceDate; // 실적 일자
+    @NotNull
+    private BigDecimal performanceQuantity; // 실적 수량
     @NotNull
     private Status status; // 실적의 상태 (등록, 확정, 취소)
     private String remarks; // 비고
@@ -42,12 +42,12 @@ public class WorkCenterPerformance {
     public static class Builder {
         private String id;
         private String workCenterId;
-        private LocalDate performanceDate;
         private String performerId;
-        private BigDecimal performanceQuantity;
-        private String itemCode;
+        private String productId;
         private String performanceDepartmentId;
         private String performanceTeamId;
+        private LocalDate performanceDate;
+        private BigDecimal performanceQuantity;
         private Status status;
         private String remarks;
 
@@ -61,23 +61,15 @@ public class WorkCenterPerformance {
             return this;
         }
 
-        public Builder performanceDate(LocalDate performanceDate) {
-            this.performanceDate = performanceDate;
-            return this;
-        }
 
         public Builder performerId(String performerId) {
             this.performerId = performerId;
             return this;
         }
 
-        public Builder performanceQuantity(BigDecimal performanceQuantity) {
-            this.performanceQuantity = performanceQuantity;
-            return this;
-        }
 
-        public Builder itemCode(String itemCode) {
-            this.itemCode = itemCode;
+        public Builder productId(String productId) {
+            this.productId = productId;
             return this;
         }
 
@@ -88,6 +80,16 @@ public class WorkCenterPerformance {
 
         public Builder performanceTeamId(String performanceTeamId) {
             this.performanceTeamId = performanceTeamId;
+            return this;
+        }
+
+        public Builder performanceDate(LocalDate performanceDate) {
+            this.performanceDate = performanceDate;
+            return this;
+        }
+
+        public Builder performanceQuantity(BigDecimal performanceQuantity) {
+            this.performanceQuantity = performanceQuantity;
             return this;
         }
 
@@ -109,12 +111,13 @@ public class WorkCenterPerformance {
     private WorkCenterPerformance(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.workCenterId = builder.workCenterId;
-        this.performanceDate = builder.performanceDate;
         this.performerId = builder.performerId;
-        this.performanceQuantity = builder.performanceQuantity;
-        this.itemCode = builder.itemCode;
+        this.productId = builder.productId;
         this.performanceDepartmentId = builder.performanceDepartmentId;
         this.performanceTeamId = builder.performanceTeamId;
+
+        this.performanceDate = builder.performanceDate;
+        this.performanceQuantity = builder.performanceQuantity;
         this.status = builder.status;
         this.remarks = builder.remarks;
         NotNullValidator.validateFields(this);
@@ -125,12 +128,12 @@ public class WorkCenterPerformance {
         return new Builder()
                 .id(this.id)
                 .workCenterId(this.workCenterId)
-                .performanceDate(this.performanceDate)
                 .performerId(this.performerId)
-                .performanceQuantity(this.performanceQuantity)
-                .itemCode(this.itemCode)
+                .productId(this.productId)
                 .performanceDepartmentId(this.performanceDepartmentId)
                 .performanceTeamId(this.performanceTeamId)
+                .performanceDate(this.performanceDate)
+                .performanceQuantity(this.performanceQuantity)
                 .status(this.status)
                 .remarks(this.remarks);
     }
@@ -144,20 +147,12 @@ public class WorkCenterPerformance {
         return workCenterId;
     }
 
-    public LocalDate getPerformanceDate() {
-        return performanceDate;
-    }
-
     public String getPerformerId() {
         return performerId;
     }
 
-    public BigDecimal getPerformanceQuantity() {
-        return performanceQuantity;
-    }
-
-    public String getItemCode() {
-        return itemCode;
+    public String getProductId() {
+        return productId;
     }
 
     public String getPerformanceDepartmentId() {
@@ -166,6 +161,14 @@ public class WorkCenterPerformance {
 
     public String getPerformanceTeamId() {
         return performanceTeamId;
+    }
+
+    public LocalDate getPerformanceDate() {
+        return performanceDate;
+    }
+
+    public BigDecimal getPerformanceQuantity() {
+        return performanceQuantity;
     }
 
     public Status getStatus() {
@@ -185,12 +188,12 @@ public class WorkCenterPerformance {
         return "WorkCenterPerformance{" +
                 "id='" + id + '\'' +
                 ", workCenterId='" + workCenterId + '\'' +
-                ", performanceDate=" + performanceDate +
                 ", performerId='" + performerId + '\'' +
-                ", performanceQuantity=" + performanceQuantity +
-                ", itemCode='" + itemCode + '\'' +
+                ", productId='" + productId + '\'' +
                 ", performanceDepartmentId='" + performanceDepartmentId + '\'' +
                 ", performanceTeamId='" + performanceTeamId + '\'' +
+                ", performanceDate=" + performanceDate +
+                ", performanceQuantity=" + performanceQuantity +
                 ", status=" + status +
                 ", remarks='" + remarks + '\'' +
                 '}';

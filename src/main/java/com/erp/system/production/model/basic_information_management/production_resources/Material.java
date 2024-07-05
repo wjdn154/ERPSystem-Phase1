@@ -1,11 +1,11 @@
-package com.erp.system.production.model.production_standard_information.routing_management;
+package com.erp.system.production.model.basic_information_management.production_resources;
 
 import com.erp.system.common.annotation.NotNull;
 import com.erp.system.common.annotation.Unique;
 
 // TODO : Complete table
 
-public class Equipment {
+public class Material {
     @NotNull
     @Unique
     private final String id;
@@ -21,7 +21,7 @@ public class Equipment {
         }
     }
 
-    private Equipment(Builder builder) {
+    private Material(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
     }
 
@@ -37,7 +37,7 @@ public class Equipment {
 
     @Override
     public String toString() {
-        return "Equipment{" +
+        return "Material{" +
                 "id='" + id + '\'' +
                 ", '" + "" + '\'' +
                 '}';

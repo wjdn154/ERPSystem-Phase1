@@ -1,4 +1,4 @@
-package com.erp.system.production.model.work_order_management;
+package com.erp.system.production.model.work_performance_management;
 
 import com.erp.system.common.annotation.EnumMapping;
 import com.erp.system.common.annotation.NotNull;
@@ -10,24 +10,20 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @EnumMapping
-public class ProductionReport {
-    public enum ReportType { DAILY, MONTHLY }
-
+public class DailyReport {
     @NotNull
     @Unique
     private final String id; // PK
     @NotNull
-    private final String productionPlanId; // 생산 계획 ID (FK)
+    private final String productionPlanId; // 생산 계획 ID (FK, ProductionPlan) // TODO: What If ADD StockProductionID;
+    @NotNull
+    private String workerId; // 작업자 이름(FK, 인사 부서 테이블)
     @NotNull
     private LocalDate reportDate; // 보고 날짜
-    @NotNull
-    private ReportType reportType; // 리포트 유형
     @NotNull
     private BigDecimal producedQuantity; // 생산량
     @NotNull
     private BigDecimal defectQuantity; // 불량 수량
-    @NotNull
-    private String productionOperator; // 작업자 이름(FK, 인사 부서 테이블)
     private String remarks; // 비고
 
     public static int idIndex = 1;
@@ -36,10 +32,9 @@ public class ProductionReport {
         private String id;
         private String productionPlanId;
         private LocalDate reportDate;
-        private ReportType reportType;
         private BigDecimal producedQuantity;
         private BigDecimal defectQuantity;
-        private String productionOperator;
+        private String workerId;
         private String remarks;
 
         public Builder id(String id) {
@@ -52,13 +47,13 @@ public class ProductionReport {
             return this;
         }
 
-        public Builder reportDate(LocalDate reportDate) {
-            this.reportDate = reportDate;
+        public Builder workerId(String workerId) {
+            this.workerId = workerId;
             return this;
         }
 
-        public Builder reportType(ReportType reportType) {
-            this.reportType = reportType;
+        public Builder reportDate(LocalDate reportDate) {
+            this.reportDate = reportDate;
             return this;
         }
 
@@ -72,29 +67,24 @@ public class ProductionReport {
             return this;
         }
 
-        public Builder productionOperator(String productionOperator) {
-            this.productionOperator = productionOperator;
-            return this;
-        }
 
         public Builder remarks(String remarks) {
             this.remarks = remarks;
             return this;
         }
 
-        public ProductionReport build() {
-            return new ProductionReport(this);
+        public DailyReport build() {
+            return new DailyReport(this);
         }
     }
 
-    private ProductionReport(Builder builder) {
+    private DailyReport(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.productionPlanId = builder.productionPlanId;
+        this.workerId = builder.workerId;
         this.reportDate = builder.reportDate;
-        this.reportType = builder.reportType;
         this.producedQuantity = builder.producedQuantity;
         this.defectQuantity = builder.defectQuantity;
-        this.productionOperator = builder.productionOperator;
         this.remarks = builder.remarks;
         NotNullValidator.validateFields(this);
         UniqueValidator.validateFields(this);
@@ -104,11 +94,10 @@ public class ProductionReport {
         return new Builder()
                 .id(this.id)
                 .productionPlanId(this.productionPlanId)
+                .workerId(this.workerId)
                 .reportDate(this.reportDate)
-                .reportType(this.reportType)
                 .producedQuantity(this.producedQuantity)
                 .defectQuantity(this.defectQuantity)
-                .productionOperator(this.productionOperator)
                 .remarks(this.remarks);
     }
 
@@ -125,10 +114,6 @@ public class ProductionReport {
         return reportDate;
     }
 
-    public ReportType getReportType() {
-        return reportType;
-    }
-
     public BigDecimal getProducedQuantity() {
         return producedQuantity;
     }
@@ -137,8 +122,8 @@ public class ProductionReport {
         return defectQuantity;
     }
 
-    public String getProductionOperator() {
-        return productionOperator;
+    public String getWorkerId() {
+        return workerId;
     }
 
     public String getRemarks() {
@@ -151,14 +136,13 @@ public class ProductionReport {
 
     @Override
     public String toString() {
-        return "ProductionReport{" +
+        return "DailyReport{" +
                 "id='" + id + '\'' +
                 ", productionPlanId='" + productionPlanId + '\'' +
                 ", reportDate=" + reportDate +
-                ", reportType=" + reportType +
                 ", producedQuantity=" + producedQuantity +
                 ", defectQuantity=" + defectQuantity +
-                ", productionOperator='" + productionOperator + '\'' +
+                ", workerId='" + workerId + '\'' +
                 ", remarks='" + remarks + '\'' +
                 '}';
     }

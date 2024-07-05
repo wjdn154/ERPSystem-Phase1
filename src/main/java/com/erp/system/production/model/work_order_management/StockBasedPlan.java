@@ -10,22 +10,19 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /*
-* 생산요청을 기반으로 일정 기간 동안의 생산 목표와 일정을 계획하는 단계
-* - 생산요청에 따른 생산계획 정보를 주로 주간, 월간 또는 프로젝트 단위로 수립되며,
-*   구체적인 일정 계획에 따라 관리하는 테이블
+ *   자체 생산으로 재고 누적을 위해 일정 기간 동안의 생산 목표와 일정을 계획하는 단계
+ *   타 부서로부터 생산 요청을 받아서 계획하는 게 아니라
+ *   자체 생산으로 진행하여 요청기반계획과 달리 `생산요청ID`를 참조하지 않음
  * */
 
 @EnumMapping
-public class RequestProductionPlanManagement {
+public class StockBasedPlan {
     public enum PlanType { DAILY, WEEKLY, MONTHLY, YEARLY };
     public enum Status { PLAN, IN_PROGRESS, COMPLETED };
 
     @NotNull
     @Unique
     private final String id; // PK
-
-    @NotNull
-    private final String productionRequestId; // 생산 요청 ID (FK, 생산요청)
     @NotNull
     private String plannerDepartment; // 계획 담당부서 (FK, 인사)
     @NotNull
@@ -49,7 +46,6 @@ public class RequestProductionPlanManagement {
 
     public static class Builder {
         private String id;
-        private String productionRequestId;
         private PlanType type;
         private LocalDate startDate;
         private LocalDate endDate;
@@ -57,17 +53,13 @@ public class RequestProductionPlanManagement {
         private String plannerDepartment;
         private String plannerName;
         private Status status;
+        private BigDecimal goalQuantity;
         private BigDecimal estimatedCost;
         private BigDecimal actualCost;
 
 
         public Builder id(String id) {
             this.id = id;
-            return this;
-        }
-
-        public Builder productionRequestId(String productionRequestId) {
-            this.productionRequestId = productionRequestId;
             return this;
         }
 
@@ -106,6 +98,11 @@ public class RequestProductionPlanManagement {
             return this;
         }
 
+        public Builder status(BigDecimal goalQuantity) {
+            this.goalQuantity = goalQuantity;
+            return this;
+        }
+
         public Builder estimatedCost(BigDecimal estimatedCost) {
             this.estimatedCost = estimatedCost;
             return this;
@@ -116,15 +113,14 @@ public class RequestProductionPlanManagement {
             return this;
         }
 
-        public RequestProductionPlanManagement build() {
-            return new RequestProductionPlanManagement(this);
+        public StockBasedPlan build() {
+            return new StockBasedPlan(this);
         }
     }
 
     // private Builder Constructor
-    private RequestProductionPlanManagement(Builder builder) {
+    private StockBasedPlan(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.productionRequestId = builder.productionRequestId;
         this.type = builder.type;
         this.startDate = builder.startDate;
         this.endDate = builder.endDate;
@@ -132,6 +128,7 @@ public class RequestProductionPlanManagement {
         this.plannerDepartment = builder.plannerDepartment;
         this.plannerName = builder.plannerName;
         this.status = builder.status;
+        this.goalQuantity = builder.goalQuantity;
         this.estimatedCost = builder.estimatedCost;
         this.actualCost = builder.actualCost;
         NotNullValidator.validateFields(this);
@@ -142,7 +139,6 @@ public class RequestProductionPlanManagement {
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .productionRequestId(this.productionRequestId)
                 .type(this.type)
                 .startDate(this.startDate)
                 .endDate(this.endDate)
@@ -150,6 +146,7 @@ public class RequestProductionPlanManagement {
                 .plannerDepartment(this.plannerDepartment)
                 .plannerName(this.plannerName)
                 .status(this.status)
+                // .goalQuantity(this.goalQuantity) // TODO resolve error
                 .estimatedCost(this.estimatedCost)
                 .actualCost(this.actualCost);
     }
@@ -158,10 +155,6 @@ public class RequestProductionPlanManagement {
 
     public String getId() {
         return id;
-    }
-
-    public String getProductionRequestId() {
-        return productionRequestId;
     }
 
     public PlanType getType() {
@@ -192,6 +185,10 @@ public class RequestProductionPlanManagement {
         return status;
     }
 
+    public BigDecimal getGoalQuantity() {
+        return goalQuantity;
+    }
+
     public BigDecimal getEstimatedCost() {
         return estimatedCost;
     }
@@ -210,7 +207,6 @@ public class RequestProductionPlanManagement {
     public String toString() {
         return "ProductionPlanManagement{" +
                 "id='" + id + '\'' +
-                ", productionRequestId='" + productionRequestId + '\'' +
                 ", type=" + type +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
@@ -218,6 +214,7 @@ public class RequestProductionPlanManagement {
                 ", plannerDepartment='" + plannerDepartment + '\'' +
                 ", plannerName='" + plannerName + '\'' +
                 ", status=" + status +
+                ", goalQuantity='" + goalQuantity + '\'' +
                 ", estimatedCost=" + estimatedCost +
                 ", actualCost=" + actualCost +
                 '}';
