@@ -16,7 +16,7 @@ import java.time.LocalDate;
  * */
 
 @EnumMapping
-public class ProductionPlanManagement {
+public class RequestProductionPlanManagement {
     public enum PlanType { DAILY, WEEKLY, MONTHLY, YEARLY };
     public enum Status { PLAN, IN_PROGRESS, COMPLETED };
 
@@ -27,6 +27,10 @@ public class ProductionPlanManagement {
     @NotNull
     private final String productionRequestId; // 생산 요청 ID (FK, 생산요청)
     @NotNull
+    private String plannerDepartment; // 계획 담당부서 (FK, 인사)
+    @NotNull
+    private String plannerName; // 계획 담당자 이름 (FK, 인사)
+    @NotNull
     private PlanType type; // 계획 유형 (일별, 주별, 월별, 연간)
     @NotNull
     private LocalDate startDate; // 시작 날짜
@@ -35,12 +39,9 @@ public class ProductionPlanManagement {
     @NotNull
     private String planDescription; // 계획 설명
     @NotNull
-    private String plannerDepartment; // 계획 담당부서 (FK, 인사)
-    @NotNull
-    private String plannerName; // 계획 담당자 이름 (FK, 인사)
-    @NotNull
     private Status status; // 상태 (예: 계획, 진행 중, 완료)
-
+    @NotNull
+    private BigDecimal goalQuantity; // 목표수량
     private BigDecimal estimatedCost; // 예상 비용
     private BigDecimal actualCost; // 실제 비용
 
@@ -115,13 +116,13 @@ public class ProductionPlanManagement {
             return this;
         }
 
-        public ProductionPlanManagement build() {
-            return new ProductionPlanManagement(this);
+        public RequestProductionPlanManagement build() {
+            return new RequestProductionPlanManagement(this);
         }
     }
 
     // private Builder Constructor
-    private ProductionPlanManagement(Builder builder) {
+    private RequestProductionPlanManagement(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.productionRequestId = builder.productionRequestId;
         this.type = builder.type;

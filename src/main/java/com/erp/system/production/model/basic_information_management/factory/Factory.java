@@ -17,16 +17,16 @@ public class Factory {
     @NotNull
     private final String id; // 공장 ID (PK, not null, unique)
     @NotNull
+    private String managerId; // 공장 관리자 ID (FK, 인사 Employee.id)
+    @NotNull
+    private String managerDepartmentId; // 공장 관리자 부서 ID (FK, 인사 Department.id)
+    @NotNull
     private Type type; // 공장 구분( 제조 공장, 조립 공장, 포장 공장, 분배 센터, 연구 개발 센터 )
     @NotNull
     private String name; // 공장 이름 (not null)
     @NotNull
     private String location; // 공장 위치 (not null)
     private String description; // 공장 설명
-    @NotNull
-    private String managerId; // 공장 관리자 ID (FK, 인사 Employee.id)
-    @NotNull
-    private String managerDepartmentId; // 공장 관리자 부서 ID (FK, 인사 Department.id)
     private String contactNumber; // 공장 연락처
 
     public static int idIndex = 1;
@@ -108,7 +108,7 @@ public class Factory {
                 .description(this.description)
                 .managerId(this.managerId)
                 .managerDepartmentId(this.managerDepartmentId)
-                .contactNumber(this.contactNumber)
+                .contactNumber(this.contactNumber);
     }
 
     // Getters
