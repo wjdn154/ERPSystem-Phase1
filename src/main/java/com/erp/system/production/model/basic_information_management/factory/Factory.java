@@ -108,7 +108,7 @@ public class Factory {
                 .description(this.description)
                 .managerId(this.managerId)
                 .managerDepartmentId(this.managerDepartmentId)
-                .contactNumber(this.contactNumber)
+                .contactNumber(this.contactNumber);
     }
 
     // Getters

@@ -98,7 +98,6 @@ public class ProductionRequestManagement {
         this.requestDate = builder.requestDate;
         this.requesterId = builder.requesterId;
         this.requestQuantity = builder.requestQuantity;
-        this.itemCode = builder.itemCode;
         this.status = builder.status;
         this.remarks = builder.remarks;
         NotNullValidator.validateFields(this);
@@ -112,7 +111,6 @@ public class ProductionRequestManagement {
                 .requestDate(this.requestDate)
                 .requesterId(this.requesterId)
                 .requestQuantity(this.requestQuantity)
-                .itemCode(this.itemCode)
                 .status(this.status)
                 .remarks(this.remarks);
     }
@@ -138,10 +136,6 @@ public class ProductionRequestManagement {
         return requestQuantity;
     }
 
-    public String getItemCode() {
-        return itemCode;
-    }
-
     public Status getStatus() {
         return status;
     }
@@ -162,7 +156,6 @@ public class ProductionRequestManagement {
                 ", requestDate=" + requestDate +
                 ", requesterId='" + requesterId + '\'' +
                 ", requestQuantity=" + requestQuantity +
-                ", itemCode='" + itemCode + '\'' +
                 ", status=" + status +
                 ", remarks='" + remarks + '\'' +
                 '}';
