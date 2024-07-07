@@ -1,11 +1,13 @@
-package com.erp.system.hr.Model.basic_information_registration;
+package com.erp.system.hr.Model.basic_information_management;
 
-import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
+import com.erp.system.common.annotation.Unique;
 
 // 부서 테이블
 
 public class Department {
+        @Unique
         @NotNull
         private final String id; // 부서 고유 식별자
 
@@ -40,7 +42,7 @@ public class Department {
                 this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
                 this.departmentName = builder.departmentName;
                 this.managerId = builder.managerId;
-                NotNullValidator.safeValidateFields(this);
+                NotNullValidator.validateFields(this);
             }
             public Builder tobuild(){
                 return new Builder()

@@ -1,14 +1,16 @@
-package com.erp.system.hr.Model.attendance_management;
+package com.erp.system.hr.Model.attendance_information_management;
 
 
 // 초과 근무 정보 테이블
 
 import com.erp.system.common.annotation.NotNull;
-import org.apache.poi.hpsf.Decimal;
+import com.erp.system.common.annotation.Unique;
 
+import java.sql.Time;
 import java.util.Date;
 
 public class Overtime {
+    @Unique
     @NotNull
     private final String id; // 초과 근무 정보 식별자
     @NotNull
@@ -19,7 +21,11 @@ public class Overtime {
     @NotNull
     private Date date; // 초과 근무 날짜
     @NotNull
-    private Decimal hours; // 초과 근무 시간
+    private Time hours; // 초과 근무 시간
+    @NotNull
+    private Time startTime; // 초과 근무 시작 시간
+    @NotNull
+    private Time endTime; // 초과 근무 종료 시간
     @NotNull
     private String reason; // 초과 근무 사유
 
@@ -30,7 +36,9 @@ public class Overtime {
         private String employeeId;
         private String managerId;
         private Date date;
-        private Decimal hours;
+        private Time hours;
+        private Time startTime;
+        private Time endTime;
         private String reason;
 
         public Builder id(String id) {
@@ -53,8 +61,16 @@ public class Overtime {
             return this;
         }
 
-        public Builder hours(Decimal hours) {
+        public Builder hours(Time hours) {
             this.hours = hours;
+            return this;
+        }
+        public Builder startTime(Time startTime) {
+            this.startTime = startTime;
+            return this;
+        }
+        public Builder endTime(Time endTime) {
+            this.endTime = endTime;
             return this;
         }
 
@@ -73,6 +89,8 @@ public class Overtime {
         this.managerId = builder.managerId;
         this.date = builder.date;
         this.hours = builder.hours;
+        this.startTime = builder.startTime;
+        this.endTime = builder.endTime;
         this.reason = builder.reason;
     }
 
@@ -83,6 +101,8 @@ public class Overtime {
                 .managerId(this.managerId)
                 .date(this.date)
                 .hours(this.hours)
+                .startTime(this.startTime)
+                .endTime(this.endTime)
                 .reason(this.reason);
     }
 
@@ -94,7 +114,11 @@ public class Overtime {
 
     public Date getDate() {return date;}
 
-    public Decimal getHours() {return hours;}
+    public Time getHours() {return hours;}
+
+    public Time getStartTime() {return startTime;}
+
+    public Time getEndTime() {return endTime;}
 
     public String getReason() {return reason;}
 }

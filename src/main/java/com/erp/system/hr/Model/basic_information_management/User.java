@@ -1,11 +1,13 @@
-package com.erp.system.hr.Model.basic_information_registration;
+package com.erp.system.hr.Model.basic_information_management;
 
-import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
+import com.erp.system.common.annotation.Unique;
 
 // 사용자 테이블
 
 public class User {
+    @Unique
     @NotNull
     private final String id; // 사용자의 고유 식별자
     @NotNull
@@ -19,6 +21,7 @@ public class User {
     private String password; // 사용자 비밀번호
     @NotNull
     private String role; // 사용자 역할
+    @Unique
     private String email; // 사용자 이메일
 
     public static int idIndex = 1;
@@ -77,7 +80,7 @@ public class User {
         this.password = builder.password;
         this.role = builder.role;
         this.email = builder.email;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
     public Builder tobuild() {
         return new Builder()

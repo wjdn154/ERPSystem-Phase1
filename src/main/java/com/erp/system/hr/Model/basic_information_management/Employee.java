@@ -1,17 +1,15 @@
-package com.erp.system.hr.Model.basic_information_registration;
+package com.erp.system.hr.Model.basic_information_management;
 
-import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
-import com.erp.system.financial.model.basic_information_management.account_information.BankAccount;
-import com.erp.system.financial.model.basic_information_management.account_information.BankTransaction;
-import org.apache.poi.hpsf.Decimal;
+import com.erp.system.common.annotation.Unique;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 // 직원 테이블
 
 public class Employee {
+    @Unique
     @NotNull
     private final String id; // 직원의 고유 식별자
     @NotNull
@@ -22,6 +20,14 @@ public class Employee {
     private final String salaryId; // 급여 ID 참조
     @NotNull
     private final String allowanceId; // 수당 ID 참조
+    @NotNull
+    private final String benefitId; // 복리후생 ID 참조
+    @NotNull
+    private final String deductionId; // 공제 ID 참조
+    @NotNull
+    private final String payrollStatementId; // 급여 명세서 ID 참조
+    @NotNull
+    private final String insuranceId; // 보험 ID 참조
 
     @NotNull
     private String firstName; // 이름
@@ -33,6 +39,7 @@ public class Employee {
     private String gender; // 성별
     @NotNull
     private String phoneNumber; // 전화번호
+    @Unique
     private String email; // 이메일
     @NotNull
     private String address; // 주소
@@ -49,6 +56,10 @@ public class Employee {
         private String positionId;
         private String salaryId;
         private String allowanceId;
+        private String benefitId;
+        private String deductionId;
+        private String payrollStatementId;
+        private String insuranceId;
 
         private String firstName;
         private String lastName;
@@ -82,6 +93,26 @@ public class Employee {
 
         public Builder allowanceId(String allowanceId) {
             this.allowanceId = allowanceId;
+            return this;
+        }
+
+        public Builder benefitId(String benefitId) {
+            this.benefitId = benefitId;
+            return this;
+        }
+
+        public Builder deductionId(String deductionId) {
+            this.deductionId = deductionId;
+            return this;
+        }
+
+        public Builder payrollStatementId(String payrollStatementId) {
+            this.payrollStatementId = payrollStatementId;
+            return this;
+        }
+
+        public Builder insuranceId(String insuranceId) {
+            this.insuranceId = insuranceId;
             return this;
         }
 
@@ -141,6 +172,11 @@ public class Employee {
             this.positionId = builder.positionId;
             this.salaryId = builder.salaryId;
             this.allowanceId = builder.allowanceId;
+            this.benefitId = builder.benefitId;
+            this.deductionId = builder.deductionId;
+            this.payrollStatementId = builder.payrollStatementId;
+            this.insuranceId = builder.insuranceId;
+
             this.firstName = builder.firstName;
             this.lastName = builder.lastName;
             this.dataOfBirth = builder.dataOfBirth;
@@ -150,7 +186,7 @@ public class Employee {
             this.address = builder.address;
             this.hireDate = builder.hireDate;
             this.employmentType = builder.employmentType;
-            NotNullValidator.safeValidateFields(this);
+            NotNullValidator.validateFields(this);
         }
 
         public Builder tobuild() {
@@ -160,6 +196,11 @@ public class Employee {
                     .positionId(this.positionId)
                     .salaryId(this.salaryId)
                     .allowanceId(this.allowanceId)
+                    .benefitId(this.benefitId)
+                    .deductionId(this.deductionId)
+                    .payrollStatementId(this.payrollStatementId)
+                    .insuranceId(this.insuranceId)
+
                     .firstName(this.firstName)
                     .lastName(this.lastName)
                     .dataOfBirth(this.dataOfBirth)
@@ -180,6 +221,14 @@ public class Employee {
         public String getSalaryId() {return salaryId;}
 
         public String getAllowanceId() {return allowanceId;}
+
+        public String getBenefitId() {return benefitId;}
+
+        public String getDeductionId() {return deductionId;}
+
+        public String getPayrollStatementId() {return payrollStatementId;}
+
+        public String getInsuranceId() {return insuranceId;}
 
         public String getFirstName() {return firstName;}
 

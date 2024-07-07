@@ -1,14 +1,16 @@
-package com.erp.system.hr.Model.salary;
+package com.erp.system.hr.Model.salary_information_management;
 
-import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
+import com.erp.system.common.annotation.Unique;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-// 수당 등록 테이블
+// 수당 정보 테이블
 
 public class Allowance {
+    @Unique
     @NotNull
     private final String id; // 수당 id
 
@@ -18,9 +20,7 @@ public class Allowance {
     private BigDecimal amount; // 수당 금액
     @NotNull
     private LocalDate issueDate; // 수당 지급 날짜
-    @NotNull
     private String description; // 수당 설명
-    @NotNull
     private String approvalStatus; // 수당 상태
 
     public static int idIndex = 1;
@@ -70,7 +70,7 @@ public class Allowance {
             this.issueDate = builder.issueDate;
             this.description = builder.description;
             this.approvalStatus = builder.approvalStatus;
-            NotNullValidator.safeValidateFields(this);
+            NotNullValidator.validateFields(this);
         }
         public Builder tobuild(){
             return new Builder()

@@ -1,15 +1,15 @@
-package com.erp.system.hr.Model.attendance_management;
+package com.erp.system.hr.Model.attendance_information_management;
 
-import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
-import com.erp.system.financial.model.basic_information_management.account_information.BankTransaction;
-import com.erp.system.hr.Model.basic_information_registration.Employee;
+import com.erp.system.common.annotation.Unique;
 
 import java.util.Date;
 
-// 휴가 테이블
+// 휴가 기록 테이블
 
 public class Leave {
+    @Unique
     @NotNull
     private final String id; // 휴가 기록 고유 식별자
     @NotNull
@@ -82,7 +82,7 @@ public class Leave {
         this.endDate = builder.endDate;
         this.reason = builder.reason;
         this.status = builder.status;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {

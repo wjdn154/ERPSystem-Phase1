@@ -1,15 +1,17 @@
-package com.erp.system.hr.Model.attendance_management;
+package com.erp.system.hr.Model.attendance_information_management;
 
-import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
+import com.erp.system.common.annotation.Unique;
 
 import java.sql.Time;
 import java.util.Date;
 
 
-// 출퇴근 기록 테이블
+// 근태 기록 등록 테이블
 
 public class Attendance {
+    @Unique
     @NotNull
     private final String id; // 근태 기록 식별자
     @NotNull
@@ -74,7 +76,7 @@ public class Attendance {
         this.checkTime = builder.checkTime;
         this.checkoutTime = builder.checkoutTime;
         this.status = builder.status;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
     public Builder tobuild() {
         return new Builder()
