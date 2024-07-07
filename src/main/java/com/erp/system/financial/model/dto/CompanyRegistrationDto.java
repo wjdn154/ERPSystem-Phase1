@@ -8,10 +8,12 @@ import java.time.LocalDate;
  * 회사 등록을 위한 데이터 전송 객체 (DTO).
  */
 public class CompanyRegistrationDto {
-    private String address; // 사업장주소
-    private String headquartersAddress; // 본점주소
-    private String businessPlace; // 사업장 동 코드 (동 ex 대연동)
-    private String headquarters; // 본점 동 코드
+    private String businessAddress; // 사업장주소
+    private String businessPostalCode; // 사업장 우편번호
+    private String businessPlace; // 사업장 동 (동 ex 대연동)
+    private String headquarterAddress; // 본점주소
+    private String headquarterPostalCode; // 본점 우편 번호
+    private String headquarterPlace; // 본점 동
     private boolean isSme; // 중소기업여부
     private String businessRegistrationNumber; // 사업자등록번호
     private String corporateRegistrationNumber; // 법인등록번호
@@ -33,21 +35,23 @@ public class CompanyRegistrationDto {
     private String businessTaxOfficeId; // 사업장관할 세무서 id
     private String headquartersTaxOfficeId; // 본점관할 세무서 id
     private String localIncomeTaxOffice; // 지방소득세납세지
+    private String businessTypeId; // 업종 형태 id
+    private String businessItemId; // 업체 종목 id
 
-    public String getAddress() {
-        return address;
+    public String getBusinessAddress() {
+        return businessAddress;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setBusinessAddress(String businessAddress) {
+        this.businessAddress = businessAddress;
     }
 
-    public String getHeadquartersAddress() {
-        return headquartersAddress;
+    public String getBusinessPostalCode() {
+        return businessPostalCode;
     }
 
-    public void setHeadquartersAddress(String headquartersAddress) {
-        this.headquartersAddress = headquartersAddress;
+    public void setBusinessPostalCode(String businessPostalCode) {
+        this.businessPostalCode = businessPostalCode;
     }
 
     public String getBusinessPlace() {
@@ -58,12 +62,28 @@ public class CompanyRegistrationDto {
         this.businessPlace = businessPlace;
     }
 
-    public String getHeadquarters() {
-        return headquarters;
+    public String getHeadquarterAddress() {
+        return headquarterAddress;
     }
 
-    public void setHeadquarters(String headquarters) {
-        this.headquarters = headquarters;
+    public void setHeadquarterAddress(String headquarterAddress) {
+        this.headquarterAddress = headquarterAddress;
+    }
+
+    public String getHeadquarterPostalCode() {
+        return headquarterPostalCode;
+    }
+
+    public void setHeadquarterPostalCode(String headquarterPostalCode) {
+        this.headquarterPostalCode = headquarterPostalCode;
+    }
+
+    public String getHeadquarterPlace() {
+        return headquarterPlace;
+    }
+
+    public void setHeadquarterPlace(String headquarterPlace) {
+        this.headquarterPlace = headquarterPlace;
     }
 
     public boolean isSme() {
@@ -234,13 +254,31 @@ public class CompanyRegistrationDto {
         this.localIncomeTaxOffice = localIncomeTaxOffice;
     }
 
+    public String getBusinessTypeId() {
+        return businessTypeId;
+    }
+
+    public void setBusinessTypeId(String businessTypeId) {
+        this.businessTypeId = businessTypeId;
+    }
+
+    public String getBusinessItemId() {
+        return businessItemId;
+    }
+
+    public void setBusinessItemId(String businessItemId) {
+        this.businessItemId = businessItemId;
+    }
+
     @Override
     public String toString() {
         return "CompanyRegistrationDto{" +
-                "address='" + address + '\'' +
-                ", headquartersAddress='" + headquartersAddress + '\'' +
+                "businessAddress='" + businessAddress + '\'' +
+                ", businessPostalCode='" + businessPostalCode + '\'' +
                 ", businessPlace='" + businessPlace + '\'' +
-                ", headquarters='" + headquarters + '\'' +
+                ", headquarterAddress='" + headquarterAddress + '\'' +
+                ", headquarterPostalCode='" + headquarterPostalCode + '\'' +
+                ", headquarterPlace='" + headquarterPlace + '\'' +
                 ", isSme=" + isSme +
                 ", businessRegistrationNumber='" + businessRegistrationNumber + '\'' +
                 ", corporateRegistrationNumber='" + corporateRegistrationNumber + '\'' +
@@ -262,6 +300,8 @@ public class CompanyRegistrationDto {
                 ", businessTaxOfficeId='" + businessTaxOfficeId + '\'' +
                 ", headquartersTaxOfficeId='" + headquartersTaxOfficeId + '\'' +
                 ", localIncomeTaxOffice='" + localIncomeTaxOffice + '\'' +
+                ", businessTypeId='" + businessTypeId + '\'' +
+                ", businessItemId='" + businessItemId + '\'' +
                 '}';
     }
 }

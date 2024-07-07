@@ -26,25 +26,21 @@ public class Vendor {
     @NotNull
     private final String managerId; // 자사 거래 담당자 ID
     @NotNull
+    private final String representativeId; // 대표자 정보 테이블 id
+    @NotNull
+    private final String contactId; // 연락처 정보 테이블 id
+    @NotNull
+    private final String addressId; // 주소 정보 테이블 id
+    @NotNull
+    private final String businessItemId; // 업태 종목 테이블 id
+    @NotNull
+    private final String businessTypeId; // 업종형태 테이블 id
+
+    @NotNull
     private String name; // 거래처명
     @Unique
     @NotNull
     private String registrationNumber; // 사업자 등록번호
-    @Unique
-    @NotNull
-    private String personalIdentificationNumber; // 주민등록번호
-    @NotNull
-    private String businessType; // 업종형태
-    private String businessItem; // 종목
-    @NotNull
-    private String address; // 주소
-    @NotNull
-    private String representativeName; // 대표자명
-    @NotNull
-    private String concat; // 연락처
-    private String fax; // 팩스
-    @NotNull
-    private String postalCode; // 주소 우편번호
     private String website; // 홈페이지 주소
     @NotNull
     private String contactPerson; // 거래처 담당자
@@ -63,17 +59,14 @@ public class Vendor {
         private String id;
         private String departmentId;
         private String managerId;
+        private String representativeId;
+        private String contactId;
+        private String addressId;
+        private String businessItemId;
+        private String businessTypeId;
 
         private String name;
         private String registrationNumber;
-        private String personalIdentificationNumber;
-        private String businessType;
-        private String businessItem;
-        private String address;
-        private String representativeName;
-        private String concat;
-        private String fax;
-        private String postalCode;
         private String website;
         private String contactPerson;
         private String email;
@@ -95,6 +88,31 @@ public class Vendor {
             return this;
         }
 
+        public Builder representativeId(String representativeId) {
+            this.representativeId = representativeId;
+            return this;
+        }
+
+        public Builder contactId(String contactId) {
+            this.contactId = contactId;
+            return this;
+        }
+
+        public Builder addressId(String addressId) {
+            this.addressId = addressId;
+            return this;
+        }
+
+        public Builder businessItemId(String businessItemId) {
+            this.businessItemId = businessItemId;
+            return this;
+        }
+
+        public Builder businessTypeId(String businessTypeId) {
+            this.businessTypeId = businessTypeId;
+            return this;
+        }
+
         public Builder name(String name) {
             this.name = name;
             return this;
@@ -105,45 +123,7 @@ public class Vendor {
             return this;
         }
 
-        public Builder personalIdentificationNumber(String personalIdentificationNumber) {
-            this.personalIdentificationNumber = personalIdentificationNumber;
-            return this;
-        }
 
-        public Builder businessType(String businessType) {
-            this.businessType = businessType;
-            return this;
-        }
-
-        public Builder businessItem(String businessItem) {
-            this.businessItem = businessItem;
-            return this;
-        }
-
-        public Builder address(String address) {
-            this.address = address;
-            return this;
-        }
-
-        public Builder representativeName(String representativeName) {
-            this.representativeName = representativeName;
-            return this;
-        }
-
-        public Builder concat(String concat) {
-            this.concat = concat;
-            return this;
-        }
-
-        public Builder fax(String fax) {
-            this.fax = fax;
-            return this;
-        }
-
-        public Builder postalCode(String postalCode) {
-            this.postalCode = postalCode;
-            return this;
-        }
 
         public Builder website(String website) {
             this.website = website;
@@ -179,16 +159,13 @@ public class Vendor {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.departmentId = builder.departmentId;
         this.managerId = builder.managerId;
+        this.representativeId = builder.representativeId;
+        this.contactId = builder.contactId;
+        this.addressId = builder.addressId;
+        this.businessItemId = builder.businessItemId;
+        this.businessTypeId = builder.businessTypeId;
         this.name = builder.name;
         this.registrationNumber = builder.registrationNumber;
-        this.personalIdentificationNumber = builder.personalIdentificationNumber;
-        this.businessType = builder.businessType;
-        this.businessItem = builder.businessItem;
-        this.address = builder.address;
-        this.representativeName = builder.representativeName;
-        this.concat = builder.concat;
-        this.fax = builder.fax;
-        this.postalCode = builder.postalCode;
         this.website = builder.website;
         this.contactPerson = builder.contactPerson;
         this.email = builder.email;
@@ -203,16 +180,13 @@ public class Vendor {
                 .id(this.id)
                 .departmentId(this.departmentId)
                 .managerId(this.managerId)
+                .representativeId(this.representativeId)
+                .contactId(this.contactId)
+                .addressId(this.addressId)
+                .businessItemId(this.businessItemId)
+                .businessTypeId(this.businessTypeId)
                 .name(this.name)
                 .registrationNumber(this.registrationNumber)
-                .personalIdentificationNumber(this.personalIdentificationNumber)
-                .businessType(this.businessType)
-                .businessItem(this.businessItem)
-                .address(this.address)
-                .representativeName(this.representativeName)
-                .concat(this.concat)
-                .fax(this.fax)
-                .postalCode(this.postalCode)
                 .website(this.website)
                 .contactPerson(this.contactPerson)
                 .email(this.email)
@@ -232,44 +206,32 @@ public class Vendor {
         return managerId;
     }
 
+    public String getRepresentativeId() {
+        return representativeId;
+    }
+
+    public String getContactId() {
+        return contactId;
+    }
+
+    public String getAddressId() {
+        return addressId;
+    }
+
+    public String getBusinessItemId() {
+        return businessItemId;
+    }
+
+    public String getBusinessTypeId() {
+        return businessTypeId;
+    }
+
     public String getName() {
         return name;
     }
 
     public String getRegistrationNumber() {
         return registrationNumber;
-    }
-
-    public String getPersonalIdentificationNumber() {
-        return personalIdentificationNumber;
-    }
-
-    public String getBusinessType() {
-        return businessType;
-    }
-
-    public String getBusinessItem() {
-        return businessItem;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public String getRepresentativeName() {
-        return representativeName;
-    }
-
-    public String getConcat() {
-        return concat;
-    }
-
-    public String getFax() {
-        return fax;
-    }
-
-    public String getPostalCode() {
-        return postalCode;
     }
 
     public String getWebsite() {
@@ -298,16 +260,13 @@ public class Vendor {
                 "id='" + id + '\'' +
                 ", departmentId='" + departmentId + '\'' +
                 ", managerId='" + managerId + '\'' +
+                ", representativeId='" + representativeId + '\'' +
+                ", contactId='" + contactId + '\'' +
+                ", addressId='" + addressId + '\'' +
+                ", businessItemId='" + businessItemId + '\'' +
+                ", businessTypeId='" + businessTypeId + '\'' +
                 ", name='" + name + '\'' +
                 ", registrationNumber='" + registrationNumber + '\'' +
-                ", personalIdentificationNumber='" + personalIdentificationNumber + '\'' +
-                ", businessType='" + businessType + '\'' +
-                ", businessItem='" + businessItem + '\'' +
-                ", address='" + address + '\'' +
-                ", representativeName='" + representativeName + '\'' +
-                ", concat='" + concat + '\'' +
-                ", fax='" + fax + '\'' +
-                ", postalCode='" + postalCode + '\'' +
                 ", website='" + website + '\'' +
                 ", contactPerson='" + contactPerson + '\'' +
                 ", email='" + email + '\'' +
