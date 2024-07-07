@@ -2,6 +2,8 @@ package com.erp.system.production.model.production_standard_information.bom_mana
 
 import com.erp.system.common.annotation.NotNull;
 import com.erp.system.common.annotation.Unique;
+import com.erp.system.common.validator.NotNullValidator;
+import com.erp.system.common.validator.UniqueValidator;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -22,19 +24,15 @@ public class Bom {
     @Unique
     private final String id; // PK
     @NotNull
-    private final String parentItemId; // 부모 품목 ID (FK, Item.id)
-    @NotNull
-    private final String childItemId; // 자식 품목 ID (FK, Item.id)
+    private final String childProductId; // 자식 품목 ID (FK, Product.id)
     @NotNull
     private final String materialId; // 자재 ID (FK, Material.id)
     @NotNull
     private BigDecimal quantity; // 자재 수량
-    @NotNull
-    private final String routingId; // 공정 경로 ID (FK, Routing.id)
     private String description; // 설명
     private double lossRate; // LOSS(%): 손실율
     private boolean subcontractingType; // 사급구분: 자재(0) 또는 사급(1)
-    private boolean outsourcingType; // 외주구분: 무상 또는 유상
+    private boolean outsourcingType; // 외주구분: 무상(0) 또는 유상(1)
     @NotNull
     private LocalDate startDate; // Bom 유효시작일
     @NotNull
@@ -46,11 +44,10 @@ public class Bom {
 
     public static class Builder {
         private String id;
-        private String parentItemId;
-        private String childItemId;
+        private String childProductId;
         private String materialId;
         private BigDecimal quantity;
-        private String routingId;
+        private String priceId;
         private String description;
         private double lossRate;
         private boolean subcontractingType;
@@ -65,13 +62,8 @@ public class Bom {
             return this;
         }
 
-        public Builder parentItemId(String parentItemId) {
-            this.parentItemId = parentItemId;
-            return this;
-        }
-
-        public Builder childItemId(String childItemId) {
-            this.childItemId = childItemId;
+        public Builder childProductId(String childProductId) {
+            this.childProductId = childProductId;
             return this;
         }
 
@@ -85,8 +77,8 @@ public class Bom {
             return this;
         }
 
-        public Builder routingId(String routingId) {
-            this.routingId = routingId;
+        public Builder priceId(String priceId) {
+            this.priceId = priceId;
             return this;
         }
 
@@ -137,11 +129,9 @@ public class Bom {
 
     private Bom(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.parentItemId = builder.parentItemId;
-        this.childItemId = builder.childItemId;
+        this.childProductId = builder.childProductId;
         this.materialId = builder.materialId;
         this.quantity = builder.quantity;
-        this.routingId = builder.routingId;
         this.description = builder.description;
         this.lossRate = builder.lossRate;
         this.subcontractingType = builder.subcontractingType;
@@ -150,16 +140,16 @@ public class Bom {
         this.expiredDate = builder.expiredDate;
         this.isActive = builder.isActive;
         this.remarks = builder.remarks;
+        NotNullValidator.validateFields(this);
+        UniqueValidator.validateFields(this);
     }
 
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .parentItemId(this.parentItemId)
-                .childItemId(this.childItemId)
+                .childProductId(this.childProductId)
                 .materialId(this.materialId)
                 .quantity(this.quantity)
-                .routingId(this.routingId)
                 .description(this.description)
                 .lossRate(this.lossRate)
                 .subcontractingType(this.subcontractingType)
@@ -175,12 +165,8 @@ public class Bom {
         return id;
     }
 
-    public String getParentItemId() {
-        return parentItemId;
-    }
-
-    public String getChildItemId() {
-        return childItemId;
+    public String getChildProductId() {
+        return childProductId;
     }
 
     public String getMaterialId() {
@@ -189,10 +175,6 @@ public class Bom {
 
     public BigDecimal getQuantity() {
         return quantity;
-    }
-
-    public String getRoutingId() {
-        return routingId;
     }
 
     public String getDescription() {
@@ -235,17 +217,16 @@ public class Bom {
     public String toString() {
         return "Bom{" +
                 "id='" + id + '\'' +
-                ", parentItemId='" + parentItemId + '\'' +
-                ", childItemId='" + childItemId + '\'' +
+                ", childProductId='" + childProductId + '\'' +
                 ", materialId='" + materialId + '\'' +
-                ", quantity=" + quantity +
+                ", quantity=" + quantity + '\'' +
                 ", description='" + description + '\'' +
-                ", lossRate=" + lossRate +
+                ", lossRate=" + lossRate + '\'' +
                 ", subcontractingType=" + subcontractingType +
                 ", outsourcingType=" + outsourcingType +
-                ", startDate=" + startDate +
-                ", expiredDate=" + expiredDate +
-                ", isActive=" + isActive +
+                ", startDate=" + startDate + '\'' +
+                ", expiredDate=" + expiredDate + '\'' +
+                ", isActive=" + isActive + '\'' +
                 ", remarks='" + remarks + '\'' +
                 '}';
     }

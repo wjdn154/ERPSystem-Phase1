@@ -2,6 +2,8 @@ package com.erp.system.production.model.basic_information_management.workcenter_
 
 import com.erp.system.common.annotation.NotNull;
 import com.erp.system.common.annotation.Unique;
+import com.erp.system.common.validator.NotNullValidator;
+import com.erp.system.common.validator.UniqueValidator;
 
 public class WorkcenterProcess {
     @NotNull
@@ -15,7 +17,6 @@ public class WorkcenterProcess {
     @NotNull
     private String itemId; // (FK, item.id from 물류) // 품번코드
     @NotNull
-    private String productionResourceName; // 생산자원명
     private boolean isActive; // 사용 여부
 
     public static int idIndex = 1;
@@ -25,7 +26,6 @@ public class WorkcenterProcess {
         private String processName;
         private String workcenterId;
         private String itemId;
-        private String productionResourceName;
         private boolean isActive;
 
         public Builder id(String id) {
@@ -48,11 +48,6 @@ public class WorkcenterProcess {
             return this;
         }
 
-        public Builder productionResourceName(String productionResourceName) {
-            this.productionResourceName = productionResourceName;
-            return this;
-        }
-
         public Builder isActive(boolean isActive) {
             this.isActive = isActive;
             return this;
@@ -68,8 +63,9 @@ public class WorkcenterProcess {
         this.processName = builder.processName;
         this.workcenterId = builder.workcenterId;
         this.itemId = builder.itemId;
-        this.productionResourceName = builder.productionResourceName;
         this.isActive = builder.isActive;
+        NotNullValidator.validateFields(this);
+        UniqueValidator.validateFields(this);
     }
 
     public Builder tobuild() {
@@ -78,7 +74,6 @@ public class WorkcenterProcess {
                 .processName(this.processName)
                 .workcenterId(this.workcenterId)
                 .itemId(this.itemId)
-                .productionResourceName(this.productionResourceName)
                 .isActive(this.isActive);
     }
 
@@ -99,10 +94,6 @@ public class WorkcenterProcess {
         return itemId;
     }
 
-    public String getProductionResourceName() {
-        return productionResourceName;
-    }
-
     public boolean isActive() {
         return isActive;
     }
@@ -119,7 +110,6 @@ public class WorkcenterProcess {
                 ", processName='" + processName + '\'' +
                 ", workcenterId='" + workcenterId + '\'' +
                 ", itemId='" + itemId + '\'' +
-                ", productionResourceName='" + productionResourceName + '\'' +
                 ", isActive=" + isActive +
                 '}';
     }

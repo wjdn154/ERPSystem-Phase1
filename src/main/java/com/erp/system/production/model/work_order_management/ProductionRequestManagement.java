@@ -22,15 +22,15 @@ public class ProductionRequestManagement {
     @Unique
     private final String id; // 요청코드: 생산 요청을 식별하기 위한 고유 코드 (PK, not null, unique)
     @NotNull
+    private String requesterId; // 요청자 ID: 생산 요청을 한 사람의 고유 ID (FK, 참조: User.id, not null) - 요청자명, 요청자부서
+    @NotNull
+    private String productId; // 제품 코드 (FK, 참조: Product.id, not null)
+    @NotNull
     private String requestName; // 요청명: 생산 요청의 이름
     @NotNull
     private LocalDate requestDate; // 요청 일자
     @NotNull
-    private String requesterId; // 요청자 ID: 생산 요청을 한 사람의 고유 ID (FK, 참조: User.id, not null) - 요청자명, 요청자부서
-    @NotNull
     private BigDecimal requestQuantity; // 요청 수량
-    @NotNull
-    private String itemCode; // 품목 코드 (FK, 참조: ItemRegistration.id, not null)
     @NotNull
     private Status status; // 요청의 상태 (등록, 확정, 취소)
     private String remarks; // 비고
@@ -98,7 +98,6 @@ public class ProductionRequestManagement {
         this.requestDate = builder.requestDate;
         this.requesterId = builder.requesterId;
         this.requestQuantity = builder.requestQuantity;
-        this.itemCode = builder.itemCode;
         this.status = builder.status;
         this.remarks = builder.remarks;
         NotNullValidator.validateFields(this);
@@ -112,7 +111,6 @@ public class ProductionRequestManagement {
                 .requestDate(this.requestDate)
                 .requesterId(this.requesterId)
                 .requestQuantity(this.requestQuantity)
-                .itemCode(this.itemCode)
                 .status(this.status)
                 .remarks(this.remarks);
     }
@@ -138,10 +136,6 @@ public class ProductionRequestManagement {
         return requestQuantity;
     }
 
-    public String getItemCode() {
-        return itemCode;
-    }
-
     public Status getStatus() {
         return status;
     }
@@ -162,7 +156,6 @@ public class ProductionRequestManagement {
                 ", requestDate=" + requestDate +
                 ", requesterId='" + requesterId + '\'' +
                 ", requestQuantity=" + requestQuantity +
-                ", itemCode='" + itemCode + '\'' +
                 ", status=" + status +
                 ", remarks='" + remarks + '\'' +
                 '}';
