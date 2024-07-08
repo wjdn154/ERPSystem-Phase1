@@ -4,10 +4,8 @@ import com.erp.system.common.annotation.NotNull;
 import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.validator.UniqueValidator;
-import com.erp.system.production.model.production_standard_information.standard_information_management.ProductionEquipmentStandard;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Material {
