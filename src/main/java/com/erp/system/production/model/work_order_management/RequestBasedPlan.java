@@ -107,7 +107,7 @@ public class RequestBasedPlan {
             return this;
         }
 
-        public Builder status(BigDecimal goalQuantity) {
+        public Builder goalQuantity(BigDecimal goalQuantity) {
             this.goalQuantity = goalQuantity;
             return this;
         }
@@ -157,7 +157,7 @@ public class RequestBasedPlan {
                 .plannerDepartment(this.plannerDepartment)
                 .plannerName(this.plannerName)
                 .status(this.status)
-                // .goalQuantity(this.goalQuantity) // TODO resolve error
+                .goalQuantity(this.goalQuantity)
                 .estimatedCost(this.estimatedCost)
                 .actualCost(this.actualCost);
     }

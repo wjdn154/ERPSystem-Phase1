@@ -18,7 +18,7 @@ public class MonthlyReport {
     // TODO: DailyReport 참조하면 생산계획ID 참조 안 해도 될 듯?? 맞나?
     // private final String requestBasedPlanId; // 생산 계획 ID (FK, ProductionPlan)
     @NotNull
-    private String workerId; // 작업자 이름(FK, 인사 부서 테이블)
+    private String workerId; // 작업자 이름(FK, 인사 부서 테이블) // TODO 작업자 테이블은 인사모듈의 부서 테이블 내에서 생산모듈의 작업센터ID를 참조해서 만드는 게 좋은가?
     @NotNull
     private LocalDate reportDate; // 보고 날짜
     @NotNull

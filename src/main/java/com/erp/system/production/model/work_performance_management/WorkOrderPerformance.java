@@ -29,7 +29,7 @@ public class WorkOrderPerformance {
     @NotNull
     private String performanceDepartmentId; // 실적 부서 (FK, 부서 테이블)
     @NotNull
-    private String performanceTeamId; // 작업팀 단위 (FK, 팀 테이블) // TODO : 인사에서 생산부서 작업팀 분류? 혹은 이 필드 제거
+    private String performanceTeamId; // 작업팀 단위 (FK, 팀 테이블) // TODO : 여러 작업센터 참조?...
     @NotNull
     private LocalDate performanceDate; // 실적 일자
     @NotNull
