@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 세무 정보 엔티티에 대한 리포지토리 인터페이스.
  */
-public interface TaxRepository extends GenericRepository<TaxOffice> {
+public interface TaxOfficeRepository extends GenericRepository<TaxOffice> {
     @Override
     void save(TaxOffice entity);
 

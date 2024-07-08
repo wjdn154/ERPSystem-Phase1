@@ -28,6 +28,10 @@ public class Company {
     private final String businessTaxOfficeId; // 사업장관할 세무서 id
     @NotNull
     private final String headquartersTaxOfficeId; // 본점관할 세무서 id
+    @NotNull
+    private final String businessTypeId; // 업종 형태 id
+    @NotNull
+    private final String businessItemId; // 업체 종목 id
 
     @NotNull
     private String localIncomeTaxOffice; // 지방소득세납세지
@@ -51,8 +55,6 @@ public class Company {
     private LocalDate fiscalYearEnd; // 회계연도 마지막일
     @NotNull
     private int fiscalCardinalNumber; // 회계연도 기수
-    @NotNull
-    private String mainIndustryId; // 주업종코드
 
     public static int idIndex = 1;
 
@@ -65,6 +67,8 @@ public class Company {
         private String contactId;
         private String businessTaxOfficeId;
         private String headquartersTaxOfficeId;
+        private String businessTypeId; // << 테이블 id 참조
+        private String businessItemId; // << 테이블 id 참조
         private String localIncomeTaxOffice;
         private boolean isSme;
         private String businessRegistrationNumber;
@@ -76,7 +80,6 @@ public class Company {
         private LocalDate fiscalYearStart;
         private LocalDate fiscalYearEnd;
         private int fiscalCardinalNumber;
-        private String mainIndustryId;
 
 
         public Builder id(String id) {
@@ -174,8 +177,13 @@ public class Company {
             return this;
         }
 
-        public Builder mainIndustryId(String mainIndustryId) {
-            this.mainIndustryId = mainIndustryId;
+        public Builder businessTypeId(String businessTypeId) {
+            this.businessTypeId = businessTypeId;
+            return this;
+        }
+
+        public Builder businessItemId(String businessItemId) {
+            this.businessItemId = businessItemId;
             return this;
         }
 
@@ -206,7 +214,8 @@ public class Company {
         this.fiscalYearStart = builder.fiscalYearStart;
         this.fiscalYearEnd = builder.fiscalYearEnd;
         this.fiscalCardinalNumber = builder.fiscalCardinalNumber;
-        this.mainIndustryId = builder.mainIndustryId;
+        this.businessTypeId = builder.businessTypeId;
+        this.businessItemId = builder.businessItemId;
         NotNullValidator.validateFields(this);
     }
 
@@ -231,7 +240,8 @@ public class Company {
                 .fiscalYearStart(this.fiscalYearStart)
                 .fiscalYearEnd(this.fiscalYearEnd)
                 .fiscalCardinalNumber(this.fiscalCardinalNumber)
-                .mainIndustryId(this.mainIndustryId);
+                .businessTypeId(this.businessTypeId)
+                .businessItemId(this.businessItemId);
     }
 
     public String getId() {
@@ -310,8 +320,12 @@ public class Company {
         return fiscalCardinalNumber;
     }
 
-    public String getMainIndustryId() {
-        return mainIndustryId;
+    public String getBusinessTypeId() {
+        return businessTypeId;
+    }
+
+    public String getBusinessItemId() {
+        return businessItemId;
     }
 
     @Override
@@ -325,6 +339,8 @@ public class Company {
                 ", contactId='" + contactId + '\'' +
                 ", businessTaxOfficeId='" + businessTaxOfficeId + '\'' +
                 ", headquartersTaxOfficeId='" + headquartersTaxOfficeId + '\'' +
+                ", businessTypeId='" + businessTypeId + '\'' +
+                ", businessItemId='" + businessItemId + '\'' +
                 ", localIncomeTaxOffice='" + localIncomeTaxOffice + '\'' +
                 ", isSme=" + isSme +
                 ", businessRegistrationNumber='" + businessRegistrationNumber + '\'' +
@@ -336,7 +352,6 @@ public class Company {
                 ", fiscalYearStart=" + fiscalYearStart +
                 ", fiscalYearEnd=" + fiscalYearEnd +
                 ", fiscalCardinalNumber=" + fiscalCardinalNumber +
-                ", mainIndustryId='" + mainIndustryId + '\'' +
                 '}';
     }
 }

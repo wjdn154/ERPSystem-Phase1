@@ -15,7 +15,9 @@ public class CompanyRegistrationServiceImpl implements CompanyRegistrationServic
     private final CorporateKindRepository corporateKindRepository;
     private final CorporateTypeRepository corporateTypeRepository;
     private final RepresentativeRepository representativeRepository;
-    private final TaxRepository taxRepository;
+    private final TaxOfficeRepository taxOfficeRepository;
+    private final BusinessItemRepository businessItemRepository;
+    private final BusinessTypeRepository businessTypeRepository;
 
     /**
      * 생성자. 각 리포지토리의 인스턴스를 초기화함.
@@ -26,14 +28,18 @@ public class CompanyRegistrationServiceImpl implements CompanyRegistrationServic
                                           CorporateKindRepository corporateKindRepository,
                                           CorporateTypeRepository corporateTypeRepository,
                                           RepresentativeRepository representativeRepository,
-                                          TaxRepository taxRepository) {
+                                          TaxOfficeRepository taxOfficeRepository,
+                                          BusinessItemRepository businessItemRepository,
+                                          BusinessTypeRepository businessTypeRepository) {
         this.addressRepository = addressRepository;
         this.companyRepository = companyRepository;
         this.contactRepository = contactRepository;
         this.corporateKindRepository = corporateKindRepository;
         this.corporateTypeRepository = corporateTypeRepository;
         this.representativeRepository = representativeRepository;
-        this.taxRepository = taxRepository;
+        this.taxOfficeRepository = taxOfficeRepository;
+        this.businessItemRepository = businessItemRepository;
+        this.businessTypeRepository = businessTypeRepository;
     }
 
     /**
@@ -66,10 +72,12 @@ public class CompanyRegistrationServiceImpl implements CompanyRegistrationServic
      */
     private Address createAddress(CompanyRegistrationDto dto) {
         return new Address.Builder()
-                .address(dto.getAddress())
-                .headquartersAddress(dto.getHeadquartersAddress())
+                .businessAddress(dto.getBusinessAddress())
+                .businessPostalCode(dto.getBusinessPostalCode())
                 .businessPlace(dto.getBusinessPlace())
-                .headquarters(dto.getHeadquarters())
+                .headquarterAddress(dto.getHeadquarterAddress())
+                .headquarterPostalCode(dto.getHeadquarterPostalCode())
+                .headquarterPlace(dto.getHeadquarterPlace())
                 .build();
     }
 
@@ -126,7 +134,8 @@ public class CompanyRegistrationServiceImpl implements CompanyRegistrationServic
                 .fiscalYearStart(dto.getFiscalYearStart())
                 .fiscalYearEnd(dto.getFiscalYearEnd())
                 .fiscalCardinalNumber(dto.getFiscalCardinalNumber())
-                .mainIndustryId(dto.getMainIndustryId())
+                .businessTypeId(dto.getBusinessTypeId())
+                .businessItemId(dto.getBusinessItemId())
                 .build();
     }
 }

@@ -10,14 +10,20 @@ import com.erp.system.financial.model.basic_information_management.vendor_regist
 public class VendorRegistrationDto {
     private String departmentId; // 자사 거래 담당 부서 ID
     private String managerId; // 자사 거래 담당자 ID
+    private String businessItemId; // 업태 종목 테이블 id
+    private String businessTypeId; // 업종형태 테이블 id
     private String name; // 거래처명
     private String registrationNumber; // 사업자 등록번호
-    private String personalIdentificationNumber; // 주민등록번호
-    private String businessType; // 업종형태
-    private String businessItem; // 종목
-    private String address; // 주소
     private String representativeName; // 대표자명
-    private String concat; // 연락처
+    private String personalIdentificationNumber; // 주민등록번호
+    private boolean foreign; // 대표자 외국인 여부
+    private String businessAddress; // 사업장주소
+    private String businessPostalCode; // 사업장 우편번호
+    private String businessPlace; // 사업장 동 (동 ex 대연동)
+    private String headquarterPostalCode; // 본점 우편 번호
+    private String headquarterAddress; // 본점주소
+    private String headquarterPlace; // 본점 동
+    private String businessPhone; // 거래처 연락처
     private String fax; // 팩스
     private String postalCode; // 주소 우편번호
     private String website; // 홈페이지 주소
@@ -42,6 +48,22 @@ public class VendorRegistrationDto {
         this.managerId = managerId;
     }
 
+    public String getBusinessItemId() {
+        return businessItemId;
+    }
+
+    public void setBusinessItemId(String businessItemId) {
+        this.businessItemId = businessItemId;
+    }
+
+    public String getBusinessTypeId() {
+        return businessTypeId;
+    }
+
+    public void setBusinessTypeId(String businessTypeId) {
+        this.businessTypeId = businessTypeId;
+    }
+
     public String getName() {
         return name;
     }
@@ -58,38 +80,6 @@ public class VendorRegistrationDto {
         this.registrationNumber = registrationNumber;
     }
 
-    public String getPersonalIdentificationNumber() {
-        return personalIdentificationNumber;
-    }
-
-    public void setPersonalIdentificationNumber(String personalIdentificationNumber) {
-        this.personalIdentificationNumber = personalIdentificationNumber;
-    }
-
-    public String getBusinessType() {
-        return businessType;
-    }
-
-    public void setBusinessType(String businessType) {
-        this.businessType = businessType;
-    }
-
-    public String getBusinessItem() {
-        return businessItem;
-    }
-
-    public void setBusinessItem(String businessItem) {
-        this.businessItem = businessItem;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getRepresentativeName() {
         return representativeName;
     }
@@ -98,12 +88,76 @@ public class VendorRegistrationDto {
         this.representativeName = representativeName;
     }
 
-    public String getConcat() {
-        return concat;
+    public String getPersonalIdentificationNumber() {
+        return personalIdentificationNumber;
     }
 
-    public void setConcat(String concat) {
-        this.concat = concat;
+    public void setPersonalIdentificationNumber(String personalIdentificationNumber) {
+        this.personalIdentificationNumber = personalIdentificationNumber;
+    }
+
+    public boolean isForeign() {
+        return foreign;
+    }
+
+    public void setForeign(boolean foreign) {
+        this.foreign = foreign;
+    }
+
+    public String getBusinessAddress() {
+        return businessAddress;
+    }
+
+    public void setBusinessAddress(String businessAddress) {
+        this.businessAddress = businessAddress;
+    }
+
+    public String getBusinessPostalCode() {
+        return businessPostalCode;
+    }
+
+    public void setBusinessPostalCode(String businessPostalCode) {
+        this.businessPostalCode = businessPostalCode;
+    }
+
+    public String getBusinessPlace() {
+        return businessPlace;
+    }
+
+    public void setBusinessPlace(String businessPlace) {
+        this.businessPlace = businessPlace;
+    }
+
+    public String getHeadquarterPostalCode() {
+        return headquarterPostalCode;
+    }
+
+    public void setHeadquarterPostalCode(String headquarterPostalCode) {
+        this.headquarterPostalCode = headquarterPostalCode;
+    }
+
+    public String getHeadquarterAddress() {
+        return headquarterAddress;
+    }
+
+    public void setHeadquarterAddress(String headquarterAddress) {
+        this.headquarterAddress = headquarterAddress;
+    }
+
+    public String getHeadquarterPlace() {
+        return headquarterPlace;
+    }
+
+    public void setHeadquarterPlace(String headquarterPlace) {
+        this.headquarterPlace = headquarterPlace;
+    }
+
+    public String getBusinessPhone() {
+        return businessPhone;
+    }
+
+    public void setBusinessPhone(String businessPhone) {
+        this.businessPhone = businessPhone;
     }
 
     public String getFax() {
@@ -167,14 +221,20 @@ public class VendorRegistrationDto {
         return "VendorRegistrationDto{" +
                 "departmentId='" + departmentId + '\'' +
                 ", managerId='" + managerId + '\'' +
+                ", businessItemId='" + businessItemId + '\'' +
+                ", businessTypeId='" + businessTypeId + '\'' +
                 ", name='" + name + '\'' +
                 ", registrationNumber='" + registrationNumber + '\'' +
-                ", personalIdentificationNumber='" + personalIdentificationNumber + '\'' +
-                ", businessType='" + businessType + '\'' +
-                ", businessItem='" + businessItem + '\'' +
-                ", address='" + address + '\'' +
                 ", representativeName='" + representativeName + '\'' +
-                ", concat='" + concat + '\'' +
+                ", personalIdentificationNumber='" + personalIdentificationNumber + '\'' +
+                ", foreign=" + foreign +
+                ", businessAddress='" + businessAddress + '\'' +
+                ", businessPostalCode='" + businessPostalCode + '\'' +
+                ", businessPlace='" + businessPlace + '\'' +
+                ", headquarterPostalCode='" + headquarterPostalCode + '\'' +
+                ", headquarterAddress='" + headquarterAddress + '\'' +
+                ", headquarterPlace='" + headquarterPlace + '\'' +
+                ", businessPhone='" + businessPhone + '\'' +
                 ", fax='" + fax + '\'' +
                 ", postalCode='" + postalCode + '\'' +
                 ", website='" + website + '\'' +

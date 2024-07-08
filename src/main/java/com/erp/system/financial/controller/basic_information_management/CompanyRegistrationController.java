@@ -17,7 +17,7 @@ public class CompanyRegistrationController {
     private final CorporateKindRepository corporateKindRepository;
     private final CorporateTypeRepository corporateTypeRepository;
     private final RepresentativeRepository representativeRepository;
-    private final TaxRepository taxRepository;
+    private final TaxOfficeRepository taxOfficeRepository;
 
 
     public CompanyRegistrationController(CompanyRegistrationService companyRegistrationService,
@@ -27,7 +27,7 @@ public class CompanyRegistrationController {
                                          CorporateKindRepository corporateKindRepository,
                                          CorporateTypeRepository corporateTypeRepository,
                                          RepresentativeRepository representativeRepository,
-                                         TaxRepository taxRepository) {
+                                         TaxOfficeRepository taxOfficeRepository) {
         this.companyRegistrationService = companyRegistrationService;
         this.addressRepository = addressRepository;
         this.companyRepository = companyRepository;
@@ -35,7 +35,7 @@ public class CompanyRegistrationController {
         this.corporateKindRepository = corporateKindRepository;
         this.corporateTypeRepository = corporateTypeRepository;
         this.representativeRepository = representativeRepository;
-        this.taxRepository = taxRepository;
+        this.taxOfficeRepository = taxOfficeRepository;
     }
 
     /**
@@ -91,7 +91,7 @@ public class CompanyRegistrationController {
      * @param taxOffice 저장할 세금
      */
     public void saveTax(TaxOffice taxOffice) {
-        taxRepository.save(taxOffice);
+        taxOfficeRepository.save(taxOffice);
     }
 
     /**
@@ -155,7 +155,7 @@ public class CompanyRegistrationController {
      * @return 조회된 세금을 Optional로 반환
      */
     public Optional<TaxOffice> findTaxById(String id) {
-        return taxRepository.findById(id);
+        return taxOfficeRepository.findById(id);
     }
 
     /**
@@ -211,7 +211,7 @@ public class CompanyRegistrationController {
      * @return 저장된 모든 세금의 컬렉션
      */
     public Collection<TaxOffice> findAllTax() {
-        return taxRepository.findAll();
+        return taxOfficeRepository.findAll();
     }
 
 
