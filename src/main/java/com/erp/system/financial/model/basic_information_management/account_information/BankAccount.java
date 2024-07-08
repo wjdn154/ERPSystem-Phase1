@@ -14,7 +14,7 @@ public class BankAccount {
     @NotNull
     private final String id; // 계좌의 고유 식별자
     @NotNull
-    private final String ERPCompanyId; // ERP 사용자 계정 회사 ID
+    private final String userCompanyId; // ERP 사용자 계정 회사 ID
 
     @NotNull
     private LocalDate openingDate; // 개설일
@@ -34,7 +34,7 @@ public class BankAccount {
 
     public static class Builder {
         private String id;
-        private String ERPCompanyId;
+        private String userCompanyId;
 
         private LocalDate openingDate;
         private String bankName;
@@ -48,8 +48,8 @@ public class BankAccount {
             return this;
         }
 
-        public Builder ERPCompanyId(String erp_company_id) {
-            this.ERPCompanyId = erp_company_id;
+        public Builder userCompanyId(String userCompanyId) {
+            this.userCompanyId = userCompanyId;
             return this;
         }
 
@@ -90,7 +90,7 @@ public class BankAccount {
 
     private BankAccount(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.ERPCompanyId = builder.ERPCompanyId;
+        this.userCompanyId = builder.userCompanyId;
         this.openingDate = builder.openingDate;
         this.bankName = builder.bankName;
         this.branchLocation = builder.branchLocation;
@@ -103,7 +103,7 @@ public class BankAccount {
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .ERPCompanyId(this.ERPCompanyId)
+                .userCompanyId(this.userCompanyId)
                 .bankName(this.bankName)
                 .branchLocation(this.branchLocation)
                 .openingDate(this.openingDate)
@@ -116,8 +116,8 @@ public class BankAccount {
         return id;
     }
 
-    public String getERPCompanyId() {
-        return ERPCompanyId;
+    public String getUserCompanyId() {
+        return userCompanyId;
     }
 
     public LocalDate getOpeningDate() {
@@ -148,7 +148,7 @@ public class BankAccount {
     public String toString() {
         return "BankAccount{" +
                 "id='" + id + '\'' +
-                ", ERPCompanyId='" + ERPCompanyId + '\'' +
+                ", userCompanyId='" + userCompanyId + '\'' +
                 ", openingDate=" + openingDate +
                 ", bankName='" + bankName + '\'' +
                 ", branchLocation='" + branchLocation + '\'' +
