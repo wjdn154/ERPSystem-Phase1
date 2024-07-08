@@ -19,30 +19,33 @@ public class PrintAllEntities {
      * @param <T>         엔티티 타입
      */
     public static <T> void printAllEntities(Collection<T> entities, String sortByField) {
-        entities.stream()
-                .sorted((e1, e2) -> {
-                    try {
-                        // 정렬 기준 필드를 가져옴
-                        Field field1 = e1.getClass().getDeclaredField(sortByField);
-                        field1.setAccessible(true);
-                        Field field2 = e2.getClass().getDeclaredField(sortByField);
-                        field2.setAccessible(true);
+        if(!entities.isEmpty()) {
+            System.out.println("Entity : " + entities.toArray()[0].getClass().getSimpleName());
+            entities.stream()
+                    .sorted((e1, e2) -> {
+                        try {
+                            // 정렬 기준 필드를 가져옴
+                            Field field1 = e1.getClass().getDeclaredField(sortByField);
+                            field1.setAccessible(true);
+                            Field field2 = e2.getClass().getDeclaredField(sortByField);
+                            field2.setAccessible(true);
 
-                        // 필드 값을 Integer로 변환하여 비교
-                        Integer value1 = Integer.parseInt(String.valueOf(field1.get(e1)));
-                        Integer value2 = Integer.parseInt(String.valueOf(field2.get(e2)));
+                            // 필드 값을 Integer로 변환하여 비교
+                            Integer value1 = Integer.parseInt(String.valueOf(field1.get(e1)));
+                            Integer value2 = Integer.parseInt(String.valueOf(field2.get(e2)));
 
-                        return Integer.compare(value1, value2);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .forEach(entity -> {
-                    String output = formatEntity(entity);
-                    // 출력 문자열 생성
-                    System.out.println(output);
-                });
-        System.out.println("----------------------------------------------------------------");
+                            return Integer.compare(value1, value2);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    })
+                    .forEach(entity -> {
+                        String output = formatEntity(entity);
+                        // 출력 문자열 생성
+                        System.out.println(output);
+                    });
+            System.out.println("----------------------------------------------------------------");
+        }
     }
 
     /**

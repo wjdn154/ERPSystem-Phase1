@@ -1,13 +1,11 @@
 package com.erp.system.financial.model.book_keeping.accounting_ledger;
 
-import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.UUID;
 
 /**
  * 총계정원장 테이블
@@ -99,7 +97,7 @@ public class GeneralLedger {
         this.credits = builder.credits;
         this.closingBalance = builder.closingBalance;
         this.updatedAt = builder.updatedAt;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {

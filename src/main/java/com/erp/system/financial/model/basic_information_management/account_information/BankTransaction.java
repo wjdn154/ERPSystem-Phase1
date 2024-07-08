@@ -1,12 +1,10 @@
 package com.erp.system.financial.model.basic_information_management.account_information;
 
-import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.UUID;
 
 /**
  * 은행 거래 테이블
@@ -19,13 +17,13 @@ public class BankTransaction {
     private final String accountId; // 계좌 코드 참조
 
     @NotNull
-    private String bankName; // 거래 은행명
-    @NotNull
     private String type; // 거래 유형
     @NotNull
-    private BigDecimal amount; // 거래 금액
-    @NotNull
     private LocalDate date; // 거래 날짜
+    @NotNull
+    private BigDecimal debit; // 차변 금액
+    @NotNull
+    private BigDecimal credit; // 대변 금액
     @NotNull
     private BigDecimal currentBalance; // 현재 잔액
 
@@ -35,9 +33,9 @@ public class BankTransaction {
         private String id;
         private String accountId;
 
-        private String bankName;
         private String type;
-        private BigDecimal amount;
+        private BigDecimal debit;
+        private BigDecimal credit;
         private LocalDate date;
         private BigDecimal currentBalance;
 
@@ -51,19 +49,18 @@ public class BankTransaction {
             return this;
         }
 
-
-        public Builder bankName(String bankName) {
-            this.bankName = bankName;
-            return this;
-        }
-
         public Builder type(String type) {
             this.type = type;
             return this;
         }
 
-        public Builder amount(BigDecimal amount) {
-            this.amount = amount;
+        public Builder debit(BigDecimal debit) {
+            this.debit = debit;
+            return this;
+        }
+
+        public Builder credit(BigDecimal credit) {
+            this.credit = credit;
             return this;
         }
 
@@ -85,21 +82,21 @@ public class BankTransaction {
     private BankTransaction(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.accountId = builder.accountId;
-        this.bankName = builder.bankName;
         this.type = builder.type;
-        this.amount = builder.amount;
+        this.debit = builder.debit;
+        this.credit = builder.credit;
         this.date = builder.date;
         this.currentBalance = builder.currentBalance;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
                 .accountId(this.accountId)
-                .bankName(this.bankName)
                 .type(this.type)
-                .amount(this.amount)
+                .debit(this.debit)
+                .credit(this.credit)
                 .date(this.date)
                 .currentBalance(this.currentBalance);
     }
@@ -112,16 +109,16 @@ public class BankTransaction {
         return accountId;
     }
 
-    public String getBankName() {
-        return bankName;
-    }
-
     public String getType() {
         return type;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
+    public BigDecimal getDebit() {
+        return debit;
+    }
+
+    public BigDecimal getCredit() {
+        return credit;
     }
 
     public LocalDate getDate() {
@@ -130,5 +127,18 @@ public class BankTransaction {
 
     public BigDecimal getCurrentBalance() {
         return currentBalance;
+    }
+
+    @Override
+    public String toString() {
+        return "BankTransaction{" +
+                "id='" + id + '\'' +
+                ", accountId='" + accountId + '\'' +
+                ", type='" + type + '\'' +
+                ", date=" + date +
+                ", debit=" + debit +
+                ", credit=" + credit +
+                ", currentBalance=" + currentBalance +
+                '}';
     }
 }

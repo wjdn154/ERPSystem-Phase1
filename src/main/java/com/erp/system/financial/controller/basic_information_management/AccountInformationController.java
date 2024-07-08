@@ -1,7 +1,6 @@
 package com.erp.system.financial.controller.basic_information_management;
 
 import com.erp.system.common.annotation.Component;
-import com.erp.system.common.annotation.Priority;
 import com.erp.system.financial.model.basic_information_management.account_information.BankAccount;
 import com.erp.system.financial.model.basic_information_management.account_information.BankTransaction;
 import com.erp.system.financial.model.basic_information_management.account_information.Deposit;
@@ -14,13 +13,12 @@ import java.util.Collection;
 import java.util.Optional;
 
 @Component
-@Priority(3)
 public class AccountInformationController {
     private final AccountInformationService accountInformationService;
     private final BankAccountRepository bankAccountRepository;
     private final BankTransactionRepository bankTransactionRepository;
     private final DepositRepository depositRepository;
-
+    
     public AccountInformationController(AccountInformationService accountInformationService,
                                         BankAccountRepository bankAccountRepository,
                                         BankTransactionRepository bankTransactionRepository,

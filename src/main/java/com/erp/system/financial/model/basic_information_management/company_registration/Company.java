@@ -1,11 +1,9 @@
 package com.erp.system.financial.model.basic_information_management.company_registration;
 
-import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.UUID;
 
 /**
  * 회사 기본 정보 테이블
@@ -15,9 +13,9 @@ public class Company {
     @NotNull
     private final String id; // 고유식별자
     @NotNull
-    private final String corporateType; // 법인구분 테이블 참조코드
+    private final String corporateTypeId; // 법인구분 테이블 참조코드
     @NotNull
-    private final String corporateKinds; // 법인종류 테이블 참조코드
+    private final String corporateKindsId; // 법인종류 테이블 참조코드
     @NotNull
     private final String representativeId; // 대표자 정보 테이블 참조코드
     @NotNull
@@ -54,8 +52,8 @@ public class Company {
 
     public static class Builder {
         private String id;
-        private String corporateType;
-        private String corporateKinds;
+        private String corporateTypeId;
+        private String corporateKindsId;
         private String representativeId;
         private String addressId;
         private String contactId;
@@ -78,13 +76,13 @@ public class Company {
             return this;
         }
 
-        public Builder corporateType(String corporateType) {
-            this.corporateType = corporateType;
+        public Builder corporateTypeId(String corporateTypeId) {
+            this.corporateTypeId = corporateTypeId;
             return this;
         }
 
-        public Builder corporateKinds(String corporateKinds) {
-            this.corporateKinds = corporateKinds;
+        public Builder corporateKindsId(String corporateKindsId) {
+            this.corporateKindsId = corporateKindsId;
             return this;
         }
 
@@ -170,8 +168,8 @@ public class Company {
 
     private Company(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.corporateType = builder.corporateType;
-        this.corporateKinds = builder.corporateKinds;
+        this.corporateTypeId = builder.corporateTypeId;
+        this.corporateKindsId = builder.corporateKindsId;
         this.representativeId = builder.representativeId;
         this.addressId = builder.addressId;
         this.contactId = builder.contactId;
@@ -187,7 +185,7 @@ public class Company {
         this.fiscalYearEnd = builder.fiscalYearEnd;
         this.fiscalCardinalNumber = builder.fiscalCardinalNumber;
         this.mainIndustryId = builder.mainIndustryId;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {
@@ -210,12 +208,12 @@ public class Company {
         return id;
     }
 
-    public String getCorporateType() {
-        return corporateType;
+    public String getCorporateTypeId() {
+        return corporateTypeId;
     }
 
-    public String getCorporateKinds() {
-        return corporateKinds;
+    public String getCorporateKindsId() {
+        return corporateKindsId;
     }
 
     public String getRepresentativeId() {
@@ -276,5 +274,29 @@ public class Company {
 
     public String getMainIndustryId() {
         return mainIndustryId;
+    }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "id='" + id + '\'' +
+                ", corporateTypeId='" + corporateTypeId + '\'' +
+                ", corporateKindsId='" + corporateKindsId + '\'' +
+                ", representativeId='" + representativeId + '\'' +
+                ", addressId='" + addressId + '\'' +
+                ", contactId='" + contactId + '\'' +
+                ", taxId='" + taxId + '\'' +
+                ", isSme=" + isSme +
+                ", businessRegistrationNumber='" + businessRegistrationNumber + '\'' +
+                ", corporateRegistrationNumber='" + corporateRegistrationNumber + '\'' +
+                ", establishmentDate=" + establishmentDate +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", active=" + active +
+                ", fiscalYearStart=" + fiscalYearStart +
+                ", fiscalYearEnd=" + fiscalYearEnd +
+                ", fiscalCardinalNumber=" + fiscalCardinalNumber +
+                ", mainIndustryId='" + mainIndustryId + '\'' +
+                '}';
     }
 }

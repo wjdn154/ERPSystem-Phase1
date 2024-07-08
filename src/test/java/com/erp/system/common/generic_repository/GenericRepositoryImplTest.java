@@ -36,7 +36,6 @@ class GenericRepositoryImplTest {
         // When: 저장된 객체를 ID 또는 코드로 조회
         Optional<Entry> foundById = entryRepository.findById(entry.getId());
 
-
         // Then: 객체는 null이 아니며 속성이 일치해야 함
         assertTrue(foundById.isPresent(), "조회된 객체는 null이 아니어야 함.");
         assertEquals(entry.getId(), foundById.get().getId(), "조회된 객체의 ID가 일치해야 함.");

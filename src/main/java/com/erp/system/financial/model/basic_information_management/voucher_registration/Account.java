@@ -1,10 +1,7 @@
 package com.erp.system.financial.model.basic_information_management.voucher_registration;
 
-import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
-import com.erp.system.financial.model.basic_information_management.vendor_registration.VendorType;
-
-import java.util.UUID;
 
 /**
  * 계정과목 테이블
@@ -16,7 +13,6 @@ public class Account {
 
     @NotNull
     private String name; // 계정과목명
-    @NotNull
     private String reference; // 참고 사항
 
     public static int idIndex = 1; // static 변수 추가
@@ -51,7 +47,7 @@ public class Account {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.name = builder.name;
         this.reference = builder.reference;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {

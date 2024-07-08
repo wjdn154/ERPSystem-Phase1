@@ -1,12 +1,12 @@
 package com.erp.system.financial.model.basic_information_management.purchase_sales_slip;
 
-import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.validator.NotNullValidator;
+import com.erp.system.common.validator.UniqueValidator;
 import com.erp.system.common.annotation.NotNull;
+import com.erp.system.common.annotation.Unique;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.UUID;
 
 /**
  * 매입매출전표
@@ -18,12 +18,13 @@ public class PurchaseSalesSlip {
     @NotNull
     private final String vatTypeId; // 부가세유형 참조 코드
     @NotNull
-    private final String supplierId; // 공급처 코드 (거래처 테이블 참조)
+    private final String vendorId; // 거래처 코드 (거래처 테이블 참조)
     @NotNull
     private final String entryId; // 분개 코드 (분개 관련 정보 참조)
 
     @NotNull
     private LocalDate date; // 전표 날짜
+    @Unique
     @NotNull
     private String itemName; // 품목명
     @NotNull
@@ -42,7 +43,7 @@ public class PurchaseSalesSlip {
     public static class Builder {
         private String id;
         private String vatTypeId;
-        private String supplierId;
+        private String vendorId;
         private String entryId;
 
         private LocalDate date;
@@ -63,8 +64,8 @@ public class PurchaseSalesSlip {
             return this;
         }
 
-        public Builder supplierId(String supplierId) {
-            this.supplierId = supplierId;
+        public Builder vendorId(String vendorId) {
+            this.vendorId = vendorId;
             return this;
         }
 
@@ -116,7 +117,7 @@ public class PurchaseSalesSlip {
     private PurchaseSalesSlip(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.vatTypeId = builder.vatTypeId;
-        this.supplierId = builder.supplierId;
+        this.vendorId = builder.vendorId;
         this.entryId = builder.entryId;
         this.date = builder.date;
         this.itemName = builder.itemName;
@@ -125,14 +126,15 @@ public class PurchaseSalesSlip {
         this.supplyValue = builder.supplyValue;
         this.vat = builder.vat;
         this.electronicTaxInvoiceIssued = builder.electronicTaxInvoiceIssued;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
+        UniqueValidator.validateFields(this);
     }
 
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
                 .vatTypeId(this.vatTypeId)
-                .supplierId(this.supplierId)
+                .vendorId(this.vendorId)
                 .entryId(this.entryId)
                 .date(this.date)
                 .itemName(this.itemName)
@@ -151,8 +153,8 @@ public class PurchaseSalesSlip {
         return vatTypeId;
     }
 
-    public String getSupplierId() {
-        return supplierId;
+    public String getvendorId() {
+        return vendorId;
     }
 
     public String getEntryId() {

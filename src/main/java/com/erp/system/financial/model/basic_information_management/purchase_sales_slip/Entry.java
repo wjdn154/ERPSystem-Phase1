@@ -1,9 +1,7 @@
 package com.erp.system.financial.model.basic_information_management.purchase_sales_slip;
 
-import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
-
-import java.util.UUID;
 
 /**
  * 분개 테이블
@@ -40,7 +38,7 @@ public class Entry {
     private Entry(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.name = builder.name;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {

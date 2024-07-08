@@ -1,6 +1,7 @@
 package com.erp.system.logistics.model.basic_information_registration.product_registration;
 
 import com.erp.system.common.annotation.NotNull;
+import com.erp.system.common.validator.NotNullValidator;
 
 /**
  * 제품 테이블
@@ -12,11 +13,13 @@ public class Product {
 
     @NotNull
     private final String id; // 제품의 고유 식별자
-
+    private String productionProcessId; // 생성공정 코드 참조
     @NotNull
     private String groupId; // 제품 그룹 코드 참조
     @NotNull
-    private String unitPriceId; // 단가 코드 참조
+    private double purchasePrice; // 입고 단가
+    @NotNull
+    private double salesPrice; // 출고 단가
     @NotNull
     private String name; // 제품명
     @NotNull
@@ -28,8 +31,10 @@ public class Product {
 
     public static class Builder {
         private String id;
+        private String productionProcessId;
         private String groupId;
-        private String unitPriceId;
+        private double purchasePrice;
+        private double salesPrice;
         private String name;
         private String standard;
         private ProductType productType;
@@ -39,13 +44,23 @@ public class Product {
             return this;
         }
 
+        public Builder productionProcessId(String productionProcessId) {
+            this.productionProcessId = productionProcessId;
+            return this;
+        }
+
         public Builder groupId(String groupId) {
             this.groupId = groupId;
             return this;
         }
 
-        public Builder unitPriceId(String unitPriceId) {
-            this.unitPriceId = unitPriceId;
+        public Builder purchasePrice(double purchasePrice) {
+            this.purchasePrice = purchasePrice;
+            return this;
+        }
+
+        public Builder salesPrice(double salesPrice) {
+            this.salesPrice = salesPrice;
             return this;
         }
 
@@ -71,18 +86,23 @@ public class Product {
 
     private Product(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
+        this.productionProcessId = builder.productionProcessId;
         this.groupId = builder.groupId;
-        this.unitPriceId = builder.unitPriceId;
+        this.purchasePrice = builder.purchasePrice;
+        this.salesPrice = builder.salesPrice;
         this.name = builder.name;
         this.standard = builder.standard;
         this.productType = builder.productType;
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
+                .productionProcessId(this.productionProcessId)
                 .groupId(this.groupId)
-                .unitPriceId(this.unitPriceId)
+                .purchasePrice(this.purchasePrice)
+                .salesPrice(this.salesPrice)
                 .name(this.name)
                 .standard(this.standard)
                 .productType(this.productType);
@@ -92,12 +112,20 @@ public class Product {
         return id;
     }
 
+    public String getProductionProcessId() {
+        return productionProcessId;
+    }
+
     public String getGroupId() {
         return groupId;
     }
 
-    public String getUnitPriceId() {
-        return unitPriceId;
+    public double getPurchasePrice() {
+        return purchasePrice;
+    }
+
+    public double getSalesPrice() {
+        return salesPrice;
     }
 
     public String getName() {
@@ -110,5 +138,19 @@ public class Product {
 
     public ProductType getProductType() {
         return productType;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id='" + id + '\'' +
+                ", productionProcessId='" + productionProcessId + '\'' +
+                ", groupId='" + groupId + '\'' +
+                ", purchasePrice=" + purchasePrice +
+                ", salesPrice=" + salesPrice +
+                ", name='" + name + '\'' +
+                ", standard='" + standard + '\'' +
+                ", productType=" + productType +
+                '}';
     }
 }

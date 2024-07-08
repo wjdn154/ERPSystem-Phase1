@@ -1,9 +1,9 @@
 package com.erp.system.financial.model.basic_information_management.vendor_registration;
 
-import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.validator.NotNullValidator;
+import com.erp.system.common.validator.UniqueValidator;
 import com.erp.system.common.annotation.NotNull;
-
-import java.util.UUID;
+import com.erp.system.common.annotation.Unique;
 
 /**
  * 거래처 테이블
@@ -19,8 +19,10 @@ public class Vendor {
 
     @NotNull
     private String name; // 거래처명
+    @Unique
     @NotNull
     private String registrationNumber; // 사업자 등록번호
+    @Unique
     private String personalIdentificationNumber; // 주민등록번호
     private String businessType; // 업종형태
     private String businessItem; // 종목
@@ -100,7 +102,8 @@ public class Vendor {
         this.businessType = builder.businessType;
         this.businessItem = builder.businessItem;
         this.address = builder.address;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
+        UniqueValidator.validateFields(this);
     }
 
     public Builder tobuild() {

@@ -1,9 +1,7 @@
 package com.erp.system.financial.model.basic_information_management.company_registration;
 
-import com.erp.system.common.NotNullValidator;
+import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
-
-import java.util.UUID;
 
 /**
  * 연락처 정보 테이블
@@ -13,8 +11,6 @@ import java.util.UUID;
 public class Contact {
     @NotNull
     private final String id; // 고유식별자
-    @NotNull
-    private final String companyId; // 연결된 회사 ID
 
     @NotNull
     private String businessPhone; // 사업장 전화번호
@@ -24,18 +20,12 @@ public class Contact {
 
     public static class Builder {
         private String id;
-        private String companyId;
 
         private String businessPhone;
         private String fax;
 
         public Builder id(String id) {
             this.id = id;
-            return this;
-        }
-
-        public Builder companyId(String companyId) {
-            this.companyId = companyId;
             return this;
         }
 
@@ -56,16 +46,14 @@ public class Contact {
 
     private Contact(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.companyId = builder.companyId;
         this.businessPhone = builder.businessPhone;
         this.fax = builder.fax;
-        NotNullValidator.safeValidateFields(this);
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .companyId(this.companyId)
                 .businessPhone(this.businessPhone)
                 .fax(this.fax);
     }
@@ -74,15 +62,20 @@ public class Contact {
         return id;
     }
 
-    public String getCompanyId() {
-        return companyId;
-    }
-
     public String getBusinessPhone() {
         return businessPhone;
     }
 
     public String getFax() {
         return fax;
+    }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "id='" + id + '\'' +
+                ", businessPhone='" + businessPhone + '\'' +
+                ", fax='" + fax + '\'' +
+                '}';
     }
 }

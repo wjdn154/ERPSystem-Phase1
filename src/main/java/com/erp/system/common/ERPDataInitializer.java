@@ -1,6 +1,7 @@
 package com.erp.system.common;
 
 import com.erp.system.common.annotation.EnumMapping;
+import com.erp.system.common.generic_repository.GenericRepository;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.reflections.Reflections;
@@ -22,7 +23,7 @@ import static com.erp.system.common.Rules.*;
  * Excel 파일을 읽고 각 시트의 데이터를 처리하는 클래스.
  */
 public class ERPDataInitializer {
-    private final DependencyInjector di = DependencyInjector.getInstance();
+    private final DependencyInjector injector = DependencyInjector.getInstance();
     private final Map<String, Class<?>> tableClassMap = new HashMap<>();
     private final Map<Class<?>, Object> repositories = new HashMap<>();
 
@@ -33,7 +34,10 @@ public class ERPDataInitializer {
         System.out.println("--------------------------- 2. ERPDataInitializer 생성 ---------------------------");
         long startTime = System.nanoTime(); // 시작 시간 기록
         autoRegister();
-        readExcel(DATA_FILE_PATH);
+        readExcel(FINANCIAL_ACCOUNTING_DATA_FILE_PATH); // 회계 데이터
+//        readExcel(HUMAN_RESOURCES_DATA_FILE_PATH); // 인사 데이터
+//        readExcel(LOGISTICS_DATA_FILE_PATH); // 물류 데이터
+//        readExcel(PRODUCTION_DATA_FILE_PATH); // 생산 데이터
         long endTime = System.nanoTime(); // 종료 시간 기록
         long duration = endTime - startTime; // 실행 시간 계산
         System.out.println("\n실행 시간: " + duration / 1_000_000 + " ms");
@@ -44,7 +48,7 @@ public class ERPDataInitializer {
      * 모든 컴포넌트를 자동으로 등록하고 매핑을 설정함.
      */
     private void autoRegister() {
-        Map<Class<?>, Object> allRepositories = di.getAllInstancesOfType(Object.class); // 모든 리포지토리를 가져옴
+        Map<Class<?>, Object> allRepositories = injector.getAllInstancesOfType(GenericRepository.class); // 모든 리포지토리를 가져옴
 
         // 모든 리포지토리를 순회하며 처리함
         for (Map.Entry<Class<?>, Object> entry : allRepositories.entrySet()) {
@@ -67,13 +71,13 @@ public class ERPDataInitializer {
      * @return 도메인 클래스
      */
     private Class<?> getDomainClassFromRepository(Class<?> repositoryClass) {
-        Type[] genericInterfaces = repositoryClass.getGenericInterfaces(); // 리포지토리 클래스의 제네릭 인터페이스를 가져옴
+        Type[] interfaces = repositoryClass.getGenericInterfaces(); // 리포지토리 클래스의 인터페이스를 가져옴
 
-        // 제네릭 인터페이스를 순회
-        for (Type genericInterface : genericInterfaces) {
-            // 제네릭 인터페이스가 ParameterizedType인 경우
-            if (genericInterface instanceof ParameterizedType) {
-                ParameterizedType parameterizedType = (ParameterizedType) genericInterface; // ParameterizedType으로 캐스팅
+        // 인터페이스를 순회
+        for (Type getInterface : interfaces) {
+            // 인터페이스가 ParameterizedType(제네릭이 적용된 타입)인 경우
+            if (getInterface instanceof ParameterizedType) {
+                ParameterizedType parameterizedType = (ParameterizedType) getInterface; // ParameterizedType으로 캐스팅
                 Type[] actualTypeArguments = parameterizedType.getActualTypeArguments(); // 제네릭 타입 인수를 가져옴
 
                 // 제네릭 타입 인수가 있는 경우
@@ -90,7 +94,7 @@ public class ERPDataInitializer {
      * Excel 파일을 읽음.
      * @param filePath 읽을 파일의 경로
      */
-    public void readExcel(String filePath) {
+    private void readExcel(String filePath) {
         try (FileInputStream fis = new FileInputStream(filePath);
              Workbook workbook = new XSSFWorkbook(fis)) {
             for (Sheet sheet : workbook) {
@@ -106,7 +110,7 @@ public class ERPDataInitializer {
      * 시트 내의 데이터를 읽어 엔티티 객체로 변환 후 저장
      * @param sheet 처리할 Excel 시트 객체
      */
-    public void handleSheet(Sheet sheet) {
+    private void handleSheet(Sheet sheet) {
         Row typeRow = sheet.getRow(0); // 첫 번째 행에서 데이터 타입을 읽음
         Row headerRow = sheet.getRow(1); // 두 번째 행에서 컬럼 이름을 읽음
 
@@ -232,7 +236,6 @@ public class ERPDataInitializer {
             if (method.getName().equalsIgnoreCase(fieldName) && method.getParameterTypes().length == 1) {
                 Class<?> methodParamType = method.getParameterTypes()[0];
                 if (methodParamType.equals(parameterType) || methodParamType.isEnum()) {
-                    System.out.println("method3 = " + method);
                     return method;
                 }
             }

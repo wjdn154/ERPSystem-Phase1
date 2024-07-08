@@ -1,6 +1,7 @@
 package com.erp.system.logistics.model.basic_information_registration.product_registration;
 
 import com.erp.system.common.annotation.NotNull;
+import com.erp.system.common.validator.NotNullValidator;
 
 /**
  * 제품 그룹 테이블
@@ -37,6 +38,7 @@ public class ProductGroup {
     private ProductGroup(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.name = builder.name;
+        NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {
@@ -51,5 +53,13 @@ public class ProductGroup {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductGroup{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
