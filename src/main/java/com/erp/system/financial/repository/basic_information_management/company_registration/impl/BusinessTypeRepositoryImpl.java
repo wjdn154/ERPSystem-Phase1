@@ -8,7 +8,7 @@ import com.erp.system.financial.repository.basic_information_management.company_
 
 @Component
 public class BusinessTypeRepositoryImpl extends GenericRepositoryImpl<BusinessType> implements BusinessTypeRepository {
-    private BusinessTypeRepositoryImpl(Class<BusinessType> entityClass) {
-        super(entityClass);
+    private BusinessTypeRepositoryImpl() {
+        super(BusinessType.class);
     }
 }

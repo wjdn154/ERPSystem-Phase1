@@ -39,7 +39,7 @@ public class Company {
     @NotNull
     private String localIncomeTaxOffice; // 지방소득세납세지
     @NotNull
-    private boolean isSme; // 중소기업여부
+    private Boolean isSme; // 중소기업여부
     @NotNull
     private String businessRegistrationNumber; // 사업자등록번호
     @NotNull
@@ -51,7 +51,7 @@ public class Company {
     @NotNull
     private EntityType entityType; // 구분 (법인, 개인)
     @NotNull
-    private boolean active; // 사용여부(사용, 미사용)
+    private Boolean active; // 사용여부(사용, 미사용)
     @NotNull
     private LocalDate fiscalYearStart; // 회계연도 시작일
     @NotNull
@@ -73,13 +73,13 @@ public class Company {
         private String businessTypeId; // << 테이블 id 참조
         private String businessItemId; // << 테이블 id 참조
         private String localIncomeTaxOffice;
-        private boolean isSme;
+        private Boolean isSme;
         private String businessRegistrationNumber;
         private String corporateRegistrationNumber;
         private LocalDate establishmentDate;
         private String name;
         private EntityType entityType;
-        private boolean active;
+        private Boolean active;
         private LocalDate fiscalYearStart;
         private LocalDate fiscalYearEnd;
         private int fiscalCardinalNumber;
@@ -130,7 +130,7 @@ public class Company {
             return this;
         }
 
-        public Builder isSme(boolean isSme) {
+        public Builder isSme(Boolean isSme) {
             this.isSme = isSme;
             return this;
         }
@@ -160,7 +160,7 @@ public class Company {
             return this;
         }
 
-        public Builder active(boolean active) {
+        public Builder active(Boolean active) {
             this.active = active;
             return this;
         }
