@@ -3,113 +3,65 @@ package com.erp.system.production.service.work_order_management.impl;
 import com.erp.system.common.annotation.Component;
 import com.erp.system.production.model.dto.RequestBasedPlanDto;
 import com.erp.system.production.model.work_order_management.RequestBasedPlan;
+import com.erp.system.production.repository.work_order_management.ProductionRequestRepository;
 import com.erp.system.production.repository.work_order_management.RequestBasedPlanRepository;
 import com.erp.system.production.service.work_order_management.RequestBasedPlanService;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-// TODO: resolve error and complete logic after generating excel table examples of models
-
 @Component
 public class RequestBasedPlanServiceImpl implements RequestBasedPlanService {
-    private final RequestBasedPlanRepository requestBasedPlanRepository;
+    // Repository Instance
+    private final ProductionRequestRepository productionRequestRepository;
 
-    public RequestBasedPlanServiceImpl(RequestBasedPlanRepository requestBasedPlanRepository) {
-        this.requestBasedPlanRepository = requestBasedPlanRepository;
+    /**
+     * 생성자. 각 Repo의 인스턴스 초기화
+     * @param productionRequestRepository
+     */
+    // 생성자 주입 방식으로 Repository를 주입
+    public RequestBasedPlanServiceImpl(ProductionRequestRepository productionRequestRepository) {
+        this.productionRequestRepository = productionRequestRepository;
     }
 
-    // Custom Exception Defined Within the Class
-    private class PlanNotFoundException extends RuntimeException {
-        public PlanNotFoundException(String message) {
-            super(message);
+    /**
+     * 생산 계획 등록 메소드. 주어진 DTO 바탕으로 생산계획 관련 모든 정보 생성 및 저장.
+     * @param requestBasedPlanDto 생산계획 등록 위한 정보가 담긴 DTO
+     * @throws RuntimeException 등록 중 발생한 예외를 처리함
+     */
+    @Override
+    public void createRequestBasedPlan(RequestBasedPlanDto requestBasedPlanDto) {
+        try {
+            // TODO ProductionRequestDto
+            // ProductionRequest productionRequest = createProductionRequest(productionRequestDto);
+            // productionRequestRepository.save(productionRequest);
+        } catch (Exception e) {
+            System.err.println("생산계획 생성 중 에러 발생: " + e.getMessage());
+            throw new RuntimeException("생성 실패", e);
         }
     }
 
-    @Override
-    public RequestBasedPlanDto getPlanById(String planId) {
-        RequestBasedPlan plan = requestBasedPlanRepository.findById(planId)
-                .orElseThrow(() -> new PlanNotFoundException("Plan not found"));
-        return convertToDto(plan);
-    }
-
-    @Override
-    public List<RequestBasedPlanDto> getAllPlans() {
-        List<RequestBasedPlan> plans = requestBasedPlanRepository.findAll();
-        return plans.stream().map(this::convertToDto).collect(Collectors.toList());
-    }
-
-    @Override
-    public RequestBasedPlanDto createPlan(RequestBasedPlanDto requestBasedPlanDto) {
-        RequestBasedPlan plan = convertToEntity(requestBasedPlanDto);
-        RequestBasedPlan savedPlan = requestBasedPlanRepository.save(plan);
-        return convertToDto(savedPlan);
-    }
-
-    @Override
-    public RequestBasedPlanDto updatePlan(String planId, RequestBasedPlanDto requestBasedPlanDto) {
-        RequestBasedPlan existingPlan = requestBasedPlanRepository.findById(planId)
-                .orElseThrow(() -> new PlanNotFoundException("Plan not found"));
-        updateEntity(existingPlan, requestBasedPlanDto);
-        RequestBasedPlan updatedPlan = requestBasedPlanRepository.save(existingPlan);
-        return convertToDto(updatedPlan);
-    }
-
-    @Override
-    public void deletePlan(String planId) {
-        RequestBasedPlan plan = requestBasedPlanRepository.findById(planId)
-                .orElseThrow(() -> new PlanNotFoundException("Plan not found"));
-        requestBasedPlanRepository.delete(plan);
-    }
-
-    private RequestBasedPlanDto convertToDto(RequestBasedPlan plan) {
-        RequestBasedPlanDto dto = new RequestBasedPlanDto();
-        dto.setId(plan.getId());
-        dto.setProductionRequestId(plan.getProductionRequestId());
-        dto.setType(plan.getType());
-        dto.setStartDate(plan.getStartDate());
-        dto.setEndDate(plan.getEndDate());
-        dto.setPlanDescription(plan.getPlanDescription());
-        dto.setPlannerDepartment(plan.getPlannerDepartment());
-        dto.setPlannerName(plan.getPlannerName());
-        dto.setStatus(plan.getStatus());
-        dto.setGoalQuantity(plan.getGoalQuantity());
-        dto.setEstimatedCost(plan.getEstimatedCost());
-        dto.setActualCost(plan.getActualCost());
-        return dto;
-    }
-
-    /*
-    private RequestBasedPlan convertToEntity(RequestBasedPlanDto dto) {
-        RequestBasedPlan plan = new RequestBasedPlan();
-        plan.setId(dto.getId());
-        plan.setProductionRequestId(dto.getProductionRequestId());
-        plan.setType(dto.getType());
-        plan.setStartDate(dto.getStartDate());
-        plan.setEndDate(dto.getEndDate());
-        plan.setPlanDescription(dto.getPlanDescription());
-        plan.setPlannerDepartment(dto.getPlannerDepartment());
-        plan.setPlannerName(dto.getPlannerName());
-        plan.setStatus(dto.getStatus());
-        plan.setGoalQuantity(dto.getGoalQuantity());
-        plan.setEstimatedCost(dto.getEstimatedCost());
-        plan.setActualCost(dto.getActualCost());
-        return plan;
-    }
-
-    private void updateEntity(RequestBasedPlan existingPlan, RequestBasedPlanDto dto) {
-        existingPlan.setProductionRequestId(dto.getProductionRequestId());
-        existingPlan.setType(dto.getType());
-        existingPlan.setStartDate(dto.getStartDate());
-        existingPlan.setEndDate(dto.getEndDate());
-        existingPlan.setPlanDescription(dto.getPlanDescription());
-        existingPlan.setPlannerDepartment(dto.getPlannerDepartment());
-        existingPlan.setPlannerName(dto.getPlannerName());
-        existingPlan.setStatus(dto.getStatus());
-        existingPlan.setGoalQuantity(dto.getGoalQuantity());
-        existingPlan.setEstimatedCost(dto.getEstimatedCost());
-        existingPlan.setActualCost(dto.getActualCost());
-    }
-
+    /**
+     *
+     * @param dto 계획 생성 위한 정보가 담긴 DTO
+     * @param productionRequestId
      */
+    // TODO 인사 FK => params
+    private createRequestBasedPlan(RequestBasedPlanDto dto, String productionRequestId) {
+        return new RequestBasedPlan.Builder()
+                .productionRequestId(dto.getProductionRequestId())
+                .plannerDepartment(dto.getPlannerDepartment())
+                .plannerName(dto.getPlannerName())
+                .type(dto.getType())
+                .startDate(dto.getStartDate())
+                .endDate(dto.getEndDate())
+                .planDescription(dto.getPlanDescription())
+                .status(dto.getStatus())
+                .goalQuantity(dto.getGoalQuantity())
+                .estimatedCost(dto.getEstimatedCost())
+                .actualCost(dto.getActualCost())
+                .build();
+    }
+
+
 }
