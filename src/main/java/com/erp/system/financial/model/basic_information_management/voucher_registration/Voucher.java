@@ -3,6 +3,7 @@ package com.erp.system.financial.model.basic_information_management.voucher_regi
 import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
+import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.PurchaseSalesSlip;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -28,7 +29,9 @@ public class Voucher {
     @NotNull
     private final String memoId; // 적요 코드
     @NotNull
-    private final String departmentId; // 작성 부서 ID
+    private final String managerId; // 담장자 ID
+    @NotNull
+    private final String adminId; // 승인 관리자 ID
 
     @NotNull
     private String description; // 거래 설명
@@ -48,8 +51,8 @@ public class Voucher {
         private String accountId;
         private String vendorId;
         private String memoId;
-        private String departmentId;
-
+        private String managerId;
+        private String adminId;
         private String description;
         private BigDecimal debit;
         private BigDecimal credit;
@@ -85,8 +88,13 @@ public class Voucher {
             return this;
         }
 
-        public Builder departmentId(String departmentId) {
-            this.departmentId = departmentId;
+        public Builder managerId(String managerId) {
+            this.managerId = managerId;
+            return this;
+        }
+
+        public Builder adminId(String adminId) {
+            this.adminId = adminId;
             return this;
         }
 
@@ -122,7 +130,8 @@ public class Voucher {
         this.accountId = builder.accountId;
         this.vendorId = builder.vendorId;
         this.memoId = builder.memoId;
-        this.departmentId = builder.departmentId;
+        this.managerId = builder.managerId;
+        this.adminId = builder.adminId;
         this.description = builder.description;
         this.debit = builder.debit;
         this.credit = builder.credit;
@@ -138,7 +147,8 @@ public class Voucher {
                 .accountId(this.accountId)
                 .vendorId(this.vendorId)
                 .memoId(this.memoId)
-                .departmentId(this.departmentId)
+                .managerId(this.managerId)
+                .adminId(this.adminId)
                 .description(this.description)
                 .debit(this.debit)
                 .credit(this.credit)
@@ -169,8 +179,12 @@ public class Voucher {
         return memoId;
     }
 
-    public String getDepartmentId() {
-        return departmentId;
+    public String getManagerId() {
+        return managerId;
+    }
+
+    public String getAdminId() {
+        return adminId;
     }
 
     public String getDescription() {
@@ -198,7 +212,8 @@ public class Voucher {
                 ", accountId='" + accountId + '\'' +
                 ", vendorId='" + vendorId + '\'' +
                 ", memoId='" + memoId + '\'' +
-                ", departmentId='" + departmentId + '\'' +
+                ", managerId='" + managerId + '\'' +
+                ", adminId='" + adminId + '\'' +
                 ", description='" + description + '\'' +
                 ", debit=" + debit +
                 ", credit=" + credit +

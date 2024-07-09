@@ -11,7 +11,8 @@ public class PurchaseSalesSlipRegistrationDto {
     private String vatTypeId; // 부가세유형 참조 코드
     private String vendorId; // 거래처 코드 (거래처 테이블 참조)
     private String entryId; // 분개 코드 (분개 관련 정보 참조)
-    private String departmentId; // 작성 부서 ID
+    private String managerId; // 담당자 ID
+    private String adminId; // 승인 관리자 ID
     private LocalDate date; // 전표 날짜
     private String itemName; // 품목명
     private BigDecimal quantity; // 수량
@@ -110,21 +111,31 @@ public class PurchaseSalesSlipRegistrationDto {
         this.userCompanyId = userCompanyId;
     }
 
-    public String getDepartmentId() {
-        return departmentId;
+    public String getManagerId() {
+        return managerId;
     }
 
-    public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId;
+    public void setManagerId(String managerId) {
+        this.managerId = managerId;
+    }
+
+    public String getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(String adminId) {
+        this.adminId = adminId;
     }
 
     @Override
     public String toString() {
         return "PurchaseSalesSlipRegistrationDto{" +
-                "vatTypeId='" + vatTypeId + '\'' +
+                "userCompanyId='" + userCompanyId + '\'' +
+                ", vatTypeId='" + vatTypeId + '\'' +
                 ", vendorId='" + vendorId + '\'' +
                 ", entryId='" + entryId + '\'' +
-                ", departmentId='" + departmentId + '\'' +
+                ", managerId='" + managerId + '\'' +
+                ", adminId='" + adminId + '\'' +
                 ", date=" + date +
                 ", itemName='" + itemName + '\'' +
                 ", quantity=" + quantity +
@@ -132,7 +143,6 @@ public class PurchaseSalesSlipRegistrationDto {
                 ", supplyValue=" + supplyValue +
                 ", vat=" + vat +
                 ", electronicTaxInvoiceIssued=" + electronicTaxInvoiceIssued +
-                ", userCompanyId='" + userCompanyId + '\'' +
                 '}';
     }
 }

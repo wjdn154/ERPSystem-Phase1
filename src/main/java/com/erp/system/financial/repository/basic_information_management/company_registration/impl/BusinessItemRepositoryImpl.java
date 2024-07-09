@@ -8,7 +8,7 @@ import com.erp.system.financial.repository.basic_information_management.company_
 
 @Component
 public class BusinessItemRepositoryImpl  extends GenericRepositoryImpl<BusinessItem> implements BusinessItemRepository {
-    protected BusinessItemRepositoryImpl(Class<BusinessItem> entityClass) {
+    private BusinessItemRepositoryImpl(Class<BusinessItem> entityClass) {
         super(entityClass);
     }
 }

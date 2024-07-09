@@ -25,7 +25,9 @@ public class PurchaseSalesSlip {
     @NotNull
     private final String entryId; // 분개 코드 (분개 관련 정보 참조)
     @NotNull
-    private final String departmentId; // 작성 부서 ID
+    private final String managerId; // 담장자 ID
+    @NotNull
+    private final String adminId; // 승인 관리자 ID
 
     @NotNull
     private LocalDate date; // 전표 날짜
@@ -41,7 +43,7 @@ public class PurchaseSalesSlip {
     @NotNull
     private BigDecimal vat; // 부가세
     @NotNull
-    private Boolean electronicTaxInvoiceIssued; // 전자세금계산서 발행여부
+    private boolean electronicTaxInvoiceIssued; // 전자세금계산서 발행여부
 
     public static int idIndex = 1;
 
@@ -51,15 +53,15 @@ public class PurchaseSalesSlip {
         private String vatTypeId;
         private String vendorId;
         private String entryId;
-        private String departmentId;
-
+        private String managerId;
+        private String adminId;
         private LocalDate date;
         private String itemName;
         private BigDecimal quantity;
         private BigDecimal unitPrice;
         private BigDecimal supplyValue;
         private BigDecimal vat;
-        private Boolean electronicTaxInvoiceIssued;
+        private boolean electronicTaxInvoiceIssued;
 
         public Builder id(String id) {
             this.id = id;
@@ -86,8 +88,13 @@ public class PurchaseSalesSlip {
             return this;
         }
 
-        public Builder departmentId(String departmentId) {
-            this.departmentId = departmentId;
+        public Builder managerId(String managerId) {
+            this.managerId = managerId;
+            return this;
+        }
+
+        public Builder adminId(String adminId) {
+            this.adminId = adminId;
             return this;
         }
 
@@ -121,7 +128,7 @@ public class PurchaseSalesSlip {
             return this;
         }
 
-        public Builder electronicTaxInvoiceIssued(Boolean electronicTaxInvoiceIssued) {
+        public Builder electronicTaxInvoiceIssued(boolean electronicTaxInvoiceIssued) {
             this.electronicTaxInvoiceIssued = electronicTaxInvoiceIssued;
             return this;
         }
@@ -137,7 +144,8 @@ public class PurchaseSalesSlip {
         this.vatTypeId = builder.vatTypeId;
         this.vendorId = builder.vendorId;
         this.entryId = builder.entryId;
-        this.departmentId = builder.departmentId;
+        this.managerId = builder.managerId;
+        this.adminId = builder.adminId;
         this.date = builder.date;
         this.itemName = builder.itemName;
         this.quantity = builder.quantity;
@@ -156,7 +164,8 @@ public class PurchaseSalesSlip {
                 .vatTypeId(this.vatTypeId)
                 .vendorId(this.vendorId)
                 .entryId(this.entryId)
-                .departmentId(this.departmentId)
+                .managerId(this.managerId)
+                .adminId(this.adminId)
                 .date(this.date)
                 .itemName(this.itemName)
                 .quantity(this.quantity)
@@ -186,8 +195,12 @@ public class PurchaseSalesSlip {
         return entryId;
     }
 
-    public String getDepartmentId() {
-        return departmentId;
+    public String getManagerId() {
+        return managerId;
+    }
+
+    public String getAdminId() {
+        return adminId;
     }
 
     public LocalDate getDate() {
@@ -214,7 +227,7 @@ public class PurchaseSalesSlip {
         return vat;
     }
 
-    public Boolean getElectronicTaxInvoiceIssued() {
+    public boolean getElectronicTaxInvoiceIssued() {
         return electronicTaxInvoiceIssued;
     }
 
@@ -226,7 +239,8 @@ public class PurchaseSalesSlip {
                 ", vatTypeId='" + vatTypeId + '\'' +
                 ", vendorId='" + vendorId + '\'' +
                 ", entryId='" + entryId + '\'' +
-                ", departmentId='" + departmentId + '\'' +
+                ", managerId='" + managerId + '\'' +
+                ", adminId='" + adminId + '\'' +
                 ", date=" + date +
                 ", itemName='" + itemName + '\'' +
                 ", quantity=" + quantity +

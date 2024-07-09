@@ -1,6 +1,7 @@
 package com.erp.system.financial.model.dto;
 
 import com.erp.system.common.annotation.NotNull;
+import com.erp.system.financial.model.basic_information_management.company_registration.Company;
 
 import java.time.LocalDate;
 
@@ -19,7 +20,7 @@ public class CompanyRegistrationDto {
     private String corporateRegistrationNumber; // 법인등록번호
     private LocalDate establishmentDate; // 설립연월일
     private String name; // 회사명
-    private String type; // 구분 (법인, 개인)
+    private Company.EntityType entityType; // 구분 (법인, 개인)
     private boolean active; // 사용여부(사용, 미사용)
     private LocalDate fiscalYearStart; // 회계연도 시작일
     private LocalDate fiscalYearEnd; // 회계연도 마지막일
@@ -126,12 +127,12 @@ public class CompanyRegistrationDto {
         this.name = name;
     }
 
-    public String getType() {
-        return type;
+    public Company.EntityType getEntityType() {
+        return entityType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setEntityType(Company.EntityType entityType) {
+        this.entityType = entityType;
     }
 
     public boolean isActive() {
@@ -284,7 +285,7 @@ public class CompanyRegistrationDto {
                 ", corporateRegistrationNumber='" + corporateRegistrationNumber + '\'' +
                 ", establishmentDate=" + establishmentDate +
                 ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
+                ", entityType='" + entityType + '\'' +
                 ", active=" + active +
                 ", fiscalYearStart=" + fiscalYearStart +
                 ", fiscalYearEnd=" + fiscalYearEnd +

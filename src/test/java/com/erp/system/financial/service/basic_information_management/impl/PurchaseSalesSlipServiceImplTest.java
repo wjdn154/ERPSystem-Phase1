@@ -45,7 +45,8 @@ public class PurchaseSalesSlipServiceImplTest {
             purchaseSalesSlipRegistrationDto.setElectronicTaxInvoiceIssued(true);
             purchaseSalesSlipRegistrationDto.setDate(LocalDate.of(24,7,2));
             purchaseSalesSlipRegistrationDto.setEntryId("2");
-            purchaseSalesSlipRegistrationDto.setDepartmentId("1");
+            purchaseSalesSlipRegistrationDto.setManagerId("1");
+            purchaseSalesSlipRegistrationDto.setAdminId("2");
             purchaseSalesSlipRegistrationDto.setQuantity(BigDecimal.valueOf(50));
             purchaseSalesSlipRegistrationDto.setUserCompanyId("1");
             purchaseSalesSlipRegistrationDto.setItemName("김밥");
@@ -65,7 +66,8 @@ public class PurchaseSalesSlipServiceImplTest {
                 assertEquals(purchaseSalesSlipRegistrationDto.getElectronicTaxInvoiceIssued(), purchaseSalesSlip.getElectronicTaxInvoiceIssued());
                 assertEquals(purchaseSalesSlipRegistrationDto.getDate(), purchaseSalesSlip.getDate());
                 assertEquals(purchaseSalesSlipRegistrationDto.getEntryId(), purchaseSalesSlip.getEntryId());
-                assertEquals(purchaseSalesSlipRegistrationDto.getDepartmentId(), purchaseSalesSlip.getDepartmentId());
+                assertEquals(purchaseSalesSlipRegistrationDto.getManagerId(), purchaseSalesSlip.getManagerId());
+                assertEquals(purchaseSalesSlipRegistrationDto.getAdminId(), purchaseSalesSlip.getAdminId());
                 assertEquals(purchaseSalesSlipRegistrationDto.getQuantity(),purchaseSalesSlip.getQuantity());
                 assertEquals(purchaseSalesSlipRegistrationDto.getUserCompanyId(),purchaseSalesSlip.getUserCompanyId());
                 assertEquals(purchaseSalesSlipRegistrationDto.getItemName(),purchaseSalesSlip.getItemName());

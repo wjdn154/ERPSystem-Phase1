@@ -51,7 +51,8 @@ public class VoucherRegistrationServiceImpl implements VoucherRegistrationServic
                 .debit(dto.getDebit())
                 .userCompanyId(dto.getUserCompanyId())
                 .memoId(dto.getMemoId())
-                .departmentId(dto.getDepartmentId())
+                .managerId(dto.getManagerId())
+                .adminId(dto.getAdminId())
                 .vendorId(dto.getVendorId())
                 .build();
     }

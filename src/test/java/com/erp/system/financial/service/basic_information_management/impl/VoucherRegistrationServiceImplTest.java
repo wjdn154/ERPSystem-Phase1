@@ -50,7 +50,8 @@ public class VoucherRegistrationServiceImplTest {
         voucherDto.setUserCompanyId("1");
         voucherDto.setMemoId("1");
         voucherDto.setVendorId("1");
-        voucherDto.setDepartmentId("1");
+        voucherDto.setManagerId("1");
+        voucherDto.setAdminId("2");
 
         // When: 전표 등록
         voucherRegistrationService.registerVoucher(voucherDto);
@@ -70,7 +71,8 @@ public class VoucherRegistrationServiceImplTest {
             assertEquals(voucherDto.getUserCompanyId(),voucher.getUserCompanyId());
             assertEquals(voucherDto.getMemoId(),voucher.getMemoId());
             assertEquals(voucherDto.getVendorId(),voucher.getVendorId());
-            assertEquals(voucherDto.getDepartmentId(),voucher.getDepartmentId());
+            assertEquals(voucherDto.getManagerId(),voucher.getManagerId());
+            assertEquals(voucherDto.getAdminId(),voucher.getAdminId());
         });
 
     }

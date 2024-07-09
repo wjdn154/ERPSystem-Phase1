@@ -14,7 +14,8 @@ public class VoucherDto {
     private String accountId; // 계정과목 코드
     private String vendorId; // 거래처 코드
     private String memoId; // 적요 코드
-    private String departmentId; // 작성 부서 ID
+    private String managerId;
+    private String adminId;
 
     private String description; // 거래 설명
     private BigDecimal debit; // 차변 금액
@@ -92,12 +93,20 @@ public class VoucherDto {
         this.date = date;
     }
 
-    public String getDepartmentId() {
-        return departmentId;
+    public String getManagerId() {
+        return managerId;
     }
 
-    public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId;
+    public void setManagerId(String managerId) {
+        this.managerId = managerId;
+    }
+
+    public String getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(String adminId) {
+        this.adminId = adminId;
     }
 
     @Override
@@ -108,7 +117,8 @@ public class VoucherDto {
                 ", accountId='" + accountId + '\'' +
                 ", vendorId='" + vendorId + '\'' +
                 ", memoId='" + memoId + '\'' +
-                ", departmentId='" + departmentId + '\'' +
+                ", managerId='" + managerId + '\'' +
+                ", adminId='" + adminId + '\'' +
                 ", description='" + description + '\'' +
                 ", debit=" + debit +
                 ", credit=" + credit +

@@ -10,6 +10,7 @@ import com.erp.system.financial.repository.basic_information_management.company_
 import com.erp.system.financial.repository.basic_information_management.company_registration.ContactRepository;
 import com.erp.system.financial.repository.basic_information_management.company_registration.RepresentativeRepository;
 import com.erp.system.financial.repository.basic_information_management.vendor_registration.VendorRepository;
+import com.erp.system.financial.service.basic_information_management.CompanyRegistrationService;
 import com.erp.system.financial.service.basic_information_management.VendorRegistrationService;
 
 @Component
@@ -18,13 +19,16 @@ public class VendorRegistrationServiceImpl implements VendorRegistrationService 
     private final AddressRepository addressRepository;
     private final ContactRepository contactRepository;
     private final RepresentativeRepository representativeRepository;
+    private final CompanyRegistrationService companyRegistrationService;
 
     public VendorRegistrationServiceImpl(VendorRepository vendorRepository, AddressRepository addressRepository,
-                                         ContactRepository contactRepository, RepresentativeRepository representativeRepository) {
+                                         ContactRepository contactRepository, RepresentativeRepository representativeRepository,
+                                         CompanyRegistrationService companyRegistrationService) {
         this.vendorRepository = vendorRepository;
         this.addressRepository = addressRepository;
         this.contactRepository = contactRepository;
         this.representativeRepository = representativeRepository;
+        this.companyRegistrationService = companyRegistrationService;
     }
 
 

@@ -70,7 +70,7 @@ public class CompanyRegistrationServiceImpl implements CompanyRegistrationServic
      * @param dto 회사 등록을 위한 정보가 담긴 DTO
      * @return 저장된 주소 객체
      */
-    private Address createAddress(CompanyRegistrationDto dto) {
+    public Address createAddress(CompanyRegistrationDto dto) {
         return new Address.Builder()
                 .businessAddress(dto.getBusinessAddress())
                 .businessPostalCode(dto.getBusinessPostalCode())
@@ -86,7 +86,7 @@ public class CompanyRegistrationServiceImpl implements CompanyRegistrationServic
      * @param dto 회사 등록을 위한 정보가 담긴 DTO
      * @return 저장된 연락처 객체
      */
-    private Contact createContact(CompanyRegistrationDto dto) {
+    public Contact createContact(CompanyRegistrationDto dto) {
         return new Contact.Builder()
                 .businessPhone(dto.getBusinessPhone())
                 .fax(dto.getFax())
@@ -98,7 +98,7 @@ public class CompanyRegistrationServiceImpl implements CompanyRegistrationServic
      * @param dto 회사 등록을 위한 정보가 담긴 DTO
      * @return 저장된 대표자 객체
      */
-    private Representative createRepresentative(CompanyRegistrationDto dto) {
+    public Representative createRepresentative(CompanyRegistrationDto dto) {
         return new Representative.Builder()
                 .name(dto.getRepresentativeName())
                 .idNumber(dto.getIdNumber())
@@ -129,7 +129,7 @@ public class CompanyRegistrationServiceImpl implements CompanyRegistrationServic
                 .corporateRegistrationNumber(dto.getCorporateRegistrationNumber())
                 .establishmentDate(dto.getEstablishmentDate())
                 .name(dto.getName())
-                .type(dto.getType())
+                .entityType(dto.getEntityType())
                 .active(dto.isActive())
                 .fiscalYearStart(dto.getFiscalYearStart())
                 .fiscalYearEnd(dto.getFiscalYearEnd())

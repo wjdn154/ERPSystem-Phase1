@@ -1,5 +1,6 @@
 package com.erp.system.financial.model.basic_information_management.company_registration;
 
+import com.erp.system.common.annotation.EnumMapping;
 import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
@@ -10,7 +11,9 @@ import java.time.LocalDate;
  * 회사 기본 정보 테이블
  * 회사 기본 정보 등록시 사용하는 테이블
  */
+@EnumMapping
 public class Company {
+    public enum EntityType {INCORPORATED,INDIVIDUAL}
     @Unique
     @NotNull
     private final String id; // 고유식별자
@@ -46,7 +49,7 @@ public class Company {
     @NotNull
     private String name; // 회사명
     @NotNull
-    private String type; // 구분 (법인, 개인)
+    private EntityType entityType; // 구분 (법인, 개인)
     @NotNull
     private boolean active; // 사용여부(사용, 미사용)
     @NotNull
@@ -75,7 +78,7 @@ public class Company {
         private String corporateRegistrationNumber;
         private LocalDate establishmentDate;
         private String name;
-        private String type;
+        private EntityType entityType;
         private boolean active;
         private LocalDate fiscalYearStart;
         private LocalDate fiscalYearEnd;
@@ -152,8 +155,8 @@ public class Company {
             return this;
         }
 
-        public Builder type(String type) {
-            this.type = type;
+        public Builder entityType(EntityType entityType) {
+            this.entityType = entityType;
             return this;
         }
 
@@ -209,7 +212,7 @@ public class Company {
         this.corporateRegistrationNumber = builder.corporateRegistrationNumber;
         this.establishmentDate = builder.establishmentDate;
         this.name = builder.name;
-        this.type = builder.type;
+        this.entityType = builder.entityType;
         this.active = builder.active;
         this.fiscalYearStart = builder.fiscalYearStart;
         this.fiscalYearEnd = builder.fiscalYearEnd;
@@ -235,7 +238,7 @@ public class Company {
                 .corporateRegistrationNumber(this.corporateRegistrationNumber)
                 .establishmentDate(this.establishmentDate)
                 .name(this.name)
-                .type(this.type)
+                .entityType(this.entityType)
                 .active(this.active)
                 .fiscalYearStart(this.fiscalYearStart)
                 .fiscalYearEnd(this.fiscalYearEnd)
@@ -300,8 +303,8 @@ public class Company {
         return name;
     }
 
-    public String getType() {
-        return type;
+    public EntityType getEntityType() {
+        return entityType;
     }
 
     public boolean isActive() {
@@ -347,7 +350,7 @@ public class Company {
                 ", corporateRegistrationNumber='" + corporateRegistrationNumber + '\'' +
                 ", establishmentDate=" + establishmentDate +
                 ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
+                ", entityType=" + entityType +
                 ", active=" + active +
                 ", fiscalYearStart=" + fiscalYearStart +
                 ", fiscalYearEnd=" + fiscalYearEnd +

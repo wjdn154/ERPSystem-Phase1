@@ -67,7 +67,7 @@ class CompanyRegistrationServiceImplTest {
         companyRegistrationDto.setCorporateRegistrationNumber("400-500-600");
         companyRegistrationDto.setEstablishmentDate(LocalDate.of(2021, 1, 1));
         companyRegistrationDto.setName("Sample Company");
-        companyRegistrationDto.setType("법인");
+        companyRegistrationDto.setEntityType(Company.EntityType.INCORPORATED);
         companyRegistrationDto.setActive(true);
         companyRegistrationDto.setFiscalYearStart(LocalDate.of(2021, 1, 1));
         companyRegistrationDto.setFiscalYearEnd(LocalDate.of(2021, 12, 31));
@@ -108,7 +108,7 @@ class CompanyRegistrationServiceImplTest {
 
         companyRepository.findById(String.valueOf(Company.idIndex-1)).ifPresent(company -> {
             assertEquals("Sample Company", company.getName());
-            assertEquals("법인", company.getType());
+            assertEquals(companyRegistrationDto.getEntityType(), company.getEntityType());
             assertTrue(company.isActive());
             assertEquals(LocalDate.of(2021, 1, 1), company.getEstablishmentDate());
             assertEquals(LocalDate.of(2021, 1, 1), company.getFiscalYearStart());
