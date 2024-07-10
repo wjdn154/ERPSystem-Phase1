@@ -55,4 +55,13 @@ public class Position {
     public String getPositionName() {return positionName;}
 
     public String getDescription() {return description;}
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "id='" + id + '\'' +
+                ", positionName='" + positionName + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

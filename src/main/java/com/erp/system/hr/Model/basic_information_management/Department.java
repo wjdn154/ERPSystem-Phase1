@@ -10,7 +10,6 @@ public class Department {
         @Unique
         @NotNull
         private final String id; // 부서 고유 식별자
-
         @NotNull
         private String departmentName; // 부서 이름
         @NotNull
@@ -53,4 +52,13 @@ public class Department {
             public String getId() {return id;}
             public String getDepartmentName() {return departmentName;}
             public String getManagerId() {return managerId;}
+
+    @Override
+    public String toString() {
+        return "Department{" +
+                "id='" + id + '\'' +
+                ", departmentName='" + departmentName + '\'' +
+                ", managerId='" + managerId + '\'' +
+                '}';
+    }
 }

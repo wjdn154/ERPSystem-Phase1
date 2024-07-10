@@ -72,5 +72,13 @@ public class Pension {
 
     public String getDescription() {return description;}
 
-
+    @Override
+    public String toString() {
+        return "Pension{" +
+                "id='" + id + '\'' +
+                ", pensionType='" + pensionType + '\'' +
+                ", contribution=" + contribution +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

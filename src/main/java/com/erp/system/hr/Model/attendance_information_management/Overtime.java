@@ -121,5 +121,19 @@ public class Overtime {
     public Time getEndTime() {return endTime;}
 
     public String getReason() {return reason;}
+
+    @Override
+    public String toString() {
+        return "Overtime{" +
+                "id='" + id + '\'' +
+                ", employeeId='" + employeeId + '\'' +
+                ", managerId='" + managerId + '\'' +
+                ", date=" + date +
+                ", hours=" + hours +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", reason='" + reason + '\'' +
+                '}';
+    }
 }
 

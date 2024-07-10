@@ -99,4 +99,16 @@ public class Attendance {
     public Time getCheckoutTime() {return checkoutTime;}
 
     public String getStatus() {return status;}
+
+    @Override
+    public String toString() {
+        return "Attendance{" +
+                "id='" + id + '\'' +
+                ", employeeId='" + employeeId + '\'' +
+                ", date=" + date +
+                ", checkTime=" + checkTime +
+                ", checkoutTime=" + checkoutTime +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

@@ -83,4 +83,15 @@ public class Salary {
     public BigDecimal getBonus() {return bonus;}
 
     public LocalDate getPayDate() {return payDate;}
+
+    @Override
+    public String toString() {
+        return "Salary{" +
+                "id='" + id + '\'' +
+                ", salaryTypeId='" + salaryTypeId + '\'' +
+                ", baseSalary=" + baseSalary +
+                ", bonus=" + bonus +
+                ", payDate=" + payDate +
+                '}';
+    }
 }

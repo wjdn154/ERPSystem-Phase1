@@ -8,7 +8,6 @@ import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 public class Insurance {
     @Unique
@@ -19,7 +18,7 @@ public class Insurance {
     private String insuranceType; // 보험 종류 ( 예 : 건강보험, 실손보험 등)
     @NotNull
     private BigDecimal preminum; // 보험료
-    private String coverage; // 보장 내용 설명
+    private String coverage; // 보장 내용 설명 ( 예 : 보험 가입자가 보장받는 손해나 손실의 범위와 종류 내용)
 
     public static int idIndex = 1;
 
@@ -72,4 +71,14 @@ public class Insurance {
     public BigDecimal getPreminum() {return preminum;}
 
     public String getCoverage() {return coverage;}
+
+    @Override
+    public String toString() {
+        return "Insurance{" +
+                "id='" + id + '\'' +
+                ", insuranceType='" + insuranceType + '\'' +
+                ", preminum=" + preminum +
+                ", coverage='" + coverage + '\'' +
+                '}';
+    }
 }

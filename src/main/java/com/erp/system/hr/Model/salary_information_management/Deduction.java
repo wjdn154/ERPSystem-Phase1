@@ -84,4 +84,15 @@ public class Deduction {
     public String getDescription() {return description;}
 
     public Date getDeductionDate() {return deductionDate;}
+
+    @Override
+    public String toString() {
+        return "Deduction{" +
+                "id='" + id + '\'' +
+                ", deductionType='" + deductionType + '\'' +
+                ", amount=" + amount +
+                ", description='" + description + '\'' +
+                ", deductionDate=" + deductionDate +
+                '}';
+    }
 }

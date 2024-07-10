@@ -89,5 +89,15 @@ public class Allowance {
     public String getApprovalStatus() {return approvalStatus;}
 
 
-
+    @Override
+    public String toString() {
+        return "Allowance{" +
+                "id='" + id + '\'' +
+                ", allowanceType='" + allowanceType + '\'' +
+                ", amount=" + amount +
+                ", issueDate=" + issueDate +
+                ", description='" + description + '\'' +
+                ", approvalStatus='" + approvalStatus + '\'' +
+                '}';
+    }
 }

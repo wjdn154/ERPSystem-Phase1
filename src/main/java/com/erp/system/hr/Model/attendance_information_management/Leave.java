@@ -107,4 +107,17 @@ public class Leave {
     public String getReason() {return reason;}
 
     public String getStatus() {return status;}
+
+    @Override
+    public String toString() {
+        return "Leave{" +
+                "id='" + id + '\'' +
+                ", employeeId='" + employeeId + '\'' +
+                ", leaveType='" + leaveType + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", reason='" + reason + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

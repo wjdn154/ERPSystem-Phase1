@@ -73,4 +73,13 @@ public class Benefit {
 
     public String getDescription() {return description;}
 
+    @Override
+    public String toString() {
+        return "Benefit{" +
+                "id='" + id + '\'' +
+                ", benefitType='" + benefitType + '\'' +
+                ", amount=" + amount +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

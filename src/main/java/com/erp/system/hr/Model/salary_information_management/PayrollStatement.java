@@ -1,8 +1,6 @@
 package com.erp.system.hr.Model.salary_information_management;
 
 
-// 급여 명세서 테이블
-
 import com.erp.system.common.annotation.NotNull;
 import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
@@ -10,6 +8,8 @@ import com.erp.system.common.validator.NotNullValidator;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
+
+// 급여 명세서 테이블
 
 public class PayrollStatement {
     @Unique
@@ -104,4 +104,16 @@ public class PayrollStatement {
     public BigDecimal getNetSalary() {return netSalary;}
     public String getRemarks() {return remarks;}
 
+    @Override
+    public String toString() {
+        return "PayrollStatement{" +
+                "id='" + id + '\'' +
+                ", payDate=" + payDate +
+                ", baseSalary=" + baseSalary +
+                ", bonus=" + bonus +
+                ", deductions=" + deductions +
+                ", netSalary=" + netSalary +
+                ", remarks='" + remarks + '\'' +
+                '}';
+    }
 }

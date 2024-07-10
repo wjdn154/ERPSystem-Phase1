@@ -1,17 +1,20 @@
 package com.erp.system.hr.Model.basic_information_management;
 
+import com.erp.system.common.annotation.EnumMapping;
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 import com.erp.system.common.annotation.Unique;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 // 직원 테이블
-
+@EnumMapping
 public class Employee {
+    public enum EmploymentType{FULLTIME, CONTRACT, PARTTIME, TEMPORARY, INTERN}
     @Unique
     @NotNull
-    private final String id; // 직원의 고유 식별자
+    private final String id; // 직원의 고유 식별자+
     @NotNull
     private final String departmentId; // 부서 ID 참조
     @NotNull
@@ -44,9 +47,9 @@ public class Employee {
     @NotNull
     private String address; // 주소
     @NotNull
-    private String hireDate; // 입사날짜
+    private LocalDate hireDate; // 입사날짜
     @NotNull
-    private String employmentType; // 고용 형태
+    private EmploymentType employmentType; // 고용 형태 ( 예 : 정규직, 계약직, 파트타임, 임시직, 인턴 )
 
     public static int idIndex = 1;
 
@@ -68,8 +71,8 @@ public class Employee {
         private String phoneNumber;
         private String email;
         private String address;
-        private String hireDate;
-        private String employmentType;
+        private LocalDate hireDate;
+        private EmploymentType employmentType;
 
         public Builder id(String id) {
             this.id = id;
@@ -151,12 +154,12 @@ public class Employee {
             return this;
         }
 
-        public Builder hireDate(String hireDate) {
+        public Builder hireDate(LocalDate hireDate) {
             this.hireDate = hireDate;
             return this;
         }
 
-        public Builder employmentType(String employmentType) {
+        public Builder employmentType(EmploymentType employmentType) {
             this.employmentType = employmentType;
             return this;
         }
@@ -244,8 +247,32 @@ public class Employee {
 
         public String getAddress() {return address;}
 
-        public String getHireDate() {return hireDate;}
+        public LocalDate getHireDate() {return hireDate;}
 
-        public String getEmploymentType() {return employmentType;}
+        public EmploymentType getEmploymentType() {return employmentType;}
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id='" + id + '\'' +
+                ", departmentId='" + departmentId + '\'' +
+                ", positionId='" + positionId + '\'' +
+                ", salaryId='" + salaryId + '\'' +
+                ", allowanceId='" + allowanceId + '\'' +
+                ", benefitId='" + benefitId + '\'' +
+                ", deductionId='" + deductionId + '\'' +
+                ", payrollStatementId='" + payrollStatementId + '\'' +
+                ", insuranceId='" + insuranceId + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", dataOfBirth=" + dataOfBirth +
+                ", gender='" + gender + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", hireDate=" + hireDate +
+                ", employmentType=" + employmentType +
+                '}';
+    }
 }
 

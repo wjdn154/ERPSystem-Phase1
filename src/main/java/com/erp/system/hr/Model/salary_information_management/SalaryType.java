@@ -7,6 +7,8 @@ import com.erp.system.common.validator.NotNullValidator;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+// 급여 유형 정보 테이블
+
 public class SalaryType {
     @Unique
     @NotNull
@@ -14,7 +16,6 @@ public class SalaryType {
 
     @NotNull
     private String typeName; // 급여 유형 이름
-    @NotNull
     private String description; // 급여 유형 설명
 
     public static int idIndex = 1;
@@ -59,5 +60,12 @@ public class SalaryType {
     public String getDescription() {return description;}
 
 
-
+    @Override
+    public String toString() {
+        return "SalaryType{" +
+                "id='" + id + '\'' +
+                ", typeName='" + typeName + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
