@@ -1,33 +1,25 @@
-package com.erp.system.financial.model.basic_information_management.purchase_sales_slip;
+package com.erp.system.financial.model.basic_information_management.company_registration;
 
-import com.erp.system.common.annotation.EnumMapping;
-import com.erp.system.common.annotation.Unique;
-import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
+import com.erp.system.common.validator.NotNullValidator;
+import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.Entry;
 
 /**
- * 부가세유형 테이블
- * 매입매출전표 등록 할때 선택할 부가세 유형 테이블
+ * 회사 및 거래처 등록의 업체종목
  */
-@EnumMapping
-public class VatType {
-    public enum Category {SALES,PURCHASE};
-
-    @Unique
+public class BusinessItem {
     @NotNull
     private final String id; // 고유 식별자
-
     @NotNull
-    private Category category; // 매입 또는 매출 구분
+    private final String businessTypeId; // 해당 회사의 업종형태 id (종목의 상위 카테고리)
     @NotNull
-    private String name; // 항목명
+    private final String name; // 종목이름
 
     public static int idIndex = 1;
 
     public static class Builder {
         private String id;
-
-        private Category category;
+        private String businessTypeId;
         private String name;
 
         public Builder id(String id) {
@@ -35,8 +27,8 @@ public class VatType {
             return this;
         }
 
-        public Builder category(Category category) {
-            this.category = category;
+        public Builder businessTypeId(String businessTypeId) {
+            this.businessTypeId = businessTypeId;
             return this;
         }
 
@@ -45,14 +37,14 @@ public class VatType {
             return this;
         }
 
-        public VatType build() {
-            return new VatType(this);
+        public BusinessItem build(){
+            return new BusinessItem(this);
         }
     } // end of Builder
 
-    private VatType(Builder builder) {
+    private BusinessItem(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.category = builder.category;
+        this.businessTypeId = builder.businessTypeId;
         this.name = builder.name;
         NotNullValidator.validateFields(this);
     }
@@ -60,7 +52,7 @@ public class VatType {
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .category(this.category)
+                .businessTypeId(this.businessTypeId)
                 .name(this.name);
     }
 
@@ -68,8 +60,8 @@ public class VatType {
         return id;
     }
 
-    public Category getCategory() {
-        return category;
+    public String getBusinessTypeId() {
+        return businessTypeId;
     }
 
     public String getName() {
@@ -78,9 +70,9 @@ public class VatType {
 
     @Override
     public String toString() {
-        return "VatType{" +
+        return "BusinessItem{" +
                 "id='" + id + '\'' +
-                ", category=" + category +
+                ", businessTypeId='" + businessTypeId + '\'' +
                 ", name='" + name + '\'' +
                 '}';
     }

@@ -1,7 +1,6 @@
 package com.erp.system.financial.repository.basic_information_management.voucher_registration;
 
 import com.erp.system.common.generic_repository.GenericRepository;
-import com.erp.system.financial.model.basic_information_management.vendor_registration.VendorType;
 import com.erp.system.financial.model.basic_information_management.voucher_registration.Account;
 
 import java.util.List;
