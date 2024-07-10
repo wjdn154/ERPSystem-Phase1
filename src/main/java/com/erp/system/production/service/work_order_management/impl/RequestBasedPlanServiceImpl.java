@@ -2,6 +2,7 @@ package com.erp.system.production.service.work_order_management.impl;
 
 import com.erp.system.common.annotation.Component;
 import com.erp.system.production.model.dto.RequestBasedPlanDto;
+import com.erp.system.production.model.work_order_management.ProductionRequest;
 import com.erp.system.production.model.work_order_management.RequestBasedPlan;
 import com.erp.system.production.repository.work_order_management.ProductionRequestRepository;
 import com.erp.system.production.repository.work_order_management.RequestBasedPlanRepository;
@@ -14,14 +15,17 @@ import java.util.stream.Collectors;
 public class RequestBasedPlanServiceImpl implements RequestBasedPlanService {
     // Repository Instance
     private final ProductionRequestRepository productionRequestRepository;
+    private final RequestBasedPlanRepository requestBasedPlanRepository;
 
     /**
      * 생성자. 각 Repo의 인스턴스 초기화
      * @param productionRequestRepository
      */
     // 생성자 주입 방식으로 Repository를 주입
-    public RequestBasedPlanServiceImpl(ProductionRequestRepository productionRequestRepository) {
+    public RequestBasedPlanServiceImpl(ProductionRequestRepository productionRequestRepository,
+                                       RequestBasedPlanRepository requestBasedPlanRepository) {
         this.productionRequestRepository = productionRequestRepository;
+        this.requestBasedPlanRepository = requestBasedPlanRepository;
     }
 
     /**
@@ -30,11 +34,11 @@ public class RequestBasedPlanServiceImpl implements RequestBasedPlanService {
      * @throws RuntimeException 등록 중 발생한 예외를 처리함
      */
     @Override
-    public void createRequestBasedPlan(RequestBasedPlanDto requestBasedPlanDto) {
+    public void registerRequestBasedPlan(RequestBasedPlanDto requestBasedPlanDto) {
         try {
-            // TODO ProductionRequestDto
-            // ProductionRequest productionRequest = createProductionRequest(productionRequestDto);
-            // productionRequestRepository.save(productionRequest);
+            RequestBasedPlan requestBasedPlan = createRequestBasedPlan(requestBasedPlanDto);
+            requestBasedPlanRepository.save(requestBasedPlan);
+
         } catch (Exception e) {
             System.err.println("생산계획 생성 중 에러 발생: " + e.getMessage());
             throw new RuntimeException("생성 실패", e);
@@ -44,10 +48,9 @@ public class RequestBasedPlanServiceImpl implements RequestBasedPlanService {
     /**
      *
      * @param dto 계획 생성 위한 정보가 담긴 DTO
-     * @param productionRequestId
      */
     // TODO 인사 FK => params
-    private createRequestBasedPlan(RequestBasedPlanDto dto, String productionRequestId) {
+    private RequestBasedPlan createRequestBasedPlan(RequestBasedPlanDto dto) {
         return new RequestBasedPlan.Builder()
                 .productionRequestId(dto.getProductionRequestId())
                 .plannerDepartment(dto.getPlannerDepartment())

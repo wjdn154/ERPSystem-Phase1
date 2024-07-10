@@ -49,6 +49,7 @@ public class ProductionRequest {
         private LocalDate requestDate;
         private BigDecimal requestQuantity;
         private Status status;
+        private boolean isActive;
         private RequestProductionType requestProductionType;
         private String remarks;
 
@@ -87,6 +88,11 @@ public class ProductionRequest {
             return this;
         }
 
+        public Builder isActive(boolean isActive) {
+            this.isActive = isActive;
+            return this;
+        }
+
         public Builder requestProductionType(RequestProductionType requestProductionType) {
             this.requestProductionType = requestProductionType;
             return this;
@@ -110,6 +116,7 @@ public class ProductionRequest {
         this.requestName = builder.requestName;
         this.requestQuantity = builder.requestQuantity;
         this.status = builder.status;
+        this.isActive = builder.isActive;
         this.requestProductionType = builder.requestProductionType;
         this.remarks = builder.remarks;
         NotNullValidator.validateFields(this);
@@ -125,6 +132,7 @@ public class ProductionRequest {
                 .requestDate(this.requestDate)
                 .requestQuantity(this.requestQuantity)
                 .status(this.status)
+                .isActive(this.isActive)
                 .requestProductionType(this.requestProductionType)
                 .remarks(this.remarks);
     }
@@ -158,6 +166,10 @@ public class ProductionRequest {
         return status;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
     public RequestProductionType getRequestProductionType() { return requestProductionType; }
 
     public String getRemarks() {
@@ -178,6 +190,7 @@ public class ProductionRequest {
                 ", requestDate=" + requestDate +
                 ", requestQuantity=" + requestQuantity +
                 ", status=" + status + '\'' +
+                ", isActive=" + isActive + '\'' +
                 ", requestProductionType=" + requestProductionType + '\'' +
                 ", remarks='" + remarks + '\'' +
                 '}';
