@@ -43,7 +43,7 @@ public class PurchaseSalesSlip {
     @NotNull
     private BigDecimal vat; // 부가세
     @NotNull
-    private boolean electronicTaxInvoiceIssued; // 전자세금계산서 발행여부
+    private Boolean electronicTaxInvoiceIssued; // 전자세금계산서 발행여부
 
     public static int idIndex = 1;
 
@@ -61,7 +61,7 @@ public class PurchaseSalesSlip {
         private BigDecimal unitPrice;
         private BigDecimal supplyValue;
         private BigDecimal vat;
-        private boolean electronicTaxInvoiceIssued;
+        private Boolean electronicTaxInvoiceIssued;
 
         public Builder id(String id) {
             this.id = id;
@@ -128,7 +128,7 @@ public class PurchaseSalesSlip {
             return this;
         }
 
-        public Builder electronicTaxInvoiceIssued(boolean electronicTaxInvoiceIssued) {
+        public Builder electronicTaxInvoiceIssued(Boolean electronicTaxInvoiceIssued) {
             this.electronicTaxInvoiceIssued = electronicTaxInvoiceIssued;
             return this;
         }

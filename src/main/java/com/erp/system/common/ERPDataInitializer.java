@@ -152,7 +152,6 @@ public class ERPDataInitializer {
         String tableName = sheet.getSheetName(); // 시트 이름을 테이블 이름으로 사용
         Class<?> clazz = tableClassMap.get(tableName); // 테이블 이름으로 도메인 클래스 조회
         Object repository = repositories.get(clazz); // 도메인 클래스로 리포지토리 조회
-        System.out.println("repository = " + repository);
 
         if (clazz == null) {
             System.err.println("클래스를 찾을 수 없습니다: " + tableName); // 클래스를 찾을 수 없는 경우 에러 메시지 출력
@@ -254,7 +253,7 @@ public class ERPDataInitializer {
     private Class<?> getTypeFromString(String typeStr) {
         switch (typeStr.toLowerCase()) {
             case "string": return String.class;
-            case "int": return Integer.class;
+            case "integer": return Integer.class;
             case "boolean": return Boolean.class;
             case "double": return Double.class;
             case "localdate": return LocalDate.class;

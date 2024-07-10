@@ -20,7 +20,7 @@ public class Representative {
     @NotNull
     private String idNumber; // 대표자 주민번호
     @NotNull
-    private boolean foreign; // 대표자 외국인여부
+    private Boolean foreign; // 대표자 외국인여부
 
     public static int idIndex = 1;
 
@@ -29,7 +29,7 @@ public class Representative {
 
         private String name;
         private String idNumber;
-        private boolean foreign;
+        private Boolean foreign;
 
         public Builder id(String id) {
             this.id = id;
@@ -46,7 +46,7 @@ public class Representative {
             return this;
         }
 
-        public Builder foreign(boolean foreign) {
+        public Builder foreign(Boolean foreign) {
             this.foreign = foreign;
             return this;
         }

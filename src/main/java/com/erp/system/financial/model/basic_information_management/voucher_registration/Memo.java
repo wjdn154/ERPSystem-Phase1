@@ -18,7 +18,7 @@ public class Memo {
     @NotNull
     private String description; // 적요 설명(계정과목에 따라 달라진다)
     @NotNull
-    private boolean immutable; // 수정불가 여부
+    private Boolean immutable; // 수정불가 여부
 
     public static int idIndex = 1; // static 변수 추가
 
@@ -27,7 +27,7 @@ public class Memo {
         private String accountId;
 
         private String description;
-        private boolean immutable;
+        private Boolean immutable;
 
         public Builder id(String id) {
             this.id = id;
@@ -44,7 +44,7 @@ public class Memo {
             return this;
         }
 
-        public Builder immutable(boolean immutable) {
+        public Builder immutable(Boolean immutable) {
             this.immutable = immutable;
             return this;
         }

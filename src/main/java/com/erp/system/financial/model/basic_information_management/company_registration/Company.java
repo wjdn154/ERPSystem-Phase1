@@ -57,7 +57,7 @@ public class Company {
     @NotNull
     private LocalDate fiscalYearEnd; // 회계연도 마지막일
     @NotNull
-    private int fiscalCardinalNumber; // 회계연도 기수
+    private Integer fiscalCardinalNumber; // 회계연도 기수
 
     public static int idIndex = 1;
 
@@ -82,7 +82,7 @@ public class Company {
         private Boolean active;
         private LocalDate fiscalYearStart;
         private LocalDate fiscalYearEnd;
-        private int fiscalCardinalNumber;
+        private Integer fiscalCardinalNumber;
 
 
         public Builder id(String id) {
@@ -175,7 +175,7 @@ public class Company {
             return this;
         }
 
-        public Builder fiscalCardinalNumber(int fiscalCardinalNumber) {
+        public Builder fiscalCardinalNumber(Integer fiscalCardinalNumber) {
             this.fiscalCardinalNumber = fiscalCardinalNumber;
             return this;
         }
@@ -319,7 +319,7 @@ public class Company {
         return fiscalYearEnd;
     }
 
-    public int getFiscalCardinalNumber() {
+    public Integer getFiscalCardinalNumber() {
         return fiscalCardinalNumber;
     }
 

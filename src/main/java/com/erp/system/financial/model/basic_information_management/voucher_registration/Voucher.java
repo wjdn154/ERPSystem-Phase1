@@ -1,5 +1,6 @@
 package com.erp.system.financial.model.basic_information_management.voucher_registration;
 
+import com.erp.system.common.annotation.EnumMapping;
 import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
  * 전표 테이블
  * 전표 작성시 전표 데이터 저장 테이블
  */
+@EnumMapping
 public class Voucher {
     public enum VoucherType {DISBURSEMENT,DEPOSIT,DEBIT,CREDIT};
 
@@ -33,7 +35,7 @@ public class Voucher {
     @NotNull
     private final String adminId; // 승인 관리자 ID
 
-    @NotNull
+
     private String description; // 거래 설명
     @NotNull
     private BigDecimal debit; // 차변 금액
