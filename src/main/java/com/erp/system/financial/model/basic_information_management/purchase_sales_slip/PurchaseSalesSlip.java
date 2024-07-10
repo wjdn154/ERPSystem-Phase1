@@ -13,6 +13,7 @@ import java.time.LocalDate;
  * 매입매출전표 등록 할때 필요한 정보들이 있는 테이블
  */
 public class PurchaseSalesSlip {
+    @Unique
     @NotNull
     private final String id; // 고유 식별자
     @NotNull
@@ -23,6 +24,10 @@ public class PurchaseSalesSlip {
     private final String vendorId; // 거래처 코드 (거래처 테이블 참조)
     @NotNull
     private final String entryId; // 분개 코드 (분개 관련 정보 참조)
+    @NotNull
+    private final String managerId; // 담장자 ID
+    @NotNull
+    private final String adminId; // 승인 관리자 ID
 
     @NotNull
     private LocalDate date; // 전표 날짜
@@ -48,7 +53,8 @@ public class PurchaseSalesSlip {
         private String vatTypeId;
         private String vendorId;
         private String entryId;
-
+        private String managerId;
+        private String adminId;
         private LocalDate date;
         private String itemName;
         private BigDecimal quantity;
@@ -79,6 +85,16 @@ public class PurchaseSalesSlip {
 
         public Builder entryId(String entryId) {
             this.entryId = entryId;
+            return this;
+        }
+
+        public Builder managerId(String managerId) {
+            this.managerId = managerId;
+            return this;
+        }
+
+        public Builder adminId(String adminId) {
+            this.adminId = adminId;
             return this;
         }
 
@@ -128,6 +144,8 @@ public class PurchaseSalesSlip {
         this.vatTypeId = builder.vatTypeId;
         this.vendorId = builder.vendorId;
         this.entryId = builder.entryId;
+        this.managerId = builder.managerId;
+        this.adminId = builder.adminId;
         this.date = builder.date;
         this.itemName = builder.itemName;
         this.quantity = builder.quantity;
@@ -146,6 +164,8 @@ public class PurchaseSalesSlip {
                 .vatTypeId(this.vatTypeId)
                 .vendorId(this.vendorId)
                 .entryId(this.entryId)
+                .managerId(this.managerId)
+                .adminId(this.adminId)
                 .date(this.date)
                 .itemName(this.itemName)
                 .quantity(this.quantity)
@@ -167,12 +187,20 @@ public class PurchaseSalesSlip {
         return vatTypeId;
     }
 
-    public String getvendorId() {
+    public String getVendorId() {
         return vendorId;
     }
 
     public String getEntryId() {
         return entryId;
+    }
+
+    public String getManagerId() {
+        return managerId;
+    }
+
+    public String getAdminId() {
+        return adminId;
     }
 
     public LocalDate getDate() {
@@ -199,7 +227,27 @@ public class PurchaseSalesSlip {
         return vat;
     }
 
-    public Boolean getElectronicTaxInvoiceIssued() {
+    public boolean getElectronicTaxInvoiceIssued() {
         return electronicTaxInvoiceIssued;
+    }
+
+    @Override
+    public String toString() {
+        return "PurchaseSalesSlip{" +
+                "id='" + id + '\'' +
+                ", userCompanyId='" + userCompanyId + '\'' +
+                ", vatTypeId='" + vatTypeId + '\'' +
+                ", vendorId='" + vendorId + '\'' +
+                ", entryId='" + entryId + '\'' +
+                ", managerId='" + managerId + '\'' +
+                ", adminId='" + adminId + '\'' +
+                ", date=" + date +
+                ", itemName='" + itemName + '\'' +
+                ", quantity=" + quantity +
+                ", unitPrice=" + unitPrice +
+                ", supplyValue=" + supplyValue +
+                ", vat=" + vat +
+                ", electronicTaxInvoiceIssued=" + electronicTaxInvoiceIssued +
+                '}';
     }
 }
