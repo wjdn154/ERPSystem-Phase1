@@ -4,15 +4,15 @@ import com.erp.system.common.annotation.NotNull;
 import com.erp.system.common.validator.NotNullValidator;
 
 /**
- * 제품 그룹 테이블
- * 제품 그룹에 대한 정보가 있는 테이블
+ * 품목 그룹 테이블
+ * 품목 그룹에 대한 정보가 있는 테이블
  */
 public class ProductGroup {
     @NotNull
-    private final String id; // 제품그룹 고유 식별자
+    private final String id; // 품목그룹 고유 식별자
 
     @NotNull
-    private String name; // 제품 그룹 명
+    private String name; // 품목 그룹 명
 
     public static int idIndex = 1;
 

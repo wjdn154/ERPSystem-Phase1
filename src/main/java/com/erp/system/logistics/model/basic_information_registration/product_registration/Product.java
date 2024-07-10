@@ -4,28 +4,31 @@ import com.erp.system.common.annotation.NotNull;
 import com.erp.system.common.validator.NotNullValidator;
 
 /**
- * 제품 테이블
- * 제품에 대한 정보가 있는 테이블 - 제품 등록 시 사용
+ * 품목 테이블
+ * 품목에 대한 정보가 있는 테이블 - 품목 등록 시 사용
  */
 public class Product {
     public enum ProductType {RAW_MATERIAL, OTHER_MATERIAL, FINISHED_GOOD,
         SEMI_FINISHED_GOOD, MERCHANDISE, INTANGIBLE_MERCHANDISE}
 
     @NotNull
-    private final String id; // 제품의 고유 식별자
-    private String productionProcessId; // 생성공정 코드 참조
+    private final String id; // 품목의 고유 식별자
     @NotNull
-    private String groupId; // 제품 그룹 코드 참조
+    private final String productionProcessId; // 생성공정 코드 참조
+    @NotNull
+    private final String groupId; // 품목 그룹 코드 참조
     @NotNull
     private double purchasePrice; // 입고 단가
     @NotNull
     private double salesPrice; // 출고 단가
     @NotNull
-    private String name; // 제품명
+    private String name; // 품목명
     @NotNull
     private String standard; // 규격
     @NotNull
-    private ProductType productType; // 제품구분 (Enum)
+    private String unit; // 단위
+    @NotNull
+    private ProductType productType; // 품목구분 (Enum)
 
     public static int idIndex = 1;
 
@@ -37,6 +40,7 @@ public class Product {
         private double salesPrice;
         private String name;
         private String standard;
+        private String unit;
         private ProductType productType;
 
         public Builder id(String id) {
@@ -74,6 +78,11 @@ public class Product {
             return this;
         }
 
+        public Builder unit(String unit) {
+            this.unit = unit;
+            return this;
+        }
+
         public Builder productType(ProductType productType) {
             this.productType = productType;
             return this;
@@ -91,6 +100,7 @@ public class Product {
         this.purchasePrice = builder.purchasePrice;
         this.salesPrice = builder.salesPrice;
         this.name = builder.name;
+        this.unit = builder.unit;
         this.standard = builder.standard;
         this.productType = builder.productType;
         NotNullValidator.validateFields(this);
@@ -105,6 +115,7 @@ public class Product {
                 .salesPrice(this.salesPrice)
                 .name(this.name)
                 .standard(this.standard)
+                .unit(this.unit)
                 .productType(this.productType);
     }
 
@@ -136,6 +147,10 @@ public class Product {
         return standard;
     }
 
+    public String getUnit() {
+        return unit;
+    }
+
     public ProductType getProductType() {
         return productType;
     }
@@ -150,6 +165,7 @@ public class Product {
                 ", salesPrice=" + salesPrice +
                 ", name='" + name + '\'' +
                 ", standard='" + standard + '\'' +
+                ", unit='" + unit + '\'' +
                 ", productType=" + productType +
                 '}';
     }
