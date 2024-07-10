@@ -1,5 +1,7 @@
 package com.erp.system.financial.model.basic_information_management.company_registration;
 
+import com.erp.system.common.annotation.EnumMapping;
+import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 
@@ -9,7 +11,10 @@ import java.time.LocalDate;
  * 회사 기본 정보 테이블
  * 회사 기본 정보 등록시 사용하는 테이블
  */
+@EnumMapping
 public class Company {
+    public enum EntityType {INCORPORATED,INDIVIDUAL}
+    @Unique
     @NotNull
     private final String id; // 고유식별자
     @NotNull
@@ -23,10 +28,18 @@ public class Company {
     @NotNull
     private final String contactId; // 연락처 정보 테이블 참조코드
     @NotNull
-    private final String taxId; // 세무 정보 테이블 참조코드
+    private final String businessTaxOfficeId; // 사업장관할 세무서 id
+    @NotNull
+    private final String headquartersTaxOfficeId; // 본점관할 세무서 id
+    @NotNull
+    private final String businessTypeId; // 업종 형태 id
+    @NotNull
+    private final String businessItemId; // 업체 종목 id
 
     @NotNull
-    private boolean isSme; // 중소기업여부
+    private String localIncomeTaxOffice; // 지방소득세납세지
+    @NotNull
+    private Boolean isSme; // 중소기업여부
     @NotNull
     private String businessRegistrationNumber; // 사업자등록번호
     @NotNull
@@ -36,17 +49,15 @@ public class Company {
     @NotNull
     private String name; // 회사명
     @NotNull
-    private String type; // 구분 (법인, 개인)
+    private EntityType entityType; // 구분 (법인, 개인)
     @NotNull
-    private boolean active; // 사용여부(사용, 미사용)
+    private Boolean active; // 사용여부(사용, 미사용)
     @NotNull
     private LocalDate fiscalYearStart; // 회계연도 시작일
     @NotNull
     private LocalDate fiscalYearEnd; // 회계연도 마지막일
     @NotNull
-    private int fiscalCardinalNumber; // 회계연도 기수
-    @NotNull
-    private String mainIndustryId; // 주업종코드
+    private Integer fiscalCardinalNumber; // 회계연도 기수
 
     public static int idIndex = 1;
 
@@ -57,19 +68,22 @@ public class Company {
         private String representativeId;
         private String addressId;
         private String contactId;
-        private String taxId;
-
-        private boolean isSme;
+        private String businessTaxOfficeId;
+        private String headquartersTaxOfficeId;
+        private String businessTypeId; // << 테이블 id 참조
+        private String businessItemId; // << 테이블 id 참조
+        private String localIncomeTaxOffice;
+        private Boolean isSme;
         private String businessRegistrationNumber;
         private String corporateRegistrationNumber;
         private LocalDate establishmentDate;
         private String name;
-        private String type;
-        private boolean active;
+        private EntityType entityType;
+        private Boolean active;
         private LocalDate fiscalYearStart;
         private LocalDate fiscalYearEnd;
-        private int fiscalCardinalNumber;
-        private String mainIndustryId;
+        private Integer fiscalCardinalNumber;
+
 
         public Builder id(String id) {
             this.id = id;
@@ -101,12 +115,22 @@ public class Company {
             return this;
         }
 
-        public Builder taxId(String taxId) {
-            this.taxId = taxId;
+        public Builder businessTaxOfficeId(String businessTaxOfficeId) {
+            this.businessTaxOfficeId = businessTaxOfficeId;
             return this;
         }
 
-        public Builder isSme(boolean isSme) {
+        public Builder headquartersTaxOfficeId(String headquartersTaxOfficeId) {
+            this.headquartersTaxOfficeId = headquartersTaxOfficeId;
+            return this;
+        }
+
+        public Builder localIncomeTaxOffice(String localIncomeTaxOffice) {
+            this.localIncomeTaxOffice = localIncomeTaxOffice;
+            return this;
+        }
+
+        public Builder isSme(Boolean isSme) {
             this.isSme = isSme;
             return this;
         }
@@ -131,12 +155,12 @@ public class Company {
             return this;
         }
 
-        public Builder type(String type) {
-            this.type = type;
+        public Builder entityType(EntityType entityType) {
+            this.entityType = entityType;
             return this;
         }
 
-        public Builder active(boolean active) {
+        public Builder active(Boolean active) {
             this.active = active;
             return this;
         }
@@ -151,15 +175,22 @@ public class Company {
             return this;
         }
 
-        public Builder fiscalCardinalNumber(int fiscalCardinalNumber) {
+        public Builder fiscalCardinalNumber(Integer fiscalCardinalNumber) {
             this.fiscalCardinalNumber = fiscalCardinalNumber;
             return this;
         }
 
-        public Builder mainIndustryId(String mainIndustryId) {
-            this.mainIndustryId = mainIndustryId;
+        public Builder businessTypeId(String businessTypeId) {
+            this.businessTypeId = businessTypeId;
             return this;
         }
+
+        public Builder businessItemId(String businessItemId) {
+            this.businessItemId = businessItemId;
+            return this;
+        }
+
+
 
         public Company build() {
             return new Company(this);
@@ -173,35 +204,47 @@ public class Company {
         this.representativeId = builder.representativeId;
         this.addressId = builder.addressId;
         this.contactId = builder.contactId;
-        this.taxId = builder.taxId;
+        this.businessTaxOfficeId = builder.businessTaxOfficeId;
+        this.headquartersTaxOfficeId = builder.headquartersTaxOfficeId;
+        this.localIncomeTaxOffice = builder.localIncomeTaxOffice;
         this.isSme = builder.isSme;
         this.businessRegistrationNumber = builder.businessRegistrationNumber;
         this.corporateRegistrationNumber = builder.corporateRegistrationNumber;
         this.establishmentDate = builder.establishmentDate;
         this.name = builder.name;
-        this.type = builder.type;
+        this.entityType = builder.entityType;
         this.active = builder.active;
         this.fiscalYearStart = builder.fiscalYearStart;
         this.fiscalYearEnd = builder.fiscalYearEnd;
         this.fiscalCardinalNumber = builder.fiscalCardinalNumber;
-        this.mainIndustryId = builder.mainIndustryId;
+        this.businessTypeId = builder.businessTypeId;
+        this.businessItemId = builder.businessItemId;
         NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
+                .corporateTypeId(this.corporateTypeId)
+                .corporateKindsId(this.corporateKindsId)
+                .representativeId(this.representativeId)
+                .addressId(this.addressId)
+                .contactId(this.contactId)
+                .businessTaxOfficeId(this.businessTaxOfficeId)
+                .headquartersTaxOfficeId(this.headquartersTaxOfficeId)
+                .localIncomeTaxOffice(this.localIncomeTaxOffice)
                 .isSme(this.isSme)
                 .businessRegistrationNumber(this.businessRegistrationNumber)
                 .corporateRegistrationNumber(this.corporateRegistrationNumber)
                 .establishmentDate(this.establishmentDate)
                 .name(this.name)
-                .type(this.type)
+                .entityType(this.entityType)
                 .active(this.active)
                 .fiscalYearStart(this.fiscalYearStart)
                 .fiscalYearEnd(this.fiscalYearEnd)
                 .fiscalCardinalNumber(this.fiscalCardinalNumber)
-                .mainIndustryId(this.mainIndustryId);
+                .businessTypeId(this.businessTypeId)
+                .businessItemId(this.businessItemId);
     }
 
     public String getId() {
@@ -228,8 +271,16 @@ public class Company {
         return contactId;
     }
 
-    public String getTaxId() {
-        return taxId;
+    public String getBusinessTaxOfficeId() {
+        return businessTaxOfficeId;
+    }
+
+    public String getHeadquartersTaxOfficeId() {
+        return headquartersTaxOfficeId;
+    }
+
+    public String getLocalIncomeTaxOffice() {
+        return localIncomeTaxOffice;
     }
 
     public boolean isSme() {
@@ -252,8 +303,8 @@ public class Company {
         return name;
     }
 
-    public String getType() {
-        return type;
+    public EntityType getEntityType() {
+        return entityType;
     }
 
     public boolean isActive() {
@@ -268,12 +319,16 @@ public class Company {
         return fiscalYearEnd;
     }
 
-    public int getFiscalCardinalNumber() {
+    public Integer getFiscalCardinalNumber() {
         return fiscalCardinalNumber;
     }
 
-    public String getMainIndustryId() {
-        return mainIndustryId;
+    public String getBusinessTypeId() {
+        return businessTypeId;
+    }
+
+    public String getBusinessItemId() {
+        return businessItemId;
     }
 
     @Override
@@ -285,18 +340,21 @@ public class Company {
                 ", representativeId='" + representativeId + '\'' +
                 ", addressId='" + addressId + '\'' +
                 ", contactId='" + contactId + '\'' +
-                ", taxId='" + taxId + '\'' +
+                ", businessTaxOfficeId='" + businessTaxOfficeId + '\'' +
+                ", headquartersTaxOfficeId='" + headquartersTaxOfficeId + '\'' +
+                ", businessTypeId='" + businessTypeId + '\'' +
+                ", businessItemId='" + businessItemId + '\'' +
+                ", localIncomeTaxOffice='" + localIncomeTaxOffice + '\'' +
                 ", isSme=" + isSme +
                 ", businessRegistrationNumber='" + businessRegistrationNumber + '\'' +
                 ", corporateRegistrationNumber='" + corporateRegistrationNumber + '\'' +
                 ", establishmentDate=" + establishmentDate +
                 ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
+                ", entityType=" + entityType +
                 ", active=" + active +
                 ", fiscalYearStart=" + fiscalYearStart +
                 ", fiscalYearEnd=" + fiscalYearEnd +
                 ", fiscalCardinalNumber=" + fiscalCardinalNumber +
-                ", mainIndustryId='" + mainIndustryId + '\'' +
                 '}';
     }
 }

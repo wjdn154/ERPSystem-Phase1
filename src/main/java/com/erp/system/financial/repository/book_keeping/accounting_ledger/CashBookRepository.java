@@ -1,7 +1,6 @@
 package com.erp.system.financial.repository.book_keeping.accounting_ledger;
 
 import com.erp.system.common.generic_repository.GenericRepository;
-import com.erp.system.financial.model.basic_information_management.voucher_registration.VoucherType;
 import com.erp.system.financial.model.book_keeping.accounting_ledger.CashBook;
 
 import java.util.List;

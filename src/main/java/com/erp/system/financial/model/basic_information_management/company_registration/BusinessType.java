@@ -1,20 +1,18 @@
-package com.erp.system.financial.model.basic_information_management.voucher_registration;
+package com.erp.system.financial.model.basic_information_management.company_registration;
 
-import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
+import com.erp.system.common.validator.NotNullValidator;
 
 /**
- * 전표 타입 테이블
- * 전표 타입 데이터를 저장하는 테이블
+ * 회사 및 거래처 등록의 업종형태
  */
-public class VoucherType {
+public class BusinessType {
     @NotNull
-    private final String id; // 전표 타입의 고유 식별자
-
+    private final String id; // 고유 식별자
     @NotNull
-    private String name; // 전표의 종류 (ex 출금, 입금, 차변, 대변)
+    private final String name; // 회사의 업종형태
 
-    public static int idIndex = 1; // static 변수 추가
+    public static int idIndex = 1;
 
     public static class Builder {
         private String id;
@@ -30,18 +28,17 @@ public class VoucherType {
             return this;
         }
 
-        public VoucherType build() {
-            return new VoucherType(this);
+        public BusinessType build() {
+            return new BusinessType(this);
         }
-    }
+    } // end of Builder
 
-    private VoucherType(Builder builder) {
+    private BusinessType(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.name = builder.name;
         NotNullValidator.validateFields(this);
     }
 
-    // tobuild() 메서드 추가
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
@@ -54,5 +51,13 @@ public class VoucherType {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return "BusinessType{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

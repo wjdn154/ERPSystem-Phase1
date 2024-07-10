@@ -1,5 +1,6 @@
 package com.erp.system.financial.model.book_keeping.accounting_ledger;
 
+import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.EnumMapping;
 import com.erp.system.common.annotation.NotNull;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
  */
 @EnumMapping
 public class CashBook {
+    @Unique
     @NotNull
     private final String id; // 고유 식별자
     @NotNull

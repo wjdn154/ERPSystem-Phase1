@@ -11,8 +11,10 @@ import java.time.LocalDate;
  * 은행 계좌에대한 정보가 있는 테이블
  */
 public class BankAccount {
+    @Unique
     @NotNull
     private final String id; // 계좌의 고유 식별자
+    @Unique
     @NotNull
     private final String userCompanyId; // ERP 사용자 계정 회사 ID
 
