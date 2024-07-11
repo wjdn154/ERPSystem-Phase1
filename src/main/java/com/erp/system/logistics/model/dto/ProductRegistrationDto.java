@@ -6,23 +6,15 @@ import com.erp.system.logistics.model.basic_information_registration.product_reg
  * 품목 등록을 위한 DTO
  */
 public class ProductRegistrationDto {
-    private String id; // 품목의 고유 식별자
+
     private String name; // 품목명
-    private String productionProcessId; // 생성공정 코드 참조
-    private String groupId; // 품목 그룹 코드 참조
+    private String productionProcessName; // 생성공정명
+    private String groupName; // 품목 그룹명
     private double purchasePrice; // 입고 단가
     private double salesPrice; // 출고 단가
     private String standard; // 규격
     private String unit; // 단위
-    private String productType; // 품목 구분
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+    private Product.ProductType productType; // 품목구분
 
     public String getName() {
         return name;
@@ -32,20 +24,20 @@ public class ProductRegistrationDto {
         this.name = name;
     }
 
-    public String getProductionProcessId() {
-        return productionProcessId;
+    public String getProductionProcessName() {
+        return productionProcessName;
     }
 
-    public void setProductionProcessId(String productionProcessId) {
-        this.productionProcessId = productionProcessId;
+    public void setProductionProcessName(String productionProcessName) {
+        this.productionProcessName = productionProcessName;
     }
 
-    public String getGroupId() {
-        return groupId;
+    public String getGroupName() {
+        return groupName;
     }
 
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 
     public double getPurchasePrice() {
@@ -80,11 +72,25 @@ public class ProductRegistrationDto {
         this.unit = unit;
     }
 
-    public String getProductType() {
+    public Product.ProductType getProductType() {
         return productType;
     }
 
-    public void setProductType(String productType) {
+    public void setProductType(Product.ProductType productType) {
         this.productType = productType;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductRegistrationDto{" +
+                "name='" + name + '\'' +
+                ", productionProcessName='" + productionProcessName + '\'' +
+                ", groupName='" + groupName + '\'' +
+                ", purchasePrice=" + purchasePrice +
+                ", salesPrice=" + salesPrice +
+                ", standard='" + standard + '\'' +
+                ", unit='" + unit + '\'' +
+                ", productType=" + productType +
+                '}';
     }
 }
