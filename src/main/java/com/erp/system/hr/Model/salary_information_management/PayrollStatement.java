@@ -17,7 +17,7 @@ public class PayrollStatement {
     private final String id; // 급여 명세서 식별자
 
     @NotNull
-    private Date payDate; // 급여 지급 일자
+    private LocalDate payDate; // 급여 지급 일자
     @NotNull
     private BigDecimal baseSalary; // 기본 급여
     @NotNull
@@ -32,7 +32,7 @@ public class PayrollStatement {
 
     public static class Builder {
         private String id;
-        private Date payDate;
+        private LocalDate payDate;
         private BigDecimal baseSalary;
         private BigDecimal bonus;
         private BigDecimal deductions;
@@ -44,7 +44,7 @@ public class PayrollStatement {
             return this;
         }
 
-        public Builder payDate(Date payDate){
+        public Builder payDate(LocalDate payDate){
             this.payDate = payDate;
             return this;
         }
@@ -97,7 +97,7 @@ public class PayrollStatement {
 
     }
     public String getId() {return id;}
-    public Date getPayDate() {return payDate;}
+    public LocalDate getPayDate() {return payDate;}
     public BigDecimal getBaseSalary() {return baseSalary;}
     public BigDecimal getBonus() {return bonus;}
     public BigDecimal getDeductions() {return deductions;}

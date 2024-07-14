@@ -3,19 +3,22 @@ package com.erp.system.hr.Model.salary_information_management;
 //연금 정보 테이블
 // 연금 관련 정보를 저장
 
+import com.erp.system.common.annotation.EnumMapping;
 import com.erp.system.common.annotation.NotNull;
 import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
 
 import java.math.BigDecimal;
-
+@EnumMapping
 public class Pension {
+    public enum PensionType{NATIONAL_PENSION, RETIREMENT_PENSION, PERSONAL_PENSION}
+
     @Unique
     @NotNull
     private final String id; // 연금 정보 고유 식별자 ID
 
     @NotNull
-    private String pensionType; // 연금 종류 ( 예 : 퇴직연금, 개인 연금 등)
+    private PensionType pensionType; // 연금 종류 ( 예 : 국민연금, 퇴직연금, 개인 연금)
     @NotNull
     private BigDecimal contribution; // 연금 기여 금액
     private String description; // 연금에 대한 설명, 비고 사항
@@ -24,7 +27,7 @@ public class Pension {
 
     public static class Builder {
         private String id;
-        private String pensionType;
+        private PensionType pensionType;
         private BigDecimal contribution;
         private String description;
 
@@ -33,7 +36,7 @@ public class Pension {
             return this;
         }
 
-        public Builder pensionType(String pensionType) {
+        public Builder pensionType(PensionType pensionType) {
             this.pensionType = pensionType;
             return this;
         }
@@ -66,7 +69,7 @@ public class Pension {
 
     public String getId() {return id;}
 
-    public String getPensionType() {return pensionType;}
+    public PensionType getPensionType() {return pensionType;}
 
     public BigDecimal getContribution() {return contribution;}
 

@@ -36,6 +36,9 @@ public class Position {
             this.description = description;
             return this;
         }
+        public Position build() {
+            return new Position(this);
+        }
     }//end of Builder
     private Position(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);

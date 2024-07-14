@@ -11,7 +11,7 @@ import javax.management.relation.Role;
 // 사용자 테이블
 @EnumMapping
 public class User {
-    public enum Role{ADMIN, ACCOUNTING, AUDITOR}
+    public enum Role{SYSTEM_ADMINISTRATOR, HR_MANAGER, DEPARTMENT_MANAGER, FINANCIAL_MANAGER, PROCUREMENT_MANAGER, SALES_MANAGER }
 
     @Unique
     @NotNull
@@ -26,7 +26,7 @@ public class User {
     @NotNull
     private String password; // 사용자 비밀번호
     @NotNull
-    private Role role; // 사용자 역할
+    private Role role; // 사용자 역할(시스템 관리자, 인사 관리자, 부서 관리자, 재무 관리자, 구매 관리자, 영업 관리자)
     @Unique
     private String email; // 사용자 이메일
 

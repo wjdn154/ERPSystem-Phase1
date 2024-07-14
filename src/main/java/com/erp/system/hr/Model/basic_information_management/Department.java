@@ -36,6 +36,9 @@ public class Department {
                 this.managerId = managerId;
                 return this;
             }
+            public Department build() {
+                return new Department(this);
+            }
         }//end of Builder
             private Department(Builder builder){
                 this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);

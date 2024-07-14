@@ -7,7 +7,7 @@ import com.erp.system.common.annotation.Unique;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-// 급여 정보 테이블
+// 급여 등록 테이블
 
 public class Salary {
     @Unique

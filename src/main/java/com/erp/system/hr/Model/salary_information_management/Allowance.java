@@ -7,7 +7,7 @@ import com.erp.system.common.annotation.Unique;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-// 수당 정보 테이블
+// 수당 등록 테이블
 
 public class Allowance {
     @Unique
@@ -21,7 +21,6 @@ public class Allowance {
     @NotNull
     private LocalDate issueDate; // 수당 지급 날짜
     private String description; // 수당 설명
-    private String approvalStatus; // 수당 상태
 
     public static int idIndex = 1;
 
@@ -31,7 +30,6 @@ public class Allowance {
         private BigDecimal amount;
         private LocalDate issueDate;
         private String description;
-        private String approvalStatus;
 
         public Builder id(String id){
             this.id = id;
@@ -57,11 +55,10 @@ public class Allowance {
             this.description = description;
             return this;
         }
-
-        public Builder approvalStatus(String approvalStatus){
-            this.approvalStatus = approvalStatus;
-            return this;
+        public Allowance build (){
+            return new Allowance(this);
         }
+
     }//end of Builder
         private Allowance(Builder builder){
             this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
@@ -69,7 +66,6 @@ public class Allowance {
             this.amount = builder.amount;
             this.issueDate = builder.issueDate;
             this.description = builder.description;
-            this.approvalStatus = builder.approvalStatus;
             NotNullValidator.validateFields(this);
         }
         public Builder tobuild(){
@@ -78,15 +74,13 @@ public class Allowance {
                 .allowanceType(this.allowanceType)
                 .amount(this.amount)
                 .issueDate(this.issueDate)
-                .description(this.description)
-                .approvalStatus(this.approvalStatus);
+                .description(this.description);
         }
     public String getId() {return id;}
     public String getAllowanceType() {return allowanceType;}
     public BigDecimal getAmount() {return amount;}
     public LocalDate getIssueDate() {return issueDate;}
     public String getDescription() {return description;}
-    public String getApprovalStatus() {return approvalStatus;}
 
 
     @Override
@@ -97,7 +91,6 @@ public class Allowance {
                 ", amount=" + amount +
                 ", issueDate=" + issueDate +
                 ", description='" + description + '\'' +
-                ", approvalStatus='" + approvalStatus + '\'' +
                 '}';
     }
 }

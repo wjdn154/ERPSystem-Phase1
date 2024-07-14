@@ -7,6 +7,7 @@ import com.erp.system.common.annotation.NotNull;
 import com.erp.system.common.annotation.Unique;
 
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Overtime {
@@ -19,7 +20,7 @@ public class Overtime {
     private final String managerId; // 부서 관리자 ID 참조 // ->  승인을 직원이 하면 이거 필요없음.
 
     @NotNull
-    private Date date; // 초과 근무 날짜
+    private LocalDate date; // 초과 근무 날짜
     @NotNull
     private Time hours; // 초과 근무 시간
     @NotNull
@@ -35,7 +36,7 @@ public class Overtime {
         private String id;
         private String employeeId;
         private String managerId;
-        private Date date;
+        private LocalDate date;
         private Time hours;
         private Time startTime;
         private Time endTime;
@@ -56,7 +57,7 @@ public class Overtime {
             return this;
         }
 
-        public Builder date(Date date) {
+        public Builder date(LocalDate date) {
             this.date = date;
             return this;
         }
@@ -112,7 +113,7 @@ public class Overtime {
 
     public String getManagerId() {return managerId;}
 
-    public Date getDate() {return date;}
+    public LocalDate getDate() {return date;}
 
     public Time getHours() {return hours;}
 

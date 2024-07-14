@@ -1,41 +1,46 @@
 package com.erp.system.hr.Model.attendance_information_management;
 
+import com.erp.system.common.annotation.EnumMapping;
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 import com.erp.system.common.annotation.Unique;
 
+import java.time.LocalDate;
 import java.util.Date;
 
-// 휴가 기록 테이블
-
+// 휴가 등록 테이블
+@EnumMapping
 public class Leave {
+    private enum LeaveType{SICK_LEAVE, ANNUAL_LEAVE, PAID_LEAVE, UNPAID_LEAVE, MATERNITY_LEAVE, PARENTAL_LEAVE
+                            , SPECIAL_LEAVE, PUBLIC_HOLIDAY_LEAVE, TRAINING_LEAVE}
+    private enum Status{PENDING, APPROVED, REJECTED, ON_HOLD, COMPLETED, CANCELLED, IN_PROGESS, UNDER_REVIEW, DEFERRED}
     @Unique
     @NotNull
-    private final String id; // 휴가 기록 고유 식별자
+    private final String id; // 휴가 등록 고유 식별자
     @NotNull
     private  final  String employeeId; // 직원 ID 참조
 
     @NotNull
-    private String leaveType; // 휴가 유형( 예 : 병가, 연차, 유급 휴가, 무급 휴가 등)
+    private LeaveType leaveType; // 휴가 유형( 예 : 병가, 연차, 유급 휴가, 무급 휴가 출산 휴가, 육아 휴가, 특별 휴가, 공휴일, 교육 휴가)
     @NotNull
-    private Date startDate; // 시작일
+    private LocalDate startDate; // 시작일
     @NotNull
-    private Date endDate; // 종료일
+    private LocalDate endDate; // 종료일
     @NotNull
     private String reason; // 사유
     @NotNull
-    private String status; // 상태 (예 : 대기, 승인, 거절)
+    private Status status; // 상태 (예 : 대기, 승인, 거절, 보류, 완료, 취소, 처리 중, 검토 중, 연기됨)
 
     public static int idIndex = 1;
 
     public static class Builder {
         private String id;
         private String employeeId;
-        private String leaveType;
-        private Date startDate;
-        private Date endDate;
+        private LeaveType leaveType;
+        private LocalDate startDate;
+        private LocalDate endDate;
         private String reason;
-        private String status;
+        private Status status;
 
         public Builder id(String id) {
             this.id = id;
@@ -47,17 +52,17 @@ public class Leave {
             return this;
         }
 
-        public Builder leaveType(String leaveType) {
+        public Builder leaveType(LeaveType leaveType) {
             this.leaveType = leaveType;
             return this;
         }
 
-        public Builder startDate(Date startDate) {
+        public Builder startDate(LocalDate startDate) {
             this.startDate = startDate;
             return this;
         }
 
-        public Builder endDate(Date endDate) {
+        public Builder endDate(LocalDate endDate) {
             this.endDate = endDate;
             return this;
         }
@@ -67,7 +72,7 @@ public class Leave {
             return this;
         }
 
-        public Builder status(String status) {
+        public Builder status(Status status) {
             this.status = status;
             return this;
         }
@@ -98,15 +103,15 @@ public class Leave {
 
     public String getId() {return id;}
 
-    public String getLeaveType() {return leaveType;}
+    public LeaveType getLeaveType() {return leaveType;}
 
-    public Date getStartDate() {return startDate;}
+    public LocalDate getStartDate() {return startDate;}
 
-    public Date getEndDate() {return endDate;}
+    public LocalDate getEndDate() {return endDate;}
 
     public String getReason() {return reason;}
 
-    public String getStatus() {return status;}
+    public Status getStatus() {return status;}
 
     @Override
     public String toString() {

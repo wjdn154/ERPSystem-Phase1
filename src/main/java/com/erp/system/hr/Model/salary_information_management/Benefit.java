@@ -1,7 +1,7 @@
 package com.erp.system.hr.Model.salary_information_management;
 
-// 복리후생 정보 테이블
-// 복리후생 관련 정보를 저장
+// 복리후생 등록 테이블
+
 import com.erp.system.common.annotation.NotNull;
 import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
@@ -13,9 +13,9 @@ public class Benefit {
     @Unique
     @NotNull
     private final String id; // 복리후생 정보 고유 식별자
-
     @NotNull
-    private String benefitType; // 복리후생 종류 ( 예 : 휴가비, 경조사비 등)
+    private String benefitTypeId; // 복리후생 종류 테이블 ID 참조
+
     @NotNull
     private BigDecimal amount; // 복리후생 금액
     private String description; // 복리후생에 대한 설명이나 비고 사항
@@ -24,8 +24,8 @@ public class Benefit {
 
     public static class Builder {
         private String id;
+        private String benefitTypeId;
 
-        private String benefitType;
         private BigDecimal amount;
         private String description;
 
@@ -34,8 +34,8 @@ public class Benefit {
             return this;
         }
 
-        public Builder benefitType(String benefitType) {
-            this.benefitType = benefitType;
+        public Builder benefitTypeId(String benefitTypeId) {
+            this.benefitTypeId = benefitTypeId;
             return this;
         }
 
@@ -51,7 +51,7 @@ public class Benefit {
     }//end of Builider
     private Benefit(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.benefitType = builder.benefitType;
+        this.benefitTypeId = builder.benefitTypeId;
         this.amount = builder.amount;
         this.description = builder.description;
         NotNullValidator.validateFields(this);
@@ -59,7 +59,7 @@ public class Benefit {
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .benefitType(this.benefitType)
+                .benefitTypeId(this.benefitTypeId)
                 .amount(this.amount)
                 .description(this.description);
 
@@ -67,7 +67,7 @@ public class Benefit {
 
     public String getId() {return id;}
 
-    public String getBenefitType() {return benefitType;}
+    public String getBenefitType() {return benefitTypeId;}
 
     public BigDecimal getAmount() {return  amount;}
 
@@ -77,7 +77,7 @@ public class Benefit {
     public String toString() {
         return "Benefit{" +
                 "id='" + id + '\'' +
-                ", benefitType='" + benefitType + '\'' +
+                ", benefitTypeId='" + benefitTypeId + '\'' +
                 ", amount=" + amount +
                 ", description='" + description + '\'' +
                 '}';
