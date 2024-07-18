@@ -5,79 +5,80 @@ import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 
 /**
- * 연락처 정보 테이블
- * 회사 등록 시 필요한 연락처 데이터 테이블
- *
+ * 세무서 테이블
+ * 회사와 연결될 세무서 정보 데이터 테이블
+ * 
  */
-public class Contact {
+public class TaxOffice {
     @Unique
     @NotNull
     private final String id; // 고유식별자
-
     @NotNull
-    private String businessPhone; // 사업장 전화번호
-    private String fax; // 팩스번호
+    private final String name; // 세무서명
+    @NotNull
+    private final String region; // 세무서 지역
 
     public static int idIndex = 1;
 
     public static class Builder {
         private String id;
-
-        private String businessPhone;
-        private String fax;
+        private String name;
+        private String region;
 
         public Builder id(String id) {
             this.id = id;
             return this;
         }
 
-        public Builder businessPhone(String businessPhone) {
-            this.businessPhone = businessPhone;
+        public Builder name(String name) {
+            this.name = name;
             return this;
         }
 
-        public Builder fax(String fax) {
-            this.fax = fax;
+        public Builder region(String region) {
+            this.region = region;
             return this;
         }
 
-        public Contact build() {
-            return new Contact(this);
+        public TaxOffice build() {
+            return new TaxOffice(this);
         }
+
     }// end of Builder
 
-    private Contact(Builder builder) {
+    private TaxOffice(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.businessPhone = builder.businessPhone;
-        this.fax = builder.fax;
+        this.name = builder.name;
+        this.region = builder.region;
         NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .businessPhone(this.businessPhone)
-                .fax(this.fax);
+                .name(this.name)
+                .region(this.region);
     }
 
     public String getId() {
         return id;
     }
 
-    public String getBusinessPhone() {
-        return businessPhone;
+    public String getName() {
+        return name;
     }
 
-    public String getFax() {
-        return fax;
+    public String getRegion() {
+        return region;
     }
+
 
     @Override
     public String toString() {
-        return "Contact{" +
+        return "TaxOffice{" +
                 "id='" + id + '\'' +
-                ", businessPhone='" + businessPhone + '\'' +
-                ", fax='" + fax + '\'' +
+                ", name='" + name + '\'' +
+                ", region='" + region + '\'' +
                 '}';
     }
 }

@@ -15,7 +15,9 @@ public class CompanyRegistrationServiceImpl implements CompanyRegistrationServic
     private final CorporateKindRepository corporateKindRepository;
     private final CorporateTypeRepository corporateTypeRepository;
     private final RepresentativeRepository representativeRepository;
-    private final TaxRepository taxRepository;
+    private final TaxOfficeRepository taxOfficeRepository;
+    private final BusinessItemRepository businessItemRepository;
+    private final BusinessTypeRepository businessTypeRepository;
 
     /**
      * 생성자. 각 리포지토리의 인스턴스를 초기화함.
@@ -26,14 +28,18 @@ public class CompanyRegistrationServiceImpl implements CompanyRegistrationServic
                                           CorporateKindRepository corporateKindRepository,
                                           CorporateTypeRepository corporateTypeRepository,
                                           RepresentativeRepository representativeRepository,
-                                          TaxRepository taxRepository) {
+                                          TaxOfficeRepository taxOfficeRepository,
+                                          BusinessItemRepository businessItemRepository,
+                                          BusinessTypeRepository businessTypeRepository) {
         this.addressRepository = addressRepository;
         this.companyRepository = companyRepository;
         this.contactRepository = contactRepository;
         this.corporateKindRepository = corporateKindRepository;
         this.corporateTypeRepository = corporateTypeRepository;
         this.representativeRepository = representativeRepository;
-        this.taxRepository = taxRepository;
+        this.taxOfficeRepository = taxOfficeRepository;
+        this.businessItemRepository = businessItemRepository;
+        this.businessTypeRepository = businessTypeRepository;
     }
 
     /**
@@ -47,13 +53,11 @@ public class CompanyRegistrationServiceImpl implements CompanyRegistrationServic
             Address address = createAddress(companyRegistrationDto);
             Contact contact = createContact(companyRegistrationDto);
             Representative representative = createRepresentative(companyRegistrationDto);
-            Tax tax = createTax(companyRegistrationDto);
-            Company company = createCompany(companyRegistrationDto, address.getId(), contact.getId(), representative.getId(), tax.getId());
+            Company company = createCompany(companyRegistrationDto, address.getId(), contact.getId(), representative.getId());
 
             addressRepository.save(address);
             contactRepository.save(contact);
             representativeRepository.save(representative);
-            taxRepository.save(tax);
             companyRepository.save(company);
         } catch (Exception e) {
             System.err.println("회사 등록 중 에러 발생: " + e.getMessage());
@@ -66,12 +70,14 @@ public class CompanyRegistrationServiceImpl implements CompanyRegistrationServic
      * @param dto 회사 등록을 위한 정보가 담긴 DTO
      * @return 저장된 주소 객체
      */
-    private Address createAddress(CompanyRegistrationDto dto) {
+    public Address createAddress(CompanyRegistrationDto dto) {
         return new Address.Builder()
-                .address(dto.getAddress())
-                .headquartersAddress(dto.getHeadquartersAddress())
+                .businessAddress(dto.getBusinessAddress())
+                .businessPostalCode(dto.getBusinessPostalCode())
                 .businessPlace(dto.getBusinessPlace())
-                .headquarters(dto.getHeadquarters())
+                .headquarterAddress(dto.getHeadquarterAddress())
+                .headquarterPostalCode(dto.getHeadquarterPostalCode())
+                .headquarterPlace(dto.getHeadquarterPlace())
                 .build();
     }
 
@@ -80,7 +86,7 @@ public class CompanyRegistrationServiceImpl implements CompanyRegistrationServic
      * @param dto 회사 등록을 위한 정보가 담긴 DTO
      * @return 저장된 연락처 객체
      */
-    private Contact createContact(CompanyRegistrationDto dto) {
+    public Contact createContact(CompanyRegistrationDto dto) {
         return new Contact.Builder()
                 .businessPhone(dto.getBusinessPhone())
                 .fax(dto.getFax())
@@ -92,22 +98,11 @@ public class CompanyRegistrationServiceImpl implements CompanyRegistrationServic
      * @param dto 회사 등록을 위한 정보가 담긴 DTO
      * @return 저장된 대표자 객체
      */
-    private Representative createRepresentative(CompanyRegistrationDto dto) {
+    public Representative createRepresentative(CompanyRegistrationDto dto) {
         return new Representative.Builder()
                 .name(dto.getRepresentativeName())
                 .idNumber(dto.getIdNumber())
                 .foreign(dto.isForeign())
-                .build();
-    }
-
-    /**
-     * 세금 정보를 생성하고 저장함.
-     * @param dto 회사 등록을 위한 정보가 담긴 DTO
-     * @return 저장된 세금 객체
-     */
-    private Tax createTax(CompanyRegistrationDto dto) {
-        return new Tax.Builder()
-                .localIncomeTaxOffice(dto.getLocalIncomeTaxOffice())
                 .build();
     }
 
@@ -118,27 +113,29 @@ public class CompanyRegistrationServiceImpl implements CompanyRegistrationServic
      * @param addressId 생성된 주소의 ID
      * @param contactId 생성된 연락처의 ID
      * @param representativeId 생성된 대표자의 ID
-     * @param taxId 생성된 세금 정보의 ID
      */
-    private Company createCompany(CompanyRegistrationDto dto, String addressId, String contactId, String representativeId, String taxId) {
+    private Company createCompany(CompanyRegistrationDto dto, String addressId, String contactId, String representativeId) {
         return new Company.Builder()
                 .corporateTypeId(dto.getCorporateTypeId())
                 .corporateKindsId(dto.getCorporateKindId())
                 .representativeId(representativeId)
                 .addressId(addressId)
                 .contactId(contactId)
-                .taxId(taxId)
+                .businessTaxOfficeId(dto.getBusinessTaxOfficeId())
+                .headquartersTaxOfficeId(dto.getHeadquartersTaxOfficeId())
+                .localIncomeTaxOffice(dto.getLocalIncomeTaxOffice())
                 .isSme(dto.isSme())
                 .businessRegistrationNumber(dto.getBusinessRegistrationNumber())
                 .corporateRegistrationNumber(dto.getCorporateRegistrationNumber())
                 .establishmentDate(dto.getEstablishmentDate())
                 .name(dto.getName())
-                .type(dto.getType())
+                .entityType(dto.getEntityType())
                 .active(dto.isActive())
                 .fiscalYearStart(dto.getFiscalYearStart())
                 .fiscalYearEnd(dto.getFiscalYearEnd())
                 .fiscalCardinalNumber(dto.getFiscalCardinalNumber())
-                .mainIndustryId(dto.getMainIndustryId())
+                .businessTypeId(dto.getBusinessTypeId())
+                .businessItemId(dto.getBusinessItemId())
                 .build();
     }
 }
