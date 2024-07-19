@@ -1,6 +1,5 @@
 package com.erp.system.financial.model.basic_information_management.company_registration;
 
-import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 
@@ -9,18 +8,15 @@ import com.erp.system.common.annotation.NotNull;
  * 회사 등록시 필요한 대표자 데이터 테이블
  */
 public class Representative {
-    @Unique
     @NotNull
     private final String id; // 고유 식별자
 
-    @Unique
     @NotNull
     private String name; // 대표자명
-    @Unique
     @NotNull
     private String idNumber; // 대표자 주민번호
     @NotNull
-    private Boolean foreign; // 대표자 외국인여부
+    private boolean foreign; // 대표자 외국인여부
 
     public static int idIndex = 1;
 
@@ -29,7 +25,7 @@ public class Representative {
 
         private String name;
         private String idNumber;
-        private Boolean foreign;
+        private boolean foreign;
 
         public Builder id(String id) {
             this.id = id;
@@ -46,7 +42,7 @@ public class Representative {
             return this;
         }
 
-        public Builder foreign(Boolean foreign) {
+        public Builder foreign(boolean foreign) {
             this.foreign = foreign;
             return this;
         }

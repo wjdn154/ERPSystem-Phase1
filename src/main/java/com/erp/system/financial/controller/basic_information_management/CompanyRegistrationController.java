@@ -4,6 +4,7 @@ import com.erp.system.common.annotation.Component;
 import com.erp.system.financial.model.basic_information_management.company_registration.*;
 import com.erp.system.financial.repository.basic_information_management.company_registration.*;
 import com.erp.system.financial.service.basic_information_management.CompanyRegistrationService;
+import org.apache.commons.math3.analysis.function.Add;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -17,7 +18,7 @@ public class CompanyRegistrationController {
     private final CorporateKindRepository corporateKindRepository;
     private final CorporateTypeRepository corporateTypeRepository;
     private final RepresentativeRepository representativeRepository;
-    private final TaxOfficeRepository taxOfficeRepository;
+    private final TaxRepository taxRepository;
 
 
     public CompanyRegistrationController(CompanyRegistrationService companyRegistrationService,
@@ -27,7 +28,7 @@ public class CompanyRegistrationController {
                                          CorporateKindRepository corporateKindRepository,
                                          CorporateTypeRepository corporateTypeRepository,
                                          RepresentativeRepository representativeRepository,
-                                         TaxOfficeRepository taxOfficeRepository) {
+                                         TaxRepository taxRepository) {
         this.companyRegistrationService = companyRegistrationService;
         this.addressRepository = addressRepository;
         this.companyRepository = companyRepository;
@@ -35,7 +36,7 @@ public class CompanyRegistrationController {
         this.corporateKindRepository = corporateKindRepository;
         this.corporateTypeRepository = corporateTypeRepository;
         this.representativeRepository = representativeRepository;
-        this.taxOfficeRepository = taxOfficeRepository;
+        this.taxRepository = taxRepository;
     }
 
     /**
@@ -88,10 +89,10 @@ public class CompanyRegistrationController {
 
     /**
      * 세금을 저장함
-     * @param taxOffice 저장할 세금
+     * @param tax 저장할 세금
      */
-    public void saveTax(TaxOffice taxOffice) {
-        taxOfficeRepository.save(taxOffice);
+    public void saveTax(Tax tax) {
+        taxRepository.save(tax);
     }
 
     /**
@@ -154,8 +155,8 @@ public class CompanyRegistrationController {
      * @param id 세금의 ID
      * @return 조회된 세금을 Optional로 반환
      */
-    public Optional<TaxOffice> findTaxById(String id) {
-        return taxOfficeRepository.findById(id);
+    public Optional<Tax> findTaxById(String id) {
+        return taxRepository.findById(id);
     }
 
     /**
@@ -210,8 +211,8 @@ public class CompanyRegistrationController {
      * 모든 세금을 조회함
      * @return 저장된 모든 세금의 컬렉션
      */
-    public Collection<TaxOffice> findAllTax() {
-        return taxOfficeRepository.findAll();
+    public Collection<Tax> findAllTax() {
+        return taxRepository.findAll();
     }
 
 

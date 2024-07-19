@@ -1,7 +1,5 @@
 package com.erp.system.financial.model.basic_information_management.purchase_sales_slip;
 
-import com.erp.system.common.annotation.EnumMapping;
-import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 
@@ -9,16 +7,12 @@ import com.erp.system.common.annotation.NotNull;
  * 부가세유형 테이블
  * 매입매출전표 등록 할때 선택할 부가세 유형 테이블
  */
-@EnumMapping
 public class VatType {
-    public enum Category {SALES,PURCHASE};
-
-    @Unique
     @NotNull
     private final String id; // 고유 식별자
 
     @NotNull
-    private Category category; // 매입 또는 매출 구분
+    private String category; // 매입 또는 매출 구분
     @NotNull
     private String name; // 항목명
 
@@ -27,7 +21,7 @@ public class VatType {
     public static class Builder {
         private String id;
 
-        private Category category;
+        private String category;
         private String name;
 
         public Builder id(String id) {
@@ -35,7 +29,7 @@ public class VatType {
             return this;
         }
 
-        public Builder category(Category category) {
+        public Builder category(String category) {
             this.category = category;
             return this;
         }
@@ -68,20 +62,11 @@ public class VatType {
         return id;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
     public String getName() {
         return name;
-    }
-
-    @Override
-    public String toString() {
-        return "VatType{" +
-                "id='" + id + '\'' +
-                ", category=" + category +
-                ", name='" + name + '\'' +
-                '}';
     }
 }

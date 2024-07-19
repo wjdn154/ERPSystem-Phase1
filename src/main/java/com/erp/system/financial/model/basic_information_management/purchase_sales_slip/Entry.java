@@ -1,6 +1,5 @@
 package com.erp.system.financial.model.basic_information_management.purchase_sales_slip;
 
-import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 
@@ -9,7 +8,6 @@ import com.erp.system.common.annotation.NotNull;
  * 매입매출전표 등록 할때 선택할 분개 정보 테이블
  */
 public class Entry {
-    @Unique
     @NotNull
     private final String id; // 고유 식별자
 
@@ -55,13 +53,5 @@ public class Entry {
 
     public String getName() {
         return name;
-    }
-
-    @Override
-    public String toString() {
-        return "Entry{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                '}';
     }
 }

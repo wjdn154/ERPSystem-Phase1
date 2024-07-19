@@ -172,28 +172,4 @@ public class AccountInformationDto {
     public void setInterestRate(BigDecimal interestRate) {
         this.interestRate = interestRate;
     }
-
-    @Override
-    public String toString() {
-        return "AccountInformationDto{" +
-                "id='" + id + '\'' +
-                ", openingDate=" + openingDate +
-                ", bankName='" + bankName + '\'' +
-                ", branchLocation='" + branchLocation + '\'' +
-                ", number='" + number + '\'' +
-                ", owner='" + owner + '\'' +
-                ", depositType='" + depositType + '\'' +
-                ", BankTransactionBankName='" + BankTransactionBankName + '\'' +
-                ", type='" + type + '\'' +
-                ", description='" + description + '\'' +
-                ", debit=" + debit +
-                ", carriedOverDebit=" + carriedOverDebit +
-                ", credit=" + credit +
-                ", carriedOverCredit=" + carriedOverCredit +
-                ", date=" + date +
-                ", currentBalance=" + currentBalance +
-                ", maturityDate=" + maturityDate +
-                ", interestRate=" + interestRate +
-                '}';
-    }
 }
