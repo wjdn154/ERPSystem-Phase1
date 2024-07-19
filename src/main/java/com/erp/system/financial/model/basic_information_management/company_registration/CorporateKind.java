@@ -1,6 +1,5 @@
 package com.erp.system.financial.model.basic_information_management.company_registration;
 
-import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 
@@ -10,7 +9,6 @@ import com.erp.system.common.annotation.NotNull;
  * 
  */
 public class CorporateKind {
-    @Unique
     @NotNull
     private final String id; // 고유 식별자
 

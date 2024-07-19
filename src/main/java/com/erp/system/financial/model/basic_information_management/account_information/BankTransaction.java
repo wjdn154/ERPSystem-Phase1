@@ -1,6 +1,5 @@
 package com.erp.system.financial.model.basic_information_management.account_information;
 
-import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 
@@ -12,7 +11,6 @@ import java.time.LocalDate;
  * 은행 거래에 대한 정보가 있는 테이블
  */
 public class BankTransaction {
-    @Unique
     @NotNull
     private final String id; // 은행 거래의 고유식별자
     @NotNull

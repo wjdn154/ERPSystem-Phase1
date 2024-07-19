@@ -2,7 +2,7 @@ plugins {
     id("java")
 }
 
-group = "org.ERPSystem-Phase1"
+group = "org.ERPSystem"
 version = "1.0-SNAPSHOT"
 
 repositories {

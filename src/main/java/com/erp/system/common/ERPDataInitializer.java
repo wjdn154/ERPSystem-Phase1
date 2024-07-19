@@ -253,7 +253,7 @@ public class ERPDataInitializer {
     private Class<?> getTypeFromString(String typeStr) {
         switch (typeStr.toLowerCase()) {
             case "string": return String.class;
-            case "integer": return Integer.class;
+            case "int": return Integer.class;
             case "boolean": return Boolean.class;
             case "double": return Double.class;
             case "localdate": return LocalDate.class;

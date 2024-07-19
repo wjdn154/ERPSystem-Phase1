@@ -1,6 +1,5 @@
 package com.erp.system.financial.model.basic_information_management.account_information;
 
-import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 
@@ -12,7 +11,6 @@ import java.time.LocalDate;
  * 예적금 현황에 대한 정보가 있는 테이블
  */
 public class Deposit {
-    @Unique
     @NotNull
     private final String id; // 고유 식별자
     @NotNull
@@ -85,15 +83,5 @@ public class Deposit {
 
     public BigDecimal getInterestRate() {
         return interestRate;
-    }
-
-    @Override
-    public String toString() {
-        return "Deposit{" +
-                "id='" + id + '\'' +
-                ", accountId='" + accountId + '\'' +
-                ", maturityDate=" + maturityDate +
-                ", interestRate=" + interestRate +
-                '}';
     }
 }

@@ -1,14 +1,17 @@
 package com.erp.system.financial.service.basic_information_management.impl;
 
 import com.erp.system.common.DependencyInjector;
+import com.erp.system.common.ERPDataInitializer;
 import com.erp.system.financial.model.basic_information_management.company_registration.*;
 import com.erp.system.financial.model.dto.CompanyRegistrationDto;
 import com.erp.system.financial.repository.basic_information_management.company_registration.*;
+import com.erp.system.financial.repository.basic_information_management.purchase_sales_slip.EntryRepository;
 import com.erp.system.financial.service.basic_information_management.CompanyRegistrationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,9 +23,7 @@ class CompanyRegistrationServiceImplTest {
     private CorporateKindRepository corporateKindRepository;
     private CorporateTypeRepository corporateTypeRepository;
     private RepresentativeRepository representativeRepository;
-    private TaxOfficeRepository taxOfficeRepository;
-    private BusinessItemRepository businessItemRepository;
-    private BusinessTypeRepository businessTypeRepository;
+    private TaxRepository taxRepository;
 
     // 테스트 실행 전 초기 설정
     @BeforeEach
@@ -37,9 +38,7 @@ class CompanyRegistrationServiceImplTest {
         corporateKindRepository = di.getInstance(CorporateKindRepository.class);
         corporateTypeRepository = di.getInstance(CorporateTypeRepository.class);
         representativeRepository = di.getInstance(RepresentativeRepository.class);
-        taxOfficeRepository = di.getInstance(TaxOfficeRepository.class);
-        businessItemRepository = di.getInstance(BusinessItemRepository.class);
-        businessTypeRepository = di.getInstance(BusinessTypeRepository.class);
+        taxRepository = di.getInstance(TaxRepository.class);
 
         addressRepository.reset();
         companyRepository.reset();
@@ -47,27 +46,23 @@ class CompanyRegistrationServiceImplTest {
         corporateKindRepository.reset();
         corporateTypeRepository.reset();
         representativeRepository.reset();
-        taxOfficeRepository.reset();
-        businessTypeRepository.reset();
-        businessItemRepository.reset();
+        taxRepository.reset();
     }
 
     @Test
     public void testRegisterCompany() {
         // Given: 테스트 데이터 설정
         CompanyRegistrationDto companyRegistrationDto = new CompanyRegistrationDto();
-        companyRegistrationDto.setBusinessAddress("부산시 남구");
-        companyRegistrationDto.setBusinessPostalCode("11532");
+        companyRegistrationDto.setAddress("123 Main St");
+        companyRegistrationDto.setHeadquartersAddress("456 Elm St");
         companyRegistrationDto.setBusinessPlace("대연동");
-        companyRegistrationDto.setHeadquarterAddress("부산시 남구");
-        companyRegistrationDto.setHeadquarterPostalCode("11667");
-        companyRegistrationDto.setHeadquarterPlace("영업동");
+        companyRegistrationDto.setHeadquarters("영업동");
         companyRegistrationDto.setSme(true);
         companyRegistrationDto.setBusinessRegistrationNumber("100-200-300");
         companyRegistrationDto.setCorporateRegistrationNumber("400-500-600");
         companyRegistrationDto.setEstablishmentDate(LocalDate.of(2021, 1, 1));
         companyRegistrationDto.setName("Sample Company");
-        companyRegistrationDto.setEntityType(Company.EntityType.INCORPORATED);
+        companyRegistrationDto.setType("법인");
         companyRegistrationDto.setActive(true);
         companyRegistrationDto.setFiscalYearStart(LocalDate.of(2021, 1, 1));
         companyRegistrationDto.setFiscalYearEnd(LocalDate.of(2021, 12, 31));
@@ -80,12 +75,7 @@ class CompanyRegistrationServiceImplTest {
         companyRegistrationDto.setRepresentativeName("홍길동");
         companyRegistrationDto.setIdNumber("900101-1234567");
         companyRegistrationDto.setForeign(false);
-        companyRegistrationDto.setBusinessTaxOfficeId("1");
-        companyRegistrationDto.setHeadquartersTaxOfficeId("2");
         companyRegistrationDto.setLocalIncomeTaxOffice("부산시청");
-        companyRegistrationDto.setBusinessItemId("1");
-        companyRegistrationDto.setBusinessTypeId("3");
-
 
         // When: 메소드 호출
         companyRegistrationService.registerCompany(companyRegistrationDto);
@@ -98,25 +88,23 @@ class CompanyRegistrationServiceImplTest {
         // System.out.println(taxRepository.findById(String.valueOf(Tax.idIndex-1)).get().toString());
 
         addressRepository.findById(String.valueOf(Address.idIndex-1)).ifPresent(address -> {
-            assertEquals(companyRegistrationDto.getBusinessAddress(), address.getBusinessAddress());
-            assertEquals(companyRegistrationDto.getBusinessPostalCode(), address.getBusinessPostalCode());
-            assertEquals(companyRegistrationDto.getBusinessPlace(), address.getBusinessPlace());
-            assertEquals(companyRegistrationDto.getHeadquarterAddress(), address.getHeadquarterAddress());
-            assertEquals(companyRegistrationDto.getHeadquarterPostalCode(), address.getHeadquarterPostalCode());
-            assertEquals(companyRegistrationDto.getHeadquarterPlace(), address.getHeadquarterPlace());
+            assertEquals("123 Main St", address.getAddress());
+            assertEquals("456 Elm St", address.getHeadquartersAddress());
+            assertEquals("대연동", address.getBusinessPlace());
+            assertEquals("영업동", address.getHeadquarters());
         });
 
         companyRepository.findById(String.valueOf(Company.idIndex-1)).ifPresent(company -> {
             assertEquals("Sample Company", company.getName());
-            assertEquals(companyRegistrationDto.getEntityType(), company.getEntityType());
+            assertEquals("법인", company.getType());
             assertTrue(company.isActive());
             assertEquals(LocalDate.of(2021, 1, 1), company.getEstablishmentDate());
             assertEquals(LocalDate.of(2021, 1, 1), company.getFiscalYearStart());
             assertEquals(LocalDate.of(2021, 12, 31), company.getFiscalYearEnd());
             assertEquals(1, company.getFiscalCardinalNumber());
+            assertEquals("001", company.getMainIndustryId());
             assertEquals("100-200-300", company.getBusinessRegistrationNumber());
             assertEquals("400-500-600", company.getCorporateRegistrationNumber());
-            assertEquals("부산시청",company.getLocalIncomeTaxOffice());
             assertTrue(company.isSme());
         });
 
@@ -131,23 +119,8 @@ class CompanyRegistrationServiceImplTest {
             assertFalse(representative.isForeign());
         });
 
-
-        taxOfficeRepository.findById(companyRegistrationDto.getBusinessTaxOfficeId()).ifPresent(tax -> {
-            assertNull(tax.getName());
+        taxRepository.findById(String.valueOf(Tax.idIndex-1)).ifPresent(tax -> {
+            assertEquals("부산시청", tax.getLocalIncomeTaxOffice());
         });
-
-        taxOfficeRepository.findById(companyRegistrationDto.getHeadquartersTaxOfficeId()).ifPresent(tax -> {
-            assertNull(tax.getName());
-        });
-
-        businessItemRepository.findById(companyRegistrationDto.getBusinessItemId()).ifPresent(businessItem -> {
-            assertNull(businessItem.getName());
-        });
-
-        businessTypeRepository.findById(companyRegistrationDto.getBusinessTypeId()).ifPresent(businessType -> {
-            businessType.toString();
-            assertNull(businessType.getName());
-        });
-
     }
 }

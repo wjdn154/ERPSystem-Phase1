@@ -1,6 +1,5 @@
 package com.erp.system.financial.model.book_keeping.accounting_ledger;
 
-import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 
@@ -13,7 +12,6 @@ import java.time.LocalDate;
  * 장부관리 탭에서 총계정원장 데이터 테이블
  */
 public class GeneralLedger {
-    @Unique
     @NotNull
     private final String id; // 고유 식별자
     @NotNull

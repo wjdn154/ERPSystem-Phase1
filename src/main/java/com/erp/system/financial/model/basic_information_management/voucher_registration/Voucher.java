@@ -1,10 +1,7 @@
 package com.erp.system.financial.model.basic_information_management.voucher_registration;
 
-import com.erp.system.common.annotation.EnumMapping;
-import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
-import com.erp.system.financial.model.basic_information_management.purchase_sales_slip.PurchaseSalesSlip;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -13,29 +10,21 @@ import java.time.LocalDate;
  * 전표 테이블
  * 전표 작성시 전표 데이터 저장 테이블
  */
-@EnumMapping
 public class Voucher {
-    public enum VoucherType {DISBURSEMENT,DEPOSIT,DEBIT,CREDIT};
-
-    @Unique
     @NotNull
     private final String id; // 전표의 고유 식별자
     @NotNull
-    private final String userCompanyId; // ERP 사용자 계정 회사 ID
+    private final String companyId; // 회사 코드
     @NotNull
-    private final VoucherType voucherType; // 전표타입
+    private final String voucherTypeId; // 전표타입 코드
     @NotNull
     private final String accountId; // 계정과목 코드
     @NotNull
     private final String vendorId; // 거래처 코드
     @NotNull
     private final String memoId; // 적요 코드
-    @NotNull
-    private final String managerId; // 담장자 ID
-    @NotNull
-    private final String adminId; // 승인 관리자 ID
 
-
+    @NotNull
     private String description; // 거래 설명
     @NotNull
     private BigDecimal debit; // 차변 금액
@@ -48,13 +37,12 @@ public class Voucher {
 
     public static class Builder {
         private String id;
-        private String userCompanyId;
-        private VoucherType voucherType;
+        private String companyId;
+        private String voucherTypeId;
         private String accountId;
         private String vendorId;
         private String memoId;
-        private String managerId;
-        private String adminId;
+
         private String description;
         private BigDecimal debit;
         private BigDecimal credit;
@@ -65,13 +53,13 @@ public class Voucher {
             return this;
         }
 
-        public Builder userCompanyId(String userCompanyId) {
-            this.userCompanyId = userCompanyId;
+        public Builder companyId(String companyId) {
+            this.companyId = companyId;
             return this;
         }
 
-        public Builder voucherType(VoucherType voucherType) {
-            this.voucherType = voucherType;
+        public Builder voucherTypeId(String voucherTypeId) {
+            this.voucherTypeId = voucherTypeId;
             return this;
         }
 
@@ -87,16 +75,6 @@ public class Voucher {
 
         public Builder memoId(String memoId) {
             this.memoId = memoId;
-            return this;
-        }
-
-        public Builder managerId(String managerId) {
-            this.managerId = managerId;
-            return this;
-        }
-
-        public Builder adminId(String adminId) {
-            this.adminId = adminId;
             return this;
         }
 
@@ -127,13 +105,11 @@ public class Voucher {
 
     private Voucher(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.userCompanyId = builder.userCompanyId;
-        this.voucherType = builder.voucherType;
+        this.companyId = builder.companyId;
+        this.voucherTypeId = builder.voucherTypeId;
         this.accountId = builder.accountId;
         this.vendorId = builder.vendorId;
         this.memoId = builder.memoId;
-        this.managerId = builder.managerId;
-        this.adminId = builder.adminId;
         this.description = builder.description;
         this.debit = builder.debit;
         this.credit = builder.credit;
@@ -144,13 +120,11 @@ public class Voucher {
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .userCompanyId(this.userCompanyId)
-                .voucherType(this.voucherType)
+                .companyId(this.companyId)
+                .voucherTypeId(this.voucherTypeId)
                 .accountId(this.accountId)
                 .vendorId(this.vendorId)
                 .memoId(this.memoId)
-                .managerId(this.managerId)
-                .adminId(this.adminId)
                 .description(this.description)
                 .debit(this.debit)
                 .credit(this.credit)
@@ -161,12 +135,12 @@ public class Voucher {
         return id;
     }
 
-    public String getUserCompanyId() {
-        return userCompanyId;
+    public String getCompanyId() {
+        return companyId;
     }
 
-    public VoucherType getVoucherType() {
-        return voucherType;
+    public String getVoucherTypeId() {
+        return voucherTypeId;
     }
 
     public String getAccountId() {
@@ -179,14 +153,6 @@ public class Voucher {
 
     public String getMemoId() {
         return memoId;
-    }
-
-    public String getManagerId() {
-        return managerId;
-    }
-
-    public String getAdminId() {
-        return adminId;
     }
 
     public String getDescription() {
@@ -203,23 +169,5 @@ public class Voucher {
 
     public LocalDate getDate() {
         return date;
-    }
-
-    @Override
-    public String toString() {
-        return "Voucher{" +
-                "id='" + id + '\'' +
-                ", userCompanyId='" + userCompanyId + '\'' +
-                ", voucherType=" + voucherType +
-                ", accountId='" + accountId + '\'' +
-                ", vendorId='" + vendorId + '\'' +
-                ", memoId='" + memoId + '\'' +
-                ", managerId='" + managerId + '\'' +
-                ", adminId='" + adminId + '\'' +
-                ", description='" + description + '\'' +
-                ", debit=" + debit +
-                ", credit=" + credit +
-                ", date=" + date +
-                '}';
     }
 }

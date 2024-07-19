@@ -1,7 +1,6 @@
 package com.erp.system.financial.model.dto;
 
 import com.erp.system.common.annotation.NotNull;
-import com.erp.system.financial.model.basic_information_management.company_registration.Company;
 
 import java.time.LocalDate;
 
@@ -9,18 +8,16 @@ import java.time.LocalDate;
  * 회사 등록을 위한 데이터 전송 객체 (DTO).
  */
 public class CompanyRegistrationDto {
-    private String businessAddress; // 사업장주소
-    private String businessPostalCode; // 사업장 우편번호
-    private String businessPlace; // 사업장 동 (동 ex 대연동)
-    private String headquarterAddress; // 본점주소
-    private String headquarterPostalCode; // 본점 우편 번호
-    private String headquarterPlace; // 본점 동
+    private String address; // 사업장주소
+    private String headquartersAddress; // 본점주소
+    private String businessPlace; // 사업장 동 코드 (동 ex 대연동)
+    private String headquarters; // 본점 동 코드
     private boolean isSme; // 중소기업여부
     private String businessRegistrationNumber; // 사업자등록번호
     private String corporateRegistrationNumber; // 법인등록번호
     private LocalDate establishmentDate; // 설립연월일
     private String name; // 회사명
-    private Company.EntityType entityType; // 구분 (법인, 개인)
+    private String type; // 구분 (법인, 개인)
     private boolean active; // 사용여부(사용, 미사용)
     private LocalDate fiscalYearStart; // 회계연도 시작일
     private LocalDate fiscalYearEnd; // 회계연도 마지막일
@@ -33,26 +30,22 @@ public class CompanyRegistrationDto {
     private String RepresentativeName; // 대표자명
     private String idNumber; // 대표자 주민번호
     private boolean foreign; // 대표자 외국인여부
-    private String businessTaxOfficeId; // 사업장관할 세무서 id
-    private String headquartersTaxOfficeId; // 본점관할 세무서 id
     private String localIncomeTaxOffice; // 지방소득세납세지
-    private String businessTypeId; // 업종 형태 id
-    private String businessItemId; // 업체 종목 id
 
-    public String getBusinessAddress() {
-        return businessAddress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setBusinessAddress(String businessAddress) {
-        this.businessAddress = businessAddress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getBusinessPostalCode() {
-        return businessPostalCode;
+    public String getHeadquartersAddress() {
+        return headquartersAddress;
     }
 
-    public void setBusinessPostalCode(String businessPostalCode) {
-        this.businessPostalCode = businessPostalCode;
+    public void setHeadquartersAddress(String headquartersAddress) {
+        this.headquartersAddress = headquartersAddress;
     }
 
     public String getBusinessPlace() {
@@ -63,28 +56,12 @@ public class CompanyRegistrationDto {
         this.businessPlace = businessPlace;
     }
 
-    public String getHeadquarterAddress() {
-        return headquarterAddress;
+    public String getHeadquarters() {
+        return headquarters;
     }
 
-    public void setHeadquarterAddress(String headquarterAddress) {
-        this.headquarterAddress = headquarterAddress;
-    }
-
-    public String getHeadquarterPostalCode() {
-        return headquarterPostalCode;
-    }
-
-    public void setHeadquarterPostalCode(String headquarterPostalCode) {
-        this.headquarterPostalCode = headquarterPostalCode;
-    }
-
-    public String getHeadquarterPlace() {
-        return headquarterPlace;
-    }
-
-    public void setHeadquarterPlace(String headquarterPlace) {
-        this.headquarterPlace = headquarterPlace;
+    public void setHeadquarters(String headquarters) {
+        this.headquarters = headquarters;
     }
 
     public boolean isSme() {
@@ -127,12 +104,12 @@ public class CompanyRegistrationDto {
         this.name = name;
     }
 
-    public Company.EntityType getEntityType() {
-        return entityType;
+    public String getType() {
+        return type;
     }
 
-    public void setEntityType(Company.EntityType entityType) {
-        this.entityType = entityType;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public boolean isActive() {
@@ -231,78 +208,11 @@ public class CompanyRegistrationDto {
         this.foreign = foreign;
     }
 
-    public String getBusinessTaxOfficeId() {
-        return businessTaxOfficeId;
-    }
-
-    public void setBusinessTaxOfficeId(String businessTaxOfficeId) {
-        this.businessTaxOfficeId = businessTaxOfficeId;
-    }
-
-    public String getHeadquartersTaxOfficeId() {
-        return headquartersTaxOfficeId;
-    }
-
-    public void setHeadquartersTaxOfficeId(String headquartersTaxOfficeId) {
-        this.headquartersTaxOfficeId = headquartersTaxOfficeId;
-    }
-
     public String getLocalIncomeTaxOffice() {
         return localIncomeTaxOffice;
     }
 
     public void setLocalIncomeTaxOffice(String localIncomeTaxOffice) {
         this.localIncomeTaxOffice = localIncomeTaxOffice;
-    }
-
-    public String getBusinessTypeId() {
-        return businessTypeId;
-    }
-
-    public void setBusinessTypeId(String businessTypeId) {
-        this.businessTypeId = businessTypeId;
-    }
-
-    public String getBusinessItemId() {
-        return businessItemId;
-    }
-
-    public void setBusinessItemId(String businessItemId) {
-        this.businessItemId = businessItemId;
-    }
-
-    @Override
-    public String toString() {
-        return "CompanyRegistrationDto{" +
-                "businessAddress='" + businessAddress + '\'' +
-                ", businessPostalCode='" + businessPostalCode + '\'' +
-                ", businessPlace='" + businessPlace + '\'' +
-                ", headquarterAddress='" + headquarterAddress + '\'' +
-                ", headquarterPostalCode='" + headquarterPostalCode + '\'' +
-                ", headquarterPlace='" + headquarterPlace + '\'' +
-                ", isSme=" + isSme +
-                ", businessRegistrationNumber='" + businessRegistrationNumber + '\'' +
-                ", corporateRegistrationNumber='" + corporateRegistrationNumber + '\'' +
-                ", establishmentDate=" + establishmentDate +
-                ", name='" + name + '\'' +
-                ", entityType='" + entityType + '\'' +
-                ", active=" + active +
-                ", fiscalYearStart=" + fiscalYearStart +
-                ", fiscalYearEnd=" + fiscalYearEnd +
-                ", fiscalCardinalNumber=" + fiscalCardinalNumber +
-                ", mainIndustryId='" + mainIndustryId + '\'' +
-                ", businessPhone='" + businessPhone + '\'' +
-                ", fax='" + fax + '\'' +
-                ", corporateKindId='" + corporateKindId + '\'' +
-                ", corporateTypeId='" + corporateTypeId + '\'' +
-                ", RepresentativeName='" + RepresentativeName + '\'' +
-                ", idNumber='" + idNumber + '\'' +
-                ", foreign=" + foreign +
-                ", businessTaxOfficeId='" + businessTaxOfficeId + '\'' +
-                ", headquartersTaxOfficeId='" + headquartersTaxOfficeId + '\'' +
-                ", localIncomeTaxOffice='" + localIncomeTaxOffice + '\'' +
-                ", businessTypeId='" + businessTypeId + '\'' +
-                ", businessItemId='" + businessItemId + '\'' +
-                '}';
     }
 }

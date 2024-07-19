@@ -1,20 +1,19 @@
-package com.erp.system.financial.model.basic_information_management.purchase_sales_slip;
+package com.erp.system.financial.model.basic_information_management.vendor_registration;
 
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 
 /**
- * 부가세유형 테이블
- * 매입매출전표 등록 할때 선택할 부가세 유형 테이블
+ * 거래처 유형 테이블
+ * 거래처의 데이터 저장 테이블
  */
-public class VatType {
+
+public class VendorType {
     @NotNull
-    private final String id; // 고유 식별자
+    private final String id; // 거래처 유형의 고유 식별자
 
     @NotNull
-    private String category; // 매입 또는 매출 구분
-    @NotNull
-    private String name; // 항목명
+    private String category; // 구분(매입,매출 동시)
 
     public static int idIndex = 1;
 
@@ -22,7 +21,6 @@ public class VatType {
         private String id;
 
         private String category;
-        private String name;
 
         public Builder id(String id) {
             this.id = id;
@@ -34,28 +32,21 @@ public class VatType {
             return this;
         }
 
-        public Builder name(String name) {
-            this.name = name;
-            return this;
+        public VendorType build() {
+            return new VendorType(this);
         }
+    }// end of Builder
 
-        public VatType build() {
-            return new VatType(this);
-        }
-    } // end of Builder
-
-    private VatType(Builder builder) {
+    private VendorType(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.category = builder.category;
-        this.name = builder.name;
         NotNullValidator.validateFields(this);
     }
 
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .category(this.category)
-                .name(this.name);
+                .category(this.category);
     }
 
     public String getId() {
@@ -65,8 +56,6 @@ public class VatType {
     public String getCategory() {
         return category;
     }
-
-    public String getName() {
-        return name;
-    }
 }
+
+
