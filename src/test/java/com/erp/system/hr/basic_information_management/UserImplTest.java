@@ -33,7 +33,8 @@ public class UserImplTest {
         userDto.setUserName("김민성");
         userDto.setPassword("rlaalstjd123");
         userDto.setEmail("ckacl2512@naver.com");
-        userDto.setRole(User.Role.AUDITOR);
+        userDto.setRole(User.Role.HR_MANAGER);
+
 
         userService.createUser(userDto);
 
