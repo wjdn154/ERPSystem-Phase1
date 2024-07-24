@@ -20,6 +20,8 @@ public class Workcenter {
     @NotNull
     private final String factoryId; // 공장코드 (FK)
     @NotNull
+    private String primaryProcessId; // 주생산공정 (FK, 생산공정코드)
+    @NotNull
     private String primaryResourceId; // 주작업자원 (FK, 생산자원코드)
     @NotNull
     @Unique
@@ -35,9 +37,10 @@ public class Workcenter {
 
     public static class Builder {
         private String id;
-        private String name;
         private String factoryId;
+        private String primaryProcessId;
         private String primaryResourceId;
+        private String name;
         private WorkcenterType type;
         private String description;
         private int inputPersonnel;
@@ -49,6 +52,11 @@ public class Workcenter {
 
         public Builder factoryId(String id) {
             this.factoryId = factoryId;
+            return this;
+        }
+
+        public Builder primaryProcessId(String primaryProcessId) {
+            this.primaryProcessId = primaryProcessId;
             return this;
         }
 
@@ -72,7 +80,6 @@ public class Workcenter {
             return this;
         }
 
-
         public Builder inputPersonnel(int inputPersonnel) {
             this.inputPersonnel = inputPersonnel;
             return this;
@@ -86,6 +93,7 @@ public class Workcenter {
     private Workcenter(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
         this.factoryId = builder.factoryId;
+        this.primaryProcessId = builder.primaryProcessId;
         this.primaryResourceId = builder.primaryResourceId;
         this.name = builder.name;
         this.type = builder.type;
@@ -99,6 +107,7 @@ public class Workcenter {
         return new Builder()
                 .id(this.id)
                 .factoryId(this.factoryId)
+                .primaryProcessId(this.primaryProcessId)
                 .primaryResourceId(this.primaryResourceId)
                 .name(this.name)
                 .type(this.type)
@@ -114,7 +123,9 @@ public class Workcenter {
         return id;
     }
 
-    public String getFactoryId() { return factoryId;}
+    public String getFactoryId() { return factoryId; }
+
+    public String getPrimaryProcessId() { return primaryProcessId; }
 
     public String getPrimaryResourceId() { return primaryResourceId; }
 
@@ -139,7 +150,8 @@ public class Workcenter {
         return "Workcenter{" +
                 "id='" + id + '\'' +
                 ", factoryId'" + factoryId + '\'' +
-                ", primaryResourceType=" + primaryResourceId +
+                ", primaryProcessId'" + primaryProcessId + '\'' +
+                ", primaryResourceId=" + primaryResourceId +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", type=" + type +
