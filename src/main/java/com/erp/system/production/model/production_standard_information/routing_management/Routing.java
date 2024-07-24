@@ -20,20 +20,18 @@ public class Routing {
 
     @NotNull
     @Unique
-    private final String id; // 공정경로코드: 공정 경로 코드 (PK, not null, unique)
+    private final String id; // PK
     @NotNull
     @Unique
     private String name; // Routing의 이름
     @NotNull
-    private Type type; // 공정 경로 유형
+    private Type type; // Routing 유형
     @NotNull
     private String description; // Routing 설명
     @NotNull
     private boolean isStandard; // 표준 여부
     @NotNull
     private boolean isActive; // 사용 여부
-    @NotNull
-    private List<RoutingStep> steps; // 공정 경로의 작업 단계 목록
 
     public static int idIndex = 1;
 
@@ -44,7 +42,6 @@ public class Routing {
         private String description;
         private boolean isStandard;
         private boolean isActive;
-        private List<RoutingStep> steps;
 
         public Builder id(String id) {
             this.id = id;
@@ -76,11 +73,6 @@ public class Routing {
             return this;
         }
 
-        public Builder steps(List<RoutingStep> steps) {
-            this.steps = steps;
-            return this;
-        }
-
         public Routing build() {
             return new Routing(this);
         }
@@ -93,7 +85,6 @@ public class Routing {
         this.description = builder.description;
         this.isStandard = builder.isStandard;
         this.isActive = builder.isActive;
-        this.steps = builder.steps;
         NotNullValidator.validateFields(this);
         UniqueValidator.validateFields(this);
     }
@@ -105,8 +96,7 @@ public class Routing {
                 .type(this.type)
                 .description(this.description)
                 .isStandard(this.isStandard)
-                .isActive(this.isActive)
-                .steps(this.steps);
+                .isActive(this.isActive);
     }
 
     // Getters
@@ -134,10 +124,6 @@ public class Routing {
         return isActive;
     }
 
-    public List<RoutingStep> getSteps() {
-        return steps;
-    }
-
     public static int getIdIndex() {
         return idIndex;
     }
@@ -151,7 +137,6 @@ public class Routing {
                 ", description='" + description + '\'' +
                 ", isStandard=" + isStandard + '\'' +
                 ", isActive=" + isActive + '\'' +
-                ", steps=" + steps +
                 '}';
     }
 }

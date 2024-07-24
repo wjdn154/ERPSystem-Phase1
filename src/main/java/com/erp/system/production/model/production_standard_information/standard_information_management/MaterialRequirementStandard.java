@@ -22,15 +22,17 @@ public class MaterialRequirementStandard {
     private final String id; // PK
     @Unique
     @NotNull
-    private final String itemId; // 자재 ID (FK, 생산 내 자재 테이블 참조)
-
+    private final String materialId; // 자재 ID (FK, 생산 내 자재 테이블 참조)
     @NotNull
     private final String productId; // 제품 ID (FK, 물류 제품 테이블 참조)
+    @NotNull
+    private final String warehouseId; // 창고 ID (FK, 물류 창고 테이블 참조)
+    @NotNull
+    private final String supplierId; // 공급업체 ID (FK, 물류 거래처 테이블 참조)
+
     private Unit unit; // 자재 단위 (예: kg, L, pcs)
     @NotNull
     private final BigDecimal requiredQuantity; // 필요 수량
-    @NotNull
-    private final String warehouseId; // (FK, 창고 ID, 물류 창고 테이블 참조)
     private final String description; // 설명
     @NotNull
     private final LocalDate orderDate; // 주문 날짜
@@ -38,23 +40,21 @@ public class MaterialRequirementStandard {
     private final int leadTime; // 조달 소요 시간(분단위)
     @NotNull
     private final BigDecimal costPerUnit; // 단위당 비용
-    @NotNull
-    private final String supplierId; // 공급업체 ID (FK, 물류 거래처 테이블 참조)
 
     public static int idIndex = 1;
 
     public static class Builder {
         private String id;
-        private String itemId;
+        private String materialId;
         private String productId;
+        private String warehouseId;
+        private String supplierId;
         private Unit unit;
         private BigDecimal requiredQuantity;
-        private String warehouseId;
         private String description;
         private LocalDate orderDate;
         private int leadTime;
         private BigDecimal costPerUnit;
-        private String supplierId;
 
 
         public Builder id(String id) {
@@ -62,13 +62,18 @@ public class MaterialRequirementStandard {
             return this;
         }
 
-        public Builder itemId(String itemId) {
-            this.itemId = itemId;
+        public Builder materialId(String materialId) {
+            this.materialId = materialId;
             return this;
         }
 
         public Builder productId(String productId) {
             this.productId = productId;
+            return this;
+        }
+
+        public Builder warehouseId(String warehouseId) {
+            this.warehouseId = warehouseId;
             return this;
         }
 
@@ -79,11 +84,6 @@ public class MaterialRequirementStandard {
 
         public Builder requiredQuantity(BigDecimal requiredQuantity) {
             this.requiredQuantity = requiredQuantity;
-            return this;
-        }
-
-        public Builder warehouseId(String warehouseId) {
-            this.warehouseId = warehouseId;
             return this;
         }
 
@@ -120,11 +120,11 @@ public class MaterialRequirementStandard {
     // private Builder
     private MaterialRequirementStandard(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.itemId = builder.itemId;
+        this.materialId = builder.materialId;
         this.productId = builder.productId;
+        this.warehouseId = builder.warehouseId;
         this.unit = builder.unit;
         this.requiredQuantity = builder.requiredQuantity;
-        this.warehouseId = builder.warehouseId;
         this.description = builder.description;
         this.orderDate = builder.orderDate;
         this.leadTime = builder.leadTime;
@@ -138,11 +138,11 @@ public class MaterialRequirementStandard {
     public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .itemId(this.itemId)
+                .materialId(this.materialId)
                 .productId(this.productId)
+                .warehouseId(this.warehouseId)
                 .unit(this.unit)
                 .requiredQuantity(this.requiredQuantity)
-                .warehouseId(this.warehouseId)
                 .description(this.description)
                 .orderDate(this.orderDate)
                 .leadTime(this.leadTime)
@@ -156,12 +156,16 @@ public class MaterialRequirementStandard {
         return id;
     }
 
-    public String getItemId() {
-        return itemId;
+    public String getMaterialId() {
+        return materialId;
     }
 
     public String getProductId() {
         return productId;
+    }
+
+    public String getWarehouseId() {
+        return warehouseId;
     }
 
     public Unit getUnit() {
@@ -170,10 +174,6 @@ public class MaterialRequirementStandard {
 
     public BigDecimal getRequiredQuantity() {
         return requiredQuantity;
-    }
-
-    public String getWarehouseId() {
-        return warehouseId;
     }
 
     public String getDescription() {
@@ -205,11 +205,11 @@ public class MaterialRequirementStandard {
     public String toString() {
         return "MaterialRequirementStandard{" +
                 "id='" + id + '\'' +
-                ", itemId='" + itemId + '\'' +
+                ", materialId='" + materialId + '\'' +
                 ", productId='" + productId + '\'' +
+                ", warehouseId='" + warehouseId + '\'' +
                 ", unit=" + unit +
                 ", requiredQuantity=" + requiredQuantity +
-                ", warehouseId='" + warehouseId + '\'' +
                 ", description='" + description + '\'' +
                 ", orderDate=" + orderDate +
                 ", leadTime=" + leadTime +
