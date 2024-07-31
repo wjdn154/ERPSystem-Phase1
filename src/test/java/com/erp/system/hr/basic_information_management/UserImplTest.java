@@ -19,7 +19,6 @@ public class UserImplTest {
     @BeforeEach
     void setUp() {
         DependencyInjector injector = DependencyInjector.getInstance();
-
         userService = injector.getInstance(UserService.class);
         userRepository = injector.getInstance(UserRepository.class);
 
@@ -35,15 +34,14 @@ public class UserImplTest {
         userDto.setEmail("ckacl2512@naver.com");
         userDto.setRole(User.Role.HR_MANAGER);
 
-
         userService.createUser(userDto);
 
         System.out.println("전송 객체 ::: = " + userDto.toString());
 
         userRepository.findById(String.valueOf(User.idIndex - 1)).ifPresent(user -> {
             System.out.println("저장 객체 ::: = " + user.toString());
-            assertEquals(userDto.getDepartmentId(),user.getDepartmentId());
-            assertEquals(userDto.getCompanyId(),user.getCompanyId());
+            assertEquals(userDto.getDepartmentId(), user.getDepartmentId());
+            assertEquals(userDto.getCompanyId(), user.getCompanyId());
             assertEquals(userDto.getUserName(), user.getUserName());
             assertEquals(userDto.getPassword(), user.getPassword());
             assertEquals(userDto.getEmail(), user.getEmail());
