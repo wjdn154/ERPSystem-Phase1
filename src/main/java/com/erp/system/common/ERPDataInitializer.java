@@ -35,7 +35,7 @@ public class ERPDataInitializer {
         long startTime = System.nanoTime(); // 시작 시간 기록
         autoRegister();
         readExcel(FINANCIAL_ACCOUNTING_DATA_FILE_PATH); // 회계 데이터
-//        readExcel(HUMAN_RESOURCES_DATA_FILE_PATH); // 인사 데이터
+        readExcel(HUMAN_RESOURCES_DATA_FILE_PATH); // 인사 데이터
 //        readExcel(LOGISTICS_DATA_FILE_PATH); // 물류 데이터
 //        readExcel(PRODUCTION_DATA_FILE_PATH); // 생산 데이터
         long endTime = System.nanoTime(); // 종료 시간 기록

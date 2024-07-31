@@ -1,8 +1,8 @@
 package com.erp.system.hr.service.basic_information_management.impl;
 
 import com.erp.system.common.annotation.Component;
-import com.erp.system.hr.Model.basic_information_management.User;
-import com.erp.system.hr.Model.dto.UserDto;
+import com.erp.system.hr.model.basic_information_management.User;
+import com.erp.system.hr.model.dto.UserDto;
 import com.erp.system.hr.respository.UserRepository;
 import com.erp.system.hr.service.basic_information_management.UserService;
 

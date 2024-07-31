@@ -1,4 +1,4 @@
-package com.erp.system.hr.Model.attendance_information_management;
+package com.erp.system.hr.model.attendance_information_management;
 
 
 // 초과 근무 정보 테이블
@@ -8,7 +8,6 @@ import com.erp.system.common.annotation.Unique;
 
 import java.sql.Time;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Overtime {
     @Unique

@@ -1,4 +1,4 @@
-package com.erp.system.hr.Model.salary_information_management;
+package com.erp.system.hr.model.salary_information_management;
 
 //연금 정보 테이블
 // 연금 관련 정보를 저장
