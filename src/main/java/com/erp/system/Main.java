@@ -18,7 +18,7 @@ import com.erp.system.financial.model.dto.CompanyRegistrationDto;
 import com.erp.system.financial.repository.basic_information_management.account_information.BankAccountRepository;
 import com.erp.system.financial.service.basic_information_management.CompanyRegistrationService;
 import com.erp.system.financial.service.basic_information_management.PurchaseSalesSlipService;
-import com.erp.system.hr.respository.UserRepository;
+import com.erp.system.logistics.controller.basic_information_registration.ProductRegistrationController;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -81,6 +81,10 @@ public class Main {
         // 장부 관리
         printAllEntities(result.accountingLedgerController().findAllCashBooks(), ID_FIELD_NAME); // CashBook 출력
         printAllEntities(result.accountingLedgerController().findAllGeneralLedgers(), ID_FIELD_NAME); // GeneralLedger 출력
+
+        // 품목 등록
+        printAllEntities(result.productRegistrationController().findAllProductGroup(), ID_FIELD_NAME );
+        printAllEntities(result.productRegistrationController().findAllProduct(), ID_FIELD_NAME );
     }
 
     private static createControllerInstance getCreateControllerInstance(DependencyInjector injector) {
@@ -92,11 +96,13 @@ public class Main {
         VoucherRegistrationController voucherRegistrationController = injector.getInstance(VoucherRegistrationController.class);
         AccountingLedgerController accountingLedgerController = injector.getInstance(AccountingLedgerController.class);
 
+        ProductRegistrationController productRegistrationController = injector.getInstance(ProductRegistrationController.class);
+
 
 
         createControllerInstance result = new createControllerInstance(purchaseSalesSlipController, accountingLedgerController,
                 taxInvoiceController, accountInformationController, companyRegistrationController, vendorRegistrationController,
-                voucherRegistrationController);
+                voucherRegistrationController, productRegistrationController);
         return result;
     }
 
@@ -106,7 +112,8 @@ public class Main {
                                             AccountInformationController accountInformationController,
                                             CompanyRegistrationController companyRegistrationController,
                                             VendorRegistrationController vendorRegistrationController,
-                                            VoucherRegistrationController voucherRegistrationController) {
+                                            VoucherRegistrationController voucherRegistrationController,
+                                            ProductRegistrationController productRegistrationController) {
     }
 
     private static void modifyBuilderPatternTest(AccountInformationController accountInformationController, DependencyInjector injector) {
