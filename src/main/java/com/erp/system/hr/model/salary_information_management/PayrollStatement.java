@@ -1,4 +1,4 @@
-package com.erp.system.hr.Model.salary_information_management;
+package com.erp.system.hr.model.salary_information_management;
 
 
 import com.erp.system.common.annotation.NotNull;
@@ -7,7 +7,6 @@ import com.erp.system.common.validator.NotNullValidator;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 
 // 급여 명세서 테이블
 

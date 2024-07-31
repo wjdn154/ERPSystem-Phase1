@@ -1,11 +1,9 @@
-package com.erp.system.hr.Model.salary_information_management;
+package com.erp.system.hr.model.salary_information_management;
 
 
 import com.erp.system.common.annotation.NotNull;
 import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
-
-import java.math.BigDecimal;
 
 // 복리후생 종류 테이블
 public class BenefitType {

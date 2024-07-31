@@ -1,4 +1,4 @@
-package com.erp.system.hr.Model.salary_information_management;
+package com.erp.system.hr.model.salary_information_management;
 
 // 보험 정보 테이블
 // 직원이 가입한 보험에 관한 정보를 저장

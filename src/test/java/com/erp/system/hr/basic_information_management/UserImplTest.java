@@ -1,9 +1,8 @@
 package com.erp.system.hr.basic_information_management;
 
 import com.erp.system.common.DependencyInjector;
-import com.erp.system.common.generic_repository.GenericRepository;
-import com.erp.system.hr.Model.basic_information_management.User;
-import com.erp.system.hr.Model.dto.UserDto;
+import com.erp.system.hr.model.basic_information_management.User;
+import com.erp.system.hr.model.dto.UserDto;
 import com.erp.system.hr.respository.UserRepository;
 import com.erp.system.hr.service.basic_information_management.UserService;
 import org.junit.jupiter.api.BeforeEach;

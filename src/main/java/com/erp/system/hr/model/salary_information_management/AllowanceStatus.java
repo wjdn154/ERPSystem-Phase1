@@ -1,10 +1,9 @@
-package com.erp.system.hr.Model.salary_information_management;
+package com.erp.system.hr.model.salary_information_management;
 
 import com.erp.system.common.annotation.EnumMapping;
 import com.erp.system.common.annotation.NotNull;
 import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
-import com.erp.system.hr.Model.basic_information_management.User;
 
 // 수당 상태 테이블
 @EnumMapping

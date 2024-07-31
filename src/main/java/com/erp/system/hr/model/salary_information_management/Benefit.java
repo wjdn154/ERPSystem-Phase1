@@ -1,45 +1,40 @@
-package com.erp.system.hr.Model.salary_information_management;
+package com.erp.system.hr.model.salary_information_management;
+
+// 복리후생 등록 테이블
 
 import com.erp.system.common.annotation.NotNull;
 import com.erp.system.common.annotation.Unique;
 import com.erp.system.common.validator.NotNullValidator;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
-// 공제 정보 테이블
-
-public class Deduction {
+public class Benefit {
     @Unique
     @NotNull
-    private final String id; // 공제 정보 고유 식별자
+    private final String id; // 복리후생 정보 고유 식별자
+    @NotNull
+    private String benefitTypeId; // 복리후생 종류 테이블 ID 참조
 
     @NotNull
-    private String deductionType; // 공제 항목 종류
-    @NotNull
-    private BigDecimal amount; // 공제 금액
-    @NotNull
-    private String description; // 공제 항목 설명
-    @NotNull
-    private Date deductionDate; // 공제 날짜
+    private BigDecimal amount; // 복리후생 금액
+    private String description; // 복리후생에 대한 설명이나 비고 사항
 
     public static int idIndex = 1;
 
     public static class Builder {
         private String id;
-        private String deductionType;
+        private String benefitTypeId;
+
         private BigDecimal amount;
         private String description;
-        private Date deductionDate;
 
         public Builder id(String id) {
             this.id = id;
             return this;
         }
 
-
-        public Builder deductionType(String deductionType) {
-            this.deductionType = deductionType;
+        public Builder benefitTypeId(String benefitTypeId) {
+            this.benefitTypeId = benefitTypeId;
             return this;
         }
 
@@ -52,47 +47,38 @@ public class Deduction {
             this.description = description;
             return this;
         }
-
-        public Builder deductionDate(Date deductionDate) {
-            this.deductionDate = deductionDate;
-            return this;
-        }
-    }//end of Builder
-    private Deduction(Builder builder){
+    }//end of Builider
+    private Benefit(Builder builder) {
         this.id = builder.id != null ? builder.id : Integer.toString(idIndex++);
-        this.deductionType = builder.deductionType;
+        this.benefitTypeId = builder.benefitTypeId;
         this.amount = builder.amount;
         this.description = builder.description;
-        this.deductionDate = builder.deductionDate;
         NotNullValidator.validateFields(this);
     }
-    public Builder tobuild(){
+    public Builder tobuild() {
         return new Builder()
                 .id(this.id)
-                .deductionType(this.deductionType)
+                .benefitTypeId(this.benefitTypeId)
                 .amount(this.amount)
-                .description(this.description)
-                .deductionDate(this.deductionDate);
+                .description(this.description);
+
     }
 
     public String getId() {return id;}
 
-    public String getDeductionType() {return deductionType;}
+    public String getBenefitType() {return benefitTypeId;}
 
-    public BigDecimal getAmount() {return amount;}
+    public BigDecimal getAmount() {return  amount;}
 
     public String getDescription() {return description;}
 
-    public Date getDeductionDate() {return deductionDate;}
-
     @Override
     public String toString() {
-        return "Deduction{" +
+        return "Benefit{" +
                 "id='" + id + '\'' +
-                ", deductionType='" + deductionType + '\'' +
+                ", benefitTypeId='" + benefitTypeId + '\'' +
                 ", amount=" + amount +
                 ", description='" + description + '\'' +
-                ", deductionDate=" + deductionDate +
                 '}';
     }
 }

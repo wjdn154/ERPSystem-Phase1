@@ -1,12 +1,9 @@
-package com.erp.system.hr.Model.basic_information_management;
+package com.erp.system.hr.model.basic_information_management;
 
 import com.erp.system.common.annotation.EnumMapping;
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;
 import com.erp.system.common.annotation.Unique;
-import com.erp.system.financial.model.basic_information_management.account_information.BankAccount;
-
-import javax.management.relation.Role;
 
 // 사용자 테이블
 @EnumMapping

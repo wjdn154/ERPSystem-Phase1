@@ -1,4 +1,4 @@
-package com.erp.system.hr.Model.basic_information_management;
+package com.erp.system.hr.model.basic_information_management;
 
 import com.erp.system.common.validator.NotNullValidator;
 import com.erp.system.common.annotation.NotNull;

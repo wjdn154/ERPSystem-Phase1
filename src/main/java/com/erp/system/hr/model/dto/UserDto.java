@@ -1,8 +1,6 @@
-package com.erp.system.hr.Model.dto;
+package com.erp.system.hr.model.dto;
 
-import com.erp.system.common.annotation.NotNull;
-import com.erp.system.common.annotation.Unique;
-import com.erp.system.hr.Model.basic_information_management.User;
+import com.erp.system.hr.model.basic_information_management.User;
 
 public class UserDto {
     private String departmentId; // 부서 ID 참조

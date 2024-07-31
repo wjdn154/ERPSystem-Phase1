@@ -1,4 +1,4 @@
-package com.erp.system.hr.Model.attendance_information_management;
+package com.erp.system.hr.model.attendance_information_management;
 
 import com.erp.system.common.annotation.EnumMapping;
 import com.erp.system.common.validator.NotNullValidator;
@@ -6,7 +6,6 @@ import com.erp.system.common.annotation.NotNull;
 import com.erp.system.common.annotation.Unique;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 // 휴가 등록 테이블
 @EnumMapping
